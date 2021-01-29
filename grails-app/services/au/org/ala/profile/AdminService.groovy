@@ -16,77 +16,79 @@ class AdminService extends BaseDataAccessService {
 
     @Async
     NameRematch rematchAllNames(List<String> opusIds) {
-        long start = System.currentTimeMillis()
+        Opus.withSession {
+            long start = System.currentTimeMillis()
 
-        List<Opus> collections
-        if (opusIds) {
-            collections = opusIds.collect { Opus.findByUuid(it) }
-        } else {
-            collections = Opus.list()
-        }
+            List<Opus> collections
+            if (opusIds) {
+                collections = opusIds.collect { Opus.findByUuid(it) }
+            } else {
+                collections = Opus.list()
+            }
 
-        Map<String, Map> results = [:] as ConcurrentHashMap
+            Map<String, Map> results = [:] as ConcurrentHashMap
 
-        NameRematch rematch = new NameRematch(uuid: UUID.randomUUID().toString(), startDate: new Date(), opusIds: opusIds)
-        save rematch
-        AtomicInteger changed = new AtomicInteger(0)
-        AtomicInteger total = new AtomicInteger(0)
+            NameRematch rematch = new NameRematch(uuid: UUID.randomUUID().toString(), startDate: new Date(), opusIds: opusIds)
+            save rematch
+            AtomicInteger changed = new AtomicInteger(0)
+            AtomicInteger total = new AtomicInteger(0)
 
-        collections.each { Opus opus ->
-            List<Profile> profiles = Profile.findAllByOpus(opus)
+            collections.each { Opus opus ->
+                List<Profile> profiles = Profile.findAllByOpus(opus)
 
-            log.info("Processing Opus ${opus.title} (${opus.uuid}) with ${profiles.size()} profiles...")
-            results[opus.uuid] = [:] as ConcurrentHashMap
-            results[opus.uuid].totalProfiles = profiles.size()
-            results[opus.uuid].opusTitle = opus.title
-            results[opus.uuid].profilesUpdated = [:] as ConcurrentHashMap
+                log.info("Processing Opus ${opus.title} (${opus.uuid}) with ${profiles.size()} profiles...")
+                results[opus.uuid] = [:] as ConcurrentHashMap
+                results[opus.uuid].totalProfiles = profiles.size()
+                results[opus.uuid].opusTitle = opus.title
+                results[opus.uuid].profilesUpdated = [:] as ConcurrentHashMap
 
-            withPool(THREAD_POOL_SIZE) {
-                profiles.eachParallel { Profile profile ->
-                    try {
-                        Boolean isDirty = false
-                        isDirty = updateProfileWithRematchedName(profile, isDirty, results, opus)
+                withPool(THREAD_POOL_SIZE) {
+                    profiles.eachParallel { Profile profile ->
+                        try {
+                            Boolean isDirty = false
+                            isDirty = updateProfileWithRematchedName(profile, isDirty, results, opus)
 
-                        if(profile.draft){
-                            isDirty = updateProfileWithRematchedName(profile.draft, isDirty, results, opus)
+                            if(profile.draft){
+                                isDirty = updateProfileWithRematchedName(profile.draft, isDirty, results, opus)
+                            }
+
+                            if(isDirty){
+                                changed.incrementAndGet()
+                            }
+
+                            // Doing this check independent of name change since this field was not kept updated with previous
+                            // name changes. So it is possible that profile.guid and lsid in occurrenceQuery are out of sync.
+                            if(profile.occurrenceQuery?.contains("lsid")){
+                                isDirty = updateOccurrenceQuery(profile, isDirty)
+                            }
+
+                            // make sure occurrence query field in profile's draft version is also updated
+                            if(profile.draft?.occurrenceQuery?.contains("lsid")){
+                                // make sure draft's guid is used in occurrenceQuery. It is possible profile and draft
+                                // have different guid.
+                                isDirty = updateOccurrenceQuery(profile.draft, isDirty)
+                            }
+
+                            if(isDirty){
+                                save profile
+                            }
+                        } catch (Exception e) {
+                            log.error("Failed to match ${profile.scientificName}", e)
+                            results[opus.uuid] << [(profile.uuid): [error: "Failed to match ${profile.scientificName}: ${e.message}. See log for stacktrace."]]
                         }
-
-                        if(isDirty){
-                            changed.incrementAndGet()
-                        }
-
-                        // Doing this check independent of name change since this field was not kept updated with previous
-                        // name changes. So it is possible that profile.guid and lsid in occurrenceQuery are out of sync.
-                        if(profile.occurrenceQuery?.contains("lsid")){
-                            isDirty = updateOccurrenceQuery(profile, isDirty)
-                        }
-
-                        // make sure occurrence query field in profile's draft version is also updated
-                        if(profile.draft?.occurrenceQuery?.contains("lsid")){
-                            // make sure draft's guid is used in occurrenceQuery. It is possible profile and draft
-                            // have different guid.
-                            isDirty = updateOccurrenceQuery(profile.draft, isDirty)
-                        }
-
-                        if(isDirty){
-                            save profile
-                        }
-                    } catch (Exception e) {
-                        log.error("Failed to match ${profile.scientificName}", e)
-                        results[opus.uuid] << [(profile.uuid): [error: "Failed to match ${profile.scientificName}: ${e.message}. See log for stacktrace."]]
+                        total.incrementAndGet()
                     }
-                    total.incrementAndGet()
                 }
             }
-        }
 
-        log.info("Name rematched finished - updated ${changed.get()} profiles in ${System.currentTimeMillis() - start}ms")
-        rematch.numberOfProfilesChanged = changed.get()
-        rematch.numberOfProfilesChecked = total.get()
-        rematch.results = results
-        rematch.endDate = new Date()
-        save rematch
-        rematch
+            log.info("Name rematched finished - updated ${changed.get()} profiles in ${System.currentTimeMillis() - start}ms")
+            rematch.numberOfProfilesChanged = changed.get()
+            rematch.numberOfProfilesChecked = total.get()
+            rematch.results = results
+            rematch.endDate = new Date()
+            save rematch
+            rematch
+        }
     }
 
     boolean updateOccurrenceQuery(Object profile, boolean isDirty) {
@@ -179,10 +181,16 @@ class AdminService extends BaseDataAccessService {
 
             Opus.list().each { opus ->
                 Tag t = opus.tags?.find {
-                    it.uuid == tagId
+                    if (it) {
+                        it.uuid == tagId
+                    }
                 }
                 if (t) {
                     opus.tags.remove(t)
+                    save opus
+                }
+                else if (opus.tags.contains(null)) {
+                    opus.tags.remove(null)
                     save opus
                 }
             }

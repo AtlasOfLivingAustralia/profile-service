@@ -18,6 +18,7 @@ class UserSettings {
             allFlorulaSettings[opusUuid] = florulaSettings
         }
         florulaSettings.drUid = listId
+        florulaSettings.markDirty('druid')
     }
 
     static embedded = [ 'allFlorulaSettings' ]

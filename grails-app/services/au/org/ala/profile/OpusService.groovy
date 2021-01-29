@@ -5,9 +5,9 @@ import au.org.ala.profile.util.*
 import au.org.ala.web.AuthService
 import com.mongodb.DBObject
 import org.grails.datastore.mapping.mongo.query.MongoQuery
-import org.grails.plugins.metrics.groovy.Metered
-import org.grails.plugins.metrics.groovy.Timed
-import org.springframework.transaction.annotation.Transactional
+import grails.plugin.dropwizard.metrics.meters.Metered
+import grails.plugin.dropwizard.metrics.timers.Timed
+import grails.gorm.transactions.Transactional
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 import java.text.SimpleDateFormat
@@ -20,10 +20,13 @@ class OpusService extends BaseDataAccessService {
     EmailService emailService
     AuthService authService
     AttachmentService attachmentService
-    ImportService importService
     MasterListService masterListService
     def grailsApplication
     def groovyPageRenderer
+
+    ImportService getImportService() {
+        grailsApplication.mainContext.importService
+    }
 
     Opus createOpus(json) {
         log.debug("Creating new opus record")
@@ -298,7 +301,9 @@ class OpusService extends BaseDataAccessService {
                 }
             }
 
-            opus.authorities?.removeAll(authoritiesToRemove)
+            authoritiesToRemove?.each { authority ->
+                opus.removeFromAuthorities(authority)
+            }
 
             json.authorities?.each {
                 if (it.uuid) {
@@ -312,7 +317,7 @@ class OpusService extends BaseDataAccessService {
                     if (opus.authorities == null) {
                         opus.authorities = []
                     }
-                    opus.authorities << new Authority(uuid: UUID.randomUUID().toString(),user: user, role: role, notes: it.notes)
+                    opus.addToAuthorities(new Authority(uuid: UUID.randomUUID().toString(),user: user, role: role, notes: it.notes))
                 }
             }
 
@@ -438,7 +443,7 @@ class OpusService extends BaseDataAccessService {
                     } else {
                         SupportingOpus existingShare = supportingOpus.sharingDataWith.find { it.uuid == opus.uuid }
                         if (!existingShare) {
-                            supportingOpus.sharingDataWith << new SupportingOpus(uuid: opus.uuid, title: opus.title)
+                            supportingOpus.addToSharingDataWith( new SupportingOpus(uuid: opus.uuid, title: opus.title))
                             save supportingOpus
                         }
                     }
@@ -486,7 +491,7 @@ class OpusService extends BaseDataAccessService {
 
         List administrators = requestingOpus.authorities.findAll {
             it.role == Role.ROLE_PROFILE_ADMIN
-        }.collect { authService.getUserForUserId(it.user.userId).userName }
+        }.collect { authService.getUserForUserId(it.user.userId)?.userName }
 
         String user = authService.getUserForUserId(authService.getUserId()).displayName
 
@@ -502,7 +507,7 @@ class OpusService extends BaseDataAccessService {
 
     private revokeAllSupportingCollectionAccess(Opus opus) {
         // use a shallow clone of the list to avoid possible concurrent modification errors
-        List<SupportingOpus> sharedWith = opus.sharingDataWith?.clone()
+        List<SupportingOpus> sharedWith = opus.sharingDataWith?.collect()
 
         sharedWith.each {
             respondToSupportingOpusRequest(opus.uuid, it.uuid, ShareRequestAction.REVOKE)
@@ -706,8 +711,8 @@ class OpusService extends BaseDataAccessService {
         importService.asyncSyncroniseMasterList(opus.uuid, true)
     }
 
-    @Timed
-    @Metered
+    @Timed(value = 'Timed: is profile on master list - timed', useClassPrefix = true)
+    @Metered(value = 'Metered: is profile on master list - metered', useClassPrefix = true)
     boolean isProfileOnMasterList(Opus opus, profile) {
         if (!opus.masterListUid || !profile) return true
 

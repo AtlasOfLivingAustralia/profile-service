@@ -1,6 +1,6 @@
 package au.org.ala.profile
 
-import grails.transaction.Transactional
+import grails.gorm.transactions.Transactional
 
 @Transactional
 class UserSettingsService extends BaseDataAccessService {
@@ -28,8 +28,22 @@ class UserSettingsService extends BaseDataAccessService {
      * @param listId The list drUid
      */
     void setFlorulaList(UserSettings userSettings, String opusUuid, String listId) {
-        checkArgument userSettings
-        userSettings.enableFlorulaList(opusUuid, listId)
-        userSettings.save(validate: true, failOnError: true, flush: true)
+                def user = UserSettings.findById('1234')
+                user.test = 'a;'
+                user.enableFlorulaList('0ded7a77-9efb-4684-8df0-48cbb1933684', 'dr12')
+//                user.allFlorulaSettings = null
+                userSettings.markDirty('allFlorulaSettings')
+                user.save(flush: true)
+
+////        userSettings.discard()
+//        UserSettings.withNewSession {
+////            userSettings.attach()
+//            userSettings = UserSettings.findById('123')
+//            userSettings.allFlorulaSettings.get('0ded7a77-9efb-4684-8df0-48cbb1933684').drUid = 'rrrr'
+////            checkArgument userSettings
+////            userSettings.enableFlorulaList(opusUuid, listId)
+//            userSettings.markDirty('allFlorulaSettings')
+//            userSettings.save(validate: true, failOnError: true, flush: true)
+//        }
     }
 }

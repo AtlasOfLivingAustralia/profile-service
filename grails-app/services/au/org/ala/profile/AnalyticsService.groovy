@@ -8,6 +8,8 @@ import com.google.api.services.analytics.Analytics
 import com.google.api.services.analytics.AnalyticsScopes
 import com.google.api.services.analytics.model.GaData
 
+import java.text.SimpleDateFormat
+
 /**
  * Access to Google Analytics API for eFlora.
  * <p>This service authorises itself to Google using a Service Account to permit the
@@ -41,6 +43,7 @@ class AnalyticsService {
     private static final JSON_FACTORY = JacksonFactory.getDefaultInstance()
 
     def grailsApplication
+    def grailsResourceLocator
     private Analytics analytics
     private String viewIds
 
@@ -100,7 +103,7 @@ class AnalyticsService {
 
         def opusId = profile.opus.shortName ?: profile.opus.uuid
 
-        def profileUri = "${grailsApplication.config.contextPath ?: ''}/opus/${opusId}/profile/${profile.scientificName}"
+        def profileUri = "${grailsResourceLocator.contextPath ?: ''}/opus/${opusId}/profile/${profile.scientificName}"
 
         // Query Google Analytics for ga:sessions and ga:pageviews...
         ret.allTime = queryForViews(profileUri, ALL_TIME)
@@ -135,7 +138,7 @@ class AnalyticsService {
         from.set(Calendar.SECOND, 0)
         from.set(Calendar.MILLISECOND, 0)
 
-        String fromStr = from ? from.format("yyyy-MM-dd") : ALL_TIME
+        String fromStr = from ? new SimpleDateFormat("yyyy-MM-dd").format(from.getTime()) : ALL_TIME
 
         ret.mostViewedProfile = queryMostViewedProfile(opus, ALL_TIME)
         ret.totalVisitorCount = queryVisitorCount(opus, ALL_TIME)
@@ -163,7 +166,7 @@ class AnalyticsService {
                 .setFilters(filters)
                 .execute()
         log.debug("Queried ${result.getSelfLink()}")
-        log.trace(result)
+        log.trace(result.toString())
 
         return extractData(result)
     }
@@ -186,7 +189,7 @@ class AnalyticsService {
                 .setMaxResults(1)
                 .execute()
         log.debug("Queried ${result.getSelfLink()}")
-        log.trace(result)
+        log.trace(result.toString())
 
         return extractData(result)
     }
@@ -204,7 +207,7 @@ class AnalyticsService {
                 .setMaxResults(1)
                 .execute()
         log.debug("Queried ${result.getSelfLink()}")
-        log.trace(result)
+        log.trace(result.toString())
 
         return extractData(result)
     }
@@ -223,7 +226,7 @@ class AnalyticsService {
                 .setMaxResults(1)
                 .execute()
         log.debug("Queried ${result.getSelfLink()}")
-        log.trace(result)
+        log.trace(result.toString())
 
         return extractData(result)
     }

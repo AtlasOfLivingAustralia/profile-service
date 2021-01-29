@@ -1,12 +1,10 @@
 package au.org.ala.profile
 
 import au.org.ala.web.UserDetails
-import grails.transaction.Transactional
 
-@Transactional
 class UserService {
+// by default service is not transactional from 3.1 onwards
 
-    static transactional = false
     def authService
 
     private static ThreadLocal<UserDetails> _currentUser = new ThreadLocal<UserDetails>()

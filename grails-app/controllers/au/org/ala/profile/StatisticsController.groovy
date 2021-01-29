@@ -3,6 +3,8 @@ package au.org.ala.profile
 import au.org.ala.profile.security.Role
 import grails.converters.JSON
 
+import java.text.SimpleDateFormat
+
 class StatisticsController extends BaseController {
 
     AnalyticsService analyticsService
@@ -69,7 +71,7 @@ class StatisticsController extends BaseController {
                         id     : 'updatesThisMonth',
                         name   : 'Updates This Month',
                         value  : updatesThisMonth.recordCount,
-                        tooltip: "Number of profiles which have been updated since ${from.getTime().format("dd/MM/yyyy")}"
+                        tooltip: "Number of profiles which have been updated since ${new SimpleDateFormat("dd/MM/yyyy").format(from.getTime())}"
                 ])
 
                 Profile profile = statisticsService.lastEditedProfile(opus)
@@ -77,7 +79,7 @@ class StatisticsController extends BaseController {
                         id     : 'lastUpdatedProfile',
                         name   : 'Most Recent Update',
                         value  : "${profile?.scientificName ?: ""}",
-                        tooltip: "Updated by ${profile?.lastUpdatedBy} on ${profile?.lastUpdated?.format('dd/MM/yyyy')}"
+                        tooltip: "Updated by ${profile?.lastUpdatedBy} on ${new SimpleDateFormat("dd/MM/yyyy").format(profile?.lastUpdated)}"
                 ])
 
                 if (analyticsService.enabled()) {

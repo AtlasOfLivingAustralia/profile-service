@@ -1,0 +1,202 @@
+import static org.springframework.boot.gradle.SpringBootPluginExtension.LayoutType.*
+buildscript {
+    repositories {
+        mavenLocal()
+        maven { url "https://repo.grails.org/grails/core" }
+//        maven {
+//            url "http://nexus.ala.org.au/content/repositories/grails-plugins/"
+//        }
+        maven {
+            url "http://nexus.ala.org.au/content/groups/public/"
+        }
+        mavenCentral()
+
+    }
+    dependencies {
+        classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+        classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.15.1"
+    }
+}
+
+version "3.0-SNAPSHOT"
+group "au.org.ala"
+
+apply plugin:"eclipse"
+apply plugin:"idea"
+apply plugin:"war"
+apply plugin:"org.grails.grails-web"
+apply plugin:"asset-pipeline"
+apply plugin:"org.grails.grails-gsp"
+apply from: 'https://raw.githubusercontent.com/AtlasOfLivingAustralia/travis-build-configuration/master/travis_grails_publish.gradle'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+def withoutXerces = { exclude group: 'xerces', module: 'xercesImpl' }
+
+repositories {
+    mavenLocal()
+    maven { url "https://repo.grails.org/grails/core" }
+//    maven {
+//        url "http://nexus.ala.org.au/content/repositories/grails-plugins/"
+//    }
+    maven {
+        url "http://nexus.ala.org.au/content/groups/public/"
+    }
+    mavenCentral()
+}
+def esVersion = '5.5.3'
+ext {
+    elasticsearchVersion = esVersion
+    elasticsearchAttachmentsVersion = esVersion
+}
+
+ext['elasticsearch.version'] = esVersion
+
+
+springBoot {
+    layout = WAR
+}
+bootRepackage {
+    enabled = true
+    executable = true
+    classifier = 'exec'
+}
+
+dependencies {
+    compile "org.springframework.boot:spring-boot-starter-logging"
+    compile "org.springframework.boot:spring-boot-autoconfigure"
+    compile "org.grails:grails-core"
+    compile "org.springframework.boot:spring-boot-starter-actuator"
+    provided "org.springframework.boot:spring-boot-starter-tomcat"
+    compile "org.grails:grails-web-boot"
+    compile "org.grails:grails-logging"
+    compile "org.grails:grails-plugin-rest"
+    compile "org.grails:grails-plugin-databinding"
+    compile "org.grails:grails-plugin-i18n"
+    compile "org.grails:grails-plugin-services"
+    compile "org.grails:grails-plugin-url-mappings"
+    compile "org.grails:grails-plugin-interceptors"
+    compile "org.grails.plugins:cache"
+    compile "org.grails:grails-async-gpars"
+    compile "org.grails.plugins:async"
+    compile "org.grails.plugins:scaffolding"
+    compile "org.grails.plugins:events"
+    compile "org.grails.plugins:gsp"
+    console "org.grails:grails-console"
+    compile "org.codehaus.groovy:groovy:2.5.6"
+    compile "org.codehaus.groovy:groovy-templates:2.5.6"
+//    compile "org.codehaus.groovy:groovy:2.4.17"
+//    compile "org.codehaus.groovy:groovy-templates:2.4.17"
+    profile "org.grails.profiles:web"
+
+    compile "commons-fileupload:commons-fileupload:1.3.1"
+
+    runtime "org.glassfish.web:el-impl:2.1.2-b03"
+//    runtime "com.h2database:h2"
+    runtime "org.apache.tomcat:tomcat-jdbc"
+    runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.15.1"
+    testCompile "org.grails:grails-gorm-testing-support"
+    testCompile "org.grails.plugins:geb"
+    testCompile "org.grails:grails-web-testing-support"
+    testCompile "org.grails.plugins:geb:1.1.2"
+    testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1", withoutXerces
+    testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
+    testRuntime "org.seleniumhq.selenium:selenium-chrome-driver:2.47.1"
+
+
+    // app specific dependencies
+    compile "org.grails.plugins:ala-auth:3.1.2", {
+//        exclude module: 'groovy'
+    }
+    compile "org.grails.plugins:ala-ws-security-plugin:2.0"
+    compile ("org.grails.plugins:ala-ws-plugin:2.0") {
+        exclude module: 'asset-pipeline-grails'
+        exclude module: 'xerces'
+    }
+
+    compile ('au.org.ala:ala-name-matching:3.4') {
+        exclude module: 'lucene-queries'
+        exclude module: 'lucene-analyzers'
+        exclude module: 'lucene-core'
+        exclude module: 'lucene-analyzers-common'
+        exclude module: 'lucene-queryparser'
+        exclude module: 'lucene-sandbox'
+//        exclude module: 'slf4j-log4j12'
+    }
+    compile "com.xlson.groovycsv:groovycsv:1.0"
+    compile "com.google.guava:guava:19.0"
+    compile ("com.google.apis:google-api-services-analytics:v3-rev116-1.20.0") {
+        exclude module: 'guava-jdk5'
+    }
+    compile 'com.googlecode.owasp-java-html-sanitizer:owasp-java-html-sanitizer:20160827.1'
+    compile "com.itextpdf:itextpdf:5.5.1"
+    compile "org.imgscalr:imgscalr-lib:4.2"
+    compile "com.google.code.gson:gson:2.8.6"
+
+    compile "org.grails:grails-plugin-datasource"
+    compile "org.grails:grails-plugin-databinding"
+    compile "org.grails:grails-datastore-gorm-mongodb:6.1.20.BUILD-SNAPSHOT"
+    compile "org.grails:grails-plugin-codecs"
+    compile ("org.grails.plugins:mongodb:6.1.7") {
+        exclude module: 'grails-datastore-gorm-mongodb'
+    }
+    compile "org.mongodb:mongodb-driver:3.9.1"
+    compile "org.grails.plugins:mail:2.0.1"
+    compile "xml-apis:xml-apis:1.4.01"
+
+//    compile ("org.mongodb:mongodb-driver:3.10.0")
+//    compile ("org.mongodb:mongodb-driver-core:3.10.0")
+//    compile ("org.grails.plugins:mongodb:7.0.1") {
+////        exclude module: "groovy"
+////        exclude module: "groovy-templates"
+//    }
+    compile 'org.grails.plugins:elasticsearch:2.5.0'
+//    compile("org.grails.plugins:elasticsearch:2.4.1") {
+////            exclude module: 'elasticsearch'
+////            exclude module: 'lucene-core'
+////            exclude module: 'lucene-analyzers-common'
+////            exclude module: 'lucene-backward-codecs'
+////            exclude module: 'lucene-grouping'
+////            exclude module: 'lucene-highlighter'
+////            exclude module: 'lucene-join'
+////            exclude module: 'lucene-memory'
+////            exclude module: 'lucene-misc'
+////            exclude module: 'lucene-queries'
+////            exclude module: 'lucene-queryparser'
+////            exclude module: 'lucene-sandbox'
+////            exclude module: 'lucene-spatial-extras'
+////            exclude module: 'lucene-spatial3d'
+////            exclude module: 'lucene-suggest'
+//        }
+
+    compile "org.grails.plugins:dropwizard-metrics:1.0.0"
+    compile 'org.grails.plugins:external-config:1.4.0'
+    compile "org.grails.plugins:quartz:2.0.13"
+//    testCompile "ch.qos.logback:logback-classic:1.0.3"
+//    compile "org.slf4j:jcl-over-slf4j:1.6.4"
+
+//    testCompile "org.grails.plugins:embedded-mongodb:1.0.2"
+}
+
+configurations.all {
+    exclude module:'grails-datastore-simple'
+}
+
+bootRun {
+    jvmArgs('-Dspring.output.ansi.enabled=always')
+    addResources = true
+    String springProfilesActive = 'spring.profiles.active'
+    systemProperty springProfilesActive, System.getProperty(springProfilesActive)
+}
+
+tasks.withType(Test) {
+    systemProperty "geb.env", System.getProperty('geb.env')
+    systemProperty "geb.build.reportsDir", reporting.file("geb/integrationTest")
+    systemProperty "webdriver.chrome.driver", System.getProperty('webdriver.chrome.driver')
+    systemProperty "webdriver.gecko.driver", System.getProperty('webdriver.gecko.driver')
+}
+
+assets {
+    minifyJs = true
+    minifyCss = true
+}

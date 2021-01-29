@@ -32,7 +32,7 @@ class BackupRestoreService {
     }
 
     private String getCurrentDB() {
-        return grailsApplication.config.grails.mongo.databaseName?:"profiles"
+        return grailsApplication.config.grails.mongodb.databaseName?:"profiles"
     }
 
     private String getScriptPath() {
@@ -45,8 +45,8 @@ class BackupRestoreService {
         def err = new StringBuffer()
         process.consumeProcessOutput( out, err )
         process.waitForProcessOutput(out, err)
-        log.info(out)
-        log.info(err)
+        log.info(out?.toString())
+        log.info(err?.toString())
 
         return process.exitValue()
     }

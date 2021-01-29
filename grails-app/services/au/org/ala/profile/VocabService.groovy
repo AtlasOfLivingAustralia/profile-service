@@ -1,14 +1,17 @@
 package au.org.ala.profile
 
-import org.springframework.transaction.annotation.Transactional
-import com.gmongo.GMongo
-import com.mongodb.*
+import com.mongodb.BasicDBObject
+import com.mongodb.WriteResult
+import com.mongodb.MongoClient
+import com.mongodb.client.MongoCollection
+import grails.gorm.transactions.Transactional
+
 import javax.persistence.PersistenceException
 
 @Transactional
 class VocabService extends BaseDataAccessService {
 
-    GMongo mongo
+    MongoClient mongo
     def grailsApplication
 
     boolean updateVocab(String vocabId, Map data) {
@@ -135,7 +138,7 @@ class VocabService extends BaseDataAccessService {
 
     def replaceTerm = { opus, vocabId, existingTermId, newTermName ->
 
-        def db = mongo.getDB(grailsApplication.config.grails.mongo.databaseName)
+        def db = mongo.getDatabase(grailsApplication.config.grails.mongodb.databaseName)
         int replacedUsages = 0
 
         // There can be more than 1 terms having same term names. So, checking by term id is necessary.
@@ -149,7 +152,7 @@ class VocabService extends BaseDataAccessService {
             if (opus.authorshipVocabUuid == vocabId) {
 
                 // Bulk update for profiles and profiles draft acknowledgement term as GORM update takes long time for many records.
-                DBCollection profileCollection = db.getCollection("profile")
+                MongoCollection<BasicDBObject> profileCollection = db.getCollection("profile", BasicDBObject.class)
                 def updateQuery = new BasicDBObject('$set', new BasicDBObject('authorship.$.category', newTerm.id))
                 def searchQuery = new BasicDBObject(['authorship.category': existingTerm.id])
                 WriteResult updateResult = profileCollection.updateMulti(searchQuery, updateQuery)
@@ -166,8 +169,8 @@ class VocabService extends BaseDataAccessService {
 
             } else {
 
-                DBCollection profileCollection = db.getCollection("profile")
-                DBCollection attributeCollection = db.getCollection("attribute")
+                MongoCollection<BasicDBObject> profileCollection = db.getCollection("profile", BasicDBObject.class)
+                MongoCollection<BasicDBObject> attributeCollection = db.getCollection("attribute", BasicDBObject.class)
 
                 def attributeUpdateQuery = new BasicDBObject('$set', new BasicDBObject('title', newTerm.id))
                 def attributeSearchQuery = new BasicDBObject('title': existingTerm.id)

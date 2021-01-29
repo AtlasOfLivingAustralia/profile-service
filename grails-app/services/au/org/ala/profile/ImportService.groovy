@@ -1,10 +1,13 @@
 package au.org.ala.profile
 
-import au.org.ala.profile.util.CloneAndDraftUtil
+
 import au.org.ala.profile.util.NSLNomenclatureMatchStrategy
 import au.org.ala.profile.util.Utils
 import com.google.common.collect.Sets
 import grails.converters.JSON
+import grails.plugin.dropwizard.metrics.meters.Metered
+import grails.plugin.dropwizard.metrics.timers.Timed
+import grails.plugins.elasticsearch.ElasticSearchService
 import groovy.transform.ToString
 import groovyx.gpars.actor.Actors
 import groovyx.gpars.actor.DefaultActor
@@ -12,9 +15,9 @@ import groovyx.gpars.dataflow.Promise
 import groovyx.net.http.ContentType
 import groovyx.net.http.RESTClient
 import org.apache.http.HttpStatus
-import org.grails.plugins.elasticsearch.ElasticSearchService
-import org.grails.plugins.metrics.groovy.Metered
-import org.grails.plugins.metrics.groovy.Timed
+
+//import grails.plugins.elasticsearch.ElasticSearchService
+
 import org.springframework.scheduling.annotation.Async
 
 import javax.annotation.PreDestroy
@@ -22,7 +25,7 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentSkipListSet
 import java.util.concurrent.atomic.AtomicInteger
 
-import static groovyx.gpars.GParsPool.*
+import static groovyx.gpars.GParsPool.withPool
 
 class ImportService extends BaseDataAccessService {
 
@@ -30,6 +33,7 @@ class ImportService extends BaseDataAccessService {
 
     ProfileService profileService
     NameService nameService
+
     ElasticSearchService elasticSearchService
     def grailsApplication
     def masterListService
@@ -262,7 +266,7 @@ class ImportService extends BaseDataAccessService {
 
                             if (profile.errors.allErrors.size() > 0) {
                                 log.error("Failed to save ${profile}")
-                                profile.errors.each { log.error(it) }
+                                profile.errors.each { log.error(it?.toString()) }
                                 results.errors << "Failed to save profile ${profile.errors.allErrors.get(0)}"
                             } else {
                                 def currentSuccess = success.incrementAndGet()
@@ -426,8 +430,8 @@ class ImportService extends BaseDataAccessService {
         }
     }
 
-    @Timed
-    @Metered
+    @Timed(value = 'Timed: sync master list', useClassPrefix = true)
+    @Metered(value = 'Metered: sync master list', useClassPrefix = true)
     private def syncMasterList(Opus collection, boolean forceStubRegeneration = false) {
 
         def colId = collection.shortName ?: collection.uuid
@@ -530,7 +534,7 @@ class ImportService extends BaseDataAccessService {
                 errors.each { profile ->
                     log.warn("${profile.scientificName} has errors:")
                     profile.errors.allErrors.each { error ->
-                        log.warn(error)
+                        log.warn(error?.toString())
                     }
                     allResults[profile.scientificName].validationErrors = profile.errors.allErrors
                 }

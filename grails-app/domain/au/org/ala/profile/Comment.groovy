@@ -4,8 +4,9 @@ import au.org.ala.profile.sanitizer.SanitizedHtml
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
-@ToString
-@EqualsAndHashCode
+@ToString(allProperties = false, excludes = 'children')
+//@ToString(excludes = 'children')
+@EqualsAndHashCode(excludes = 'children')
 class Comment {
 
     String uuid
@@ -16,6 +17,7 @@ class Comment {
     Comment parent
     Date dateCreated
     Date lastUpdated
+    List children
 
     static hasMany = [children: Comment]
 
@@ -24,7 +26,7 @@ class Comment {
     }
 
     static mapping = {
-        children cascade: "all-delete-orphan"
+        children cascade: "all-delete-orphan", fetch: 'join'
     }
 
     def beforeValidate() {
