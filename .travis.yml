@@ -8,6 +8,7 @@ branches:
   only:
     - master
     - dev
+    - hotfix
 services:
   - mongodb
 cache:

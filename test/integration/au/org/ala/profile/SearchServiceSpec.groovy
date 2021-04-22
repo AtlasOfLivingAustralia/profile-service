@@ -65,8 +65,8 @@ class SearchServiceSpec extends BaseIntegrationSpec {
     def "findByScientificName should exclude matches from private collections when there is no logged in user"() {
         given:
         Opus opus1 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr1", title: "title1")
-        Opus opus2 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr2", title: "title2", privateCollection: true, authorities: [[uuid: "1", user: [userId: "9876"], role: "ROLE_USER"]])
-        Opus opus3 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr3", title: "title3", privateCollection: true, authorities: [[uuid: "2", user: [userId: "1234"], role: "ROLE_USER"]])
+        Opus opus2 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr2", title: "title2", privateCollection: true, authorities: [[uuid: "1", user: [userId: "9876", name: "user 1"], role: "ROLE_USER"]])
+        Opus opus3 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr3", title: "title3", privateCollection: true, authorities: [[uuid: "2", user: [userId: "1234", name: "user 2"], role: "ROLE_USER"]])
 
         Profile profile1 = save new Profile(scientificName: "name1", fullName: "name1", opus: opus1, rank: "kingdom", classification: [new Classification(rank: "kingdom", name: "Plantae")])
         Profile profile2 = save new Profile(scientificName: "name2", fullName: "name2", opus: opus2, rank: "kingdom", classification: [new Classification(rank: "kingdom", name: "Plantae")])
@@ -88,8 +88,8 @@ class SearchServiceSpec extends BaseIntegrationSpec {
     def "findByScientificName should include matches from private collections when the logged in user is registered with that collection"() {
         given:
         Opus opus1 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr1", title: "title1")
-        Opus opus2 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr2", title: "title2", privateCollection: true, authorities: [[uuid: "1", user: [userId: "9876"], role: "ROLE_USER"]])
-        Opus opus3 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr3", title: "title3", privateCollection: true, authorities: [[uuid: "2", user: [userId: "1234"], role: "ROLE_USER"]])
+        Opus opus2 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr2", title: "title2", privateCollection: true, authorities: [[uuid: "1", user: [userId: "9876", name: "user 1"], role: "ROLE_USER"]])
+        Opus opus3 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr3", title: "title3", privateCollection: true, authorities: [[uuid: "2", user: [userId: "1234", name: "user 1"], role: "ROLE_USER"]])
 
         Profile profile1 = save new Profile(scientificName: "name1", fullName: "name1", opus: opus1, rank: "kingdom", classification: [new Classification(rank: "kingdom", name: "Plantae")])
         Profile profile2 = save new Profile(scientificName: "name2", fullName: "name2", opus: opus2, rank: "kingdom", classification: [new Classification(rank: "kingdom", name: "Plantae")])
