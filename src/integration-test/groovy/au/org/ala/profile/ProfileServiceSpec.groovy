@@ -451,7 +451,7 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
         then:
         result == false
         Profile.withNewSession { s ->
-            Profile.findByOpusAndScientificName(opus, 'sciName')?.imageSettings?.get(image)?.imageDisplayOption == INCLUDE
+            Profile.findByOpusAndScientificName(opus, 'sciName')?.imageSettings?.get(image)?.imageDisplayOption == INCLUDE.toString()
         }
     }
 

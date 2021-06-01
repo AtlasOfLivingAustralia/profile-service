@@ -147,7 +147,7 @@ class ReportService {
                         text       : [$first: '$text'],
                         author     : [$first: '$author']
                 ]]),
-BaseDataAccessService.getBsonDocument([$sort: [lastUpdated: -1]])
+                BaseDataAccessService.getBsonDocument([$sort: [lastUpdated: -1]])
         ])
 
         final results = aggOutput

@@ -233,7 +233,8 @@ class CloneAndDraftUtil {
 
     static Map cloneImageSettings (Map imageSettings) {
         Map clone = new HashMap<String, ImageSettings>()
-        imageSettings?.each { String key, ImageSettings imageSetting ->
+//        imageSettings?.each { String key, ImageSettings imageSetting ->
+        imageSettings?.each { String key, imageSetting ->
             ImageSettings cloneImageSetting = new ImageSettings()
             cloneImageSetting.caption = imageSetting.caption
             cloneImageSetting.imageDisplayOption = imageSetting.imageDisplayOption

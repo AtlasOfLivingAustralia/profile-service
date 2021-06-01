@@ -135,7 +135,7 @@ dependencies {
 
     compile "org.grails:grails-plugin-datasource"
     compile "org.grails:grails-plugin-databinding"
-    compile "org.grails:grails-datastore-gorm-mongodb:6.1.20.BUILD-SNAPSHOT"
+    compile "org.grails:grails-datastore-gorm-mongodb:6.1.7.RELEASE"
     compile "org.grails:grails-plugin-codecs"
     compile ("org.grails.plugins:mongodb:6.1.7") {
         exclude module: 'grails-datastore-gorm-mongodb'
@@ -184,6 +184,8 @@ configurations.all {
 
 bootRun {
     jvmArgs('-Dspring.output.ansi.enabled=always')
+//    jvmArgs('-Xmx6g')
+//    jvmArgs('-Xms6g')
     addResources = true
     String springProfilesActive = 'spring.profiles.active'
     systemProperty springProfilesActive, System.getProperty(springProfilesActive)

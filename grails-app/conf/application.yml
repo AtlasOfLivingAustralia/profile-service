@@ -95,31 +95,25 @@ endpoints:
         unique-names: true
 
 ---
-grails:
-    mongodb:
-        host: localhost
-        port: 27017
-        databaseName: profiles
-#environments:
-#    development:
-#        grails:
-#            mongodb:
-#                host: localhost
-#                port: 27017
-#                databaseName: profiles
-#    test:
-#        grails:
-#            mongodb:
-#                host: localhost
-#                port: 27017
-#                databaseName: profiles
-##                databaseName: profiles-test
-#    production:
-#        grails:
-#            mongodb:
-#                host: localhost
-#                port: 27017
-#                databaseName: profiles
+environments:
+    development:
+        grails:
+            mongodb:
+                host: localhost
+                port: 27017
+                databaseName: profiles
+    test:
+        grails:
+            mongodb:
+                host: localhost
+                port: 27017
+                databaseName: profiles-test
+    production:
+        grails:
+            mongodb:
+                host: localhost
+                port: 27017
+                databaseName: profiles
 
 ---
 #reverse proxy support

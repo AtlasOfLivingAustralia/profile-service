@@ -538,21 +538,14 @@ class OpusController extends BaseController {
             if (!opus) {
                 notFound "Ain't no opus"
             } else {
-//                def user = new UserSettings()
-//                user.id = '123'
-//                user.enableFlorulaList('0ded7a77-9efb-4684-8df0-48cbb1933684', 'dr123')
-//                user.allFlorulaSettings['0ded7a77-9efb-4684-8df0-48cbb1933684'].id = 1
-//                user.save(flush: true)
                 def json = request.getJSON()
                 def listId = json.florulaListId
                 UserDetails userDetails = (UserDetails) request.getAttribute(AuditInterceptor.REQUEST_USER_DETAILS_KEY)
                 if (!userDetails.userId) {
                     badRequest "Ain't no user"
                 }
-//                userSettingsService.setFlorulaList(userSettingsService.getUserSettings(userDetails?.userId), opus.uuid, listId)
-                userSettingsService.setFlorulaList(userSettingsService.getUserSettings('123'), opus.uuid, listId)
-//                response.sendError(HttpServletResponse.SC_NO_CONTENT)
-                render(text: '', status: HttpServletResponse.SC_NO_CONTENT)
+                userSettingsService.setFlorulaList(userSettingsService.getUserSettings(userDetails?.userId), opus.uuid, listId)
+                response.sendError(HttpServletResponse.SC_NO_CONTENT)
             }
         }
     }

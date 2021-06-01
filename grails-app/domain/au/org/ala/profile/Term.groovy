@@ -9,7 +9,7 @@ import groovy.transform.ToString
 class Term implements Comparable<Term> {
 
     private static final String NOT_ANALYZED_INDEX = "not_analyzed"
-    Long id
+
     static searchable = {
         only = ["name", "summary", "containsName", "uuid"]
         uuid index: NOT_ANALYZED_INDEX

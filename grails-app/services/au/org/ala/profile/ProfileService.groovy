@@ -338,6 +338,8 @@ class ProfileService extends BaseDataAccessService {
             profile.guid = null
             profile.classification = []
             profile.rank = null
+
+            profile.markDirty('classification')
         }
 
         populateTaxonHierarchy(profile, manualHierarchy)
@@ -421,6 +423,7 @@ class ProfileService extends BaseDataAccessService {
             // The manual hierarchy could have some unknown items in it, and it could have 1 recognised name.
             // If we have a recognised name, then the hierarchy from that point UP needs to be derived from the name.
             profile.classification = []
+            profile.markDirty('classification')
 
             // The profile's rank will be stored in the first element of the manually entered hierarchy
             profile.rank = manualHierarchy[0].rank
@@ -620,6 +623,8 @@ class ProfileService extends BaseDataAccessService {
 
         if (json.containsKey("specimenIds")) {
             profileOrDraft(profile).specimenIds = []
+            profileOrDraft(profile).markDirty('specimenIds')
+
             if (json.specimenIds) {
                 profileOrDraft(profile).specimenIds.addAll(json.specimenIds)
             }
@@ -633,6 +638,8 @@ class ProfileService extends BaseDataAccessService {
     boolean saveAuthorship(Profile profile, Map json, boolean deferSave = false) {
         if (json.containsKey("authorship")) {
             profileOrDraft(profile).authorship = []
+            profileOrDraft(profile).markDirty('authorship')
+
             if (json.authorship) {
                 profileOrDraft(profile).authorship = json.authorship.collect {
                     Term term = vocabService.getOrCreateTerm(it.category,
@@ -640,8 +647,6 @@ class ProfileService extends BaseDataAccessService {
                     new Authorship(category: term, text: it.text)
                 }
             }
-
-            profileOrDraft(profile).markDirty('authorship')
 
             if (!deferSave) {
                 save profile
@@ -697,7 +702,11 @@ class ProfileService extends BaseDataAccessService {
         }
 
         if (json.containsKey("imageSettings")) {
+            // Dirty checking in Grails 3 is disabled when property is assigned a new object like below.
+            // Therefore, GORM needs to explicitly know property has changed to write it to DB.
             profileOrDraft.imageSettings = [:]
+            profileOrDraft.markDirty('imageSettings')
+
             if (json.imageSettings) {
                 profileOrDraft.imageSettings = json.imageSettings.collectEntries {
                     ImageOption imageDisplayOption = it.displayOption ?
@@ -727,6 +736,7 @@ class ProfileService extends BaseDataAccessService {
         // can only stage images for a draft profile - otherwise images are to be automatically updated
 
         boolean success = recordImage(profile.draft.stagedImages, json)
+        profile.draft.markDirty('stagedImages')
 
         if (success) {
             if (json.action == "delete") {
@@ -792,6 +802,8 @@ class ProfileService extends BaseDataAccessService {
 
         if (json.containsKey('bibliography')) {
             profileOrDraft(profile).bibliography = []
+            profileOrDraft(profile).markDirty('bibliography')
+
             if (json.bibliography) {
                 profileOrDraft(profile).bibliography = json.bibliography.collect {
                     new Bibliography(
@@ -883,6 +895,8 @@ class ProfileService extends BaseDataAccessService {
 
         if (json.containsKey("links")) {
             profileOrDraft(profile).bhlLinks = []
+            profileOrDraft(profile).markDirty('bhlLinks')
+
             if (json.links) {
                 profileOrDraft(profile).bhlLinks = json.links.collect {
                     Link link = new Link(uuid: it.uuid ?: UUID.randomUUID().toString())
@@ -912,6 +926,8 @@ class ProfileService extends BaseDataAccessService {
 
         if (json.containsKey("links")) {
             profileOrDraft(profile).links = []
+            profileOrDraft(profile).markDirty('links')
+
             if (json.links) {
                 profileOrDraft(profile).links = json.links.collect {
                     Link link = new Link(uuid: it.uuid ?: UUID.randomUUID().toString())
@@ -950,6 +966,7 @@ class ProfileService extends BaseDataAccessService {
 
         if (!profile.publications) {
             profile.publications = []
+            profile.markDirty('publications')
         }
 
         Publication publication = new Publication()
@@ -1113,6 +1130,7 @@ class ProfileService extends BaseDataAccessService {
         if (profile.draft) {
             if (!profile.draft.attributes) {
                 profile.draft.attributes = []
+                profile.draft.markDirty('attributes')
             }
             profile.draft.attributes << attribute
         } else {
@@ -1173,6 +1191,7 @@ class ProfileService extends BaseDataAccessService {
 
         if (!attribute.editors) {
             attribute.editors = []
+            attribute.markDirty('editors')
         }
 
         if (!attribute.editors.contains(contributor) && data.significantEdit) {

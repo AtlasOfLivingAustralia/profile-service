@@ -876,18 +876,18 @@ class SearchService extends BaseDataAccessService {
 
     @Async
     def reindexAll() {
-        int time
-        Status status
-        if (Status.count() == 0) {
-            status = new Status()
-        } else {
-            status = Status.list()[0]
-        }
-
-        status.searchReindex = true
-        save status
-
         Profile.withSession {
+            int time
+            Status status
+            if (Status.count() == 0) {
+                status = new Status()
+            } else {
+                status = Status.list()[0]
+            }
+
+            status.searchReindex = true
+            save status
+
             long start = System.currentTimeMillis()
 
             log.warn("Deleting existing index...")
@@ -902,11 +902,11 @@ class SearchService extends BaseDataAccessService {
             elasticSearchService.index(Profile)
             time = System.currentTimeMillis() - start
             log.warn("Search re-index complete in ${time} milliseconds")
-        }
 
-        status.searchReindex = false
-        status.lastReindexDuration = time
-        save status
+            status.searchReindex = false
+            status.lastReindexDuration = time
+            save status
+        }
     }
 
     @Async

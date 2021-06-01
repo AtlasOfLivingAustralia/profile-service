@@ -31,7 +31,7 @@ class ProfileMarshaller {
                     classification           : profile.classification,
                     manualClassification     : profile.manualClassification,
                     taxonomyTree             : profile.taxonomyTree,
-                    attributes               : profile.attributes?.sort(),
+                    attributes               : profile.attributes?.sort() ?: [],
                     links                    : profile.links ?: [],
                     bhl                      : profile.bhlLinks ?: [],
                     primaryImage             : profile.primaryImage,
@@ -44,14 +44,14 @@ class ProfileMarshaller {
                     specimenIds              : profile.specimenIds ?: [],
                     authorship               : profile.authorship?.collect {
                         [category: it.category.name, text: it.text]
-                    },
+                    } ?: [],
                     bibliography             : profile.bibliography?.collect {
                         [uuid: it.uuid, text: it.text, plainText: Utils.cleanupText(it.text), order: it.order]
-                    }?.sort { it.order },
+                    }?.sort { it.order } ?: [],
                     documents             : profile.documents?.collect {
                         [documentId: it.documentId, name: it.name, attribution: it.attribution, licence: it.licence, url: it.url, type: it.type ]
                     } ?: [],
-                    publications             : profile.publications?.sort { left, right -> right.publicationDate <=> left.publicationDate },
+                    publications             : profile.publications?.sort { left, right -> right.publicationDate <=> left.publicationDate } ?: [],
                     lastAttributeChange      : profile.lastAttributeChange,
                     createdDate              : profile.dateCreated,
                     createdBy                : profile.createdBy,

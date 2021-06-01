@@ -28,8 +28,8 @@ class Opus {
     String dataResourceUid
 
     String masterListUid
-    List<String> approvedLists
-    List<String> featureLists
+    List<String> approvedLists = []
+    List<String> featureLists = []
     String featureListSectionName
 
     BrandingConfig brandingConfig
@@ -63,9 +63,9 @@ class Opus {
     String email
     String facebook
     String twitter
-    List<SupportingOpus> supportingOpuses
-    List<SupportingOpus> sharingDataWith
-    List<Attachment> attachments
+    List<SupportingOpus> supportingOpuses = []
+    List<SupportingOpus> sharingDataWith = []
+    List<Attachment> attachments = []
     boolean autoApproveShareRequests = true
     boolean keepImagesPrivate = false
     boolean usePrivateRecordData = false

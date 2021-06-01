@@ -10,6 +10,7 @@ import com.mongodb.BasicDBObject
 import com.mongodb.DBObject
 import com.mongodb.MongoClient
 import com.mongodb.client.MongoCollection
+import org.bson.BsonDocument
 import org.grails.datastore.mapping.core.Datastore
 import org.springframework.web.context.WebApplicationContext
 
@@ -24,6 +25,7 @@ class BootStrap {
     def init = { servletContext ->
 
         def ctx = servletContext.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE)
+        overrideClassMethod()
         initDatastores(ctx)
 
         ctx.getBean("customObjectMarshallers").register()
@@ -39,6 +41,15 @@ class BootStrap {
         addScientificNameLowerToProfiles()
     }
     def destroy = {
+    }
+
+    void overrideClassMethod() {
+        // grails-datastore-gorm-mongodb:6.1.7.RELEASE has a bug which prevents embedded objects from saving. It occurs
+        // since {@link org.bson.BsonDocument.asBoolean} throws an exception when Groovy tries to convert BsonDocument to
+        // a boolean. The below hack is to provided the correct Groovy behaviour.
+        BsonDocument.metaClass.asBoolean = {
+            !delegate.isEmpty()
+        }
     }
 
     void createDefaultTags() {

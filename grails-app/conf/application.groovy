@@ -157,7 +157,9 @@ elasticSearch {
     // see http://noamt.github.io/elasticsearch-grails-plugin/guide/configuration.html for defaults
     datastoreImpl = "mongoDatastore"
     bulkIndexOnStartup = false
-    migration.strategy = 'none'
+    // changing to `alias` form `none` since elasticsearch-plugin throws exception when domain mapping is different from existing
+    // elasticsearch mapping.
+    migration.strategy = 'alias'
     searchMethodName = 'searchIndex'
     countHitsMethodName = 'countSearchHits'
 }

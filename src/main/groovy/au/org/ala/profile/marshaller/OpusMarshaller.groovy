@@ -59,7 +59,7 @@ class OpusMarshaller {
                     allowFineGrainedAttribution: opus.allowFineGrainedAttribution != null ? opus.allowFineGrainedAttribution : true,
                     authorities                : opus.authorities?.collect {
                         [uuid: it.uuid, userId: it.user.userId, name: it.user.name, role: it.role.toString(), notes: it.notes]
-                    },
+                    }?:[],
                     copyrightText              : opus.copyrightText,
                     footerText                 : opus.footerText,
                     contact                    : [twitter : opus.twitter,

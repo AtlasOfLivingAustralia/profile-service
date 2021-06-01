@@ -66,7 +66,7 @@ class Profile {
     boolean manuallyMatchedName = false
     String taxonomyTree
     String primaryImage
-    Map<String, ImageSettings> imageSettings = [:]
+    Map imageSettings = [:]
     String primaryVideo
     String primaryAudio
     boolean showLinkedOpusAttributes = false // Even if set to true, this needs Opus.showLinkedOpusAttributes to also be true
@@ -114,7 +114,7 @@ class Profile {
     @Transient
     String getMatchedNameLower() { matchedName?.scientificName?.toLowerCase() }
 
-    static embedded = ['authorship', 'classification', 'draft', 'links', 'bhlLinks', 'publications', 'bibliography', 'documents', 'matchedName', 'privateImages', 'attachments', 'imageSettings', 'profileSettings']
+    static embedded = ['authorship', 'classification', 'draft', 'links', 'bhlLinks', 'publications', 'bibliography', 'documents', 'matchedName', 'privateImages', 'attachments', 'profileSettings']
 
     static hasMany = [attributes: Attribute]
 
@@ -153,13 +153,14 @@ class Profile {
     }
 
     static mapping = {
-        attributes cascade: "all-delete-orphan", fetch: 'join'
+        // removed fetch due to GC error for certain profiles while reindexing
+        attributes cascade: "all-delete-orphan"
         scientificName index: true
         scientificNameLower index: true
         guid index: true
         rank index: true
         uuid index: true
-        opus index: true, fetch: 'join'
+        opus index: true
         nameAuthor index: true
         profileStatus defaultValue: STATUS_PARTIAL
     }

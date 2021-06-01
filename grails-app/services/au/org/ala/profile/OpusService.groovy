@@ -4,11 +4,11 @@ import au.org.ala.profile.security.Role
 import au.org.ala.profile.util.*
 import au.org.ala.web.AuthService
 import com.mongodb.DBObject
-import org.grails.datastore.mapping.mongo.query.MongoQuery
+import grails.gorm.transactions.Transactional
 import grails.plugin.dropwizard.metrics.meters.Metered
 import grails.plugin.dropwizard.metrics.timers.Timed
-import grails.gorm.transactions.Transactional
-import org.springframework.web.multipart.commons.CommonsMultipartFile
+import org.grails.datastore.mapping.mongo.query.MongoQuery
+import org.springframework.web.multipart.MultipartFile
 
 import java.text.SimpleDateFormat
 
@@ -67,6 +67,7 @@ class OpusService extends BaseDataAccessService {
                 opus.approvedLists.clear()
             } else {
                 opus.approvedLists = []
+                opus.markDirty('approvedLists')
             }
             opus.approvedLists.addAll(json.approvedLists)
         }
@@ -76,6 +77,7 @@ class OpusService extends BaseDataAccessService {
                 opus.featureLists.clear()
             } else {
                 opus.featureLists = []
+                opus.markDirty('featureLists')
             }
             opus.featureLists.addAll(json.featureLists)
         }
@@ -94,6 +96,7 @@ class OpusService extends BaseDataAccessService {
                     opus.dataResourceConfig.recordSources.clear()
                 } else {
                     opus.dataResourceConfig.recordSources = []
+                    opus.dataResourceConfig.markDirty('recordSources')
                 }
                 opus.dataResourceConfig.recordSources.addAll(json.dataResourceConfig.recordSources)
             }
@@ -103,6 +106,7 @@ class OpusService extends BaseDataAccessService {
                     opus.dataResourceConfig.privateRecordSources.clear()
                 } else {
                     opus.dataResourceConfig.privateRecordSources = []
+                    opus.dataResourceConfig.markDirty('privateRecordSources')
                 }
                 opus.dataResourceConfig.privateRecordSources.addAll(json.dataResourceConfig.privateRecordSources)
             }
@@ -115,6 +119,7 @@ class OpusService extends BaseDataAccessService {
                     opus.dataResourceConfig.imageSources.clear()
                 } else {
                     opus.dataResourceConfig.imageSources = []
+                    opus.dataResourceConfig.markDirty('imageSources')
                 }
                 opus.dataResourceConfig.imageSources.addAll(json.dataResourceConfig.imageSources)
             }
@@ -137,6 +142,7 @@ class OpusService extends BaseDataAccessService {
                 opus.brandingConfig.logos.clear()
             } else {
                 opus.brandingConfig.logos = []
+                opus.brandingConfig.markDirty('logos')
             }
 
             opus.brandingConfig.logos.addAll(json.brandingConfig.logos.collect { logo ->
@@ -168,6 +174,7 @@ class OpusService extends BaseDataAccessService {
                 opus.opusLayoutConfig.images.clear()
             } else {
                 opus.opusLayoutConfig.images = []
+                opus.opusLayoutConfig.markDirty('images')
             }
 
             opus.opusLayoutConfig.images.addAll(json.opusLayoutConfig.images.collect { image ->
@@ -221,6 +228,7 @@ class OpusService extends BaseDataAccessService {
                     json.mapConfig.mapBaseLayer : Utils.DEFAULT_MAP_BASE_LAYER
             opus.mapConfig.biocacheUrl = json.mapConfig.biocacheUrl ? json.mapConfig.biocacheUrl : null
             opus.mapConfig.biocacheName = json.mapConfig.biocacheName ? json.mapConfig.biocacheName : null
+            opus.markDirty('mapConfig')
         }
 
         opus.approvedImageOption = json.approvedImageOption ?
@@ -257,6 +265,7 @@ class OpusService extends BaseDataAccessService {
             }
         }
 
+        opus.markDirty()
         boolean success = save opus
 
         if (success) {
@@ -612,6 +621,7 @@ class OpusService extends BaseDataAccessService {
             glossary.items?.clear()
         } else if (glossary.items == null) {
             glossary.items = []
+            glossary.markDirty('items')
         }
 
         json.items.each {
@@ -647,7 +657,7 @@ class OpusService extends BaseDataAccessService {
         authorities
     }
 
-    List<Attachment> saveAttachment(String opusId, Map metadata, CommonsMultipartFile file) {
+    List<Attachment> saveAttachment(String opusId, Map metadata, MultipartFile file) {
         Opus opus = Opus.findByUuid(opusId)
         checkState opus
 
