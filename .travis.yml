@@ -8,7 +8,7 @@ branches:
   only:
     - master
     - dev
-    - grails3
+    - grails3.3
     - /^feature\/.*$/
     - /^hotfix\/.*$/
 
