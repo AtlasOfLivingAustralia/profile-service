@@ -2,7 +2,7 @@ os: linux
 dist: bionic
 language: groovy
 jdk:
-  - openjdk11
+  - openjdk8
 
 branches:
   only:
