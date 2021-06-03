@@ -3,8 +3,8 @@ grails:
     config:
         locations:
             - file:/data/profile-service/config/profile-service-config.properties
-#            - file:/data/profile-service/config/profile-service-config.yml
-#            - file:/data/profile-service/config/profile-service-config.groovy
+            - file:/data/profile-service/config/profile-service-config.yml
+            - file:/data/profile-service/config/profile-service-config.groovy
     profile: web
     codegen:
         defaultPackage: au.org.ala.profile

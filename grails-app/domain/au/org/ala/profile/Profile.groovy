@@ -154,13 +154,13 @@ class Profile {
 
     static mapping = {
         // removed fetch due to GC error for certain profiles while reindexing
-        attributes cascade: "all-delete-orphan"
+        attributes cascade: "all-delete-orphan", fetch: 'join'
         scientificName index: true
         scientificNameLower index: true
         guid index: true
         rank index: true
         uuid index: true
-        opus index: true
+        opus index: true, fetch: 'join'
         nameAuthor index: true
         profileStatus defaultValue: STATUS_PARTIAL
     }

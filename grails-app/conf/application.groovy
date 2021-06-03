@@ -162,6 +162,7 @@ elasticSearch {
     migration.strategy = 'alias'
     searchMethodName = 'searchIndex'
     countHitsMethodName = 'countSearchHits'
+    maxBulkRequest = 250
 }
 
 //grails.mongodb.default.mapping = {

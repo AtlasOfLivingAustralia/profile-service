@@ -28,7 +28,7 @@ class BootStrap {
         overrideClassMethod()
         initDatastores(ctx)
 
-        ctx.getBean("customObjectMarshallers").register()
+        ctx?.getBean("customObjectMarshallers")?.register()
 
         createDefaultTags()
 
@@ -68,7 +68,7 @@ class BootStrap {
 
     // Add custom GORM event listeners
     def initDatastores(ctx) {
-        ctx.getBeansOfType(Datastore).values().each { Datastore d ->
+        ctx?.getBeansOfType(Datastore)?.values().each { Datastore d ->
             log.info "Adding listener for datastore: ${d}"
             ctx.addApplicationListener new AuditListener(d, auditService)
             ctx.addApplicationListener new LastUpdateListener(d, authService)
