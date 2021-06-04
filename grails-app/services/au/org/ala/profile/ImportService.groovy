@@ -21,6 +21,7 @@ import org.apache.http.HttpStatus
 import org.springframework.scheduling.annotation.Async
 
 import javax.annotation.PreDestroy
+import java.text.SimpleDateFormat
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentSkipListSet
 import java.util.concurrent.atomic.AtomicInteger
@@ -290,8 +291,8 @@ class ImportService extends BaseDataAccessService {
 
             Date finishTime = new Date()
 
-            importReportFile << ([started: startTime.format("dd/MM/yyyy HH:mm:ss"),
-                                  finished: finishTime.format("dd/MM/yyyy HH:mm:ss"),
+            importReportFile << ([started: new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(startTime),
+                                  finished: new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(finishTime),
                                   profiles: profileResults] as JSON)
 
             importReportFile.renameTo("${grailsApplication.config.temp.file.directory}/${importId}.json")

@@ -138,14 +138,14 @@ class FOAImport {
 
 //        int sleepTime = 5 * 60 * 1000
         int sleepTime = 1 * 30 * 1000
-        println "${new Date().format("HH:mm:ss.S")} Waiting for import to complete..."
+        println "${new SimpleDateFormat("HH:mm:ss.S").format(new Date())} Waiting for import to complete..."
         Thread.sleep(sleepTime)
 
         service = new RESTClient("${PROFILE_SERVICE_REPORT_URL}import/${importId}/report")
         resp = service.get([:]).data
 
         while (resp.status == "IN_PROGRESS") {
-            println "${new Date().format("HH:mm:ss.S")} Waiting for import to complete..."
+            println "${new SimpleDateFormat("HH:mm:ss.S").format(new Date())} Waiting for import to complete..."
             Thread.sleep(sleepTime)
 
             resp = service.get([:]).data

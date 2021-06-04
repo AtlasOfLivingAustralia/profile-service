@@ -6,6 +6,8 @@ import groovyx.net.http.RESTClient
 import org.apache.commons.lang3.StringUtils
 import org.apache.http.impl.client.LaxRedirectStrategy
 
+import java.text.SimpleDateFormat
+
 class PERTHImport {
 
 	static File report
@@ -97,14 +99,14 @@ class PERTHImport {
 		println "Import report will be available at ${reportUrl}"
 
 		int sleepTime = 60 * 1000;
-		println "${new Date().format("HH:mm:ss.S")} Waiting for import to complete..."
+		println "${new SimpleDateFormat("HH:mm:ss.S").format(new Date())} Waiting for import to complete..."
 		Thread.sleep(sleepTime)
 
 		service = new RESTClient(reportUrl)
 		response = service.get([:]).data
 
 		while (response.status == "IN_PROGRESS") {
-			println "${new Date().format("HH:mm:ss.S")} Waiting for import to complete..."
+			println "${new SimpleDateFormat("HH:mm:ss.S").format(new Date())} Waiting for import to complete..."
 			Thread.sleep(sleepTime)
 
 			response = service.get([:]).data

@@ -1,10 +1,11 @@
 import grails.util.Environment
-import org.apache.catalina.connector.*
 import org.apache.catalina.startup.Tomcat
+
+import java.text.SimpleDateFormat
 
 eventCreateWarStart = { warName, stagingDir ->
     ant.propertyfile(file: "${stagingDir}/WEB-INF/classes/application.properties") {
-        entry(key: "app.build", value: new Date().format("dd/MM/yyyy HH:mm:ss"))
+        entry(key: "app.build", value: new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()))
     }
 }
 

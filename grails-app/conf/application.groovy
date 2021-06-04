@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat
+
 def appName = 'profile-service'
 def ENV_NAME = "${appName.toUpperCase()}_CONFIG"
 default_config = "/data/${appName}/config/${appName}-config.properties"
@@ -89,7 +91,7 @@ grails.exceptionresolver.params.exclude = ['password']
 
 grails.cache.config = {
     provider {
-        name "ehcache-profile-service-"+(new Date().format("yyyyMMddHHmmss"))
+        name "ehcache-profile-service-"+(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()))
     }
 }
 
