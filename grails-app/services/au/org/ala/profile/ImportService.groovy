@@ -293,7 +293,7 @@ class ImportService extends BaseDataAccessService {
 
             importReportFile << ([started: new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(startTime),
                                   finished: new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(finishTime),
-                                  profiles: profileResults] as JSON)
+                                  profiles: profileResults] as JSON).toString()
 
             importReportFile.renameTo("${grailsApplication.config.temp.file.directory}/${importId}.json")
         }

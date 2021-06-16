@@ -1,14 +1,16 @@
 #!/bin/bash
 
 # For backing up, run this script like this:
-# sh backup.sh -b profiles /data/profile-service/backup/db masterlist ["5547200f-94ee-4725-b5d1-08daeeb33ad4", "bf6bf7f5-56d4-438b-84ec-045870115200"]
+# sh backup.sh -b profiles /data/profile-service/backup/db masterlist [\"5547200f-94ee-4725-b5d1-08daeeb33ad4\", \"bf6bf7f5-56d4-438b-84ec-045870115200\"]
 
 # For restore collection, run the script like this:
-# sh backup.sh -r profiles /data/profile-service/backup/db ["masterlist"] profiles-new
+# sh backup.sh -r profiles /data/profile-service/backup/db [\"masterlist\"] profiles-new
 
 option="$1"
 currentDB="$2"
 backupFolder="$3"
+userName="$6"
+password="$7"
 
 backupCollections() {
   backupPath="${backupFolder}/${backupName}"
@@ -17,12 +19,11 @@ backupCollections() {
   echo "Backing up Opus: ${opusUuids} into ${backupPath} \n"
 
   mkdir -p $backupPath
-
-  local extractedOpusIds=$(mongo $currentDB --quiet --eval "db.opus.find({uuid: { \$in: $opusUuids}}).forEach(function(opus) { print(opus._id + ',');})")
+  local extractedOpusIds=$(mongo $currentDB --quiet --eval "db.opus.find({uuid: { \$in: $opusUuids}}).forEach(function(opus) { print(opus._id + ',');})" -u $userName -p $password)
   local opusIds="[$(echo $extractedOpusIds | sed 's/ //g' | sed 's/\(.*\),/\1/')]"
   echo "Extracted Opus Ids: ${opusIds}"
 
-  mongodump -d $currentDB -c profile --query "{opus: {\$in : ${opusIds}}}" -o $backupPath
+  mongodump -u $userName -p $password -d $currentDB -c profile --query "{opus: {\$in : ${opusIds}}}" -o $backupPath
 
   printf "$opusUuids" | sed 's/[][]//g' > $backupPath/opusUuids.txt
 }
@@ -46,7 +47,7 @@ restoreCollections() {
 
   echo "${restoreOpusUuids}"
 
-  local extractedOpusIds=$(mongo $currentDB --quiet --eval "db.opus.find({uuid: { \$in: $restoreOpusUuids }}).forEach(function(opus) { print(opus._id + ',');})")
+  local extractedOpusIds=$(mongo $currentDB --quiet  -u $userName -p $password --eval "db.opus.find({uuid: { \$in: $restoreOpusUuids }}).forEach(function(opus) { print(opus._id + ',');})")
   local opusIds="[$(echo $extractedOpusIds | sed 's/ //g' | sed 's/\(.*\),/\1/')]"
   echo "Extracted Opus Ids: ${opusIds}"
 
@@ -54,15 +55,15 @@ restoreCollections() {
 
   rm -rf $tempdir
 
-  mongodump -d $currentDB -o $tempdir
+  mongodump -d $currentDB -o $tempdir  -u $userName -p $password}
 
-  mongodump -d $currentDB -c profile --query "{opus: {\$nin : ${opusIds}} }" -o $tempdir
+  mongodump -d $currentDB -c profile --query "{opus: {\$nin : ${opusIds}} }" -o $tempdir -u $userName -p $password
 
-  mongorestore --drop -d $restoreDB $tempdir/$currentDB
+  mongorestore --drop -d $restoreDB $tempdir/$currentDB -u $userName -p $password
 
   for backupName in $(echo $tempStr | tr "," "\n")
   do
-    mongorestore -d $restoreDB $backupFolder/$backupName/$currentDB &
+    mongorestore -d $restoreDB $backupFolder/$backupName/$currentDB  -u $userName -p $password &
     wait
   done
 

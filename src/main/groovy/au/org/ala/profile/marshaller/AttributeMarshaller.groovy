@@ -20,8 +20,8 @@ class AttributeMarshaller {
                     text        : attr.text,
                     source      : attr.source,
                     plainText   : Utils.cleanupText(attr.text),
-                    creators    : attr.creators.collect { it.name },
-                    editors     : attr.editors.collect { it.name },
+                    creators    : attr.creators?.collect { it.name },
+                    editors     : attr.editors?.collect { it.name },
                     original    : attr.original,
                     profile     : attr.profile ? marshalProfile(attr.profile) : null
             ]

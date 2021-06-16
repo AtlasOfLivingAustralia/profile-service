@@ -1,4 +1,6 @@
-@Grab(group = 'org.codehaus.groovy.modules.http-builder', module = 'http-builder', version = '0.7')
+// https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
+@Grab(group = 'org.apache.httpcomponents', module = 'httpclient', version = '4.2.1')
+@Grab(group = 'org.codehaus.groovy.modules.http-builder', module = 'http-builder', version = '0.7.1')
 @Grab('com.xlson.groovycsv:groovycsv:1.0')
 @Grab('org.apache.commons:commons-lang3:3.3.2')
 
@@ -60,6 +62,7 @@ class FOAImport {
             report.createNewFile()
         }
 
+        // Gets a map of attribute name and its id - [1: "NOMENCLATURE", 2: "NOTE", 3: "SOURCE"]
         Map<Integer, String> attributeTitles = loadAttributeTitles()
 
         Map<Integer, Map<String, List<String>>> taxaAttributes = loadAttributes(attributeTitles)
@@ -127,7 +130,7 @@ class FOAImport {
         createImageFiles(collectionImages)
 
         println "Importing ${profiles.size()} profiles..."
-
+        println(PROFILE_SERVICE_IMPORT_URL)
         def service = new RESTClient(PROFILE_SERVICE_IMPORT_URL)
 
         def resp = service.post(body: opus, requestContentType: JSON)
@@ -247,6 +250,12 @@ class FOAImport {
         attributeTitles
     }
 
+    /**
+     * Converts attribute CSV file to a Map of taxa ID, Attribute name and attribute text.
+     * [ TAXA_ID: [ PROPERTY_NAME: [ VAL ] ] ]
+     * @param attributeTitles
+     * @return Map<Integer, Map<String, List<String>>>
+     */
     static Map<Integer, Map<String, List<String>>> loadAttributes(Map<Integer, String> attributeTitles) {
         Map<Integer, Map<String, List<String>>> attributes = [:]
         int count = 0

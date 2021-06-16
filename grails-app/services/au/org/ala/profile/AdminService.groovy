@@ -70,7 +70,10 @@ class AdminService extends BaseDataAccessService {
                             }
 
                             if(isDirty){
-                                save profile
+                                Profile.withSession { session ->
+                                    session.attach(profile)
+                                    save profile
+                                }
                             }
                         } catch (Exception e) {
                             log.error("Failed to match ${profile.scientificName}", e)
@@ -189,7 +192,7 @@ class AdminService extends BaseDataAccessService {
                     opus.tags.remove(t)
                     save opus
                 }
-                else if (opus.tags.contains(null)) {
+                else if (opus.tags?.contains(null)) {
                     opus.tags.remove(null)
                     save opus
                 }
