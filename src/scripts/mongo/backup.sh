@@ -19,6 +19,7 @@ backupCollections() {
   echo "Backing up Opus: ${opusUuids} into ${backupPath} \n"
 
   mkdir -p $backupPath
+  echo "mongo $currentDB --quiet --eval \"db.opus.find({uuid: { \$in: $opusUuids}}).forEach(function(opus) { print(opus._id + ',');})\" -u $userName -p $password"
   local extractedOpusIds=$(mongo $currentDB --quiet --eval "db.opus.find({uuid: { \$in: $opusUuids}}).forEach(function(opus) { print(opus._id + ',');})" -u $userName -p $password)
   local opusIds="[$(echo $extractedOpusIds | sed 's/ //g' | sed 's/\(.*\),/\1/')]"
   echo "Extracted Opus Ids: ${opusIds}"
@@ -55,7 +56,7 @@ restoreCollections() {
 
   rm -rf $tempdir
 
-  mongodump -d $currentDB -o $tempdir  -u $userName -p $password}
+  mongodump -d $currentDB -o $tempdir  -u $userName -p $password
 
   mongodump -d $currentDB -c profile --query "{opus: {\$nin : ${opusIds}} }" -o $tempdir -u $userName -p $password
 

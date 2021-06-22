@@ -30,7 +30,7 @@ class JobController extends BaseController {
         JobType type = jobType ? jobType.toUpperCase() as JobType : null
         Job job = jobService.listPendingJobs(type)?.first()
 
-        success(job)
+        success(job?:[:])
     }
 
     def updateJob(@NotNull String jobId) {
@@ -42,7 +42,7 @@ class JobController extends BaseController {
             if (job) {
                 job = jobService.updateJob(jobId, request.getJSON())
 
-                success job
+                success job?:[:]
             } else {
                 notFound "No job was found for id ${jobId}"
             }

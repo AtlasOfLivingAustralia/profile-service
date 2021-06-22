@@ -17,7 +17,7 @@ class BackupRestoreService {
         String currentDB = getCurrentDB()
         String userName = getDBUser()
         String password = getDBPassword()
-        executeOnShell("${getScriptPath()}/backup.sh -b ${currentDB} ${backupDir} ${backupName} ${backupOpusUuids.toString().replace('"', '\\\"')} ${userName} ${password}")
+        executeOnShell("${getScriptPath()}/backup.sh -b ${currentDB} ${backupDir} ${backupName} ${backupOpusUuids.toString()} ${userName} ${password}")
     }
 
     /**
@@ -32,7 +32,7 @@ class BackupRestoreService {
         String currentDB = getCurrentDB()
         String userName = getDBUser()
         String password = getDBPassword()
-        executeOnShell("${getScriptPath()}/backup.sh -r ${currentDB} ${backupDir} ${backupNames.toString().replace('"', '\\\"')} ${restoreToDB} ${userName} ${password}")
+        executeOnShell("${getScriptPath()}/backup.sh -r ${currentDB} ${backupDir} ${backupNames.toString()} ${restoreToDB} ${userName} ${password}")
     }
 
     private String getCurrentDB() {
