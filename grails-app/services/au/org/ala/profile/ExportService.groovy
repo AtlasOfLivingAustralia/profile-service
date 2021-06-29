@@ -108,7 +108,7 @@ class ExportService extends BaseDataAccessService {
                         nslNomenclatureId: data.nslNomenclatureIdentifier,
                         attributes       : [],
                         thumbnailUrl     : constructThumbnailUrl(data, opus),
-                        url              : "${grailsApplication.config.profile.hub.base.url}opus/${opus.shortName ?: opus.uuid}/profile/${data.scientificName}".toString(),
+                        url              : "${grailsApplication.config.profile.hub.base.url}/opus/${opus.shortName ?: opus.uuid}/profile/${data.scientificName}".toString(),
                         mainVideo        : null,
                         mainAudio        : null
                 ]
@@ -117,7 +117,7 @@ class ExportService extends BaseDataAccessService {
                         id       : opus.uuid,
                         title    : opus.title,
                         shortName: opus.shortName,
-                        url      : "${grailsApplication.config.profile.hub.base.url}opus/${opus.shortName ?: opus.uuid}".toString()
+                        url      : "${grailsApplication.config.profile.hub.base.url}/opus/${opus.shortName ?: opus.uuid}".toString()
                 ]
 
                 if (!summary) {
@@ -206,7 +206,7 @@ class ExportService extends BaseDataAccessService {
             def image = profile.privateImages.find { it.imageId == profile.primaryImage }
             if (image) {
                 // the primary image is a local image
-                url = "${grailsApplication.config.profile.hub.base.url}opus/${opus.uuid}/profile/${profile.uuid}/image/thumbnail/${profile.primaryImage}.${Utils.getFileExtension(image.originalFileName)}?type=PRIVATE"
+                url = "${grailsApplication.config.profile.hub.base.url}/opus/${opus.uuid}/profile/${profile.uuid}/image/thumbnail/${profile.primaryImage}.${Utils.getFileExtension(image.originalFileName)}?type=PRIVATE"
             } else {
                 // the primary image is from the ALA Image Service
                 url = "${grailsApplication.config.images.base.ur}/image/proxyImageThumbnailLarge?imageId=${profile.primaryImage}"
@@ -215,7 +215,7 @@ class ExportService extends BaseDataAccessService {
             // if there is no primary image but there are local images (i.e. the editor has provided images that are not
             // in the ALA image service), then we use the first local image as the primary.
             def image = profile.privateImages[0]
-            url = "${grailsApplication.config.profile.hub.base.url}opus/${opus.uuid}/profile/${profile.uuid}/image/thumbnail/${profile.primaryImage}.${Utils.getFileExtension(image.originalFileName)}?type=PRIVATE"
+            url = "${grailsApplication.config.profile.hub.base.url}/opus/${opus.uuid}/profile/${profile.uuid}/image/thumbnail/${profile.primaryImage}.${Utils.getFileExtension(image.originalFileName)}?type=PRIVATE"
         } else {
             // If there is no explicitly specified primary image and we have no local images, then leave the url blank:
             // the calling system can retrieve an image directly from the image service if one is required in this case.

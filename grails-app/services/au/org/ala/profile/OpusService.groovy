@@ -443,7 +443,7 @@ class OpusService extends BaseDataAccessService {
 
                         String user = authService.getUserForUserId(authService.getUserId()).displayName
 
-                        String url = "${grailsApplication.config.profile.hub.base.url}opus/${supportingOpus.uuid}/shareRequest/${opus.uuid}"
+                        String url = "${grailsApplication.config.profile.hub.base.url}/opus/${supportingOpus.uuid}/shareRequest/${opus.uuid}"
 
                         String body = groovyPageRenderer.render(template: "/email/shareRequest", model: [user: user, supportingOpus: supportingOpus, opus: opus, url: url])
 
