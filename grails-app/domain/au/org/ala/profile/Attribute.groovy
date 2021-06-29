@@ -39,6 +39,10 @@ class Attribute implements Comparable<Attribute> {
     static mapping = {
         profile index: true
         uuid index: true
+        title fetch: 'join'
+        profile fetch: 'join'
+        creators fetch: 'join'
+        editors fetch: 'join'
     }
 
     def beforeValidate() {

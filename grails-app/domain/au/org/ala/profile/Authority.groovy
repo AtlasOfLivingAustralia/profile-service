@@ -4,8 +4,9 @@ import au.org.ala.profile.security.Role
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
-@ToString
-@EqualsAndHashCode
+@ToString(allProperties = false, excludes = 'user')
+//@ToString(excludes = 'user')
+@EqualsAndHashCode(excludes = 'user')
 class Authority {
 
     String uuid 

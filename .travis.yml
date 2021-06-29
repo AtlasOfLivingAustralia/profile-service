@@ -1,47 +1,37 @@
 os: linux
-dist: xenial
-sudo: false
+dist: bionic
 language: groovy
 jdk:
-- openjdk8
+  - openjdk8
+
 branches:
   only:
     - master
     - dev
+    - grails3
+    - /^feature\/.*$/
+    - /^hotfix\/.*$/
+
 services:
   - mongodb
+
+before_install:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
 cache:
   directories:
-    - ~/.m2/repository
-    - ~/.grails/wrapper
-before_install:
-  - export TZ=Australia/Canberra
-  - date
-before_script:
-  - mkdir -p ~/.grails; wget -q -O ~/.grails/settings.groovy https://raw.githubusercontent.com/AtlasOfLivingAustralia/travis-build-configuration/master/travis_grails_settings_new.groovy
-  - MAVEN_REPO="ala-repo-snapshot"; grep '^app\.version=' ./application.properties |
-    grep -q "\-SNAPSHOT"; if [ "$?" = "1" ]; then MAVEN_REPO="ala-repo-release"; fi;
-  - echo "MAVEN_REPO:$MAVEN_REPO"
-  - sudo systemctl stop mongod
-  - sudo apt-get purge mongodb-org
-  - sudo apt autoremove
-  - sudo rm -r /var/lib/mongodb/*
-  - sudo rm -r /var/log/mongodb/*
-  - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
-  - echo "deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list
-  - sudo apt-get update
-  - sudo apt-get install mongodb-org -y
-  - sudo systemctl start mongod
-  - sleep 15
-  - sudo systemctl status mongod
+    - $HOME/.m2
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
 
 script:
-  - ./grailsw refresh-dependencies --non-interactive
-  - ./grailsw test-app --non-interactive
-  - ./grailsw prod war --non-interactive
+  - ./gradlew check
+
 after_success:
-  - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && travis_retry ./grailsw prod maven-deploy --repository=$MAVEN_REPO --non-interactive --stacktrace'
+  - '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && ./gradlew clean && travis_retry ./gradlew publish --stacktrace'
+
 env:
   global:
-  - secure: afqIu7SQ/GoytD1WjbYDBok8+8YPEYIwOGWM2jtx5JW5qVD+qRZIWL5CY0MWZix28MVGjafbta3TRhM7SWPVpm+O9fnaKmW5BP3ywex/Imu9t4MSXbMY0FTXk5HArMSHXB78pfTjqVpsUey8m8gC64kecN+c+cpcNCT+MRkHL7Q=
-  - secure: WXXh59l5xUhIaMLbgCLE7b0AqCqN9Ms11r2YkU2SYg5z0pXeJVdbs7DX7oaE+OwOXyZOWnzugVbQv5USZ1v/FwDBNnr16jxXXGDT2+TL1myfS9YT+kj7zDf/OWtMzmebf5dj6OSi7/1qDQgCyElQZJIRpN8pENsC1qmDHPbEyMo=
+    - secure: afqIu7SQ/GoytD1WjbYDBok8+8YPEYIwOGWM2jtx5JW5qVD+qRZIWL5CY0MWZix28MVGjafbta3TRhM7SWPVpm+O9fnaKmW5BP3ywex/Imu9t4MSXbMY0FTXk5HArMSHXB78pfTjqVpsUey8m8gC64kecN+c+cpcNCT+MRkHL7Q=
+    - secure: WXXh59l5xUhIaMLbgCLE7b0AqCqN9Ms11r2YkU2SYg5z0pXeJVdbs7DX7oaE+OwOXyZOWnzugVbQv5USZ1v/FwDBNnr16jxXXGDT2+TL1myfS9YT+kj7zDf/OWtMzmebf5dj6OSi7/1qDQgCyElQZJIRpN8pENsC1qmDHPbEyMo=

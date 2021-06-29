@@ -7,13 +7,12 @@ import au.org.ala.profile.util.StorageExtension
 import au.org.ala.profile.util.Utils
 import au.org.ala.web.AuthService
 import com.google.common.base.Stopwatch
+import grails.gorm.transactions.Transactional
 import groovy.transform.stc.ClosureParams
 import groovy.transform.stc.SimpleType
 import org.apache.commons.lang3.StringUtils
-import org.codehaus.groovy.grails.commons.DomainClassArtefactHandler
-import org.springframework.transaction.annotation.Transactional
+import org.grails.core.artefact.DomainClassArtefactHandler
 import org.springframework.web.multipart.MultipartFile
-import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 import java.text.SimpleDateFormat
 import java.util.zip.ZipEntry
@@ -110,7 +109,7 @@ class ProfileService extends BaseDataAccessService {
                 }
             }
         } catch (Exception e) {
-            log.warn e.message, e
+            log.warn e.message
         }
 
         result
@@ -293,12 +292,12 @@ class ProfileService extends BaseDataAccessService {
                 }
 
             } else {
-                profile.attributes = sourceProfile.attributes?.collect {
+                def attributes = sourceProfile.attributes?.collect {
                     Attribute newAttribute = CloneAndDraftUtil.cloneAttribute(it, false)
                     newAttribute.uuid = UUID.randomUUID().toString()
                     newAttribute
-                }?.toSet()
-                profile.attributes.each {
+                }
+                attributes.each {
                     profile.addToAttributes(it)
                 }
 
@@ -339,6 +338,8 @@ class ProfileService extends BaseDataAccessService {
             profile.guid = null
             profile.classification = []
             profile.rank = null
+
+            profile.markDirty('classification')
         }
 
         populateTaxonHierarchy(profile, manualHierarchy)
@@ -422,6 +423,7 @@ class ProfileService extends BaseDataAccessService {
             // The manual hierarchy could have some unknown items in it, and it could have 1 recognised name.
             // If we have a recognised name, then the hierarchy from that point UP needs to be derived from the name.
             profile.classification = []
+            profile.markDirty('classification')
 
             // The profile's rank will be stored in the first element of the manually entered hierarchy
             profile.rank = manualHierarchy[0].rank
@@ -621,6 +623,8 @@ class ProfileService extends BaseDataAccessService {
 
         if (json.containsKey("specimenIds")) {
             profileOrDraft(profile).specimenIds = []
+            profileOrDraft(profile).markDirty('specimenIds')
+
             if (json.specimenIds) {
                 profileOrDraft(profile).specimenIds.addAll(json.specimenIds)
             }
@@ -634,6 +638,8 @@ class ProfileService extends BaseDataAccessService {
     boolean saveAuthorship(Profile profile, Map json, boolean deferSave = false) {
         if (json.containsKey("authorship")) {
             profileOrDraft(profile).authorship = []
+            profileOrDraft(profile).markDirty('authorship')
+
             if (json.authorship) {
                 profileOrDraft(profile).authorship = json.authorship.collect {
                     Term term = vocabService.getOrCreateTerm(it.category,
@@ -696,7 +702,11 @@ class ProfileService extends BaseDataAccessService {
         }
 
         if (json.containsKey("imageSettings")) {
+            // Dirty checking in Grails 3 is disabled when property is assigned a new object like below.
+            // Therefore, GORM needs to explicitly know property has changed to write it to DB.
             profileOrDraft.imageSettings = [:]
+            profileOrDraft.markDirty('imageSettings')
+
             if (json.imageSettings) {
                 profileOrDraft.imageSettings = json.imageSettings.collectEntries {
                     ImageOption imageDisplayOption = it.displayOption ?
@@ -726,6 +736,7 @@ class ProfileService extends BaseDataAccessService {
         // can only stage images for a draft profile - otherwise images are to be automatically updated
 
         boolean success = recordImage(profile.draft.stagedImages, json)
+        profile.draft.markDirty('stagedImages')
 
         if (success) {
             if (json.action == "delete") {
@@ -791,6 +802,8 @@ class ProfileService extends BaseDataAccessService {
 
         if (json.containsKey('bibliography')) {
             profileOrDraft(profile).bibliography = []
+            profileOrDraft(profile).markDirty('bibliography')
+
             if (json.bibliography) {
                 profileOrDraft(profile).bibliography = json.bibliography.collect {
                     new Bibliography(
@@ -867,7 +880,7 @@ class ProfileService extends BaseDataAccessService {
         o.save(flush: true, failOnError: true)
         if (o.hasErrors()) {
             log.error("has errors:")
-            o.errors.each { log.error it }
+            o.errors.each { log.error it?.toString() }
             throw new Exception(o.errors[0] as String);
         }
     }
@@ -882,6 +895,8 @@ class ProfileService extends BaseDataAccessService {
 
         if (json.containsKey("links")) {
             profileOrDraft(profile).bhlLinks = []
+            profileOrDraft(profile).markDirty('bhlLinks')
+
             if (json.links) {
                 profileOrDraft(profile).bhlLinks = json.links.collect {
                     Link link = new Link(uuid: it.uuid ?: UUID.randomUUID().toString())
@@ -911,6 +926,8 @@ class ProfileService extends BaseDataAccessService {
 
         if (json.containsKey("links")) {
             profileOrDraft(profile).links = []
+            profileOrDraft(profile).markDirty('links')
+
             if (json.links) {
                 profileOrDraft(profile).links = json.links.collect {
                     Link link = new Link(uuid: it.uuid ?: UUID.randomUUID().toString())
@@ -949,6 +966,7 @@ class ProfileService extends BaseDataAccessService {
 
         if (!profile.publications) {
             profile.publications = []
+            profile.markDirty('publications')
         }
 
         Publication publication = new Publication()
@@ -1112,6 +1130,7 @@ class ProfileService extends BaseDataAccessService {
         if (profile.draft) {
             if (!profile.draft.attributes) {
                 profile.draft.attributes = []
+                profile.draft.markDirty('attributes')
             }
             profile.draft.attributes << attribute
         } else {
@@ -1172,6 +1191,7 @@ class ProfileService extends BaseDataAccessService {
 
         if (!attribute.editors) {
             attribute.editors = []
+            attribute.markDirty('editors')
         }
 
         if (!attribute.editors.contains(contributor) && data.significantEdit) {
@@ -1218,7 +1238,7 @@ class ProfileService extends BaseDataAccessService {
         profiles.size() > 0 ? profiles.get(0) : null;
     }
 
-    List<Attachment> saveAttachment(String profileId, Map metadata, CommonsMultipartFile file) {
+    List<Attachment> saveAttachment(String profileId, Map metadata, MultipartFile file) {
         Profile profile = Profile.findByUuid(profileId)
         checkState profile
 
@@ -1350,7 +1370,7 @@ class ProfileService extends BaseDataAccessService {
             } catch (Exception e) {
                 Profile.withSession { session -> session.clear() }
                 def error = "Error deleting document ${documentId} - ${e.message}"
-                log.error error, e
+                log.error error
                 return [status: 'error', error: error]
             }
         } else {

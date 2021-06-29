@@ -1,6 +1,6 @@
 package au.org.ala.profile
 
-import grails.transaction.Transactional
+import grails.gorm.transactions.Transactional
 
 @Transactional
 class UserSettingsService extends BaseDataAccessService {
@@ -30,6 +30,7 @@ class UserSettingsService extends BaseDataAccessService {
     void setFlorulaList(UserSettings userSettings, String opusUuid, String listId) {
         checkArgument userSettings
         userSettings.enableFlorulaList(opusUuid, listId)
+        userSettings.markDirty('allFlorulaSettings')
         userSettings.save(validate: true, failOnError: true, flush: true)
     }
 }

@@ -7,12 +7,14 @@ import au.org.ala.profile.util.Utils
 import au.org.ala.web.AuthService
 import au.org.ala.web.UserDetails
 import grails.converters.JSON
+import grails.gorm.transactions.Transactional
 import groovy.json.JsonSlurper
+import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.multipart.MultipartHttpServletRequest
-import org.springframework.web.multipart.commons.CommonsMultipartFile
+
+import javax.servlet.http.HttpServletResponse
 
 import static au.org.ala.profile.ImportService.SyncResponse.*
-import static javax.servlet.http.HttpServletResponse.SC_NO_CONTENT
 
 @RequireApiKey
 class OpusController extends BaseController {
@@ -409,7 +411,7 @@ class OpusController extends BaseController {
             } else {
                 Map metadata = new JsonSlurper().parseText(request.getParameter("data"))
 
-                CommonsMultipartFile file = null
+                MultipartFile file = null
                 if (request instanceof MultipartHttpServletRequest) {
                     file = request.getFile(request.fileNames[0])
                 }
@@ -522,12 +524,12 @@ class OpusController extends BaseController {
                 if (result != null) {
                     render(result as JSON)
                 } else {
-                    response.sendError(SC_NO_CONTENT)
+                    response.sendError(HttpServletResponse.SC_NO_CONTENT)
                 }
             }
         }
     }
-
+    @Transactional
     def updateFlorulaListForUser() {
         if (!params.opusId) {
             badRequest "opusId is required"
@@ -538,12 +540,12 @@ class OpusController extends BaseController {
             } else {
                 def json = request.getJSON()
                 def listId = json.florulaListId
-                UserDetails userDetails = (UserDetails) request.getAttribute(AuditFilters.REQUEST_USER_DETAILS_KEY)
+                UserDetails userDetails = (UserDetails) request.getAttribute(AuditInterceptor.REQUEST_USER_DETAILS_KEY)
                 if (!userDetails.userId) {
                     badRequest "Ain't no user"
                 }
                 userSettingsService.setFlorulaList(userSettingsService.getUserSettings(userDetails?.userId), opus.uuid, listId)
-                response.sendError(SC_NO_CONTENT)
+                response.sendError(HttpServletResponse.SC_NO_CONTENT)
             }
         }
     }

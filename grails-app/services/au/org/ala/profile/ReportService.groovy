@@ -1,6 +1,8 @@
 package au.org.ala.profile
 
 import au.org.ala.profile.util.Utils
+import com.mongodb.client.model.Aggregates
+import com.mongodb.client.model.Filters
 
 class ReportService {
 
@@ -135,20 +137,20 @@ class ReportService {
             }
         }
         final profileUuids = profiles*.get(0)
-
         final aggOutput = Comment.collection.aggregate([
-                [$match: [lastUpdated: [$gte: from, $lte: to], profileUuid: [$in: profileUuids]]],
-                [$sort: [lastUpdated: -1]],
-                [$group: [
+//                BaseDataAccessService.getBsonDocument([$match: [lastUpdated: [$gte: from, $lte: to], profileUuid: [$in: profileUuids]]]),
+                Aggregates.match(Filters.and(Filters.in("profileUuid", profileUuids), Filters.gte("lastUpdated", from), Filters.lte("lastUpdated", to))),
+                BaseDataAccessService.getBsonDocument([$sort: [lastUpdated: -1]]),
+                BaseDataAccessService.getBsonDocument([$group: [
                         _id        : '$profileUuid',
                         lastUpdated: [$first: '$lastUpdated'],
                         text       : [$first: '$text'],
                         author     : [$first: '$author']
-                ]],
-                [$sort: [lastUpdated: -1]]
+                ]]),
+                BaseDataAccessService.getBsonDocument([$sort: [lastUpdated: -1]])
         ])
 
-        final results = aggOutput.results()
+        final results = aggOutput
         final count = results.size()
 
         if (countOnly) {

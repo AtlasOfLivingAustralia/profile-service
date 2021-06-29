@@ -7,8 +7,9 @@ import groovy.transform.ToString
 
 import javax.persistence.Transient
 
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(excludes = 'additionalOccurrenceResources,authorities,tags')
+@ToString(allProperties=false, excludes = 'additionalOccurrenceResources,authorities,tags')
+//@ToString(excludes = 'additionalOccurrenceResources,authorities,tags')
 class Opus {
 
     static searchable = {
@@ -27,8 +28,8 @@ class Opus {
     String dataResourceUid
 
     String masterListUid
-    List<String> approvedLists
-    List<String> featureLists
+    List<String> approvedLists = []
+    List<String> featureLists = []
     String featureListSectionName
 
     BrandingConfig brandingConfig
@@ -62,9 +63,9 @@ class Opus {
     String email
     String facebook
     String twitter
-    List<SupportingOpus> supportingOpuses
-    List<SupportingOpus> sharingDataWith
-    List<Attachment> attachments
+    List<SupportingOpus> supportingOpuses = []
+    List<SupportingOpus> sharingDataWith = []
+    List<Attachment> attachments = []
     boolean autoApproveShareRequests = true
     boolean keepImagesPrivate = false
     boolean usePrivateRecordData = false
@@ -83,6 +84,9 @@ class Opus {
     String florulaListId
 
     List<String> additionalStatuses = ['In Review', 'Complete']
+    List<Authority> authorities
+    List<Tag> tags
+    List <OccurrenceResource> additionalOccurrenceResources
 
     static transients = ['profileCount', 'florulaListId']
     static hasMany = [additionalOccurrenceResources: OccurrenceResource, authorities: Authority, tags: Tag]
@@ -129,8 +133,10 @@ class Opus {
     static mapping = {
         autoTimestamp true
         glossary cascade: "all-delete-orphan"
-        authorities cascade: "all-delete-orphan"
+        authorities cascade: "all-delete-orphan", fetch: 'join'
         shortName index: true
         uuid index: true
+        additionalOccurrenceResources fetch: 'join'
+        tags fetch: 'join'
     }
 }

@@ -2,6 +2,7 @@ package au.org.ala.profile
 
 import au.org.ala.web.AuthService
 import au.org.ala.ws.service.WebService
+import grails.converters.JSON
 import org.springframework.http.HttpStatus
 
 import java.text.SimpleDateFormat
@@ -27,7 +28,7 @@ class DoiService {
         log.debug "Requesting new DOI from doi-service..."
         String doiURL = "${grailsApplication.config.doi.service.url}api/doi"
         Map requestJSON = buildJSONForDataCite(opus, publication, profile)
-        log.debug requestJSON
+        log.debug ((requestJSON as JSON).toString())
 
         Map headers = ["Content-Type": org.apache.http.entity.ContentType.APPLICATION_JSON, "Accept-Version": "1.0"]
         Map response = webService.post(doiURL, requestJSON, [:], org.apache.http.entity.ContentType.APPLICATION_JSON, true, false, headers )

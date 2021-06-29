@@ -50,7 +50,7 @@ class ExportService extends BaseDataAccessService {
             int count = Profile.collection.count(query)
             def profiles = Profile.collection.find(query).sort([scientificName: 1])
 
-            export(outputStream, collections, count, profiles, summary)
+            export(outputStream, collections, count, profiles.iterator(), summary)
         }
     }
 
@@ -67,7 +67,7 @@ class ExportService extends BaseDataAccessService {
 
         int totalProfileCount = getProfileCount(opus, includeArchived)
 
-        export(outputStream, [opus], totalProfileCount, profiles, summary)
+        export(outputStream, [opus], totalProfileCount, profiles.iterator(), summary)
     }
 
     private void export(OutputStream outputStream, List<Opus> collections, int total, def profiles, boolean summary) {
@@ -136,7 +136,7 @@ class ExportService extends BaseDataAccessService {
                     profile.occurrenceQuery = data.occurrenceQuery
                 }
 
-                def attributeCursor = Attribute.collection.find([profile: data._id])
+                def attributeCursor = Attribute.collection.find([profile: data._id]).iterator()
                 while (attributeCursor.hasNext()) {
                     Map attribute = attributeCursor.next()
 

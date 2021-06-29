@@ -1,5 +1,8 @@
 package au.org.ala.profile
 
+import grails.converters.JSON
+import org.bson.conversions.Bson
+
 class BaseDataAccessService {
     boolean save(entity, flush = true) {
         checkState entity
@@ -10,7 +13,7 @@ class BaseDataAccessService {
 
         if (entity.errors.allErrors.size() > 0) {
             log.error("Failed to save ${entity}")
-            entity.errors.each { log.error(it) }
+            entity.errors.each { log.error(it.toString()) }
             saved = false
         } else {
             log.info("Saved ${entity}")
@@ -29,7 +32,7 @@ class BaseDataAccessService {
 
         if (entity.errors.allErrors.size() > 0) {
             log.error("Failed to delete entity ${entity}")
-            entity.errors.each { log.error(it) }
+            entity.errors.each { log.error(it.toString()) }
             deleted = false
         } else {
             log.info("Entity ${entity} deleted")
@@ -74,4 +77,22 @@ class BaseDataAccessService {
         }
         contributor
     }
+
+    static String toJSON(target, defaultValue = "{}") {
+        target = target ?: defaultValue
+        (target as JSON).toString()
+    }
+
+    static Bson getBsonDocument(String json) {
+        org.bson.Document.parse(json)
+    }
+
+    static Bson getBsonDocument(Map target) {
+        getBsonDocument(toJSON(target))
+    }
+
+    static Bson getBsonDocument(List target) {
+        getBsonDocument(toJSON(target))
+    }
+
 }

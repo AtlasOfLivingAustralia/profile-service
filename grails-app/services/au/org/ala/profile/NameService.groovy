@@ -18,7 +18,7 @@ import au.org.ala.names.model.LinnaeanRankClassification
 import au.org.ala.names.model.NameSearchResult
 import au.org.ala.names.search.ALANameSearcher
 import groovy.json.JsonSlurper
-import org.springframework.transaction.annotation.Transactional
+import grails.gorm.transactions.Transactional
 
 import javax.annotation.PostConstruct
 
@@ -182,7 +182,7 @@ class NameService extends BaseDataAccessService {
                 log.warn("${json.count} NSL matches for ${name} and no rank provided")
             }
         } catch (Exception e) {
-            log.error(e)
+            log.error(e.message)
         }
 
         return match ?: [:]

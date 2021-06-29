@@ -159,6 +159,6 @@ class SearchController extends BaseController {
 
        searchService.reindexAll()
 
-       render (Status.first() as JSON)
+       render ((Status.first()?:[:]) as JSON)
     }
 }
