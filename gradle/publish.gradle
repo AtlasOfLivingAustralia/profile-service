@@ -1,9 +1,13 @@
+// To use, add the following to build.gradle:
+// apply from: 'https://raw.githubusercontent.com/AtlasOfLivingAustralia/travis-build-configuration/master/travis_grails_publish.gradle'
+
 apply plugin:"maven-publish"
+
 publishing {
     repositories {
         maven {
             name 'Nexus'
-            url "https://nexus.ala.org.au/content/repositories/${project.version.endsWith('-SNAPSHOT') ? 'snapshots' : 'releases'}"
+            url "https://nexus.ala.org.au/content/repositories/${project.version.endsWith('-SNAPSHOT') ? 'snapshots' : 'releases' }"
             credentials {
                 username = System.getenv('TRAVIS_DEPLOY_USERNAME')
                 password = System.getenv('TRAVIS_DEPLOY_PASSWORD')
@@ -12,7 +16,6 @@ publishing {
     }
     publications {
         mavenJar(MavenPublication) {
-
             pom.withXml {
                 def pomNode = asNode()
                 pomNode.dependencyManagement.replaceNode {}
@@ -26,7 +29,14 @@ publishing {
                     it.replaceNode {}
                 }
             }
-            artifact bootJar
+            from components.web
+            if (bootRepackage && bootRepackage.enabled && bootRepackage.classifier) {
+                logger.quiet("$libsDir/$project.name-$project.version-${bootRepackage.classifier}.jar")
+                def repackagedFile = file("$libsDir/$project.name-$project.version-${bootRepackage.classifier}.jar")
+                artifact(repackagedFile) {
+                    classifier bootRepackage.classifier
+                }
+            }
         }
     }
 }
