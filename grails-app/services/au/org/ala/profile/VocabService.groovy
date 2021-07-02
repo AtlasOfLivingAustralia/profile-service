@@ -1,6 +1,7 @@
 package au.org.ala.profile
 
 import com.mongodb.BasicDBObject
+import com.mongodb.DBCollection
 import com.mongodb.WriteResult
 import com.mongodb.MongoClient
 import com.mongodb.client.MongoCollection
@@ -109,7 +110,9 @@ class VocabService extends BaseDataAccessService {
             attributes.size()
 
             // Draft for profiles store attributes as well
-            List<Profile> profiles = Profile.findAll {draft.attributes.title == term.id}
+            List<Profile> profiles = Profile.findAll {
+                eq("draft.attributes.title", term.id)
+            }
 
             return (attributes.size() + profiles.size())
 
@@ -152,7 +155,7 @@ class VocabService extends BaseDataAccessService {
             if (opus.authorshipVocabUuid == vocabId) {
 
                 // Bulk update for profiles and profiles draft acknowledgement term as GORM update takes long time for many records.
-                MongoCollection<BasicDBObject> profileCollection = db.getCollection("profile", BasicDBObject.class)
+                DBCollection profileCollection = mongo.getDB(grailsApplication.config.grails.mongodb.databaseName).getCollection('profile')
                 def updateQuery = new BasicDBObject('$set', new BasicDBObject('authorship.$.category', newTerm.id))
                 def searchQuery = new BasicDBObject(['authorship.category': existingTerm.id])
                 WriteResult updateResult = profileCollection.updateMulti(searchQuery, updateQuery)
@@ -168,9 +171,8 @@ class VocabService extends BaseDataAccessService {
                 }
 
             } else {
-
-                MongoCollection<BasicDBObject> profileCollection = db.getCollection("profile", BasicDBObject.class)
-                MongoCollection<BasicDBObject> attributeCollection = db.getCollection("attribute", BasicDBObject.class)
+                DBCollection profileCollection = mongo.getDB(grailsApplication.config.grails.mongodb.databaseName).getCollection('profile')
+                DBCollection attributeCollection = mongo.getDB(grailsApplication.config.grails.mongodb.databaseName).getCollection('attribute')
 
                 def attributeUpdateQuery = new BasicDBObject('$set', new BasicDBObject('title', newTerm.id))
                 def attributeSearchQuery = new BasicDBObject('title': existingTerm.id)
