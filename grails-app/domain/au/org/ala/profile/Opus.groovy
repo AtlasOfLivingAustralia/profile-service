@@ -67,7 +67,7 @@ class Opus {
     List<SupportingOpus> sharingDataWith = []
     List<Attachment> attachments = []
     boolean autoApproveShareRequests = true
-    boolean keepImagesPrivate = false
+    boolean keepImagesPrivate = true
     boolean usePrivateRecordData = false
     ImageOption approvedImageOption = ImageOption.INCLUDE
 
