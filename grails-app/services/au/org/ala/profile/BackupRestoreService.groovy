@@ -15,7 +15,9 @@ class BackupRestoreService {
     @Async
     void backupCollections(def backupOpusUuids, String backupDir, String backupName) {
         String currentDB = getCurrentDB()
-        executeOnShell("${getScriptPath()}/backup.sh -b ${currentDB} ${backupDir} ${backupName} ${backupOpusUuids.toString()}")
+        String userName = getDBUser()
+        String password = getDBPassword()
+        executeOnShell("${getScriptPath()}/backup.sh -b ${currentDB} ${backupDir} ${backupName} ${backupOpusUuids.toString()} ${userName} ${password}")
     }
 
     /**
@@ -28,11 +30,21 @@ class BackupRestoreService {
     @Async
     void restoreCollections(String backupDir, def backupNames, String restoreToDB) {
         String currentDB = getCurrentDB()
-        executeOnShell("${getScriptPath()}/backup.sh -r ${currentDB} ${backupDir} ${backupNames.toString()} ${restoreToDB}")
+        String userName = getDBUser()
+        String password = getDBPassword()
+        executeOnShell("${getScriptPath()}/backup.sh -r ${currentDB} ${backupDir} ${backupNames.toString()} ${restoreToDB} ${userName} ${password}")
     }
 
     private String getCurrentDB() {
-        return grailsApplication.config.grails.mongo.databaseName?:"profiles"
+        return grailsApplication.config.grails.mongodb.databaseName?:"profiles"
+    }
+
+    private String getDBUser() {
+        return grailsApplication.config.grails.mongodb.username?:""
+    }
+
+    private String getDBPassword() {
+        return grailsApplication.config.grails.mongodb.password?:""
     }
 
     private String getScriptPath() {
@@ -45,8 +57,8 @@ class BackupRestoreService {
         def err = new StringBuffer()
         process.consumeProcessOutput( out, err )
         process.waitForProcessOutput(out, err)
-        log.info(out)
-        log.info(err)
+        log.info(out?.toString())
+        log.info(err?.toString())
 
         return process.exitValue()
     }

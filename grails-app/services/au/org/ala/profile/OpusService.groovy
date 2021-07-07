@@ -4,11 +4,11 @@ import au.org.ala.profile.security.Role
 import au.org.ala.profile.util.*
 import au.org.ala.web.AuthService
 import com.mongodb.DBObject
+import grails.gorm.transactions.Transactional
+import grails.plugin.dropwizard.metrics.meters.Metered
+import grails.plugin.dropwizard.metrics.timers.Timed
 import org.grails.datastore.mapping.mongo.query.MongoQuery
-import org.grails.plugins.metrics.groovy.Metered
-import org.grails.plugins.metrics.groovy.Timed
-import org.springframework.transaction.annotation.Transactional
-import org.springframework.web.multipart.commons.CommonsMultipartFile
+import org.springframework.web.multipart.MultipartFile
 
 import java.text.SimpleDateFormat
 
@@ -20,10 +20,13 @@ class OpusService extends BaseDataAccessService {
     EmailService emailService
     AuthService authService
     AttachmentService attachmentService
-    ImportService importService
     MasterListService masterListService
     def grailsApplication
     def groovyPageRenderer
+
+    ImportService getImportService() {
+        grailsApplication.mainContext.importService
+    }
 
     Opus createOpus(json) {
         log.debug("Creating new opus record")
@@ -64,6 +67,7 @@ class OpusService extends BaseDataAccessService {
                 opus.approvedLists.clear()
             } else {
                 opus.approvedLists = []
+                opus.markDirty('approvedLists')
             }
             opus.approvedLists.addAll(json.approvedLists)
         }
@@ -73,6 +77,7 @@ class OpusService extends BaseDataAccessService {
                 opus.featureLists.clear()
             } else {
                 opus.featureLists = []
+                opus.markDirty('featureLists')
             }
             opus.featureLists.addAll(json.featureLists)
         }
@@ -91,6 +96,7 @@ class OpusService extends BaseDataAccessService {
                     opus.dataResourceConfig.recordSources.clear()
                 } else {
                     opus.dataResourceConfig.recordSources = []
+                    opus.dataResourceConfig.markDirty('recordSources')
                 }
                 opus.dataResourceConfig.recordSources.addAll(json.dataResourceConfig.recordSources)
             }
@@ -100,6 +106,7 @@ class OpusService extends BaseDataAccessService {
                     opus.dataResourceConfig.privateRecordSources.clear()
                 } else {
                     opus.dataResourceConfig.privateRecordSources = []
+                    opus.dataResourceConfig.markDirty('privateRecordSources')
                 }
                 opus.dataResourceConfig.privateRecordSources.addAll(json.dataResourceConfig.privateRecordSources)
             }
@@ -112,6 +119,7 @@ class OpusService extends BaseDataAccessService {
                     opus.dataResourceConfig.imageSources.clear()
                 } else {
                     opus.dataResourceConfig.imageSources = []
+                    opus.dataResourceConfig.markDirty('imageSources')
                 }
                 opus.dataResourceConfig.imageSources.addAll(json.dataResourceConfig.imageSources)
             }
@@ -134,6 +142,7 @@ class OpusService extends BaseDataAccessService {
                 opus.brandingConfig.logos.clear()
             } else {
                 opus.brandingConfig.logos = []
+                opus.brandingConfig.markDirty('logos')
             }
 
             opus.brandingConfig.logos.addAll(json.brandingConfig.logos.collect { logo ->
@@ -165,6 +174,7 @@ class OpusService extends BaseDataAccessService {
                 opus.opusLayoutConfig.images.clear()
             } else {
                 opus.opusLayoutConfig.images = []
+                opus.opusLayoutConfig.markDirty('images')
             }
 
             opus.opusLayoutConfig.images.addAll(json.opusLayoutConfig.images.collect { image ->
@@ -218,6 +228,7 @@ class OpusService extends BaseDataAccessService {
                     json.mapConfig.mapBaseLayer : Utils.DEFAULT_MAP_BASE_LAYER
             opus.mapConfig.biocacheUrl = json.mapConfig.biocacheUrl ? json.mapConfig.biocacheUrl : null
             opus.mapConfig.biocacheName = json.mapConfig.biocacheName ? json.mapConfig.biocacheName : null
+            opus.markDirty('mapConfig')
         }
 
         opus.approvedImageOption = json.approvedImageOption ?
@@ -254,6 +265,7 @@ class OpusService extends BaseDataAccessService {
             }
         }
 
+        opus.markDirty()
         boolean success = save opus
 
         if (success) {
@@ -298,7 +310,9 @@ class OpusService extends BaseDataAccessService {
                 }
             }
 
-            opus.authorities?.removeAll(authoritiesToRemove)
+            authoritiesToRemove?.each { authority ->
+                opus.removeFromAuthorities(authority)
+            }
 
             json.authorities?.each {
                 if (it.uuid) {
@@ -312,7 +326,7 @@ class OpusService extends BaseDataAccessService {
                     if (opus.authorities == null) {
                         opus.authorities = []
                     }
-                    opus.authorities << new Authority(uuid: UUID.randomUUID().toString(),user: user, role: role, notes: it.notes)
+                    opus.addToAuthorities(new Authority(uuid: UUID.randomUUID().toString(),user: user, role: role, notes: it.notes))
                 }
             }
 
@@ -429,7 +443,7 @@ class OpusService extends BaseDataAccessService {
 
                         String user = authService.getUserForUserId(authService.getUserId()).displayName
 
-                        String url = "${grailsApplication.config.profile.hub.base.url}opus/${supportingOpus.uuid}/shareRequest/${opus.uuid}"
+                        String url = "${grailsApplication.config.profile.hub.base.url}/opus/${supportingOpus.uuid}/shareRequest/${opus.uuid}"
 
                         String body = groovyPageRenderer.render(template: "/email/shareRequest", model: [user: user, supportingOpus: supportingOpus, opus: opus, url: url])
 
@@ -438,7 +452,7 @@ class OpusService extends BaseDataAccessService {
                     } else {
                         SupportingOpus existingShare = supportingOpus.sharingDataWith.find { it.uuid == opus.uuid }
                         if (!existingShare) {
-                            supportingOpus.sharingDataWith << new SupportingOpus(uuid: opus.uuid, title: opus.title)
+                            supportingOpus.addToSharingDataWith( new SupportingOpus(uuid: opus.uuid, title: opus.title))
                             save supportingOpus
                         }
                     }
@@ -486,7 +500,7 @@ class OpusService extends BaseDataAccessService {
 
         List administrators = requestingOpus.authorities.findAll {
             it.role == Role.ROLE_PROFILE_ADMIN
-        }.collect { authService.getUserForUserId(it.user.userId).userName }
+        }.collect { authService.getUserForUserId(it.user.userId)?.userName }
 
         String user = authService.getUserForUserId(authService.getUserId()).displayName
 
@@ -502,7 +516,7 @@ class OpusService extends BaseDataAccessService {
 
     private revokeAllSupportingCollectionAccess(Opus opus) {
         // use a shallow clone of the list to avoid possible concurrent modification errors
-        List<SupportingOpus> sharedWith = opus.sharingDataWith?.clone()
+        List<SupportingOpus> sharedWith = opus.sharingDataWith?.collect()
 
         sharedWith.each {
             respondToSupportingOpusRequest(opus.uuid, it.uuid, ShareRequestAction.REVOKE)
@@ -607,6 +621,7 @@ class OpusService extends BaseDataAccessService {
             glossary.items?.clear()
         } else if (glossary.items == null) {
             glossary.items = []
+            glossary.markDirty('items')
         }
 
         json.items.each {
@@ -642,7 +657,7 @@ class OpusService extends BaseDataAccessService {
         authorities
     }
 
-    List<Attachment> saveAttachment(String opusId, Map metadata, CommonsMultipartFile file) {
+    List<Attachment> saveAttachment(String opusId, Map metadata, MultipartFile file) {
         Opus opus = Opus.findByUuid(opusId)
         checkState opus
 
@@ -706,8 +721,8 @@ class OpusService extends BaseDataAccessService {
         importService.asyncSyncroniseMasterList(opus.uuid, true)
     }
 
-    @Timed
-    @Metered
+    @Timed(value = 'Timed: is profile on master list - timed', useClassPrefix = true)
+    @Metered(value = 'Metered: is profile on master list - metered', useClassPrefix = true)
     boolean isProfileOnMasterList(Opus opus, profile) {
         if (!opus.masterListUid || !profile) return true
 

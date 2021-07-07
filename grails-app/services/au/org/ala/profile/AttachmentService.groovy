@@ -1,7 +1,7 @@
 package au.org.ala.profile
 
 import au.org.ala.profile.util.Utils
-import org.springframework.web.multipart.commons.CommonsMultipartFile
+import org.springframework.web.multipart.MultipartFile
 
 class AttachmentService {
 
@@ -13,7 +13,7 @@ class AttachmentService {
         file.delete()
     }
 
-    void saveAttachment(String opusId, String profileId, String attachmentId, CommonsMultipartFile incomingFile, String extension) {
+    void saveAttachment(String opusId, String profileId, String attachmentId, MultipartFile incomingFile, String extension) {
         File file = new File(getPath(opusId, profileId, attachmentId, extension))
         file.mkdirs()
         incomingFile.transferTo(file)
@@ -30,7 +30,7 @@ class AttachmentService {
     }
 
     Map<String,File> collectAllAttachmentsIncludingOriginalNames(Profile profile) {
-        Map<File> fileMap = [:]
+        Map<String,File> fileMap = [:]
         if (profile.attachments) {
             List<Attachment> attachments = profile.getAttachments()
             attachments.each { attachment ->

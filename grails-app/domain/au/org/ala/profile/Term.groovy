@@ -3,8 +3,9 @@ package au.org.ala.profile
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
-@ToString
-@EqualsAndHashCode
+@ToString(allProperties=false, excludes = 'vocab')
+//@ToString(excludes = 'vocab')
+@EqualsAndHashCode(excludes = 'vocab')
 class Term implements Comparable<Term> {
 
     private static final String NOT_ANALYZED_INDEX = "not_analyzed"
@@ -24,6 +25,10 @@ class Term implements Comparable<Term> {
     static belongsTo = [vocab: Vocab]
 
     static constraints = {}
+
+    static mapping = {
+        vocab fetch: 'join'
+    }
 
     def beforeValidate() {
         if (uuid == null) {

@@ -1,13 +1,11 @@
 package au.org.ala.profile
 
+import au.org.ala.profile.BasicWSController
 import au.org.ala.profile.util.DataResourceOption
 import au.org.ala.web.UserDetails
-import au.org.ala.ws.controller.BasicWSController
 import com.google.common.base.Stopwatch
 
-import static au.org.ala.profile.AuditFilters.REQUEST_USER_DETAILS_KEY
-import static au.org.ala.profile.util.Utils.isUuid
-import static au.org.ala.profile.util.Utils.enc
+import static AuditInterceptor.REQUEST_USER_DETAILS_KEY
 
 class BaseController extends BasicWSController {
 
@@ -20,14 +18,14 @@ class BaseController extends BasicWSController {
         Profile profile
         Opus opus
 
-        if (isUuid(params.profileId)) {
+        if (au.org.ala.profile.util.Utils.isUuid(params.profileId)) {
             profile = Profile.findByUuid(params.profileId)
             opus = profile?.opus
             log.trace("getProfile() - Get profile by UUID ${params.profileId}: $sw")
             sw.reset().start()
         } else {
             opus = getOpus()
-            profile = Profile.findByOpusAndScientificNameIlike(opus, params.profileId)
+            profile = Profile.findByOpusAndScientificNameIlike(opus.id, params.profileId)
             log.trace("getProfile() - Get profile by opus ${opus.uuid} and sci name ${params.profileId}: $sw")
             sw.reset().start()
 
@@ -35,7 +33,7 @@ class BaseController extends BasicWSController {
             // but only if the 'latest' flag is true
             if (!profile && params.latest?.toBoolean()) {
                 List matches = Profile.withCriteria {
-                    eq "opus", opus
+                    eq "opus", opus.id
                     ilike "draft.scientificName", params.profileId
                 }
                 profile = matches.isEmpty() ? null : matches.first()
@@ -104,7 +102,7 @@ class BaseController extends BasicWSController {
                 }
             }
 
-            result = "q=${enc(occurrenceQuery)}"
+            result = "q=${au.org.ala.profile.util.Utils.enc(occurrenceQuery)}"
         }
 
         result
@@ -113,7 +111,7 @@ class BaseController extends BasicWSController {
     Opus getOpus() {
         Stopwatch sw = new Stopwatch().start()
         Opus opus
-        if (isUuid(params.opusId)) {
+        if (au.org.ala.profile.util.Utils.isUuid(params.opusId)) {
             opus = Opus.findByUuid(params.opusId)
             log.trace("getOpus() - Get opus by UUID ${params.opusId}: $sw")
         } else {

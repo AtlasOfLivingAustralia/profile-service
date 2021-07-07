@@ -6,10 +6,8 @@ import au.org.ala.profile.util.Utils
 import grails.converters.JSON
 import groovy.json.JsonSlurper
 import org.springframework.http.HttpStatus
-
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.multipart.MultipartHttpServletRequest
-import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 @RequireApiKey
 class ProfileController extends BaseController {
@@ -101,7 +99,7 @@ class ProfileController extends BaseController {
                     sendError code, result.error
                 }
 
-                render result as JSON
+                render (result as JSON)
             }
         }
     }
@@ -136,7 +134,7 @@ class ProfileController extends BaseController {
                         }
                     }
 
-                    render attachments as JSON
+                    render ((attachments?:[]) as JSON)
                 }
             }
         }
@@ -182,13 +180,13 @@ class ProfileController extends BaseController {
             } else {
                 Map metadata = new JsonSlurper().parseText(request.getParameter("data"))
 
-                CommonsMultipartFile file = null
+                MultipartFile file = null
                 if (request instanceof MultipartHttpServletRequest) {
                     file = request.getFile(request.fileNames[0])
                 }
                 List<Attachment> attachments = profileService.saveAttachment(profile.uuid, metadata, file)
 
-                render attachments as JSON
+                render (attachments as JSON)
             }
         }
     }
@@ -239,7 +237,7 @@ class ProfileController extends BaseController {
             } else {
                 Set<Publication> publications = profileService.listPublications(profile.uuid)
 
-                render publications as JSON
+                render ((publications?:[]) as JSON)
             }
         }
     }
@@ -249,12 +247,12 @@ class ProfileController extends BaseController {
             badRequest()
         } else {
             Profile profile = profileService.getProfileFromPubId(params.publicationId);
-            render text: [
+            render (text: [
                     profileId     : profile.uuid,
                     opusId        : profile.opus.uuid,
                     scientificName: profile.scientificName,
                     publications  : profile.publications
-            ] as JSON
+            ] as JSON)
         }
     }
 
@@ -279,7 +277,7 @@ class ProfileController extends BaseController {
             }
 
             response.setContentType("application/json")
-            render classification as JSON
+            render ((classification?:[]) as JSON)
         }
     }
 
@@ -294,7 +292,7 @@ class ProfileController extends BaseController {
             } else {
                 Map result = profileService.checkName(opus.uuid, params.scientificName as String)
 
-                render result as JSON
+                render (result as JSON)
             }
         }
     }
@@ -315,7 +313,7 @@ class ProfileController extends BaseController {
                     badRequest "A profile already exists for ${json.scientificName}"
                 } else {
                     profile = profileService.createProfile(opus.uuid, json);
-                    render profile as JSON
+                    render (profile as JSON)
                 }
             }
         }
@@ -339,7 +337,7 @@ class ProfileController extends BaseController {
                     Profile sourceProfile = getProfile()
                     if (sourceProfile) {
                         profile = profileService.duplicateProfile(opus.uuid, sourceProfile, json);
-                        render profile as JSON
+                        render (profile as JSON)
                     } else {
                         notFound "No existing profile with id ${params.profileId} was found to duplicate"
                     }
@@ -371,7 +369,7 @@ class ProfileController extends BaseController {
                     profile.privateMode = true
                 }
 
-                render profile as JSON
+                render (profile as JSON)
             }
         }
     }
@@ -399,7 +397,7 @@ class ProfileController extends BaseController {
                     profile.privateMode = true
                 }
 
-                render profile as JSON
+                render (profile as JSON)
             }
         }
     }
@@ -459,7 +457,7 @@ class ProfileController extends BaseController {
             def florulaListId = masterListService.getFlorulaListIdForUser(request, profile.opus.uuid)
             profile.opus.florulaListId = florulaListId
 
-            render profile as JSON
+            render (profile as JSON)
         } else {
             notFound()
         }
@@ -492,7 +490,7 @@ class ProfileController extends BaseController {
             } else {
                 Profile archive = profileService.archiveProfile(profile.uuid, json.archiveComment)
 
-                render archive as JSON
+                render (archive as JSON)
             }
         }
     }
@@ -505,7 +503,7 @@ class ProfileController extends BaseController {
         } else {
             Profile profile = profileService.restoreArchivedProfile(params.profileId, json?.newName ?: null)
 
-            render profile as JSON
+            render (profile as JSON)
         }
     }
 
@@ -548,7 +546,7 @@ class ProfileController extends BaseController {
             notFound()
         } else {
             def result = profileService.listDocument(profile, editMode)
-            render result as JSON
+            render (result as JSON)
         }
     }
 
@@ -566,7 +564,7 @@ class ProfileController extends BaseController {
             message = [message: 'deleted', documentId: result.documentId, url: result.url]
             if (result.status == 'ok') {
                 response.status = 200
-                render message as JSON
+                render (message as JSON)
             } else {
                 log.error result.error
                 render status: 400, text: result.error
@@ -608,7 +606,7 @@ class ProfileController extends BaseController {
 
             if (result.status == 'ok') {
                 response.status = 200
-                render message as JSON
+                render (message as JSON)
             } else {
                 //Document.withSession { session -> session.clear() }
                 log.error result.error

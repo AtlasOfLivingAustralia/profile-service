@@ -7,8 +7,9 @@ import org.bson.types.ObjectId
 
 import javax.persistence.Transient
 
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(excludes = 'attributes')
+@ToString(allProperties=false, excludes = 'attributes')
+//@ToString(excludes = 'attributes')
 class Profile {
 
     private static final String NOT_ANALYZED_INDEX = "not_analyzed"
@@ -25,7 +26,7 @@ class Profile {
                 "archivedNameLower", "matchedNameLower", "fullNameLower", "nameAuthor", 'profileStatus']
         scientificName multi_field: true, boost: 20
         archivedWithName multi_field: true, boost: 20
-        matchedName component: true, boost: 10
+        matchedName component: true//, boost: 10
         opus component: true
         attributes component: true
         nslNameIdentifier index: NOT_ANALYZED_INDEX
@@ -65,7 +66,7 @@ class Profile {
     boolean manuallyMatchedName = false
     String taxonomyTree
     String primaryImage
-    Map<String, ImageSettings> imageSettings = [:]
+    Map imageSettings = [:]
     String primaryVideo
     String primaryAudio
     boolean showLinkedOpusAttributes = false // Even if set to true, this needs Opus.showLinkedOpusAttributes to also be true
@@ -82,7 +83,9 @@ class Profile {
     List<LocalImage> privateImages = []
     List<LocalImage> stagedImages = [] // this is only used when dealing with draft profiles
 
-    List<Attachment> attachments
+    List<Attachment> attachments = []
+
+    List attributes
 
     String lastAttributeChange
 
@@ -111,7 +114,7 @@ class Profile {
     @Transient
     String getMatchedNameLower() { matchedName?.scientificName?.toLowerCase() }
 
-    static embedded = ['authorship', 'classification', 'draft', 'links', 'bhlLinks', 'publications', 'bibliography', 'documents', 'matchedName', 'privateImages', 'attachments', 'imageSettings', 'profileSettings']
+    static embedded = ['authorship', 'classification', 'draft', 'links', 'bhlLinks', 'publications', 'bibliography', 'documents', 'matchedName', 'privateImages', 'attachments', 'profileSettings']
 
     static hasMany = [attributes: Attribute]
 
@@ -150,13 +153,14 @@ class Profile {
     }
 
     static mapping = {
-        attributes cascade: "all-delete-orphan"
+        // removed fetch due to GC error for certain profiles while reindexing
+        attributes cascade: "all-delete-orphan", fetch: 'join'
         scientificName index: true
         scientificNameLower index: true
         guid index: true
         rank index: true
         uuid index: true
-        opus index: true
+        opus index: true, fetch: 'join'
         nameAuthor index: true
         profileStatus defaultValue: STATUS_PARTIAL
     }

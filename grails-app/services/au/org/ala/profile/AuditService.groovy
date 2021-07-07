@@ -3,7 +3,6 @@ package au.org.ala.profile
 import au.org.ala.profile.listener.AuditEventType
 import org.grails.datastore.mapping.engine.event.AbstractPersistenceEvent
 import org.grails.datastore.mapping.engine.event.EventType
-import org.grails.datastore.mapping.mongo.MongoSession
 
 import java.util.concurrent.ConcurrentLinkedQueue
 
@@ -12,7 +11,6 @@ class AuditService {
     def userService
     def grailsApplication
 
-    static transactional = false
 
     // AuditMessages are queued so that they can be persisted asynchronously. The reasons for doing this are twofold:
     // 1. It avoids the problems caused by creating/saving domain objects during the flush phase of the session (i.e. when the GORM
@@ -114,7 +112,7 @@ class AuditService {
      */
     public int flushMessageQueue(int maxMessagesToFlush = 1000) {
         int messageCount = 0
-        AuditMessage.withNewSession { MongoSession session ->
+            AuditMessage.withNewSession { session ->
             try {
                 AuditMessage message = null;
                 while (messageCount < maxMessagesToFlush && (message = _messageQueue.poll()) != null) {
@@ -125,7 +123,7 @@ class AuditService {
                 }
                 session.flush()
             } catch (Exception ex) {
-                log.error(ex)
+                log.error(ex.message)
             }
             return messageCount
         }
