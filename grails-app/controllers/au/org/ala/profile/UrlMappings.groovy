@@ -65,7 +65,7 @@ class UrlMappings {
         "/profile/search/taxon/levels" controller: "search", action: "getRanks"
         "/profile/search/children" controller: "search", action: "getImmediateChildren"
 
-        "/opus/$opusId/profile/" controller: "profile", action: [GET: "index", PUT: "createProfile"]
+        "/opus/$opusId/profile/" controller: "profile", action: [GET: "getProfiles", PUT: "createProfile"]
 
         "/opus/$opusId/profile/$profileId" controller: "profile", action: [GET: "getByUuid", DELETE: "deleteProfile", POST: "updateProfile"]
 

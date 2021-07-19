@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest
 
 @RequireApiKey
 class ProfileController extends BaseController {
+    final MAX_PAGE_SIZE = 500
 
     ProfileService profileService
     BieService bieService
@@ -650,6 +651,29 @@ class ProfileController extends BaseController {
             } else {
                 log.error "Couldn't update $profile status with $props"
                 response.sendError(500)
+            }
+        }
+    }
+
+    def getProfiles() {
+        if (!params.opusId) {
+            badRequest "opusId is required"
+        } else {
+            Opus opus = getOpus()
+            if (!opus) {
+                notFound()
+            } else {
+                boolean includeArchived = params.getBoolean('includeArchived', false)
+                int startIndex = params.getInt('startIndex', 0)
+                int pageSize = params.getInt('pageSize', 20)
+                String sort = params.sort ?: 'scientificNameLower'
+                String order = params.order ?: 'asc'
+
+                pageSize = pageSize > MAX_PAGE_SIZE ? MAX_PAGE_SIZE : pageSize
+                startIndex = startIndex >= 0 ? startIndex : 0
+                def profiles = profileService.getProfiles(opus, pageSize, startIndex, sort, order, includeArchived)
+
+                render (profiles as JSON)
             }
         }
     }

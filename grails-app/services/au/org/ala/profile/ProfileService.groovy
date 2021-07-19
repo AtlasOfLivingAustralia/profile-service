@@ -189,6 +189,40 @@ class ProfileService extends BaseDataAccessService {
         profile
     }
 
+    Map getProfiles (Opus opus, int pageSize, int startIndex = 0, String sort = "scientificNameLower", String order = 'asc', boolean includeArchived = false) {
+        List profiles = includeArchived ?
+                Profile.findAllByOpus(opus, [max: pageSize, offset: startIndex, sort: sort, order: order]) :
+                Profile.findAllByOpusAndArchivedDateIsNull(opus, [max: pageSize, offset: startIndex, sort: sort, order: order])
+        int count = includeArchived ? Profile.countByOpus(opus) : Profile.countByOpusAndArchivedDateIsNull(opus)
+
+        [
+                profiles: trimProfiles(profiles),
+                count: count
+        ]
+    }
+
+    def trimProfiles (List profiles) {
+        profiles?.collect {
+            [
+                    uuid: it.uuid,
+                    guid: it.guid,
+                    opusId: it.opus?.uuid,
+                    opusName: it.opus?.title,
+                    opusShortName: it.opus?.shortName,
+                    fullName: it.fullName,
+                    nameAuthor: it.nameAuthor,
+                    scientificName: it.scientificName,
+                    profileStatus: it.profileStatus,
+                    rank: it.rank,
+                    nslNameIdentifier: it.nslNameIdentifier,
+                    primaryImage: it.primaryImage,
+                    createdDate: it.createdDate,
+                    lastUpdated: it.lastUpdated
+
+            ]
+        }
+    }
+
     Profile duplicateProfile(String opusId, Profile sourceProfile, Map json) {
         checkArgument sourceProfile
 
