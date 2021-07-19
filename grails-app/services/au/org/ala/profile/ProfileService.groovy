@@ -210,6 +210,7 @@ class ProfileService extends BaseDataAccessService {
             count =  Profile.countByOpusAndArchivedDateIsNull(opus)
         }
 
+
         [
                 profiles: trimProfiles(profiles),
                 count: count
