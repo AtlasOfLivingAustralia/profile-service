@@ -63,6 +63,8 @@ class SearchService extends BaseDataAccessService {
         Map results = [:]
         if (accessibleCollections) {
             Map params = [
+                    indices:  Profile,
+                    types: Profile,
                     score: true,
                     from : offset,
                     size : pageSize
@@ -229,31 +231,22 @@ class SearchService extends BaseDataAccessService {
     }
 
     private static QueryBuilder buildFilter(String[] accessibleCollections, boolean includeArchived = false, Map<String, List<String>> filterLists = [:]) {
-//        QueryBuilder filter = boolFilter()
         QueryBuilder filter = boolQuery()
         if (!includeArchived) {
-//            filter.must(missingFilter("archivedDate"))
             filter.mustNot(existsQuery("archivedDate"))
         }
 
+        accessibleCollections.each { uuid ->
+            QueryBuilder masterListFilter = boolQuery ()
+                    .must(nestedQuery("opus", boolQuery().must(termQuery("opus.uuid", uuid)), ScoreMode.Avg))
 
-        filter.should(
-                *(accessibleCollections.collect { uuid ->
-//                    def masterListFilter = boolFilter()
-//                            .must(nestedFilter("opus", boolFilter().must(termFilter("opus.uuid", uuid))))
-                    def masterListFilter = boolQuery ()
-                            .must(nestedQuery("opus", boolQuery().must(termQuery("opus.uuid", uuid)), ScoreMode.Avg))
+            def filterList = filterLists[uuid]
+            if (filterList != null) {
+                masterListFilter.must(termsQuery("scientificNameLower", filterList))
+            }
 
-
-                    def filterList = filterLists[uuid]
-                    if (filterList != null) {
-//                                                masterListFilter.must(termsFilter("scientificNameLower", filterList))
-                        masterListFilter.must(termsQuery("scientificNameLower", filterList))
-                    }
-                    masterListFilter
-                })
-        )
-
+            filter.should(masterListFilter)
+        }
 
         filter
     }
@@ -893,7 +886,7 @@ class SearchService extends BaseDataAccessService {
             log.warn("Deleting existing index...")
 
             // This deletes the elasticsearch documents that are in Mongodb
-//            elasticSearchService.unindex(Profile)
+            elasticSearchService.unindex(Profile)
 
             // Unsearchable data are documents that the records don't exist in Mongodb anymore.
             deleteUnsearchableData()
