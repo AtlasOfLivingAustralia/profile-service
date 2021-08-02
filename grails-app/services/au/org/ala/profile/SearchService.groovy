@@ -856,13 +856,13 @@ class SearchService extends BaseDataAccessService {
 
         def jsonSlurper = new JsonSlurper()
         def query = jsonSlurper.parseText('{"query": {"match_all": {}}}')
-        def resp = webService.post(elasticSearchUrl + "/_search", query, [:], ContentType.APPLICATION_JSON, false, false, [:])
+        def resp = webService.post(elasticSearchUrl + "/au.org.ala.profile/_search", query, [:], ContentType.APPLICATION_JSON, false, false, [:])
 
         Integer total = resp?.resp?.hits?.total?: 0
 
         if (total > 0) {
             // must add q:scientificName:* for deletion to make sure that it is only data that is deleted and not the index itself, i.e. au.org.ala.profile_v0
-            webService.delete("${elasticSearchUrl}/${resp?.resp?.hits?.hits[0]._index}/profile/_query" , ['q':'scientificName:*'], ContentType.APPLICATION_JSON, false, false, [:])
+            webService.post("${elasticSearchUrl}/${resp?.resp?.hits?.hits[0]._index}/profile/_delete_by_query" , null, ['q':'scientificName:*'], ContentType.APPLICATION_JSON, false, false, [:])
         }
         ["RecordsDeleted": total]
     }
