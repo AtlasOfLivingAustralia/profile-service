@@ -95,7 +95,7 @@ switch (Environment.current) {
         break
 }
 
-root(DEBUG, ['STDOUT'])
+root(INFO, ['STDOUT'])
 
 [
         (OFF): [],
