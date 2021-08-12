@@ -663,7 +663,6 @@ class ProfileController extends BaseController {
             if (!opus) {
                 notFound()
             } else {
-                boolean includeArchived = params.getBoolean('includeArchived', false)
                 int startIndex = params.getInt('startIndex', 0)
                 int pageSize = params.getInt('pageSize', 20)
                 String sort = params.sort ?: 'scientificNameLower'
@@ -671,7 +670,7 @@ class ProfileController extends BaseController {
 
                 pageSize = pageSize > MAX_PAGE_SIZE ? MAX_PAGE_SIZE : pageSize
                 startIndex = startIndex >= 0 ? startIndex : 0
-                def profiles = profileService.getProfiles(opus, pageSize, startIndex, sort, order, includeArchived)
+                def profiles = profileService.getProfiles(opus, pageSize, startIndex, sort, order, params.rankFilter)
 
                 render (profiles as JSON)
             }

@@ -61,6 +61,7 @@ class UrlMappings {
         "/profile/search/scientificName" controller: "search", action: "findByScientificName"
         "/profile/search/taxon/name" controller: "search", action: "findByClassificationNameAndRank"
         "/profile/search/taxon/name/total" controller: "search", action: "totalByClassificationNameAndRank"
+        "/profile/search/taxon/nameAndTotal" controller: "search", action: "findProfilesByClassificationNameAndRankAndGetTotalProfilesCount"
         "/profile/search/taxon/level" controller: "search", action: "groupByRank"
         "/profile/search/taxon/levels" controller: "search", action: "getRanks"
         "/profile/search/children" controller: "search", action: "getImmediateChildren"

@@ -189,11 +189,27 @@ class ProfileService extends BaseDataAccessService {
         profile
     }
 
-    Map getProfiles (Opus opus, int pageSize, int startIndex = 0, String sort = "scientificNameLower", String order = 'asc', boolean includeArchived = false) {
-        List profiles = includeArchived ?
-                Profile.findAllByOpus(opus, [max: pageSize, offset: startIndex, sort: sort, order: order]) :
-                Profile.findAllByOpusAndArchivedDateIsNull(opus, [max: pageSize, offset: startIndex, sort: sort, order: order])
-        int count = includeArchived ? Profile.countByOpus(opus) : Profile.countByOpusAndArchivedDateIsNull(opus)
+    /**
+     * Lists all profiles in an opus.
+     * @param opus The opus domain object
+     * @param pageSize Size of returned result
+     * @param startIndex page number of result to return
+     * @param sort
+     * @param order
+     * @param includeArchived excludes archived profiles by default
+     * @return
+     */
+    Map getProfiles (Opus opus, int pageSize, int startIndex = 0, String sort = "scientificNameLower", String order = 'asc', String rankFilter = null) {
+        List profiles
+        int count
+        if (rankFilter) {
+            rankFilter = rankFilter.toLowerCase()
+            profiles = Profile.findAllByOpusAndRankAndArchivedDateIsNull(opus, rankFilter, [max: pageSize, offset: startIndex, sort: sort, order: order])
+            count =  Profile.countByOpusAndRankAndArchivedDateIsNull(opus, rankFilter)
+        } else {
+            profiles = Profile.findAllByOpusAndArchivedDateIsNull(opus, [max: pageSize, offset: startIndex, sort: sort, order: order])
+            count =  Profile.countByOpusAndArchivedDateIsNull(opus)
+        }
 
         [
                 profiles: trimProfiles(profiles),

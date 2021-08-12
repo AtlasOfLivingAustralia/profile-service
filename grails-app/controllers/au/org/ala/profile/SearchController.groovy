@@ -66,8 +66,9 @@ class SearchController extends BaseController {
             int max = params.int('max', -1)
             int startFrom = params.int('offset', 0)
             boolean immediateChildrenOnly = params.boolean('immediateChildrenOnly', false)
+            boolean includeTaxon = params.boolean('includeTaxon', false)
             ProfileSortOption sortBy = ProfileSortOption.byName(params.sortBy) ?: ProfileSortOption.getDefault()
-            List<Map> profiles = searchService.findByClassificationNameAndRank(params.taxon, params.scientificName, opusIds, sortBy, max, startFrom, immediateChildrenOnly)
+            List<Map> profiles = searchService.findByClassificationNameAndRank(params.taxon, params.scientificName, opusIds, sortBy, max, startFrom, immediateChildrenOnly, includeTaxon)
 
             response.setContentType("application/json")
             render profiles.collect { profile ->
@@ -105,10 +106,30 @@ class SearchController extends BaseController {
             List<String> opusIds = params.opusId?.split(",") ?: []
 
             boolean immediateChildrenOnly = params.boolean('immediateChildrenOnly', false)
-            int total = searchService.totalDescendantsByClassificationAndRank(params.taxon, params.scientificName, opusIds, immediateChildrenOnly)
+            boolean includeTaxon = params.boolean('includeTaxon', false)
+            int total = searchService.totalDescendantsByClassificationAndRank(params.taxon, params.scientificName, opusIds, immediateChildrenOnly, includeTaxon)
 
             def result = [total: total]
             respond result
+        }
+    }
+
+    def findProfilesByClassificationNameAndRankAndGetTotalProfilesCount() {
+        if ((!params.taxon || !params.scientificName) && !params.rankFilter ) {
+            badRequest "taxon (e.g. phylum, genus, species, etc) and scientificName, or rankFilter are required parameters . You can also optionally supply opusId (comma-separated list of opus ids), max (max records to return), offset (0 based index to start from), recursive (whether to get all subordinate taxa (true) or only the next rank (false) - default is true)."
+        } else {
+            List<String> opusIds = params.opusId?.split(",") ?: []
+
+            int max = params.int('max', -1)
+            int startFrom = params.int('offset', 0)
+            boolean immediateChildrenOnly = params.boolean('immediateChildrenOnly', false)
+            boolean includeTaxon = params.boolean('includeTaxon', false)
+            ProfileSortOption sortBy = ProfileSortOption.byName(params.sortBy) ?: ProfileSortOption.getDefault()
+            List<Map> profiles = searchService.findByClassificationNameAndRank(params.taxon, params.scientificName, opusIds, sortBy, max, startFrom, immediateChildrenOnly, includeTaxon, params.rankFilter)
+            profiles = profileService.trimProfiles(profiles)
+            Integer total = searchService.totalDescendantsByClassificationAndRank(params.taxon, params.scientificName, opusIds, immediateChildrenOnly, includeTaxon, params.rankFilter)
+            response.setContentType("application/json")
+            render ([profiles: profiles, count: total] as JSON)
         }
     }
 
