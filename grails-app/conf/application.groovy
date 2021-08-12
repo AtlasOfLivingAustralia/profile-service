@@ -99,14 +99,6 @@ grails.cache.config = {
 nsl.name.export.cacheTime = 86400 // seconds
 lists.items.cacheSpec = 'maximumSize=100,expireAfterWrite=1m'
 
-security {
-    cas {
-        uriExclusionFilterPattern='/images.*,/css.*,/js.*,/less.*'
-        uriFilterPattern=''
-        authenticateOnlyIfLoggedInFilterPattern=''
-    }
-}
-
 environments {
     development {
         grails.logging.jul.usebridge = true
@@ -167,15 +159,4 @@ elasticSearch {
     countHitsMethodName = 'countSearchHits'
     maxBulkRequest = 250
 }
-
-//grails.mongodb.default.mapping = {
-//    version false
-//}
-
-//dataSource.url = null
-//dataSource.driverClassName = null
-//dataSource.password = null
-//dataSource.username = null
-//dataSource.dbCreate = null
-//dataSource.pooled = null
 

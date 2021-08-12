@@ -61,6 +61,8 @@ class SearchService extends BaseDataAccessService {
         Map results = [:]
         if (accessibleCollections) {
             Map params = [
+                    indices:  Profile,
+                    types: Profile,
                     score: true,
                     from : offset,
                     size : pageSize
@@ -232,20 +234,17 @@ class SearchService extends BaseDataAccessService {
             filter.mustNot(existsQuery("archivedDate"))
         }
 
+        accessibleCollections.each { uuid ->
+            QueryBuilder masterListFilter = boolQuery ()
+                    .must(nestedQuery("opus", boolQuery().must(termQuery("opus.uuid", uuid)), ScoreMode.Avg))
 
-        filter.should(
-                *(accessibleCollections.collect { uuid ->
-                    def masterListFilter = boolQuery ()
-                            .must(nestedQuery("opus", boolQuery().must(termQuery("opus.uuid", uuid)), ScoreMode.Avg))
+            def filterList = filterLists[uuid]
+            if (filterList != null) {
+                masterListFilter.must(termsQuery("scientificNameLower", filterList))
+            }
 
-                    def filterList = filterLists[uuid]
-                    if (filterList != null) {
-                        masterListFilter.must(termsQuery("scientificNameLower", filterList))
-                    }
-                    masterListFilter
-                })
-        )
-
+            filter.should(masterListFilter)
+        }
 
         filter
     }
@@ -810,13 +809,13 @@ class SearchService extends BaseDataAccessService {
 
         def jsonSlurper = new JsonSlurper()
         def query = jsonSlurper.parseText('{"query": {"match_all": {}}}')
-        def resp = webService.post(elasticSearchUrl + "/_search", query, [:], ContentType.APPLICATION_JSON, false, false, [:])
+        def resp = webService.post(elasticSearchUrl + "/au.org.ala.profile/_search", query, [:], ContentType.APPLICATION_JSON, false, false, [:])
 
         Integer total = resp?.resp?.hits?.total?: 0
 
         if (total > 0) {
             // must add q:scientificName:* for deletion to make sure that it is only data that is deleted and not the index itself, i.e. au.org.ala.profile_v0
-            webService.delete("${elasticSearchUrl}/${resp?.resp?.hits?.hits[0]._index}/profile/_query" , ['q':'scientificName:*'], ContentType.APPLICATION_JSON, false, false, [:])
+            webService.post("${elasticSearchUrl}/${resp?.resp?.hits?.hits[0]._index}/profile/_delete_by_query" , null, ['q':'scientificName:*'], ContentType.APPLICATION_JSON, false, false, [:])
         }
         ["RecordsDeleted": total]
     }
@@ -840,7 +839,7 @@ class SearchService extends BaseDataAccessService {
             log.warn("Deleting existing index...")
 
             // This deletes the elasticsearch documents that are in Mongodb
-//            elasticSearchService.unindex(Profile)
+            elasticSearchService.unindex(Profile)
 
             // Unsearchable data are documents that the records don't exist in Mongodb anymore.
             deleteUnsearchableData()

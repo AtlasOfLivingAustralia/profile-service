@@ -115,6 +115,13 @@ environments:
                 port: 27017
                 databaseName: profiles
 
+security:
+    cas:
+        uriExclusionFilterPattern: '.*/assets/.*'
+        uriFilterPattern: ''
+        authenticateOnlyIfCookieFilterPattern: ''
+        authenticateOnlyIfLoggedInFilterPattern: ''
+
 ---
 #reverse proxy support
 server:
