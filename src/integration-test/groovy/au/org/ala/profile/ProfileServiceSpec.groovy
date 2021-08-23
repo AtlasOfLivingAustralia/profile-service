@@ -1957,5 +1957,46 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
         null | null | 'abc' | 'def' | true
         'def' | 'abc' | null | null | true
     }
+
+    def "getProfiles should by default return all profiles and total count" () {
+        given:
+        Opus opus1 = new Opus(title: "opus1", dataResourceUid: "123", glossary: new Glossary())
+        save opus1
+        Profile profile1 = new Profile(opus: opus1, scientificName: "profile1", attachments: [new Attachment(uuid: "1234", title: "oldTitle", description: "oldDesc")])
+        save profile1
+        Profile profile2 = new Profile(opus: opus1, scientificName: "profile2", attachments: [new Attachment(uuid: "1234", title: "oldTitle", description: "oldDesc")])
+        save profile2
+        Profile profile3 = new Profile(opus: opus1, scientificName: "profile3", attachments: [new Attachment(uuid: "1234", title: "oldTitle", description: "oldDesc")])
+        save profile3
+
+        when:
+        def result = service.getProfiles(opus1, 1, 0, 'scientificName', 'desc')
+
+        then:
+        result.count == 3
+        result.profiles.size() == 1
+        result.profiles.collect { it.scientificName } == ['profile3']
+    }
+
+    def "getProfiles should by default return profiles filterd by rank" () {
+        given:
+        Opus opus1 = new Opus(title: "opus1", dataResourceUid: "123", glossary: new Glossary())
+        save opus1
+        Profile profile1 = new Profile(opus: opus1, scientificName: "profile1", rank: 'species', attachments: [new Attachment(uuid: "1234", title: "oldTitle", description: "oldDesc")])
+        save profile1
+        Profile profile2 = new Profile(opus: opus1, scientificName: "profile2", rank: 'species', attachments: [new Attachment(uuid: "1234", title: "oldTitle", description: "oldDesc")])
+        save profile2
+        Profile profile3 = new Profile(opus: opus1, scientificName: "profile3", rank: 'subspecies', attachments: [new Attachment(uuid: "1234", title: "oldTitle", description: "oldDesc")])
+        save profile3
+
+        when:
+        def result = service.getProfiles(opus1, 1, 0, 'scientificName', 'desc', 'species')
+
+        then:
+        result.count == 2
+        result.profiles.size() == 1
+        result.profiles.collect { it.scientificName} == ['profile2']
+    }
+
 }
 

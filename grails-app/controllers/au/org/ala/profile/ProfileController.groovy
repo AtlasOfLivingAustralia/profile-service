@@ -667,10 +667,11 @@ class ProfileController extends BaseController {
                 int pageSize = params.getInt('pageSize', 20)
                 String sort = params.sort ?: 'scientificNameLower'
                 String order = params.order ?: 'asc'
+                String rankFilter = params.rankFilter ?: null
 
                 pageSize = pageSize > MAX_PAGE_SIZE ? MAX_PAGE_SIZE : pageSize
                 startIndex = startIndex >= 0 ? startIndex : 0
-                def profiles = profileService.getProfiles(opus, pageSize, startIndex, sort, order, params.rankFilter)
+                def profiles = profileService.getProfiles(opus, pageSize, startIndex, sort, order, rankFilter)
 
                 render (profiles as JSON)
             }

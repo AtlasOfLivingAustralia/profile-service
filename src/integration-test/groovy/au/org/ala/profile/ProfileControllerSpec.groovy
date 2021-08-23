@@ -169,4 +169,23 @@ class ProfileControllerSpec extends BaseIntegrationSpec {
         then:
         1 * controller.attachmentService.getAttachment("opusId", profile.uuid, "1234", _)
     }
+
+    def "getProfiles should get all profiles in an opus"() {
+        Opus opus = save new Opus(uuid: "opusId", shortName: "opusid", title: "opusName", glossary: new Glossary(), dataResourceUid: "dr1")
+        Profile profile = save new Profile(scientificName: "sciName", opus: opus, rank: "subspecies", attachments: [new Attachment(uuid: "1234")])
+
+        when:
+        controller.params.opusId = "opusId"
+        controller.params.pageSize = "10"
+        controller.params.startIndex = "0"
+        controller.params.sort = "scientificName"
+        controller.params.order = "desc"
+        controller.params.rankFilter = "species"
+        controller.getProfiles()
+
+        then:
+        1 * controller.profileService.getProfiles(_, 10, 0, "scientificName", "desc", "species") >> [count: 1, profiles: [scientificName: "sciName", rank: "subspecies"]]
+        controller.response.status == 200
+        controller.response.json.count == 1
+    }
 }

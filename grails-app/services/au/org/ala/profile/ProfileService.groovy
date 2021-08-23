@@ -199,7 +199,7 @@ class ProfileService extends BaseDataAccessService {
      * @param includeArchived excludes archived profiles by default
      * @return
      */
-    Map getProfiles (Opus opus, int pageSize, int startIndex = 0, String sort = "scientificNameLower", String order = 'asc', String rankFilter = null) {
+    Map getProfiles (Opus opus, int pageSize = 20, int startIndex = 0, String sort = "scientificNameLower", String order = 'asc', String rankFilter = null) {
         List profiles
         int count
         if (rankFilter) {
