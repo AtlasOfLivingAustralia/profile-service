@@ -14,6 +14,9 @@ import static groovyx.net.http.ContentType.JSON
 import static com.xlson.groovycsv.CsvParser.parseCsv
 import static org.apache.commons.lang3.StringEscapeUtils.unescapeHtml4
 
+/**
+ * Creates profiles that do not exist on database i.e. ignores profiles that already exists.
+ */
 class FOAImport {
 
     static final String FILE_ENCODING = "utf-8"

@@ -71,7 +71,7 @@ class UpdateProfileAttribute {
         DATA_DIR = opt.f
         IMPORT_OUTPUT_FILE = opt.i
         OUTPUT_FILE = opt.r ?: "updatedAttributes.json"
-        ATTRIBUTE_OPTION = APPEND
+        ATTRIBUTE_OPTION = OVERWRITE
 
         Map<Integer, String> attributeTitles = loadAttributeTitles()
         Map<Integer, Map<String, List<String>>> taxaAttributes = loadAttributes(attributeTitles)
