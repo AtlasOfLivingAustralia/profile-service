@@ -15,7 +15,7 @@ buildscript {
     }
 }
 
-version "3.0.3"
+version "3.0.4"
 group "au.org.ala"
 
 apply plugin:"eclipse"
@@ -137,8 +137,8 @@ dependencies {
 
     // override log4j in elasticsearch plugin
     // TODO remove this once no log4j vulnerable transitive deps are used.
-    runtime 'org.apache.logging.log4j:log4j-core:2.15.0'
-    runtime 'org.apache.logging.log4j:log4j-api:2.15.0'
+    runtime 'org.apache.logging.log4j:log4j-core:2.17.0'
+    runtime 'org.apache.logging.log4j:log4j-api:2.17.0'
 }
 
 configurations.all {
