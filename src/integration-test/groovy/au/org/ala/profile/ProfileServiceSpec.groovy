@@ -101,6 +101,35 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
         profile == null
     }
 
+    def "createProfile should validate primary image regardless of the value in imageDisplayOption"() {
+        given:
+        Opus opus = new Opus(glossary: new Glossary(), dataResourceUid: "dr1234", title: "title")
+        save opus
+
+        when:
+        String image = UUID.randomUUID().toString()
+        Profile profile = service.createProfile(opus.uuid, [scientificName: "sciName1", primaryImage: image, imageSettings: [(image): new ImageSettings(imageDisplayOption: ImageOption.INCLUDE, caption: '')]])
+
+        then:
+        profile != null
+        profile.hasErrors() == false
+
+        when:
+        profile = service.createProfile(opus.uuid, [scientificName: "sciName2", primaryImage: image, imageSettings: [(image): [imageDisplayOption: "INCLUDE", caption: '']]])
+
+        then:
+        profile != null
+        profile.hasErrors() == false
+
+        when:
+        profile = Profile.findByScientificName("sciName2")
+        profile.scientificName = "sciName3"
+        profile.save()
+
+        then:
+        profile.hasErrors() == false
+    }
+
     def "createProfile should NOT automatically put the profile in draft mode if the Opus.autoDraftProfiles flag = false"() {
         given:
         Opus opus = new Opus(glossary: new Glossary(), dataResourceUid: "dr1234", title: "title", autoDraftProfiles: false)

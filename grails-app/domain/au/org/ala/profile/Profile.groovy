@@ -125,7 +125,14 @@ class Profile {
         fullName nullable: true
         guid nullable: true
         primaryImage nullable: true, validator: { val, obj ->
-            !val || (obj?.imageSettings[val]?.imageDisplayOption ?: ImageOption.INCLUDE) == ImageOption.INCLUDE
+            !val || (
+                    obj?.imageSettings[val]?.imageDisplayOption ?
+                    (
+                            obj?.imageSettings[val]?.imageDisplayOption instanceof String ?
+                            ImageOption.byName(obj?.imageSettings[val]?.imageDisplayOption, null)
+                            : obj?.imageSettings[val]?.imageDisplayOption
+                    ) : ImageOption.INCLUDE
+            ) == ImageOption.INCLUDE
         }
         primaryVideo nullable: true
         primaryAudio nullable: true
