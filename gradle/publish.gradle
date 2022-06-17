@@ -30,11 +30,11 @@ publishing {
                 }
             }
             from components.web
-            if (bootRepackage && bootRepackage.enabled && bootRepackage.classifier) {
-                logger.quiet("$libsDir/$project.name-$project.version-${bootRepackage.classifier}.jar")
-                def repackagedFile = file("$libsDir/$project.name-$project.version-${bootRepackage.classifier}.jar")
+            if (bootJar && bootJar.enabled && bootJar.classifier) {
+                logger.quiet("$libsDir/$project.name-$project.version-${bootJar.classifier}.jar")
+                def repackagedFile = file("$libsDir/$project.name-$project.version-${bootJar.classifier}.jar")
                 artifact(repackagedFile) {
-                    classifier bootRepackage.classifier
+                    classifier bootJar.classifier
                 }
             }
         }
