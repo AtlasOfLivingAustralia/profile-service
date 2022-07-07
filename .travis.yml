@@ -26,6 +26,7 @@ before_install:
   - sudo chown -R elasticsearch:elasticsearch /etc/default/elasticsearch
   - sudo sh -c 'echo ES_JAVA_OPTS=\"-Xmx256m -Xms256m\" >> /etc/default/elasticsearch'
   - sudo service elasticsearch restart
+  - sudo journalctl -xe
 
 cache:
   directories:
