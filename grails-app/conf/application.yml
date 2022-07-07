@@ -28,7 +28,12 @@ spring:
     groovy:
         template:
             check-template-location: false
-
+    devtools:
+        restart:
+            exclude:
+                - grails-app/views/**
+                - grails-app/i18n/**
+                - grails-app/conf/**
 # Spring Actuator Endpoints are Disabled by Default
 endpoints:
     enabled: false
@@ -90,9 +95,13 @@ grails:
                 scriptlets: html
                 taglib: none
                 staticparts: none
-endpoints:
+
+spring:
     jmx:
         unique-names: true
+management:
+    endpoints:
+        enabled-by-default: false
 
 ---
 environments:

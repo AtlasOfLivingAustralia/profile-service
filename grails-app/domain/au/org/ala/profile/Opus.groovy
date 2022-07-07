@@ -15,10 +15,10 @@ class Opus {
     static searchable = {
         root = false
         only = ["title", "uuid", "shortName", "dataResourceUid"]
-        title index: "not_analyzed"
-        uuid index: "not_analyzed"
-        shortName index: "not_analyzed"
-        dataResourceUid index: "not_analyzed"
+        title index: "true"
+        uuid index: "true"
+        shortName index: "true"
+        dataResourceUid index: "true"
     }
 
     String uuid

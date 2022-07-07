@@ -10,6 +10,7 @@ branches:
     - dev
     - hotfix
     - grails3
+    - grails4
     - /^feature\/.*$/
     - /^hotfix\/.*$/
 

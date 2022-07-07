@@ -7,7 +7,7 @@ import groovy.transform.ToString
 @EqualsAndHashCode
 class Name {
 
-    private static final String NOT_ANALYZED_INDEX = "not_analyzed"
+    private static final String NOT_ANALYZED_INDEX = "true"
 
     static searchable = {
         root = false
