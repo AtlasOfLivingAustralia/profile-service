@@ -118,7 +118,7 @@ environments {
         }
         elasticSearch {
             client.mode = "transport"
-            client.hosts = [[host: "localhost", port: 9300]]
+            client.hosts = [[host: "localhost", port: 9200]]
         }
         security.cas.appServerName='http://devt.ala.org.au:8081'
     }
@@ -146,7 +146,7 @@ environments {
         }
         elasticSearch {
             client.mode = "transport"
-            client.hosts = [[host: "localhost", port: 9300]]
+            client.hosts = [[host: "localhost", port: 9200]]
         }
     }
 }

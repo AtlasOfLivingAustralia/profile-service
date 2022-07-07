@@ -8,7 +8,7 @@ import groovy.transform.ToString
 @EqualsAndHashCode(excludes = 'vocab')
 class Term implements Comparable<Term> {
 
-    private static final String NOT_ANALYZED_INDEX = "not_analyzed"
+    private static final String NOT_ANALYZED_INDEX = "true"
 
     static searchable = {
         only = ["name", "summary", "containsName", "uuid"]

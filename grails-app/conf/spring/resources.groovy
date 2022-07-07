@@ -19,4 +19,5 @@ beans = {
     }
 
     sanitizerPolicy(SanitizerPolicy)
+    springConfig.addAlias "persistenceInterceptor", "mongoPersistenceInterceptor"
 }
