@@ -129,8 +129,9 @@ environments {
         app.uploads.url = "http://devt.ala.org.au:8082/profile-service/document/download?filename="
 
         elasticSearch {
-            client.mode = 'local'
+            client.mode = 'transport'
 //            index.store.type = 'memory' // store local node in memory and not on disk
+            client.hosts = [[host: "localhost", port: 9200]]
             plugin.mapperAttachment.enabled = false
         }
         security.cas.appServerName='http://devt.ala.org.au:8082'

@@ -38,7 +38,11 @@ class NameService extends BaseDataAccessService {
 
     @PostConstruct
     def init() {
-        nameSearcher = new ALANameSearcher("${grailsApplication.config.name.index.location}")
+        try {
+            nameSearcher = new ALANameSearcher("${grailsApplication.config.name.index.location}")
+        } catch (FileNotFoundException ex) {
+            log.error("Names matching index not found. Check configuration.", ex)
+        }
         nslNameDumpSupplier = createSimpleNameDumpSupplier()
     }
 
