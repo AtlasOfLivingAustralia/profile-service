@@ -14,7 +14,7 @@ class Attribute implements Comparable<Attribute> {
         root = false
         only = ["text", "title"]
         title component: true
-        text index: "true"
+        text index: "false"
     }
 
     String uuid

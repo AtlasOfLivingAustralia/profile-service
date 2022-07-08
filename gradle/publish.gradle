@@ -29,14 +29,7 @@ publishing {
                     it.replaceNode {}
                 }
             }
-            from components.web
-            if (bootJar && bootJar.enabled && bootJar.classifier) {
-                logger.quiet("$libsDir/$project.name-$project.version-${bootJar.classifier}.jar")
-                def repackagedFile = file("$libsDir/$project.name-$project.version-${bootJar.classifier}.jar")
-                artifact(repackagedFile) {
-                    classifier bootJar.classifier
-                }
-            }
+            artifact bootJar
         }
     }
 }
