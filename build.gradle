@@ -1,4 +1,3 @@
-//import static org.springframework.boot.gradle.SpringBootPluginExtension.LayoutType.*
 buildscript {
     repositories {
         mavenLocal()
@@ -57,13 +56,6 @@ ext['elasticsearch.version'] = esVersion
 
 springBoot {
     buildInfo()
-}
-bootJar {
-    enabled = true
-    classifier = 'exec'
-}
-bootWar {
-    enabled = false
 }
 
 dependencies {
@@ -175,6 +167,7 @@ configurations.all {
 }
 
 bootRun {
+    ignoreExitValue true
     jvmArgs('-Dspring.output.ansi.enabled=always',
             '-noverify',
             '-XX:TieredStopAtLevel=1',
