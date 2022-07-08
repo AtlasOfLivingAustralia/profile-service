@@ -163,7 +163,13 @@ bootRun {
 }
 
 bootJar {
-    classifier = "exec"
+    enabled = true
+    classifier = 'exec'
+    launchScript()
+}
+
+bootWar {
+    enabled = false
 }
 
 tasks.withType(GroovyCompile) {
