@@ -94,7 +94,7 @@ class SearchService extends BaseDataAccessService {
             def rawResults = elasticSearchService.search(params, query, null)
             log.debug("${options.nameOnly ? 'name' : 'text'} search for ${term} took ${System.currentTimeMillis() - start}ms and returned ${rawResults.total} results")
 
-            results.total = rawResults.total
+            results.total = rawResults.total?.value
             results.items = rawResults.searchResults.collect { Profile it ->
                 def status = options.nameOnly ? getProfileMatchReason (term, it, nslSearchResult): null
                 [
@@ -856,13 +856,16 @@ class SearchService extends BaseDataAccessService {
 
         def jsonSlurper = new JsonSlurper()
         def query = jsonSlurper.parseText('{"query": {"match_all": {}}}')
-        def resp = webService.post(elasticSearchUrl + "/au.org.ala.profile/_search", query, [:], ContentType.APPLICATION_JSON, false, false, [:])
+        def resp = webService.post(elasticSearchUrl + "/au.org.ala.profile.profile/_search?track_total_hits=true", query, [:], ContentType.APPLICATION_JSON, false, false, [:])
 
-        Integer total = resp?.resp?.hits?.total?: 0
+        Integer total = resp?.resp?.hits?.total?.value ?: 0
 
         if (total > 0) {
             // must add q:scientificName:* for deletion to make sure that it is only data that is deleted and not the index itself, i.e. au.org.ala.profile_v0
-            webService.post("${elasticSearchUrl}/${resp?.resp?.hits?.hits[0]._index}/profile/_delete_by_query" , null, ['q':'scientificName:*'], ContentType.APPLICATION_JSON, false, false, [:])
+            resp = webService.post("${elasticSearchUrl}/${resp?.resp?.hits?.hits[0]._index}/_delete_by_query?wait_for_completion=true" , null, ['q':'scientificName:*'], ContentType.APPLICATION_JSON, false, false, [:])
+            if (resp.resp) {
+               log.info("${total} documents deleted via _delete_by_query API")
+            }
         }
         ["RecordsDeleted": total]
     }

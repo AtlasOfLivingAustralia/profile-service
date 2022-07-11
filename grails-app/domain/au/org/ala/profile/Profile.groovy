@@ -12,7 +12,7 @@ import javax.persistence.Transient
 //@ToString(excludes = 'attributes')
 class Profile {
 
-    private static final String NOT_ANALYZED_INDEX = "not_analyzed"
+    private static final String NOT_ANALYZED_INDEX = "true"
 
     final static STATUS_EMPTY = 'Empty'
     final static STATUS_PARTIAL = 'Partial'
@@ -162,6 +162,7 @@ class Profile {
     static mapping = {
         // removed fetch due to GC error for certain profiles while reindexing
         attributes cascade: "all-delete-orphan", fetch: 'join'
+        id index: true
         scientificName index: true
         scientificNameLower index: true
         guid index: true
