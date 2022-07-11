@@ -133,7 +133,7 @@ dependencies {
 
     compile "org.elasticsearch.client:elasticsearch-rest-high-level-client:${esVersion}"
     if (!Boolean.valueOf(inplace)) {
-        compile 'org.grails.plugins:elasticsearch:3.0.0.M1.ALA-SNAPSHOT'
+        compile 'org.grails.plugins:elasticsearch:3.0.0.M1.ALA'
     }
 
     compile "org.grails.plugins:dropwizard-metrics:2.0.0.RC1"
