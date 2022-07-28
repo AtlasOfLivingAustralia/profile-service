@@ -15,7 +15,7 @@ buildscript {
     }
 }
 
-version "4.0-API-SNAPSHOT"
+version "4.1-API-SNAPSHOT"
 group "au.org.ala"
 
 apply plugin:"eclipse"
