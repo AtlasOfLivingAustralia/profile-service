@@ -2,7 +2,6 @@ package au.org.ala.profile
 
 import au.org.ala.profile.security.Role
 import au.org.ala.profile.util.*
-import au.org.ala.web.AuthService
 import com.mongodb.DBObject
 import grails.gorm.transactions.Transactional
 import grails.plugin.dropwizard.metrics.meters.Metered
@@ -18,7 +17,7 @@ import static au.org.ala.profile.util.Utils.toBooleanWithDefault
 class OpusService extends BaseDataAccessService {
 
     EmailService emailService
-    AuthService authService
+    UserService userService
     AttachmentService attachmentService
     MasterListService masterListService
     def grailsApplication
@@ -439,9 +438,9 @@ class OpusService extends BaseDataAccessService {
                     if (!supportingOpus.autoApproveShareRequests) {
                         List administrators = supportingOpus.authorities.findAll {
                             it.role == Role.ROLE_PROFILE_ADMIN
-                        }.collect { authService.getUserForUserId(it.user.userId).userName }
+                        }.collect { userService.getUserForUserId(it.user.userId).userName }
 
-                        String user = authService.getUserForUserId(authService.getUserId()).displayName
+                        String user = userService.getUserForUserId(userService.getUserId()).displayName
 
                         String url = "${grailsApplication.config.profile.hub.base.url}/opus/${supportingOpus.uuid}/shareRequest/${opus.uuid}"
 
@@ -500,9 +499,9 @@ class OpusService extends BaseDataAccessService {
 
         List administrators = requestingOpus.authorities.findAll {
             it.role == Role.ROLE_PROFILE_ADMIN
-        }.collect { authService.getUserForUserId(it.user.userId)?.userName }
+        }.collect { userService.getUserForUserId(it.user.userId)?.userName }
 
-        String user = authService.getUserForUserId(authService.getUserId()).displayName
+        String user = userService.getUserForUserId(userService.getUserId()).displayName
 
         String body = groovyPageRenderer.render(template: "/email/shareResponse", model: [user: user, action: action, opus: opus])
 

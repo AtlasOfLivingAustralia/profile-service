@@ -25,9 +25,9 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
     def setup() {
         service.nameService = Mock(NameService)
         service.nameService.matchName(_) >> [scientificName: "sciName", author: "fred", guid: "ABC"]
-        service.authService = Mock(AuthService)
-        service.authService.getUserId() >> "fred"
-        service.authService.getUserForUserId(_) >> new UserDetails(userId: "1234", firstName: "fred", lastName: "fred")
+        service.userService = Mock(UserService)
+        service.userService.getUserId() >> "fred"
+        service.userService.getUserForUserId(_) >> new UserDetails(userId: "1234", firstName: "fred", lastName: "fred")
         bieService = Mock(BieService)
         bieService.getClassification(_) >> null
         service.bieService = bieService

@@ -4,7 +4,6 @@ import au.ala.org.ws.security.RequireApiKey
 import au.org.ala.profile.security.Role
 import au.org.ala.profile.util.ShareRequestAction
 import au.org.ala.profile.util.Utils
-import au.org.ala.web.AuthService
 import au.org.ala.web.UserDetails
 import grails.converters.JSON
 import grails.gorm.transactions.Transactional
@@ -20,7 +19,7 @@ import static au.org.ala.profile.ImportService.SyncResponse.*
 class OpusController extends BaseController {
 
     OpusService opusService
-    AuthService authService
+    UserService userService
     ImportService importService
     AttachmentService attachmentService
     SearchService searchService
@@ -313,7 +312,7 @@ class OpusController extends BaseController {
                         opusId: opus.uuid,
                         administrators: opus.authorities.collect {
                             if (it.role == Role.ROLE_PROFILE_ADMIN) {
-                                [email: authService.getUserForUserId(it.user.userId, false)?.userName,
+                                [email: userService.getUserForUserId(it.user.userId, false)?.userName,
                                  name: it.user.name]
                             }
                         }] as JSON)

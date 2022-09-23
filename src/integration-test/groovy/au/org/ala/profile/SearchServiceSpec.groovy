@@ -25,7 +25,6 @@ class SearchServiceSpec extends BaseIntegrationSpec {
 
 
     def "setup"() {
-        service.authService = Mock(AuthService)
         service.userService = Mock(UserService)
         service.mongoClient = datastore.getMongoClient()
         def mls = Stub(MasterListService)
@@ -90,7 +89,7 @@ class SearchServiceSpec extends BaseIntegrationSpec {
         Profile profile2 = save new Profile(scientificName: "name2", fullName: "name2", opus: opus2, rank: "kingdom", classification: [new Classification(rank: "kingdom", name: "Plantae")])
         Profile profile3 = save new Profile(scientificName: "name3", fullName: "name3", opus: opus3, rank: "kingdom", classification: [new Classification(rank: "kingdom", name: "Plantae")])
 
-        service.authService.userInRole("ROLE_ADMIN") >> false
+        service.userService.userInRole("ROLE_ADMIN") >> false
         service.userService.getCurrentUserDetails() >> [userId: null]
 
         when:
@@ -113,7 +112,7 @@ class SearchServiceSpec extends BaseIntegrationSpec {
         Profile profile2 = save new Profile(scientificName: "name2", fullName: "name2", opus: opus2, rank: "kingdom", classification: [new Classification(rank: "kingdom", name: "Plantae")])
         Profile profile3 = save new Profile(scientificName: "name3", fullName: "name3", opus: opus3, rank: "kingdom", classification: [new Classification(rank: "kingdom", name: "Plantae")])
 
-        service.authService.userInRole("ROLE_ADMIN") >> false
+        service.userService.userInRole("ROLE_ADMIN") >> false
         service.userService.getCurrentUserDetails() >> [userId: "1234"]
 
         when:
@@ -136,7 +135,7 @@ class SearchServiceSpec extends BaseIntegrationSpec {
         Profile profile2 = save new Profile(scientificName: "name2", fullName: "name2", opus: opus2, rank: "kingdom", classification: [new Classification(rank: "kingdom", name: "Plantae")])
         Profile profile3 = save new Profile(scientificName: "name3", fullName: "name3", opus: opus3, rank: "kingdom", classification: [new Classification(rank: "kingdom", name: "Plantae")])
 
-        service.authService.userInRole("ROLE_ADMIN") >> true
+        service.userService.userInRole("ROLE_ADMIN") >> true
         service.userService.getCurrentUserDetails() >> [userId: "1234"]
 
         when:

@@ -1,9 +1,8 @@
 package au.org.ala.profile
 
 import com.mongodb.BasicDBObject
-import com.mongodb.DBCollection
-import com.mongodb.WriteResult
-import com.mongodb.MongoClient
+import com.mongodb.client.result.UpdateResult
+import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoCollection
 import grails.gorm.transactions.Transactional
 
@@ -155,37 +154,37 @@ class VocabService extends BaseDataAccessService {
             if (opus.authorshipVocabUuid == vocabId) {
 
                 // Bulk update for profiles and profiles draft acknowledgement term as GORM update takes long time for many records.
-                DBCollection profileCollection = mongo.getDB(grailsApplication.config.grails.mongodb.databaseName).getCollection('profile')
+                MongoCollection<Profile> profileCollection = mongo.getDatabase(grailsApplication.config.grails.mongodb.databaseName).getCollection('profile')
                 def updateQuery = new BasicDBObject('$set', new BasicDBObject('authorship.$.category', newTerm.id))
                 def searchQuery = new BasicDBObject(['authorship.category': existingTerm.id])
-                WriteResult updateResult = profileCollection.updateMulti(searchQuery, updateQuery)
-                if (updateResult && updateResult.n) {
-                    replacedUsages = updateResult.n
+                UpdateResult updateResult = profileCollection.updateMany(searchQuery, updateQuery)
+                if (updateResult && updateResult.getModifiedCount()) {
+                    replacedUsages = updateResult.getModifiedCount()
                 }
 
                 def draftUpdateQuery = new BasicDBObject('$set', new BasicDBObject('draft.authorship.$.category', newTerm.id))
                 def draftSearchQuery = new BasicDBObject(['draft.authorship.category': existingTerm.id])
-                WriteResult draftUpdateResult = profileCollection.updateMulti(draftSearchQuery, draftUpdateQuery)
-                if (draftUpdateResult && draftUpdateResult.n) {
-                    replacedUsages += draftUpdateResult.n
+                UpdateResult draftUpdateResult = profileCollection.updateMany(draftSearchQuery, draftUpdateQuery)
+                if (draftUpdateResult && draftUpdateResult.getModifiedCount()) {
+                    replacedUsages += draftUpdateResult.getModifiedCount()
                 }
 
             } else {
-                DBCollection profileCollection = mongo.getDB(grailsApplication.config.grails.mongodb.databaseName).getCollection('profile')
-                DBCollection attributeCollection = mongo.getDB(grailsApplication.config.grails.mongodb.databaseName).getCollection('attribute')
+                MongoCollection<Profile> profileCollection = mongo.getDatabase(grailsApplication.config.grails.mongodb.databaseName).getCollection('profile')
+                MongoCollection<Attribute> attributeCollection = mongo.getDatabase(grailsApplication.config.grails.mongodb.databaseName).getCollection('attribute')
 
                 def attributeUpdateQuery = new BasicDBObject('$set', new BasicDBObject('title', newTerm.id))
                 def attributeSearchQuery = new BasicDBObject('title': existingTerm.id)
-                WriteResult attributeUpdateResult = attributeCollection.updateMulti(attributeSearchQuery, attributeUpdateQuery)
-                if (attributeUpdateResult && attributeUpdateResult.n) {
-                    replacedUsages = attributeUpdateResult.n
+                UpdateResult attributeUpdateResult = attributeCollection.updateMany(attributeSearchQuery, attributeUpdateQuery)
+                if (attributeUpdateResult && attributeUpdateResult.getModifiedCount()) {
+                    replacedUsages = attributeUpdateResult.getModifiedCount()
                 }
 
                 def draftUpdateQuery = new BasicDBObject('$set', new BasicDBObject('draft.attributes.$.title', newTerm.id))
                 def draftSearchQuery = new BasicDBObject(['draft.attributes.title': existingTerm.id])
-                WriteResult draftUpdateResult = profileCollection.updateMulti(draftSearchQuery, draftUpdateQuery)
-                if (draftUpdateResult && draftUpdateResult.n) {
-                    replacedUsages += draftUpdateResult.n
+                UpdateResult draftUpdateResult = profileCollection.updateMany(draftSearchQuery, draftUpdateQuery)
+                if (draftUpdateResult && draftUpdateResult.getModifiedCount()) {
+                    replacedUsages += draftUpdateResult.getModifiedCount()
                 }
 
             }

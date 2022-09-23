@@ -18,9 +18,9 @@ class OpusServiceSpec extends BaseIntegrationSpec {
     EmailService emailService = Mock(EmailService)
 
     def setup() {
-        service.authService = Mock(AuthService)
-        service.authService.getUserForUserId(_) >> new UserDetails(userId: "123", firstName: "fred", lastName: "fred")
-        service.authService.getUserId() >> "123"
+        service.userService = Mock(UserService)
+        service.userService.getUserForUserId(_) >> new UserDetails(userId: "123", firstName: "fred", lastName: "fred")
+        service.userService.getUserId() >> "123"
         service.groovyPageRenderer = Mock(PageRenderer)
         service.groovyPageRenderer.render(_, _) >> "bla"
         service.emailService = emailService

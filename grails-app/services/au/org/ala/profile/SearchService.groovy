@@ -4,14 +4,13 @@ import au.org.ala.names.search.SearchResultException
 import au.org.ala.profile.util.ProfileSortOption
 import au.org.ala.profile.util.SearchOptions
 import au.org.ala.profile.util.Utils
-import au.org.ala.web.AuthService
 import au.org.ala.ws.service.WebService
 import com.mongodb.BasicDBObject
-import com.mongodb.DBCollection
-import com.mongodb.MapReduceCommand
-import com.mongodb.MapReduceOutput
-import com.mongodb.MongoClient
+import com.mongodb.client.MapReduceIterable
+import com.mongodb.client.MongoCollection
+import com.mongodb.client.MongoClient
 import com.mongodb.client.model.Aggregates
+import com.mongodb.client.model.MapReduceAction
 import grails.plugins.elasticsearch.ElasticSearchService
 import groovy.json.JsonSlurper
 import org.apache.http.entity.ContentType
@@ -21,6 +20,7 @@ import org.elasticsearch.index.query.Operator
 import org.elasticsearch.index.query.QueryBuilder
 import org.elasticsearch.search.sort.SortBuilders
 import org.gbif.api.vocabulary.Rank
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.scheduling.annotation.Async
 
 import static org.elasticsearch.index.query.Operator.AND
@@ -36,7 +36,6 @@ class SearchService extends BaseDataAccessService {
     static final Integer DEFAULT_MAX_OPUS_SEARCH_RESULTS = 25
     static final Integer DEFAULT_MAX_BROAD_SEARCH_RESULTS = 50
 
-    AuthService authService
     UserService userService
     BieService bieService
     ElasticSearchService elasticSearchService
@@ -45,7 +44,7 @@ class SearchService extends BaseDataAccessService {
     WebService webService
     def grailsApplication
     OpusService opusService
-    def dataSourceUnproxied
+    @Autowired
     MongoClient mongoClient
 
     Map search(List<String> opusIds, String term, int offset, int pageSize, SearchOptions options) {
@@ -532,7 +531,7 @@ class SearchService extends BaseDataAccessService {
         filter = Utils.sanitizeRegex(filter)?.trim()?.toLowerCase()
 
         List results = []
-        MapReduceOutput hierarchyView = null
+        MongoCollection outputCollectionObject = null
 
         def filterList = masterListService.getCombinedLowerCaseNamesListForUser(opus)
 
@@ -624,28 +623,32 @@ class SearchService extends BaseDataAccessService {
             BasicDBObject query = new BasicDBObject()
             query.put("opus", opus.id)
 
-            DBCollection collection = mongoClient.getDB(grailsApplication.config.grails.mongodb.databaseName).getCollection('profile')
+            MongoCollection collection = mongoClient.getDatabase(grailsApplication.config.grails.mongodb.databaseName).getCollection('profile')
             //            MapReduceCommand command = new MapReduceCommand(Profile.collection, mapFunction, reduceFunction,
-            MapReduceCommand command = new MapReduceCommand(collection, mapFunction, reduceFunction,
-                    UUID.randomUUID().toString().replaceAll("-", ""), MapReduceCommand.OutputType.REPLACE, query)
-            command.setFinalize(finalizeFunction)
-            command.setScope([
-                    filterList: filterList
-            ])
 
-            hierarchyView = collection.mapReduce(command)
+            BasicDBObject scope = new BasicDBObject()
+            scope.put("filterList", filterList)
+            String outputCollection = UUID.randomUUID().toString().replaceAll("-", "")
+            MapReduceIterable mapReduceIterable = collection.mapReduce(mapFunction, reduceFunction, org.bson.Document.class).finalizeFunction(finalizeFunction).scope(scope)
+                    .collectionName(outputCollection)
+                    .action(MapReduceAction.REPLACE)
+                    .filter(query)
+            mapReduceIterable.toCollection()
 
             // Use an aggregation to extract the individual classification entries from the standard mongo 'value' object
             // and sort them by rank then name. The results are then flattened into a single list of classification entries
-            results = hierarchyView.getOutputCollection().aggregate([
+            outputCollectionObject = mongoClient.getDatabase(grailsApplication.config.grails.mongodb.databaseName).getCollection(outputCollection)
+            results = outputCollectionObject.aggregate([
                     getBsonDocument([$unwind: '$value']),
                     getBsonDocument([$sort: ["value.rankOrder": 1, "value.name": 1]]),
                     Aggregates.skip(startFrom), Aggregates.limit(max < 0 ? DEFAULT_MAX_CHILDREN_RESULTS : max)
-            ])?.results()?.collect { it.value }?.flatten()
+            ])?.collect { it.value }?.flatten()
 
             // drop the temporary collection created during the map reduce process to clean up
+        } catch (Exception ex) {
+            log.error("An exception occurred while getting immediate children of a taxon", ex)
         } finally {
-            hierarchyView?.drop()
+            outputCollectionObject?.drop()
         }
 
         results
@@ -730,7 +733,7 @@ class SearchService extends BaseDataAccessService {
         List<Opus> opusList = opusIds?.findResults { Opus.findByUuidOrShortName(it, it) }
 
         // search results from private collections can only be seen by ALA Admins or users registered with the collection
-        boolean alaAdmin = authService.userInRole("ROLE_ADMIN")
+        boolean alaAdmin = userService.userInRole("ROLE_ADMIN")
         String userId = userService.getCurrentUserDetails()?.userId
 
         // if the user is ala admin, do nothing

@@ -1,7 +1,8 @@
 package au.org.ala.profile
 
+import au.ala.org.ws.security.RequireApiKey
 import au.org.ala.profile.util.ImageType
-
+@RequireApiKey
 class LocalImageService {
 
     Map getImageInfo(String imageId) {

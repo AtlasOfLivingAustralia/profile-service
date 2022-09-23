@@ -5,7 +5,6 @@ import au.org.ala.profile.util.CloneAndDraftUtil
 import au.org.ala.profile.util.ImageOption
 import au.org.ala.profile.util.StorageExtension
 import au.org.ala.profile.util.Utils
-import au.org.ala.web.AuthService
 import com.google.common.base.Stopwatch
 import grails.gorm.transactions.Transactional
 import groovy.transform.stc.ClosureParams
@@ -23,7 +22,7 @@ class ProfileService extends BaseDataAccessService {
 
     VocabService vocabService
     NameService nameService
-    AuthService authService
+    UserService userService
     BieService bieService
     DoiService doiService
     AttachmentService attachmentService
@@ -163,9 +162,9 @@ class ProfileService extends BaseDataAccessService {
 
         updateNameDetails(profile, matchedName, json.scientificName, json.manualHierarchy ?: [])
 
-        if (authService.getUserId()) {
+        if (userService.getUserId()) {
             Term term = vocabService.getOrCreateTerm("Author", opus.authorshipVocabUuid)
-            profile.authorship = [new Authorship(category: term, text: authService.getUserForUserId(authService.getUserId()).displayName)]
+            profile.authorship = [new Authorship(category: term, text: userService.getUserForUserId(userService.getUserId()).displayName)]
         }
 
         if (json.manuallyMatchedGuid) {
@@ -511,7 +510,7 @@ class ProfileService extends BaseDataAccessService {
         checkState profile
 
         profile.archiveComment = archiveComment
-        profile.archivedBy = authService.getUserForUserId(authService.getUserId()).displayName
+        profile.archivedBy = userService.getUserForUserId(userService.getUserId()).displayName
         profile.archivedDate = new Date()
         profile.archivedWithName = profile.scientificName
         profile.scientificName = "${profile.scientificName} (Archived ${new SimpleDateFormat('dd/MM/yyyy H:mm a').format(profile.archivedDate)})"
@@ -611,7 +610,7 @@ class ProfileService extends BaseDataAccessService {
             save profile
         } else {
             profile.draft = profile.draft ?: CloneAndDraftUtil.createDraft(profile)
-            profile.draft.createdBy = authService.getUserForUserId(authService.getUserId()).displayName
+            profile.draft.createdBy = userService.getUserForUserId(userService.getUserId()).displayName
 
             save profile
         }
@@ -1023,7 +1022,7 @@ class ProfileService extends BaseDataAccessService {
         publication.title = profile.scientificName
         publication.authors = profile.authorship.find { it.category.name ==~ /\b(?i)author.*/ }?.text
         publication.publicationDate = new Date()
-        publication.userId = authService.getUserId()
+        publication.userId = userService.getUserId()
         publication.uuid = UUID.randomUUID().toString()
         if (profile.publications) {
             publication.version = profile.publications.sort { it.version }.last().version ?: profile.publications.size()

@@ -16,7 +16,7 @@ class BaseIntegrationSpec extends Specification {
      */
     def setup() {
         grailsApplication.domainClasses.each {
-            it.clazz.collection.drop()
+            it.clazz.collection.remove([:])
         }
     }
 

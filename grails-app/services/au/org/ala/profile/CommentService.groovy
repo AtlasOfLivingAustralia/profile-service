@@ -1,10 +1,8 @@
 package au.org.ala.profile
 
-import au.org.ala.web.AuthService
-
 class CommentService extends BaseDataAccessService {
 
-    AuthService authService
+    UserService userService
 
     Comment createComment(String profileId, Map json) {
         checkArgument profileId
@@ -15,7 +13,7 @@ class CommentService extends BaseDataAccessService {
         Comment comment = new Comment(json)
         comment.profileUuid = profileId
 
-        comment.author = getOrCreateContributor(authService.getUserForUserId(authService.getUserId())?.displayName, authService.getUserId())
+        comment.author = getOrCreateContributor(userService.getUserForUserId(userService.getUserId())?.displayName, userService.getUserId())
 
         boolean success
         if (json.parentCommentId) {

@@ -126,11 +126,25 @@ environments:
 
 security:
     cas:
-        uriExclusionFilterPattern: '.*/assets/.*'
-        uriFilterPattern: ''
-        authenticateOnlyIfCookieFilterPattern: ''
-        authenticateOnlyIfLoggedInFilterPattern: ''
+        enabled: false
+        uriExclusionFilterPattern:
+            - '/assets/*'
+        uriFilterPattern:
+        authenticateOnlyIfCookieFilterPattern:
+        authenticateOnlyIfLoggedInFilterPattern:
 
+    oidc:
+        enabled: true
+        discoveryUri: https://auth.ala.org.au/cas/oidc/.well-known
+        scope: openid,profile,email,ala,roles
+        clientId: some-client-id
+        secret: some-client-secret
+
+    jwt:
+        discoveryUri: https://auth.ala.org.au/cas/oidc/.well-known
+        enabled: true
+        fallbackToLegacyBehaviour: true
+        requiredScopes: profile-service/write
 ---
 #reverse proxy support
 server:

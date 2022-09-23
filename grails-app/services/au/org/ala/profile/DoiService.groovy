@@ -1,6 +1,6 @@
 package au.org.ala.profile
 
-import au.org.ala.web.AuthService
+
 import au.org.ala.ws.service.WebService
 import grails.converters.JSON
 import org.springframework.http.HttpStatus
@@ -11,7 +11,7 @@ class DoiService {
 
     static final String PROVIDER_DATACITE = "DATACITE"
 
-    AuthService authService
+    UserService userService
     WebService webService
     def grailsApplication
 
@@ -90,7 +90,7 @@ class DoiService {
                 "description"         : "Taxonomic treatment for ${publication.title}",
                 "applicationUrl"      : applicationUrl,
                 "customLandingPageUrl": "${grailsApplication.config.doi.resolution.url.prefix}${publication.uuid}",
-                "userId"              : "${authService.getUserId()}",
+                "userId"              : "${userService.getUserId()}",
                 "providerMetadata"    : [
                         "resourceType"   : "Text",
                         "resourceText"   : "Species information",
@@ -100,7 +100,7 @@ class DoiService {
                         "publisher"      : "${opus.title}",
                         "publicationYear": Calendar.getInstance().get(Calendar.YEAR),
                         "subjects"       : [publication.title],
-                        "contributors"   : [[type: "Editor", name: "${authService.getUserForUserId(authService.getUserId())?.displayName}"]],
+                        "contributors"   : [[type: "Editor", name: "${userService.getUserForUserId(userService.getUserId())?.displayName}"]],
                         "createdDate"    : new SimpleDateFormat("yyyy-MM-dd").format(publication.publicationDate),
                         "descriptions"   : [[type: "Other", text: "Taxonomic treatment for ${publication.title}"]]
                 ]
