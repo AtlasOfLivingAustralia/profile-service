@@ -2,6 +2,8 @@ arch: amd64
 os: linux
 dist: focal
 language: groovy
+addons:
+  mongodb: 5.0
 jdk:
   - openjdk11
 
