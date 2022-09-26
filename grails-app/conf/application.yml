@@ -117,6 +117,7 @@ environments:
                 host: localhost
                 port: 27017
                 databaseName: profiles-test
+            serverURL: http://devt.ala.org.au:8080
     production:
         grails:
             mongodb:
