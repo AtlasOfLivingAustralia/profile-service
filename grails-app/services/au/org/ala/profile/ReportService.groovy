@@ -36,7 +36,11 @@ class ReportService {
 
                 or {
                     isNull "matchedName"
-                    neProperty("fullName", "matchedName.fullName")
+                    and {
+                        isNotNull "matchedName"
+                        neProperty("fullName", "matchedName.fullName")
+                    }
+
                     isNull "nslNameIdentifier"
                 }
 
@@ -52,7 +56,10 @@ class ReportService {
 
                 or {
                     isNull "matchedName"
-                    neProperty("fullName", "matchedName.fullName")
+                    and {
+                        isNotNull "matchedName"
+                        neProperty("fullName", "matchedName.fullName")
+                    }
                     isNull "nslNameIdentifier"
                 }
 
