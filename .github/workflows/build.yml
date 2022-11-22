@@ -54,7 +54,7 @@ jobs:
           properties: 'profileServiceVersion'
 
       - name: Get the package id for the version read from the properties file
-          uses: castlabs/get-package-version-id-action@v2.0
+        uses: castlabs/get-package-version-id-action@v2.0
         id: versions
         with:
           version:  ${{steps.read_property.outputs.profileServiceVersion}}
