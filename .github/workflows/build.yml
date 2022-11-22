@@ -24,15 +24,6 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
 
-      - name: Install nodejs
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
-      - run: npm install
-      - name: Validate Gradle wrapper
-        uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
-
       - name: Install and start elasticsearch
         run: |
           curl https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.16.3-amd64.deb -o elasticsearch.deb
