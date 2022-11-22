@@ -15,7 +15,7 @@ buildscript {
     }
 }
 
-version $profileServiceVersion
+version "$profileServiceVersion"
 group "au.org.ala"
 
 apply plugin:"eclipse"
