@@ -15,7 +15,7 @@ buildscript {
     }
 }
 
-version "5.0-API-SNAPSHOT"
+version "$profileServiceVersion"
 group "au.org.ala"
 
 apply plugin:"eclipse"
