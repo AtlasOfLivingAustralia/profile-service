@@ -455,6 +455,12 @@ class ProfileController extends BaseController {
                 profile.privateMode = true
             }
 
+            profile.attributes?.each { attr ->
+                if (attr.constraintList) {
+                    attr.constraintListExpanded = Term.findAllByUuidInList(attr.constraintList)
+                }
+            }
+
             def florulaListId = masterListService.getFlorulaListIdForUser(request, profile.opus.uuid)
             profile.opus.florulaListId = florulaListId
 

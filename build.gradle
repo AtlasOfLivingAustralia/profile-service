@@ -15,7 +15,7 @@ buildscript {
     }
 }
 
-version "5.0-API-SNAPSHOT"
+version "5.0-MANGROVE-SNAPSHOT"
 group "au.org.ala"
 
 apply plugin:"eclipse"
@@ -104,7 +104,7 @@ dependencies {
     // app specific dependencies
     implementation "org.grails.plugins:ala-auth:5.1.1"
     implementation "au.org.ala:userdetails-service-client:2.0.0"
-    implementation "org.grails.plugins:ala-ws-security-plugin:4.1.2"
+    implementation "org.grails.plugins:ala-ws-security-plugin:4.3.4-SNAPSHOT"
     implementation ("org.grails.plugins:ala-ws-plugin:3.1.2") {
         exclude module: 'asset-pipeline-grails'
         exclude module: 'xerces'

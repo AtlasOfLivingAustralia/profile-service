@@ -37,9 +37,12 @@ class OpusService extends BaseDataAccessService {
         Term authorTerm = new Term(name: "Author", vocab: authorshipVocab, uuid: UUID.randomUUID(), required: true)
         authorshipVocab.addToTerms(authorTerm)
         save authorshipVocab
+        Vocab groupVocab = new Vocab(name: "${opus.title} Group Vocabulary", strict: true)
+        save groupVocab
 
         opus.attributeVocabUuid = attributeVocab.uuid
         opus.authorshipVocabUuid = authorshipVocab.uuid
+        opus.groupVocabUuid = groupVocab.uuid
 
         Glossary glossary = new Glossary()
         save glossary
@@ -390,6 +393,11 @@ class OpusService extends BaseDataAccessService {
             }
             if (opus.authorshipVocabUuid) {
                 Vocab vocab = Vocab.findByUuid(opus.authorshipVocabUuid)
+                Term.deleteAll(vocab.terms)
+                delete vocab
+            }
+            if (opus.groupVocabUuid) {
+                Vocab vocab = Vocab.findByUuid(opus.groupVocabUuid)
                 Term.deleteAll(vocab.terms)
                 delete vocab
             }

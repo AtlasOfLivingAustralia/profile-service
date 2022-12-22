@@ -35,6 +35,7 @@ class OpusMarshaller {
                     keybaseKeyId               : opus.keybaseKeyId,
                     attributeVocabUuid         : opus.attributeVocabUuid,
                     authorshipVocabUuid        : opus.authorshipVocabUuid,
+                    groupVocabUuid             : opus.groupVocabUuid,
                     autoDraftProfiles          : opus.autoDraftProfiles,
                     glossaryUuid               : opus.glossary?.uuid,
                     attachments                : opus.attachments ?: [],

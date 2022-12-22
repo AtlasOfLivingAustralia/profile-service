@@ -1166,6 +1166,9 @@ class ProfileService extends BaseDataAccessService {
                 uuid: UUID.randomUUID().toString(),
                 title: titleTerm,
                 text: data.text,
+                numbers: data.numbers?.collect { Double.parseDouble(it.toString()) },
+                numberRange: data.numberRange ? new NumberRange(data.numberRange) : null,
+                constraintList: data.constraintList ?: null,
                 source: data.source
         )
         attribute.creators = creators
@@ -1229,6 +1232,9 @@ class ProfileService extends BaseDataAccessService {
             attribute.title = titleTerm
         }
         attribute.text = data.text
+        attribute.numbers = data.numbers != null ? data.numbers?.collect { Double.parseDouble(it?.toString()) } : null
+        attribute.numberRange = data.numberRange != null ? new NumberRange(data.numberRange) : null
+        attribute.constraintList = data.constraintList ?: null
         attribute.source = data.source
 
         def contributor

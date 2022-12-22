@@ -60,6 +60,9 @@ class CloneAndDraftUtil {
             if (existing) {
                 existing.title = it.title
                 existing.text = it.text
+                existing.numbers = it.numbers
+                existing.numberRange = it.numberRange
+                existing.constraintList = it.constraintList
             } else {
                 it.profile = profile
                 profile.addToAttributes(it)
@@ -185,6 +188,9 @@ class CloneAndDraftUtil {
             clone.id = source.id
         }
         clone.text = source.text
+        clone.numbers = source.numbers
+        clone.numberRange = source.numberRange
+        clone.constraintList = source.constraintList
         clone.source = source.source
 
         // title, original, creators & editors are not cloned - copy by reference, not value

@@ -14,9 +14,16 @@ class VocabService extends BaseDataAccessService {
     MongoClient mongo
     def grailsApplication
 
-    boolean updateVocab(String vocabId, Map data) {
+    Map updateVocab(String vocabId, Map data) {
         log.debug("Updating vocabulary ${vocabId} with data ${data}")
-        Vocab vocab = Vocab.findByUuid(vocabId);
+        Vocab vocab
+        if(vocabId){
+            vocab = Vocab.findByUuid(vocabId)
+        } else {
+            vocab = new Vocab(name: data.name, terms: [])
+        }
+
+        List toDelete = []
 
         vocab.strict = data.strict as boolean
 
@@ -27,6 +34,12 @@ class VocabService extends BaseDataAccessService {
         Set<String> retainedTermIds = []
 
         data.terms.each { item ->
+            if(item.groupBy) {
+                item.groupBy = Term.findByUuid(item.groupBy.termId)
+            } else {
+                item.groupBy = null
+            }
+
             if (item.termId) {
                 Term term = Term.findByUuid(item.termId)
 
@@ -37,16 +50,27 @@ class VocabService extends BaseDataAccessService {
                     term.required = item.required == null ? false : item.required.toBoolean()
                     term.summary = item.summary == null ? false : item.summary.toBoolean()
                     term.containsName = item.containsName == null ? false : item.containsName.toBoolean()
+                    term.dataType = item.dataType ?: null
+                    term.listTerms = item.listTerms ?: []
+                    term.groupBy = item.groupBy
+                    term.constraintListVocab = item.constraintListVocab ?: null
+                    term.unit = item.unit ?: null
                 }
             } else {
                 // GRAILS-8061 beforeValidate does not get called on child records during a cascade save of the parent
                 // Therefore, we cannot rely on the beforeValidate method of Term, which usually creates the UUID.
                 Term term = new Term(uuid: UUID.randomUUID().toString(),
                         name: item.name,
-                        order: item.order ?: vocab.terms.size() + 1,
+                        order: item.order == null ?: vocab.terms.size() + 1,
                         required: item.required.toBoolean(),
                         summary: item.summary.toBoolean(),
-                        containsName: item.containsName.toBoolean())
+                        containsName: item.containsName.toBoolean(),
+                        groupBy: item.groupBy,
+                        listTerms: item.listTerms ?: [],
+                        dataType: item.dataType ?: null,
+                        constraintListVocab: item.constraintListVocab ?: null,
+                        unit: item.unit
+                )
                 term.vocab = vocab
                 vocab.terms << term
             }
@@ -59,11 +83,17 @@ class VocabService extends BaseDataAccessService {
                     term.vocab = null
                     log.debug("Deleting term ${item.name}")
                     term.delete()
+                    toDelete.add(item)
                 }
             }
         }
 
-        save vocab
+        if (toDelete) {
+            vocab.terms.removeAll(toDelete)
+        }
+
+        boolean updated = save vocab
+        [updated: updated, vocab: vocab]
     }
 
     Term getOrCreateTerm(String name, String vocabId, String excludeTerm = null) {
@@ -93,9 +123,10 @@ class VocabService extends BaseDataAccessService {
     }
 
     int findUsagesOfTerm(String opusId, String vocabId, String termUuid) {
-
-        Term term = Term.findByVocabAndUuid(Vocab.findByUuid(vocabId), termUuid)
+        Vocab vocab = Vocab.findByUuid(vocabId)
+        Term term = Term.findByVocabAndUuid(vocab, termUuid)
         Opus opus = Opus.findByUuid(opusId)
+        Term constraintListVocabTerm = Term.findByConstraintListVocab(vocabId)
 
         // Check if this is acknowledgement term
         if (opus.authorshipVocabUuid == vocabId) {
@@ -103,7 +134,7 @@ class VocabService extends BaseDataAccessService {
 
             return profiles.size()
 
-        } else {
+        } else if (opus.attributeVocabUuid == vocabId) {
             List<Attribute> attributes = Attribute.findAllByTitle(term)
 
             attributes.size()
@@ -115,7 +146,29 @@ class VocabService extends BaseDataAccessService {
 
             return (attributes.size() + profiles.size())
 
+        } else if (opus.groupVocabUuid == vocabId) {
+            vocab = Vocab.findByUuid(opus.attributeVocabUuid)
+            if (vocab) {
+                List<Term> terms = vocab.terms.findAll {
+                    it.groupBy?.uuid == termUuid
+                }
+
+                return terms.size()
+            }
+        } else if (constraintListVocabTerm) {
+//            todo: calculate exact number of profiles using this term.
+            List<Attribute> attributes = Attribute.findAllByConstraintList(term.uuid)
+
+            // Draft for profiles store attributes as well
+            List<Profile> profiles = Profile.findAll {
+                eq("draft.attributes.constraintList", term.uuid)
+            }
+
+            return (attributes.size() + profiles.size())
+        } else {
+            return 0
         }
+
     }
 
     Map<String, Integer> replaceUsagesOfTerm(String opusId, jsonMap) {

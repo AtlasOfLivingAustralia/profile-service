@@ -25,6 +25,8 @@ import java.text.SimpleDateFormat
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentSkipListSet
 import java.util.concurrent.atomic.AtomicInteger
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 import static groovyx.gpars.GParsPool.withPool
 
@@ -34,6 +36,7 @@ class ImportService extends BaseDataAccessService {
 
     ProfileService profileService
     NameService nameService
+    VocabService vocabService
 
     ElasticSearchService elasticSearchService
     def grailsApplication
@@ -74,6 +77,8 @@ class ImportService extends BaseDataAccessService {
             Opus opus = Opus.findByUuid(opusId);
 
             Map<String, Map> profileResults = [:] as ConcurrentHashMap
+            Map<String, String> termConcurrentListVocabMapping = [:] as ConcurrentHashMap
+            Map<String, String> vocabIdTermNameTermIdMapping = [:]
             Date startTime = new Date()
 
             AtomicInteger success = new AtomicInteger(0)
@@ -211,10 +216,10 @@ class ImportService extends BaseDataAccessService {
                                     if (it.title && it.text) {
                                         Term term = vocab.get(it.title.trim())
 
-                                        String text = it.stripHtml?.booleanValue() ? Utils.cleanupText(it.text) : it.text
-                                        if (text?.trim()) {
-                                            Attribute attribute = new Attribute(title: term, text: text)
+                                        if (it.text?.trim()) {
+                                            Attribute attribute = new Attribute(title: term)
                                             attribute.uuid = UUID.randomUUID().toString()
+                                            getContent(it, attribute, term, termConcurrentListVocabMapping, vocabIdTermNameTermIdMapping)
 
                                             if (it.creators) {
                                                 attribute.creators = []
@@ -289,6 +294,7 @@ class ImportService extends BaseDataAccessService {
             }
             log.debug "${success} of ${profilesJson.size()} records imported"
 
+            updateTermWithConstraintListVocab(termConcurrentListVocabMapping)
             Date finishTime = new Date()
 
             importReportFile << ([started: new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(startTime),
@@ -296,6 +302,84 @@ class ImportService extends BaseDataAccessService {
                                   profiles: profileResults] as JSON).toString()
 
             importReportFile.renameTo("${grailsApplication.config.temp.file.directory}/${importId}.json")
+        }
+    }
+
+    def updateTermWithConstraintListVocab(Map termConcurrentListVocabMapping){
+        termConcurrentListVocabMapping.each { termId, vocabId ->
+            Term term = Term.findByUuid(termId)
+            term?.constraintListVocab = vocabId
+            term.save(flush: true)
+        }
+    }
+
+    def getContent(Map body, Attribute attribute, Term title, Map termConcurrentListVocabMapping, Map vocabIdTermNameTermIdMapping) {
+        switch (title.dataType) {
+            case 'number':
+                getNumbers(body.text, attribute)
+                break;
+            case 'range':
+                getRange(body.text, attribute)
+                break;
+            case 'list':
+            case 'singleselect':
+                synchronized(this){
+                    getTerms(body.text, attribute, title, termConcurrentListVocabMapping, vocabIdTermNameTermIdMapping)
+                }
+                break;
+            case 'text':
+            default:
+                attribute.text = body.stripHtml?.booleanValue() ? Utils.cleanupText(body.text) : body.text
+                break
+        }
+
+        attribute
+    }
+
+    def getNumbers (String text, Attribute attribute) {
+        attribute.numbers = text?.split(',').collect {
+            Double.parseDouble(it)
+        }
+
+        attribute
+    }
+
+    def getRange(String text, Attribute attribute) {
+        Map result = [:]
+        Pattern pattern = Pattern.compile("(\\d+)\\s+-\\s+(\\d+)")
+        Matcher matcher = pattern.matcher(text)
+        if(matcher.find()) {
+            attribute.numberRange = new NumberRange(from: Double.parseDouble(matcher.group(1)), to: Double.parseDouble(matcher.group(2)))
+        }
+
+        pattern = Pattern.compile("([\\[\\(]*)(\\d+)\\s+-\\s+(\\d+)([\\]\\)]*)")
+        matcher = pattern.matcher(text)
+        if(matcher.find()) {
+            Map range = [from: Double.parseDouble(matcher.group(2)), to: Double.parseDouble(matcher.group(3))]
+            range.fromInclusive = matcher.group(1) == '[' ? true : matcher.group(1) == '(' ? false : true
+            range.toInclusive = matcher.group(4) == ']' ? true : matcher.group(4) == ')' ? false : true
+            attribute.numberRange = new NumberRange(range)
+        }
+    }
+
+    def getTerms(String text, Attribute attribute, Term title, Map termConcurrentListVocabMapping, Map vocabIdTermNameTermIdMapping) {
+        if(text) {
+            List parts = text.split("\\s*,\\s*")
+            attribute.constraintList = parts?.collect { part ->
+                if(!termConcurrentListVocabMapping[title.uuid] && !title.constraintListVocab) {
+                    Map result = vocabService.updateVocab(null, [name: "Contraint list for ${title.name}"])
+                    termConcurrentListVocabMapping[title.uuid] = result.vocab.uuid
+                }
+
+                String vocabId = termConcurrentListVocabMapping[title.uuid] ?: title.constraintListVocab
+                part = part.trim()
+                if (!vocabIdTermNameTermIdMapping[vocabId + part]) {
+                    Term term = getOrCreateTerm(vocabId, part)
+                    vocabIdTermNameTermIdMapping[vocabId + part] = term.uuid
+                }
+
+                vocabIdTermNameTermIdMapping[vocabId+part]
+            }
         }
     }
 

@@ -38,7 +38,7 @@ class UrlMappings {
         "/opus/$opusId/masterList/sync" controller: "opus", action: [POST: 'syncMasterList']
         "/opus/$opusId/masterList/isSyncing" controller: "opus", action: [GET: 'isMasterListSyncing']
         "/opus/$opusId/florulaList" controller: "opus", action: [POST: 'updateFlorulaListForUser']
-        "/opus/$opusId/vocab/" controller: "vocab", action: "index"
+        "/opus/$opusId/vocab/" controller: "vocab", action: [GET: "index", POST: "update"]
         "/opus/$opusId/vocab/$vocabId" controller: "vocab", action: [GET: "show", POST: "update"]
         "/opus/$opusId/vocab/usages/find" controller: "vocab", action: "findUsagesOfTerm"
         "/opus/$opusId/vocab/usages/replace" controller: "vocab", action: [POST: "replaceUsagesOfTerm"]
