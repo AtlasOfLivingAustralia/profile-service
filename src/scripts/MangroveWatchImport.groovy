@@ -15,13 +15,12 @@ class MangroveWatchImport {
 
 
     static void main(args) {
-        def cli = new CliBuilder(usage: "groovy MangroveWatchImport -f <datafile> -o opusId -p <profileServiceBaseUrl> -d <delimiter default ~> -r <reportfile>")
+        def cli = new CliBuilder(usage: "groovy MangroveWatchImport -f <datafile> -o opusId -p <profileServiceBaseUrl> -r <reportfile> -t <bearer token>")
         cli.f(longOpt: "file", "source data file", required: true, args: 1)
         cli.o(longOpt: "opusId", "UUID of the NSW Flora Opus", required: true, args: 1)
         cli.p(longOpt: "profileServiceBaseUrl", "Base URL of the profile service", required: true, args: 1)
-        cli.d(longOpt: "delimiter", "Data file delimiter (defaults to ~)", required: false, args: 1)
         cli.r(longOpt: "reportFile", "File to write the results of the import to", required: false, args: 1)
-
+        cli.t(longOpt: "token", "Bearer token", required: false, args: 1)
         OptionAccessor opt = cli.parse(args)
 
         if (!opt) {
@@ -34,7 +33,7 @@ class MangroveWatchImport {
         String REPORT_FILE = opt.r ?: "report.txt"
         String PROFILE_SERVICE_IMPORT_URL = "${opt.p}/import/profile"
         String PROFILE_SERVICE_REPORT_URL = "${opt.p}/"
-        String DELIMITER = opt.d ?: "~"
+        String TOKEN = opt.t ?: ""
 
         List profiles = []
 
@@ -43,11 +42,8 @@ class MangroveWatchImport {
 
         Map<String, List<Integer>> scientificNames = [:]
         Map<Integer, String> invalidLines = [:]
-        String FILE_ENCODING = "UTF-8",
-                DATA_DIR= "/Users/var03f/Documents/ala/profile/mangrove watch"
-        String genusField = "Genus",
-               speciesField = "Species Name",
-               familyField = "Family",
+        String FILE_ENCODING = "UTF-8"
+        String speciesField = "Species Name",
                 nameField = "Species Authority Name"
 
 
@@ -57,7 +53,6 @@ class MangroveWatchImport {
             rpt.createNewFile()
         }
 
-        List collectionImages = []
         List attributeNames = [
                 "Plant Structure",
                 "Stem Spines",
@@ -132,7 +127,7 @@ class MangroveWatchImport {
                 "Iucn Red List Comment"
         ]
 
-        def csv = parseCsv(new File("${DATA_DIR}/mangrovewatch.csv").newReader(FILE_ENCODING))
+        def csv = parseCsv(new File(DATA_FILE).newReader(FILE_ENCODING))
         csv.each { line ->
             List attributes = []
             String scientificName = line[speciesField]?.trim()
@@ -174,7 +169,7 @@ class MangroveWatchImport {
         def service = new RESTClient(PROFILE_SERVICE_IMPORT_URL)
         def resp
         try {
-            resp = service.post(body: opus, requestContentType: JSON, headers: [Authorization: "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsIm9yZy5hcGVyZW8uY2FzLnNlcnZpY2VzLlJlZ2lzdGVyZWRTZXJ2aWNlIjoiMTY1NzQzMDkwOTEwMyIsImtpZCI6ImF1dGgtdGVzdC5hbGEub3JnLmF1In0.eyJzdWIiOiJ0ZW1pLnZhcmdoZXNlQGNzaXJvLmF1Iiwicm9sZSI6WyJST0xFX0FETUlOIiwiUk9MRV9BUElfRURJVE9SIiwiUk9MRV9BUFBEX1VTRVIiLCJST0xFX0JBU0UiLCJST0xFX0NPTExFQ1RJT05fRURJVE9SIiwiUk9MRV9FRElUT1IiLCJST0xFX01EQkFfQURNSU4iLCJST0xFX1BIWUxPTElOS19BRE1JTiIsIlJPTEVfVVNFUiJdLCJvYXV0aENsaWVudElkIjoib2lkYy1leHBvLXRlc3QiLCJpc3MiOiJodHRwczpcL1wvYXV0aC10ZXN0LmFsYS5vcmcuYXVcL2Nhc1wvb2lkYyIsInByZWZlcnJlZF91c2VybmFtZSI6InRlbWkudmFyZ2hlc2VAY3Npcm8uYXUiLCJ1c2VyaWQiOiI0MjI4IiwiY2xpZW50X2lkIjoib2lkYy1leHBvLXRlc3QiLCJ1cGRhdGVkX2F0IjoiMjAxMi0xMS0xOSAwMTo0MToxMyIsImdyYW50X3R5cGUiOiJBVVRIT1JJWkFUSU9OX0NPREUiLCJzY29wZSI6WyJhbGEiLCJyb2xlcyIsInVzZXJfZGVmaW5lZCJdLCJzZXJ2ZXJJcEFkZHJlc3MiOiIxMjcuMC4wLjEiLCJsb25nVGVybUF1dGhlbnRpY2F0aW9uUmVxdWVzdFRva2VuVXNlZCI6dHJ1ZSwic3RhdGUiOiIiLCJleHAiOjE2NzEwMDEzOTYsImlhdCI6MTY3MDkxNDk5NiwianRpIjoiQVQtMTY0LUlCTFVyRmlVYmtjUDBES1VzNEROVHpWUm9HQ1FNTFByIiwiZW1haWwiOiJ0ZW1pLnZhcmdoZXNlQGNzaXJvLmF1Iiwib3JnLmFwZXJlby5jYXMuYXV0aGVudGljYXRpb24ucHJpbmNpcGFsLlJFTUVNQkVSX01FIjp0cnVlLCJjbGllbnRJcEFkZHJlc3MiOiIxNDAuMjUzLjIyOC4xNjMiLCJpc0Zyb21OZXdMb2dpbiI6ZmFsc2UsImVtYWlsX3ZlcmlmaWVkIjoiMSIsImF1dGhlbnRpY2F0aW9uRGF0ZSI6IjIwMjItMTItMDRUMjI6NTk6MDIuMTU1MzQ1WiIsInN1Y2Nlc3NmdWxBdXRoZW50aWNhdGlvbkhhbmRsZXJzIjoiUXVlcnlEYXRhYmFzZUF1dGhlbnRpY2F0aW9uSGFuZGxlciIsInVzZXJBZ2VudCI6Ik1vemlsbGFcLzUuMCAoTWFjaW50b3NoOyBJbnRlbCBNYWMgT1MgWCAxMF8xNV83KSBBcHBsZVdlYktpdFwvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgUG9zdG1hblwvOS4yOS4wIENocm9tZVwvOTQuMC40NjA2LjgxIEVsZWN0cm9uXC8xNS41LjcgU2FmYXJpXC81MzcuMzYiLCJnaXZlbl9uYW1lIjoidGVtaSIsIm5vbmNlIjoiIiwiY3JlZGVudGlhbFR5cGUiOiJSZW1lbWJlck1lVXNlcm5hbWVQYXNzd29yZENyZWRlbnRpYWwiLCJzYW1sQXV0aGVudGljYXRpb25TdGF0ZW1lbnRBdXRoTWV0aG9kIjoidXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6MS4wOmFtOnVuc3BlY2lmaWVkIiwiYXVkIjoiaHR0cDpcL1wvbG9jYWxob3N0OjMwMDAiLCJhdXRoZW50aWNhdGlvbk1ldGhvZCI6IlF1ZXJ5RGF0YWJhc2VBdXRoZW50aWNhdGlvbkhhbmRsZXIiLCJuYW1lIjoidGVtaSB2YXJnaGVzZSIsInNjb3BlcyI6WyJ1c2VyX2RlZmluZWQiLCJyb2xlcyIsImFsYSJdLCJmYW1pbHlfbmFtZSI6InZhcmdoZXNlIn0.JQ7peQv9oA0LQQOxYRf99XXuIlDHJlovVhM9cf7ovxPJ22r9VncbkBM89Z_C2wltvI5Riq2dwPG9-JlQYD-vu9ytZ0Imkp2c7s6Hyl86e82zeTpvtDDTdgitJioE-rJC5IOWNt3lA1BGFFGK21Oah5O4idQEv1Lk4CPR-VAbHAIrISUD3hZQMYc7-51EeM6RFN9fRrjYH5JQQe2niK5vNdSyNEwj_QoB4sDHmls30NQ09f1KGZNBHPB546KkWhj4pi5P015j0YnloD1FKnZgUu8K6Ptfbec6RtkLf0e2xlCgvz42AZyqnTJCFr0gOq16lnuxz1x13Pylyct1_WL3Rw"])
+            resp = service.post(body: opus, requestContentType: JSON, headers: [Authorization: "Bearer ${TOKEN}"])
         } catch (groovyx.net.http.HttpResponseException ex) {
             println ex.statusCode
             println ex.response.data
