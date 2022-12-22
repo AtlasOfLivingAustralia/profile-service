@@ -186,7 +186,7 @@ class MangroveWatchImport {
         Thread.sleep(sleepTime)
 
         service = new RESTClient("${PROFILE_SERVICE_REPORT_URL}import/${importId}/report")
-        resp = service.get([:]).data
+        resp = service.get(headers: [Authorization: "Bearer ${TOKEN}"]).data
 
         while (resp.status == "IN_PROGRESS") {
             println "${new SimpleDateFormat("HH:mm:ss.S").format(new Date())} Waiting for import to complete..."
