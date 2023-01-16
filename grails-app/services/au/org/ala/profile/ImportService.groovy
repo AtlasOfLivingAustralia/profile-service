@@ -336,16 +336,41 @@ class ImportService extends BaseDataAccessService {
         attribute
     }
 
+    /**
+     * Parses the given text and sets the numbers for the given attribute.
+     * The method splits the text by comma, and then converts each element
+     * to a double, and save it in the attribute.numbers field.
+     *
+     * @param text the text to be parsed
+     * @param attribute the attribute whose numbers will be set
+     */
+
     def getNumbers (String text, Attribute attribute) {
-        attribute.numbers = text?.split(',').collect {
-            Double.parseDouble(it)
+        try {
+            if (text) {
+                attribute.numbers = text.split(',').collect {
+                    Double.parseDouble(it)
+                }
+            }
+        } catch (NumberFormatException nfe) {
+            log.error("Cannot convert text (${text}) to double", nfe)
         }
 
         attribute
     }
 
+    /**
+     * Parses the given text and sets the number range for the given attribute.
+     * The method looks for patterns of the form "x - y", "[x - y)" in the text,
+     * where x and y are numbers, uses the first group of digits as the start of the range
+     * and the second group as the end of the range, and '[' or ']' is used to signify inclusive range.
+     * It also takes into account whether the range is inclusive or exclusive based on the
+     * enclosing brackets. If enclosing bracket is missing, range is inclusive by default.
+     *
+     * @param text the text to be parsed
+     * @param attribute the attribute whose number range will be set
+     */
     def getRange(String text, Attribute attribute) {
-        Map result = [:]
         Pattern pattern = Pattern.compile("(\\d+)\\s+-\\s+(\\d+)")
         Matcher matcher = pattern.matcher(text)
         if(matcher.find()) {
@@ -365,7 +390,7 @@ class ImportService extends BaseDataAccessService {
     def getTerms(String text, Attribute attribute, Term title, Map termConcurrentListVocabMapping, Map vocabIdTermNameTermIdMapping) {
         if(text) {
             List parts = text.split("\\s*,\\s*")
-            attribute.constraintList = parts?.collect { part ->
+            attribute.constraintList = parts?.collect { String part ->
                 if(!termConcurrentListVocabMapping[title.uuid] && !title.constraintListVocab) {
                     Map result = vocabService.updateVocab(null, [name: "Contraint list for ${title.name}"])
                     termConcurrentListVocabMapping[title.uuid] = result.vocab.uuid

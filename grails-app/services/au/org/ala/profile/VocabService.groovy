@@ -51,7 +51,6 @@ class VocabService extends BaseDataAccessService {
                     term.summary = item.summary == null ? false : item.summary.toBoolean()
                     term.containsName = item.containsName == null ? false : item.containsName.toBoolean()
                     term.dataType = item.dataType ?: null
-                    term.listTerms = item.listTerms ?: []
                     term.groupBy = item.groupBy
                     term.constraintListVocab = item.constraintListVocab ?: null
                     term.unit = item.unit ?: null
@@ -66,7 +65,6 @@ class VocabService extends BaseDataAccessService {
                         summary: item.summary.toBoolean(),
                         containsName: item.containsName.toBoolean(),
                         groupBy: item.groupBy,
-                        listTerms: item.listTerms ?: [],
                         dataType: item.dataType ?: null,
                         constraintListVocab: item.constraintListVocab ?: null,
                         unit: item.unit

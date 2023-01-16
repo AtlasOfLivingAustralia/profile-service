@@ -11,4 +11,9 @@ class NumberRange {
             val < range.to
         }
     }
+
+    @Override
+    String toString() {
+        (fromInclusive ? "[" : "(") + from + " - " + to + (toInclusive ? "]" : ")")
+    }
 }

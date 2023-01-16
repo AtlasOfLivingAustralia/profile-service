@@ -33,7 +33,7 @@ class AttributeMarshaller {
                     editors               : attr.editors?.collect { it.name },
                     original              : attr.original,
                     dataType              : attr.title.dataType ?: 'text',
-                    listTerms             : attr.title.listTerms,
+                    groupName             : attr.title?.groupBy?.name ?: "",
                     groupBy               : attr.title?.groupBy ? marshalTerm(attr.title?.groupBy) : null,
                     unit                  : attr.title.unit,
                     profile               : attr.profile ? marshalProfile(attr.profile) : null
