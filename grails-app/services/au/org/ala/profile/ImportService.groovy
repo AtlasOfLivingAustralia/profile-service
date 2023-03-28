@@ -361,7 +361,7 @@ class ImportService extends BaseDataAccessService {
 
     /**
      * Parses the given text and sets the number range for the given attribute.
-     * The method looks for patterns of the form "x - y", "[x - y)" in the text,
+     * The method looks for patterns of the form "x", "x - y" or "[x - y)" in the text,
      * where x and y are numbers, uses the first group of digits as the start of the range
      * and the second group as the end of the range, and '[' or ']' is used to signify inclusive range.
      * It also takes into account whether the range is inclusive or exclusive based on the
@@ -371,8 +371,15 @@ class ImportService extends BaseDataAccessService {
      * @param attribute the attribute whose number range will be set
      */
     def getRange(String text, Attribute attribute) {
-        Pattern pattern = Pattern.compile("(\\d+)\\s+-\\s+(\\d+)")
+        Pattern pattern = Pattern.compile("\\s*(\\d+)\\s*")
         Matcher matcher = pattern.matcher(text)
+        if(matcher.find()) {
+            attribute.numberRange = new NumberRange(from: Double.parseDouble(matcher.group(1)), to: Double.parseDouble(matcher.group(1)))
+            return
+        }
+
+        pattern = Pattern.compile("(\\d+)\\s+-\\s+(\\d+)")
+        matcher = pattern.matcher(text)
         if(matcher.find()) {
             attribute.numberRange = new NumberRange(from: Double.parseDouble(matcher.group(1)), to: Double.parseDouble(matcher.group(2)))
         }
