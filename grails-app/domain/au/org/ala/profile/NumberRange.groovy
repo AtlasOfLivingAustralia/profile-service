@@ -8,7 +8,7 @@ class NumberRange {
 
     static constraints = {
         from validator: { val, NumberRange range->
-            val < range.to
+            val <= range.to
         }
     }
 
