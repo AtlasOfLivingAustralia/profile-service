@@ -110,8 +110,16 @@ class MangroveWatchImport {
                 "Radicle Surface",
                 "Mangrove Or Associate",
                 "Native?",
+                "Species Name",
+                "Genus",
+                "Species",
+                "Subspecies",
+                "Variety",
+                "Species Authority Name",
                 "Common Name",
                 "Synopsis Text",
+                "Family Name",
+                "Family Authority Name",
                 "Genus Note Text",
                 "Species Note Text",
                 "Species Feature Text",
@@ -124,6 +132,11 @@ class MangroveWatchImport {
                 "Dispersal Text",
                 "Local Distribution Text",
                 "Iucn Red List Text",
+                "Distribution - Australia Text",
+                "Distribution - World Countries",
+                "Distribution - Australia NRM",
+                "Genus Authority",
+                "References",
                 "Iucn Red List Comment"
         ]
 
