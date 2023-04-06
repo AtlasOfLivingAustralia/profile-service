@@ -233,6 +233,7 @@ class CloneAndDraftUtil {
         clone.title = source.title
         clone.uuid = source.uuid
         clone.url = source.url
+        clone.category = source.category
 
         clone
     }

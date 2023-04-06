@@ -18,6 +18,7 @@ class Attachment {
     String rights
     String licence
     String creator
+    String category
     Date createdDate
 
     @Transient
@@ -34,5 +35,10 @@ class Attachment {
         creator nullable: true
         licence nullable: true
         createdDate nullable: true
+        category nullable: true
+    }
+
+    static constraints = {
+        category blank: true,  inList: ['Management', 'General']
     }
 }

@@ -337,7 +337,7 @@ class OpusService extends BaseDataAccessService {
             }
         }
 
-        if (json.privateCollection) {
+        if (json.privateCollection != null) {
             opus.privateCollection = json.privateCollection?.toBoolean() ?: false
             if (opus.privateCollection) {
                 revokeAllSupportingCollectionAccess(opus)
@@ -680,13 +680,14 @@ class OpusService extends BaseDataAccessService {
                 existing.rightsHolder = metadata.rightsHolder
                 existing.licence = metadata.licence
                 existing.creator = metadata.creator
+                existing.category = metadata.category
                 existing.createdDate = createdDate
             }
         } else {
             Attachment newAttachment = new Attachment(uuid: UUID.randomUUID().toString(), url: metadata.url,
                     title: metadata.title, description: metadata.description, filename: metadata.filename,
                     contentType: file?.contentType, rights: metadata.rights, createdDate: createdDate,
-                    rightsHolder: metadata.rightsHolder, licence: metadata.licence, creator: metadata.creator)
+                    rightsHolder: metadata.rightsHolder, licence: metadata.licence, creator: metadata.creator, category: metadata.category)
             if (file) {
                 String extension = Utils.getFileExtension(file.originalFilename)
                 attachmentService.saveAttachment(opus.uuid, null, newAttachment.uuid, file, extension)
