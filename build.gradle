@@ -102,10 +102,10 @@ dependencies {
     testRuntimeOnly "org.seleniumhq.selenium:selenium-firefox-driver:4.0.0"
 
     // app specific dependencies
-    implementation "org.grails.plugins:ala-auth:5.2.0-SNAPSHOT"
-    implementation "au.org.ala:userdetails-service-client:2.0.0"
-    implementation "org.grails.plugins:ala-ws-security-plugin:4.3.5-SNAPSHOT"
-    implementation ("org.grails.plugins:ala-ws-plugin:3.1.2") {
+    implementation "org.grails.plugins:ala-auth:$alaSecurityLibsVersion"
+    implementation "au.org.ala:userdetails-service-client:$alaSecurityLibsVersion"
+    implementation "org.grails.plugins:ala-ws-security-plugin:$alaSecurityLibsVersion"
+    implementation ("org.grails.plugins:ala-ws-plugin:$alaSecurityLibsVersion") {
         exclude module: 'asset-pipeline-grails'
         exclude module: 'xerces'
     }
