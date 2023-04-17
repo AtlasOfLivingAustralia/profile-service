@@ -31,6 +31,11 @@ class VocabController extends BaseController {
                 termsToRender << [
                         name        : term.name,
                         termId      : term.uuid,
+                        groupBy     : term.groupBy ? [name: term.groupBy.name, termId: term.groupBy.uuid, order: term.groupBy.order, required: term.groupBy.required, summary: term.groupBy.summary, containsName: term.groupBy.containsName ] : null,
+                        dataType    : term.dataType,
+                        listTerms   : term.listTerms,
+                        constraintListVocab: term.constraintListVocab,
+                        unit: term.unit,
                         order       : term.order == -1 ? index : term.order,
                         required    : term.required,
                         summary     : term.summary,
@@ -48,24 +53,23 @@ class VocabController extends BaseController {
     }
 
     def update() {
-        if (!params.vocabId) {
-            badRequest()
-        } else {
-            Vocab vocab = Vocab.findByUuid(params.vocabId);
+        Vocab vocab
+        if (params.vocabId) {
+            vocab = Vocab.findByUuid(params.vocabId);
 
             if (!vocab) {
                 notFound()
-            } else {
-                def json = request.getJSON()
-
-                boolean updated = vocabService.updateVocab(params.vocabId, json);
-
-                if (!updated) {
-                    saveFailed()
-                } else {
-                    success([updated: true])
-                }
             }
+        }
+
+        def json = request.getJSON()
+
+        Map result = vocabService.updateVocab(params.vocabId, json);
+
+        if (!result.updated) {
+            saveFailed()
+        } else {
+            success([updated: true, vocabId: result.vocab.uuid])
         }
     }
 

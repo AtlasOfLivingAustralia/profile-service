@@ -25,6 +25,8 @@ import java.text.SimpleDateFormat
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentSkipListSet
 import java.util.concurrent.atomic.AtomicInteger
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 import static groovyx.gpars.GParsPool.withPool
 
@@ -34,6 +36,7 @@ class ImportService extends BaseDataAccessService {
 
     ProfileService profileService
     NameService nameService
+    VocabService vocabService
 
     ElasticSearchService elasticSearchService
     def grailsApplication
@@ -73,7 +76,9 @@ class ImportService extends BaseDataAccessService {
 
             Opus opus = Opus.findByUuid(opusId);
 
-            Map<String, Map> profileResults = [:] as ConcurrentHashMap
+            Map<String, Map> profileResults = new ConcurrentHashMap<>()
+            Map<String, String> termConcurrentListVocabMapping = new ConcurrentHashMap<>()
+            Map<String, String> vocabIdTermNameTermIdMapping = new ConcurrentHashMap<>()
             Date startTime = new Date()
 
             AtomicInteger success = new AtomicInteger(0)
@@ -95,200 +100,204 @@ class ImportService extends BaseDataAccessService {
             log.info "Importing profiles ..."
             withPool(IMPORT_THREAD_POOL_SIZE) {
                 profilesJson.eachParallel {
-                    Map results = [errors: [], warnings: []]
-                    try {
-                        def currentIndex = index.incrementAndGet()
+                    Opus.withSession { session ->
+                        def profileJSON = it
+                        Map results = [errors: [], warnings: []]
+                        try {
+                            def currentIndex = index.incrementAndGet()
 
-                        if (!it.scientificName) {
-                            results.errors << "Failed to import row ${currentIndex}, does not have a scientific name"
-                        } else {
-                            Map matchedName = nameService.matchName(it.scientificName?.trim(), it.classification ?: [:])
-
-                            String scientificName = matchedName?.scientificName?.trim() ?: it.scientificName.trim()
-                            String fullName = matchedName?.fullName?.trim() ?: scientificName.trim()
-                            String nameAuthor = matchedName?.nameAuthor?.trim() ?: null
-                            String guid = matchedName?.guid ?: null
-
-                            if (!matchedName) {
-                                results.warnings << "ALA - No matching name for ${it.scientificName} in the ALA"
-                            } else if (!it.scientificName.equalsIgnoreCase(matchedName.scientificName) && !it.scientificName.equalsIgnoreCase(fullName)) {
-                                results.warnings << "ALA - Provided with name ${it.scientificName}, but was matched with name ${fullName} in the ALA. Using provided name."
-                                scientificName = it.scientificName
-                                fullName = it.fullName
-                                nameAuthor = it.nameAuthor
-                            }
-
-                            Profile profile = Profile.findByScientificNameAndOpus(scientificName, opus)
-                            if (profile && profile.profileStatus != Profile.STATUS_EMPTY) {
-                                log.info("Profile already exists in this opus for scientific name ${scientificName}")
-                                results.errors << "'${it.scientificName}' already exists (provided as ${it.scientificName}, matched as ${fullName})"
+                            if (!profileJSON.scientificName) {
+                                results.errors << "Failed to import row ${currentIndex}, does not have a scientific name"
                             } else {
-                                if (!profile) {
-                                    profile = new Profile(scientificName: scientificName, nameAuthor: nameAuthor, opus: opus, guid: guid, attributes: [], links: [], bhlLinks: [], bibliography: [], profileStatus: Profile.STATUS_LEGACY);
+                                Map matchedName = nameService.matchName(profileJSON.scientificName?.trim(), profileJSON.classification ?: [:])
+
+                                String scientificName = matchedName?.scientificName?.trim() ?: profileJSON.scientificName.trim()
+                                String fullName = matchedName?.fullName?.trim() ?: scientificName.trim()
+                                String nameAuthor = matchedName?.nameAuthor?.trim() ?: null
+                                String guid = matchedName?.guid ?: null
+
+                                if (!matchedName) {
+                                    results.warnings << "ALA - No matching name for ${profileJSON.scientificName} in the ALA"
+                                } else if (!profileJSON.scientificName.equalsIgnoreCase(matchedName.scientificName) && !profileJSON.scientificName.equalsIgnoreCase(fullName)) {
+                                    results.warnings << "ALA - Provided with name ${profileJSON.scientificName}, but was matched with name ${fullName} in the ALA. Using provided name."
+                                    scientificName = profileJSON.scientificName
+                                    fullName = profileJSON.fullName
+                                    nameAuthor = profileJSON.nameAuthor
+                                }
+
+                                Profile profile = Profile.findByScientificNameAndOpus(scientificName, opus)
+                                if (profile && profile.profileStatus != Profile.STATUS_EMPTY) {
+                                    log.info("Profile already exists in this opus for scientific name ${scientificName}")
+                                    results.errors << "'${profileJSON.scientificName}' already exists (provided as ${profileJSON.scientificName}, matched as ${fullName})"
                                 } else {
-                                    profile.scientificName = scientificName
-                                    profile.nameAuthor = nameAuthor
-                                    profile.opus = opus
-                                    profile.guid = guid
-                                    profile.profileStatus = Profile.STATUS_LEGACY
-                                }
-                                profile.fullName = fullName
-
-                                if (matchedName) {
-                                    profile.matchedName = new Name(matchedName)
-                                }
-
-                                if (profile.guid) {
-                                    profileService.populateTaxonHierarchy(profile)
-                                }
-
-                                if (it.nslNameIdentifier) {
-                                    profile.nslNameIdentifier = it.nslNameIdentifier
-                                } else if (enableNSLMatching) {
-                                    Map nslMatch
-                                    boolean matchedByName
-                                    if (it.nslNomenclatureIdentifier) {
-                                        nslMatch = nameService.findNslNameFromNomenclature(it.nslNomenclatureIdentifier)
-                                        matchedByName = false
-                                    } else if (nslNamesCached) {
-                                        nslMatch = nameService.matchCachedNSLName(nslNamesCached, it.scientificName, it.nameAuthor, it.fullName)
-                                        matchedByName = true
+                                    if (!profile) {
+                                        profile = new Profile(scientificName: scientificName, nameAuthor: nameAuthor, opus: opus, guid: guid, attributes: [], links: [], bhlLinks: [], bibliography: [], profileStatus: Profile.STATUS_LEGACY);
                                     } else {
-                                        nslMatch = nameService.matchNSLName(it.scientificName, profile.rank)
-                                        matchedByName = true
+                                        profile.scientificName = scientificName
+                                        profile.nameAuthor = nameAuthor
+                                        profile.opus = opus
+                                        profile.guid = guid
+                                        profile.profileStatus = Profile.STATUS_LEGACY
+                                    }
+                                    profile.fullName = fullName
+
+                                    if (matchedName) {
+                                        profile.matchedName = new Name(matchedName)
                                     }
 
-                                    if (nslMatch) {
-                                        profile.nslNameIdentifier = nslMatch.nslIdentifier
-                                        profile.nslProtologue = nslMatch.nslProtologue
-                                        if (!profile.nameAuthor) {
-                                            profile.nameAuthor = nslMatch.nameAuthor
+                                    if (profile.guid) {
+                                        profileService.populateTaxonHierarchy(profile)
+                                    }
+
+                                    if (profileJSON.nslNameIdentifier) {
+                                        profile.nslNameIdentifier = profileJSON.nslNameIdentifier
+                                    } else if (enableNSLMatching) {
+                                        Map nslMatch
+                                        boolean matchedByName
+                                        if (profileJSON.nslNomenclatureIdentifier) {
+                                            nslMatch = nameService.findNslNameFromNomenclature(profileJSON.nslNomenclatureIdentifier)
+                                            matchedByName = false
+                                        } else if (nslNamesCached) {
+                                            nslMatch = nameService.matchCachedNSLName(nslNamesCached, profileJSON.scientificName, profileJSON.nameAuthor, profileJSON.fullName)
+                                            matchedByName = true
+                                        } else {
+                                            nslMatch = nameService.matchNSLName(profileJSON.scientificName, profile.rank)
+                                            matchedByName = true
                                         }
 
-                                        if (matchedByName && !it.scientificName.equalsIgnoreCase(nslMatch.scientificName) && !it.scientificName.equalsIgnoreCase(nslMatch.fullName)) {
-                                            results.warnings << "NSL - Provided with name ${it.scientificName}, but was matched with name ${nslMatch.fullName} in the NSL. Using provided name."
+                                        if (nslMatch) {
+                                            profile.nslNameIdentifier = nslMatch.nslIdentifier
+                                            profile.nslProtologue = nslMatch.nslProtologue
+                                            if (!profile.nameAuthor) {
+                                                profile.nameAuthor = nslMatch.nameAuthor
+                                            }
+
+                                            if (matchedByName && !profileJSON.scientificName.equalsIgnoreCase(nslMatch.scientificName) && !profileJSON.scientificName.equalsIgnoreCase(nslMatch.fullName)) {
+                                                results.warnings << "NSL - Provided with name ${profileJSON.scientificName}, but was matched with name ${nslMatch.fullName} in the NSL. Using provided name."
+                                            }
+                                        } else {
+                                            results.warnings << "NSL - No matching name for ${profileJSON.scientificName} in the NSL."
                                         }
-                                    } else {
-                                        results.warnings << "NSL - No matching name for ${it.scientificName} in the NSL."
                                     }
-                                }
 
-                                if (it.nslNomenclatureIdentifier) {
-                                    profile.nslNomenclatureIdentifier = it.nslNomenclatureIdentifier
-                                } else if (profile.nslNameIdentifier && enableNSLMatching && it.nslNomenclatureMatchStrategy) {
-                                    NSLNomenclatureMatchStrategy matchStrategy = NSLNomenclatureMatchStrategy.valueOf(it.nslNomenclatureMatchStrategy) ?: NSLNomenclatureMatchStrategy.DEFAULT
-                                    if (matchStrategy != NSLNomenclatureMatchStrategy.NONE) {
-                                        Map nomenclature = nameService.findNomenclature(profile.nslNameIdentifier, matchStrategy, it.nslNomenclatureMatchData)
+                                    if (profileJSON.nslNomenclatureIdentifier) {
+                                        profile.nslNomenclatureIdentifier = profileJSON.nslNomenclatureIdentifier
+                                    } else if (profile.nslNameIdentifier && enableNSLMatching && profileJSON.nslNomenclatureMatchStrategy) {
+                                        NSLNomenclatureMatchStrategy matchStrategy = NSLNomenclatureMatchStrategy.valueOf(profileJSON.nslNomenclatureMatchStrategy) ?: NSLNomenclatureMatchStrategy.DEFAULT
+                                        if (matchStrategy != NSLNomenclatureMatchStrategy.NONE) {
+                                            Map nomenclature = nameService.findNomenclature(profile.nslNameIdentifier, matchStrategy, profileJSON.nslNomenclatureMatchData)
 
-                                        if (!nomenclature) {
-                                            results.warnings << "No matching nomenclature was found for '${it.nslNomenclatureMatchData}'"
+                                            if (!nomenclature) {
+                                                results.warnings << "No matching nomenclature was found for '${profileJSON.nslNomenclatureMatchData}'"
+                                            }
+
+                                            profile.nslNomenclatureIdentifier = nomenclature?.id
                                         }
-
-                                        profile.nslNomenclatureIdentifier = nomenclature?.id
                                     }
-                                }
 
-                                it.links.each {
-                                    if (it) {
-                                        profile.links << createLink(it, contributors)
+                                    profileJSON.links.each {
+                                        if (it) {
+                                            profile.links << createLink(it, contributors)
+                                        }
                                     }
-                                }
 
-                                it.bhl.each {
-                                    if (it) {
-                                        profile.bhlLinks << createLink(it, contributors)
+                                    profileJSON.bhl.each {
+                                        if (it) {
+                                            profile.bhlLinks << createLink(it, contributors)
+                                        }
                                     }
-                                }
 
-                                it.bibliography.each {
-                                    if (it) {
-                                        profile.bibliography << new Bibliography(uuid: UUID.randomUUID().toString(), text: it, order: profile.bibliography.size())
+                                    profileJSON.bibliography.each {
+                                        if (it) {
+                                            profile.bibliography << new Bibliography(uuid: UUID.randomUUID().toString(), text: it, order: profile.bibliography.size())
+                                        }
                                     }
-                                }
 
-                                Set<String> contributorNames = []
-                                it.attributes.each {
-                                    if (it.title && it.text) {
-                                        Term term = vocab.get(it.title.trim())
+                                    Set<String> contributorNames = []
+                                    profileJSON.attributes.each {
+                                        if (it.title && it.text) {
+                                            Term term = vocab.get(it.title.trim())
 
-                                        String text = it.stripHtml?.booleanValue() ? Utils.cleanupText(it.text) : it.text
-                                        if (text?.trim()) {
-                                            Attribute attribute = new Attribute(title: term, text: text)
-                                            attribute.uuid = UUID.randomUUID().toString()
+                                            if (it.text?.trim()) {
+                                                Attribute attribute = new Attribute(title: term)
+                                                attribute.uuid = UUID.randomUUID().toString()
+                                                getContent(it, attribute, term, termConcurrentListVocabMapping, vocabIdTermNameTermIdMapping)
 
-                                            if (it.creators) {
-                                                attribute.creators = []
-                                                it.creators.each {
-                                                    String name = cleanName(it)
-                                                    if (name) {
-                                                        Contributor contrib = contributors[name]
-                                                        if (contrib) {
-                                                            attribute.creators << contrib
-                                                            contributorNames << contrib.name
-                                                        } else {
-                                                            log.warn("Missing contributor for name '${name}'")
+                                                if (it.creators) {
+                                                    attribute.creators = []
+                                                    it.creators.each {
+                                                        String name = cleanName(it)
+                                                        if (name) {
+                                                            Contributor contrib = contributors[name]
+                                                            if (contrib) {
+                                                                attribute.creators << contrib
+                                                                contributorNames << contrib.name
+                                                            } else {
+                                                                log.warn("Missing contributor for name '${name}'")
+                                                            }
                                                         }
                                                     }
                                                 }
-                                            }
 
-                                            if (it.editors) {
-                                                attribute.editors = []
-                                                it.editors.each {
-                                                    String name = cleanName(it)
-                                                    if (name) {
-                                                        attribute.editors << contributors[name]
+                                                if (it.editors) {
+                                                    attribute.editors = []
+                                                    it.editors.each {
+                                                        String name = cleanName(it)
+                                                        if (name) {
+                                                            attribute.editors << contributors[name]
+                                                        }
                                                     }
                                                 }
-                                            }
 
-                                            attribute.profile = profile
-                                            profile.attributes << attribute
+                                                attribute.profile = profile
+                                                profile.attributes << attribute
+                                            }
+                                        }
+                                    }
+
+                                    if (profileJSON.images) {
+                                        profileJSON.images.each {
+                                            uploadImage(scientificName, opus.dataResourceUid, it)
+                                        }
+                                    }
+
+                                    if (profileJSON.authorship) {
+                                        profile.authorship = profileJSON.authorship.collect {
+                                            Term term = getOrCreateTerm(opus.authorshipVocabUuid, it.category)
+                                            new Authorship(category: term, text: it.text)
+                                        }
+                                    } else {
+                                        Term term = getOrCreateTerm(opus.authorshipVocabUuid, "Author")
+                                        profile.authorship = [new Authorship(category: term, text: contributorNames.join(", "))]
+                                    }
+
+                                    profile.save(flush: true)
+
+                                    if (profile.errors.allErrors.size() > 0) {
+                                        log.error("Failed to save ${profile}")
+                                        profile.errors.each { log.error(profileJSON?.toString()) }
+                                        results.errors << "Failed to save profile ${profile.errors.allErrors.get(0)}"
+                                    } else {
+                                        def currentSuccess = success.incrementAndGet()
+                                        if (currentIndex % reportInterval == 0) {
+                                            log.debug("Saved ${currentSuccess} of ${profilesJson.size()}")
                                         }
                                     }
                                 }
-
-                                if (it.images) {
-                                    it.images.each {
-                                        uploadImage(scientificName, opus.dataResourceUid, it)
-                                    }
-                                }
-
-                                if (it.authorship) {
-                                    profile.authorship = it.authorship.collect {
-                                        Term term = getOrCreateTerm(opus.authorshipVocabUuid, it.category)
-                                        new Authorship(category: term, text: it.text)
-                                    }
-                                } else {
-                                    Term term = getOrCreateTerm(opus.authorshipVocabUuid, "Author")
-                                    profile.authorship = [new Authorship(category: term, text: contributorNames.join(", "))]
-                                }
-
-                                profile.save(flush: true)
-
-                                if (profile.errors.allErrors.size() > 0) {
-                                    log.error("Failed to save ${profile}")
-                                    profile.errors.each { log.error(it?.toString()) }
-                                    results.errors << "Failed to save profile ${profile.errors.allErrors.get(0)}"
-                                } else {
-                                    def currentSuccess = success.incrementAndGet()
-                                    if (currentIndex % reportInterval == 0) {
-                                        log.debug("Saved ${currentSuccess} of ${profilesJson.size()}")
-                                    }
-                                }
                             }
+                        } catch (Exception e) {
+                            log.error "An exception occurred while importing the record ${profileJSON}", e
+                            results.errors << "Failed to create profile ${profileJSON.scientificName}: ${e.getMessage()}"
                         }
-                    } catch (Exception e) {
-                        log.error "An exception occurred while importing the record ${it}", e
-                        results.errors << "Failed to create profile ${it.scientificName}: ${e.getMessage()}"
-                    }
 
-                    results.status = results.errors ? "error" : results.warnings ? "warning" : "success"
-                    profileResults << [(it.scientificName): results]
+                        results.status = results.errors ? "error" : results.warnings ? "warning" : "success"
+                        profileResults << [(profileJSON.scientificName): results]
+                    }
                 }
             }
             log.debug "${success} of ${profilesJson.size()} records imported"
 
+            updateTermWithConstraintListVocab(termConcurrentListVocabMapping)
             Date finishTime = new Date()
 
             importReportFile << ([started: new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(startTime),
@@ -296,6 +305,115 @@ class ImportService extends BaseDataAccessService {
                                   profiles: profileResults] as JSON).toString()
 
             importReportFile.renameTo("${grailsApplication.config.temp.file.directory}/${importId}.json")
+        }
+    }
+
+    def updateTermWithConstraintListVocab(Map termConcurrentListVocabMapping){
+        termConcurrentListVocabMapping.each { termId, vocabId ->
+            Term term = Term.findByUuid(termId)
+            term?.constraintListVocab = vocabId
+            term.save(flush: true)
+        }
+    }
+
+    def getContent(Map body, Attribute attribute, Term title, Map termConcurrentListVocabMapping, Map vocabIdTermNameTermIdMapping) {
+        switch (title.dataType) {
+            case 'number':
+                getNumbers(body.text, attribute)
+                break;
+            case 'range':
+                getRange(body.text, attribute)
+                break;
+            case 'list':
+            case 'singleselect':
+                synchronized(this){
+                    getTerms(body.text, attribute, title, termConcurrentListVocabMapping, vocabIdTermNameTermIdMapping)
+                }
+                break;
+            case 'text':
+            default:
+                attribute.text = body.stripHtml?.booleanValue() ? Utils.cleanupText(body.text) : body.text
+                break
+        }
+
+        attribute
+    }
+
+    /**
+     * Parses the given text and sets the numbers for the given attribute.
+     * The method splits the text by comma, and then converts each element
+     * to a double, and save it in the attribute.numbers field.
+     *
+     * @param text the text to be parsed
+     * @param attribute the attribute whose numbers will be set
+     */
+
+    def getNumbers (String text, Attribute attribute) {
+        try {
+            if (text) {
+                attribute.numbers = text.split(',').collect {
+                    Double.parseDouble(it)
+                }
+            }
+        } catch (NumberFormatException nfe) {
+            log.error("Cannot convert text (${text}) to double", nfe)
+        }
+
+        attribute
+    }
+
+    /**
+     * Parses the given text and sets the number range for the given attribute.
+     * The method looks for patterns of the form "x", "x - y" or "[x - y)" in the text,
+     * where x and y are numbers, uses the first group of digits as the start of the range
+     * and the second group as the end of the range, and '[' or ']' is used to signify inclusive range.
+     * It also takes into account whether the range is inclusive or exclusive based on the
+     * enclosing brackets. If enclosing bracket is missing, range is inclusive by default.
+     *
+     * @param text the text to be parsed
+     * @param attribute the attribute whose number range will be set
+     */
+    def getRange(String text, Attribute attribute) {
+        Pattern pattern = Pattern.compile("\\s*(\\d+)\\s*")
+        Matcher matcher = pattern.matcher(text)
+        if(matcher.find()) {
+            attribute.numberRange = new NumberRange(from: Double.parseDouble(matcher.group(1)), to: Double.parseDouble(matcher.group(1)))
+        }
+
+        pattern = Pattern.compile("(\\d+)\\s*-\\s*(\\d+)")
+        matcher = pattern.matcher(text)
+        if(matcher.find()) {
+            attribute.numberRange = new NumberRange(from: Double.parseDouble(matcher.group(1)), to: Double.parseDouble(matcher.group(2)))
+        }
+
+        pattern = Pattern.compile("([\\[\\(]*)(\\d+)\\s*-\\s*(\\d+)([\\]\\)]*)")
+        matcher = pattern.matcher(text)
+        if(matcher.find()) {
+            Map range = [from: Double.parseDouble(matcher.group(2)), to: Double.parseDouble(matcher.group(3))]
+            range.fromInclusive = matcher.group(1) == '[' ? true : matcher.group(1) == '(' ? false : true
+            range.toInclusive = matcher.group(4) == ']' ? true : matcher.group(4) == ')' ? false : true
+            attribute.numberRange = new NumberRange(range)
+        }
+    }
+
+    def getTerms(String text, Attribute attribute, Term title, Map termConcurrentListVocabMapping, Map vocabIdTermNameTermIdMapping) {
+        if(text) {
+            List parts = text.split("\\s*,\\s*")
+            attribute.constraintList = parts?.collect { String part ->
+                if(!termConcurrentListVocabMapping[title.uuid] && !title.constraintListVocab) {
+                    Map result = vocabService.updateVocab(null, [name: "Contraint list for ${title.name}"])
+                    termConcurrentListVocabMapping[title.uuid] = result.vocab.uuid
+                }
+
+                String vocabId = termConcurrentListVocabMapping[title.uuid] ?: title.constraintListVocab
+                part = part.trim()
+                if (!vocabIdTermNameTermIdMapping[vocabId + part]) {
+                    Term term = getOrCreateTerm(vocabId, part)
+                    vocabIdTermNameTermIdMapping[vocabId + part] = term.uuid
+                }
+
+                vocabIdTermNameTermIdMapping[vocabId+part]
+            }
         }
     }
 

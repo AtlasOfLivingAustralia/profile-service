@@ -1,6 +1,6 @@
 package au.org.ala.profile
 
-
+import au.org.ala.profile.util.DataResourceOption
 import grails.gorm.transactions.Rollback
 import grails.testing.mixin.integration.Integration
 import grails.util.GrailsWebMockUtil
@@ -8,6 +8,7 @@ import org.grails.plugins.testing.GrailsMockHttpServletRequest
 import org.grails.plugins.testing.GrailsMockHttpServletResponse
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.context.WebApplicationContext
+import static au.org.ala.profile.util.ImageOption.EXCLUDE
 
 @Integration
 @Rollback
@@ -187,5 +188,95 @@ class ProfileControllerSpec extends BaseIntegrationSpec {
         1 * controller.profileService.getProfiles(_, 10, 0, "scientificName", "desc", "species") >> [count: 1, profiles: [scientificName: "sciName", rank: "subspecies"]]
         controller.response.status == 200
         controller.response.json.count == 1
+    }
+
+    def "profile attribute should have constraintListExpanded if constraintList is present"() {
+        def profile
+        setup:
+        def opus = save new Opus(
+                uuid: "opus1",
+                shortName: 'opus-short',
+                dataResourceConfig: new DataResourceConfig(recordResourceOption: DataResourceOption.ALL),
+                glossary: new Glossary(),
+                title: 'opus1',
+                dataResourceUid: 'dataResourceUid1'
+        )
+        def vocab = save new Vocab(uuid: 'vocab1', name: 'vocab1')
+        def term1 = save new Term(uuid: 'term1', name: 'title1', vocab: vocab, dataType: 'list')
+        def range = save new Term(uuid: 'term2', name: 'numberRange1', vocab: vocab, dataType: 'range')
+        def number = save new Term(uuid: 'term1', name: 'number1', vocab: vocab, dataType: 'number')
+
+        save new Term(uuid: 'constraint1', name: 'term1', vocab: vocab)
+        save new Term(uuid:  'constraint2', name: 'term2', vocab: vocab)
+        save new Profile(
+                uuid: "uuid",
+                scientificName: "sciName",
+                nameAuthor: "nameAuthor",
+                guid: "guid",
+                rank: "rank",
+                taxonomyTree: "taxonomyTree",
+                nslNameIdentifier: "nslId",
+                primaryImage: "primaryImage",
+                showLinkedOpusAttributes: true,
+                profileStatus: Profile.STATUS_PARTIAL,
+                imageSettings: [image1: new ImageSettings(imageDisplayOption: EXCLUDE), image2: new ImageSettings(imageDisplayOption: EXCLUDE)],
+                specimenIds: ["spec1", "spec2"],
+                authorship: [],
+                classification: [new Classification(rank: "kingdom", name: "Plantae"), new Classification(rank: "family", name: "Acacia")],
+                links: [new Link(title: "link1"), new Link(title: "link2")],
+                bhlLinks: [new Link(title: "bhl1"), new Link(title: "bhl2")],
+                bibliography: [new Bibliography(text: "bib1"), new Bibliography(text: "bib2")],
+                publications: [new Publication(title: "pub1"), new Publication(title: "pub2")],
+                attributes: [
+                        new Attribute(uuid: 'attr1', title: term1, constraintList: ['constraint1', 'constraint2']),
+                        new Attribute(uuid: 'attr2', title: range, numberRange: new NumberRange(from: 1, to: 2)),
+                        new Attribute(uuid: 'attr3', title: number, numbers: [3,4,5])
+                ],
+                attachments: [new Attachment(title: "doc1"), new Attachment(title: "doc2")],
+                dateCreated: new Date(),
+                isCustomMapConfig: false,
+                occurrenceQuery: "",
+                draft: new DraftProfile(
+                        uuid: "uuid",
+                        scientificName: "sciName",
+                        nameAuthor: "nameAuthor",
+                        guid: "draftguid",
+                        rank: "rank",
+                        taxonomyTree: "taxonomyTree2",
+                        nslNameIdentifier: "nslId2",
+                        primaryImage: "primaryImage2",
+                        showLinkedOpusAttributes: false,
+                        profileStatus: Profile.STATUS_LEGACY,
+                        imageSettings: [],
+                        specimenIds: ["spec3", "spec4"],
+                        authorship: [],
+                        classification: [new Classification(rank: "kingdom", name: "Plantae"), new Classification(rank: "family", name: "Acacia")],
+                        links: [],
+                        bhlLinks: [],
+                        bibliography: [],
+                        attributes: [new Attribute(uuid: 'attr2', title: term1, constraintList: ['constraint1', 'constraint2'])],
+                        attachments: [],
+                        dateCreated: new Date(),
+                        isCustomMapConfig: false,
+                        occurrenceQuery: ""
+                ),
+                opus: opus
+        )
+
+        when:
+        controller.params.opusId = 'opus-short'
+        controller.params.profileId = 'sciName'
+        profile = controller.getProfile()
+
+        then:
+        def constraintListAttribute = profile.attributes.find { it.title.dataType == 'list'}
+        constraintListAttribute.constraintListExpanded.size() == 2
+        constraintListAttribute.constraintListExpanded.collect { it.uuid } == ['constraint1', 'constraint2']
+        constraintListAttribute.constraintListExpanded.collect { it.uuid } == ['constraint1', 'constraint2']
+        def rangeAttribute = profile.attributes.find { it.title.dataType == 'range'}
+        rangeAttribute.numberRange.from == 1
+        rangeAttribute.numberRange.to == 2
+        def numberAttribute = profile.attributes.find { it.title.dataType == 'number'}
+        numberAttribute.numbers == [3,4,5]
     }
 }

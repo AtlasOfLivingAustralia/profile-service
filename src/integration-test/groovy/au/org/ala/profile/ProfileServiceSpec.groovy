@@ -1,5 +1,6 @@
 package au.org.ala.profile
 
+import au.org.ala.profile.util.DataResourceOption
 import au.org.ala.profile.util.ImageOption
 import au.org.ala.web.AuthService
 import au.org.ala.web.UserDetails
@@ -1996,6 +1997,129 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
         result.count == 2
         result.profiles.size() == 1
         result.profiles.collect { it.scientificName} == ['profile2']
+    }
+
+
+    def "test create attribute"() {
+        given:
+        String profileId = "12345"
+        service.vocabService = vocabService
+        def vocab = save new Vocab(uuid: 'vocab-uuid', name: 'test', terms: [])
+        def term = save new Term(name: "Test Title", uuid: "uuid1", vocab: vocab)
+        def opus = save new Opus(
+                uuid: "opus1",
+                shortName: 'opus-short',
+                dataResourceConfig: new DataResourceConfig(recordResourceOption: DataResourceOption.ALL),
+                glossary: new Glossary(),
+                title: 'opus1',
+                dataResourceUid: 'dataResourceUid1',
+                attributeVocabUuid: "vocab-uuid"
+        )
+        save new Profile(
+                uuid: profileId,
+                scientificName: "sciName",
+                nameAuthor: "nameAuthor",
+                guid: "guid",
+                rank: "rank",
+                taxonomyTree: "taxonomyTree",
+                nslNameIdentifier: "nslId",
+                primaryImage: "primaryImage",
+                showLinkedOpusAttributes: true,
+                profileStatus: Profile.STATUS_PARTIAL,
+                attributes: [],
+                dateCreated: new Date(),
+                opus: opus
+        )
+        Map data = [
+                title: "Test Title",
+                text: "Test text",
+                numbers: [1, 2, 3, 4, 5],
+                numberRange: [from: 5, to: 10],
+                constraintList: ["term1", "term2", "term3"],
+                source: "Test source",
+                creators: ["creator1", "creator2"],
+                editors: ["editor1", "editor2"],
+                original: null,
+                userDisplayName: "User 1",
+                userId: "user1"
+        ]
+
+        when:
+        Attribute attribute = service.createAttribute(profileId, data)
+
+        then:
+        attribute.title.name == "Test Title"
+        attribute.text == "Test text"
+        attribute.numbers == [1.0, 2.0, 3.0, 4.0, 5.0]
+        attribute.numberRange.from == 5.0
+        attribute.numberRange.to == 10.0
+        attribute.constraintList == ["term1", "term2", "term3"]
+        attribute.source == "Test source"
+        attribute.creators.size() == 3
+        attribute.editors.size() == 2
+    }
+
+    def "test update attribute"() {
+        given:
+        service.vocabService = vocabService
+        String profileId = "12345"
+        String attributeId = "abcde"
+        def vocab = save new Vocab(uuid: 'vocab-uuid', name: 'test', terms: [])
+        def term = save new Term(name: "Test Title", uuid: "uuid1", vocab: vocab)
+        def opus = save new Opus(
+                uuid: "opus1",
+                shortName: 'opus-short',
+                dataResourceConfig: new DataResourceConfig(recordResourceOption: DataResourceOption.ALL),
+                glossary: new Glossary(),
+                title: 'opus1',
+                dataResourceUid: 'dataResourceUid1',
+                attributeVocabUuid: "vocab-uuid"
+        )
+        Attribute attribute = new Attribute(uuid: attributeId, title: term, text: "Test text", source: "Test source")
+        Profile profile = save new Profile(
+                uuid: profileId,
+                scientificName: "sciName",
+                nameAuthor: "nameAuthor",
+                guid: "guid",
+                rank: "rank",
+                taxonomyTree: "taxonomyTree",
+                nslNameIdentifier: "nslId",
+                primaryImage: "primaryImage",
+                showLinkedOpusAttributes: true,
+                profileStatus: Profile.STATUS_PARTIAL,
+                attributes: [attribute],
+                dateCreated: new Date(),
+                opus: opus
+        )
+
+        Map data = [
+                title: "Updated Title",
+                text: "Updated text",
+                numbers: [1, 2, 3, 4, 5],
+                numberRange: [from: 5, to: 10],
+                constraintList: ["term1", "term2", "term3"],
+                source: "Updated source",
+                attributeTo: "User 1",
+                userDisplayName: "User 1",
+                userId: "user1",
+                significantEdit: true
+        ]
+
+        when:
+        boolean result = service.updateAttribute(attributeId, profileId, data)
+        attribute = Attribute.findByUuid(attributeId)
+
+        then:
+        result == true
+        attribute.title.name == "Updated Title"
+        attribute.text == "Updated text"
+        attribute.numbers == [1.0, 2.0, 3.0, 4.0, 5.0]
+        attribute.numberRange.from == 5.0
+        attribute.numberRange.to == 10.0
+        attribute.constraintList == ["term1", "term2", "term3"]
+        attribute.source == "Updated source"
+        attribute.editors.size() == 1
+        attribute.editors.first().name == "User 1"
     }
 
 }

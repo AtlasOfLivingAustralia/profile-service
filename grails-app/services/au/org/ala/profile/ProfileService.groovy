@@ -1166,6 +1166,9 @@ class ProfileService extends BaseDataAccessService {
                 uuid: UUID.randomUUID().toString(),
                 title: titleTerm,
                 text: data.text,
+                numbers: data.numbers?.collect { Double.parseDouble(it.toString()) },
+                numberRange: data.numberRange ? new NumberRange(data.numberRange) : null,
+                constraintList: data.constraintList ?: null,
                 source: data.source
         )
         attribute.creators = creators
@@ -1229,6 +1232,9 @@ class ProfileService extends BaseDataAccessService {
             attribute.title = titleTerm
         }
         attribute.text = data.text
+        attribute.numbers = data.numbers != null ? data.numbers?.collect { Double.parseDouble(it?.toString()) } : null
+        attribute.numberRange = data.numberRange != null ? new NumberRange(data.numberRange) : null
+        attribute.constraintList = data.constraintList ?: null
         attribute.source = data.source
 
         def contributor
@@ -1303,13 +1309,14 @@ class ProfileService extends BaseDataAccessService {
                 existing.rightsHolder = metadata.rightsHolder
                 existing.licence = metadata.licence
                 existing.creator = metadata.creator
+                existing.category = metadata.category
                 existing.createdDate = createdDate
             }
         } else {
             Attachment newAttachment = new Attachment(uuid: UUID.randomUUID().toString(), url: metadata.url,
                     title: metadata.title, description: metadata.description, filename: metadata.filename,
                     contentType: file?.contentType, rights: metadata.rights, createdDate: createdDate,
-                    rightsHolder: metadata.rightsHolder, licence: metadata.licence, creator: metadata.creator)
+                    rightsHolder: metadata.rightsHolder, licence: metadata.licence, creator: metadata.creator, category: metadata.category)
             if (file) {
                 String extension = Utils.getFileExtension(file.originalFilename)
                 attachmentService.saveAttachment(profile.opus.uuid, profile.uuid, newAttachment.uuid, file, extension)
