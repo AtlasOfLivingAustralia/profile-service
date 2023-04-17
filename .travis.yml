@@ -38,6 +38,7 @@ cache:
     - $HOME/.gradle/wrapper/
 
 script:
+  - ./gradlew clean
   - ./gradlew check
 
 after_success:
