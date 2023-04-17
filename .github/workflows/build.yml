@@ -63,6 +63,11 @@ jobs:
         with:
           arguments: clean
 
+      - name: Run tests
+        uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
+        with:
+          arguments: check
+
       - name: Publish the JAR to the repository
         uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
         with:

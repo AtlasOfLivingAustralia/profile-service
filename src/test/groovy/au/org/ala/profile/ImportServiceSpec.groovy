@@ -5,8 +5,8 @@ import grails.testing.services.ServiceUnitTest
 import spock.lang.Specification
 
 class ImportServiceSpec extends Specification implements ServiceUnitTest<ImportService> {
-    Closure doWithSpring() {
-        { ->
+    void setup ( ) {
+        defineBeans {
             metricRegistry(MetricRegistry)
         }
     }

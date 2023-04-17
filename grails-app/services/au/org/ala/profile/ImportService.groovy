@@ -378,7 +378,6 @@ class ImportService extends BaseDataAccessService {
         Matcher matcher = pattern.matcher(text)
         if(matcher.find()) {
             attribute.numberRange = new NumberRange(from: Double.parseDouble(matcher.group(1)), to: Double.parseDouble(matcher.group(1)))
-            return
         }
 
         pattern = Pattern.compile("(\\d+)\\s*-\\s*(\\d+)")
