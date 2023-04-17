@@ -183,7 +183,7 @@ class ExportService extends BaseDataAccessService {
                     }
                 }
 
-                writer << com.mongodb.util.JSON.serialize(profile)
+                writer << (profile as JSON).toString()
                 if (profiles.hasNext()) {
                     writer << ","
                 }

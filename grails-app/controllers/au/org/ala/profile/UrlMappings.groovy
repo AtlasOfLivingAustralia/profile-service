@@ -38,7 +38,7 @@ class UrlMappings {
         "/opus/$opusId/masterList/sync" controller: "opus", action: [POST: 'syncMasterList']
         "/opus/$opusId/masterList/isSyncing" controller: "opus", action: [GET: 'isMasterListSyncing']
         "/opus/$opusId/florulaList" controller: "opus", action: [POST: 'updateFlorulaListForUser']
-        "/opus/$opusId/vocab/" controller: "vocab", action: "index"
+        "/opus/$opusId/vocab/" controller: "vocab", action: [GET: "index", POST: "update"]
         "/opus/$opusId/vocab/$vocabId" controller: "vocab", action: [GET: "show", POST: "update"]
         "/opus/$opusId/vocab/usages/find" controller: "vocab", action: "findUsagesOfTerm"
         "/opus/$opusId/vocab/usages/replace" controller: "vocab", action: [POST: "replaceUsagesOfTerm"]
@@ -61,11 +61,12 @@ class UrlMappings {
         "/profile/search/scientificName" controller: "search", action: "findByScientificName"
         "/profile/search/taxon/name" controller: "search", action: "findByClassificationNameAndRank"
         "/profile/search/taxon/name/total" controller: "search", action: "totalByClassificationNameAndRank"
+        "/profile/search/taxon/nameAndTotal" controller: "search", action: "findProfilesByClassificationNameAndRankAndGetTotalProfilesCount"
         "/profile/search/taxon/level" controller: "search", action: "groupByRank"
         "/profile/search/taxon/levels" controller: "search", action: "getRanks"
         "/profile/search/children" controller: "search", action: "getImmediateChildren"
 
-        "/opus/$opusId/profile/" controller: "profile", action: [GET: "index", PUT: "createProfile"]
+        "/opus/$opusId/profile/" controller: "profile", action: [GET: "getProfiles", PUT: "createProfile"]
 
         "/opus/$opusId/profile/$profileId" controller: "profile", action: [GET: "getByUuid", DELETE: "deleteProfile", POST: "updateProfile"]
 

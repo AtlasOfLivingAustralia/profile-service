@@ -4,7 +4,6 @@ import au.org.ala.profile.listener.AuditListener
 import au.org.ala.profile.listener.LastUpdateListener
 import au.org.ala.profile.listener.ValueConverterListener
 import au.org.ala.profile.sanitizer.SanitizedHtml
-import com.mongodb.MongoClient
 import org.bson.BsonDocument
 import org.grails.datastore.mapping.core.Datastore
 import org.springframework.web.context.WebApplicationContext
@@ -12,9 +11,8 @@ import org.springframework.web.context.WebApplicationContext
 class BootStrap {
 
     def auditService
-    def authService
+    def userService
     def grailsApplication
-    MongoClient mongo
     def sanitizerPolicy
 
     def init = { servletContext ->
@@ -58,7 +56,7 @@ class BootStrap {
         ctx?.getBeansOfType(Datastore)?.values().each { Datastore d ->
             log.info "Adding listener for datastore: ${d}"
             ctx.addApplicationListener new AuditListener(d, auditService)
-            ctx.addApplicationListener new LastUpdateListener(d, authService)
+            ctx.addApplicationListener new LastUpdateListener(d, userService)
             ctx.addApplicationListener(ValueConverterListener.of(d, SanitizedHtml, String, sanitizerPolicy.&sanitizeField))
         }
     }

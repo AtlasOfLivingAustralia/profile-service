@@ -259,7 +259,7 @@ class CloneAndDraftUtilTest extends Specification {
 
     def "cloneAttachment should create a new object with copies of all attributes"() {
         given:
-        Attachment original = new Attachment(uuid: "uuid", title: "title", description: "description", rights: "rights", rightsHolder: "rightsHolder", licence: "licence", creator: "creator", createdDate: new Date())
+        Attachment original = new Attachment(uuid: "uuid", title: "title", description: "description", rights: "rights", rightsHolder: "rightsHolder", licence: "licence", creator: "creator", createdDate: new Date(), category: 'Management')
 
         when:
         Attachment clone = CloneAndDraftUtil.cloneAttachment(original)

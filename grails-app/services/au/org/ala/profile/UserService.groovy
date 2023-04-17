@@ -1,8 +1,9 @@
 package au.org.ala.profile
 
+import au.org.ala.web.AuthService
 import au.org.ala.web.UserDetails
 
-class UserService {
+class UserService extends AuthService {
 // by default service is not transactional from 3.1 onwards
 
     def authService
@@ -38,5 +39,45 @@ class UserService {
         if (_currentUser) {
             _currentUser.remove()
         }
+    }
+
+    @Override
+    String getEmail() {
+        _currentUser?.get()?.getEmail()
+    }
+
+    @Override
+    String getUserName() {
+        _currentUser?.get()?.getUserName()
+    }
+
+    @Override
+    String getUserId() {
+        _currentUser?.get()?.getUserId()
+    }
+
+    @Override
+    String getDisplayName() {
+        _currentUser?.get()?.getDisplayName()
+    }
+
+    @Override
+    String getFirstName() {
+        _currentUser?.get()?.getFirstName()
+    }
+
+    @Override
+    String getLastName() {
+        _currentUser?.get()?.getLastName()
+    }
+
+    @Override
+    boolean userInRole(String role) {
+        _currentUser?.get()?.hasRole(role)
+    }
+
+    @Override
+    UserDetails userDetails() {
+        _currentUser?.get()
     }
 }

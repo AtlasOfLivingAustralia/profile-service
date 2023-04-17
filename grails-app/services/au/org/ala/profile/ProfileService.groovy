@@ -5,7 +5,6 @@ import au.org.ala.profile.util.CloneAndDraftUtil
 import au.org.ala.profile.util.ImageOption
 import au.org.ala.profile.util.StorageExtension
 import au.org.ala.profile.util.Utils
-import au.org.ala.web.AuthService
 import com.google.common.base.Stopwatch
 import grails.gorm.transactions.Transactional
 import groovy.transform.stc.ClosureParams
@@ -23,7 +22,7 @@ class ProfileService extends BaseDataAccessService {
 
     VocabService vocabService
     NameService nameService
-    AuthService authService
+    UserService userService
     BieService bieService
     DoiService doiService
     AttachmentService attachmentService
@@ -163,9 +162,9 @@ class ProfileService extends BaseDataAccessService {
 
         updateNameDetails(profile, matchedName, json.scientificName, json.manualHierarchy ?: [])
 
-        if (authService.getUserId()) {
+        if (userService.getUserId()) {
             Term term = vocabService.getOrCreateTerm("Author", opus.authorshipVocabUuid)
-            profile.authorship = [new Authorship(category: term, text: authService.getUserForUserId(authService.getUserId()).displayName)]
+            profile.authorship = [new Authorship(category: term, text: userService.getUserForUserId(userService.getUserId()).displayName)]
         }
 
         if (json.manuallyMatchedGuid) {
@@ -187,6 +186,56 @@ class ProfileService extends BaseDataAccessService {
         }
 
         profile
+    }
+
+    /**
+     * Lists all profiles in an opus.
+     * @param opus The opus domain object
+     * @param pageSize Size of returned result
+     * @param startIndex page number of result to return
+     * @param sort
+     * @param order
+     * @param includeArchived excludes archived profiles by default
+     * @return
+     */
+    Map getProfiles (Opus opus, int pageSize = 20, int startIndex = 0, String sort = "scientificNameLower", String order = 'asc', String rankFilter = null) {
+        List profiles
+        int count
+        if (rankFilter) {
+            rankFilter = rankFilter.toLowerCase()
+            profiles = Profile.findAllByOpusAndRankAndArchivedDateIsNull(opus, rankFilter, [max: pageSize, offset: startIndex, sort: sort, order: order])
+            count =  Profile.countByOpusAndRankAndArchivedDateIsNull(opus, rankFilter)
+        } else {
+            profiles = Profile.findAllByOpusAndArchivedDateIsNull(opus, [max: pageSize, offset: startIndex, sort: sort, order: order])
+            count =  Profile.countByOpusAndArchivedDateIsNull(opus)
+        }
+
+        [
+                profiles: trimProfiles(profiles),
+                count: count
+        ]
+    }
+
+    def trimProfiles (List profiles) {
+        profiles?.collect {
+            [
+                    uuid: it.uuid,
+                    guid: it.guid,
+                    opusId: it.opus?.uuid,
+                    opusName: it.opus?.title,
+                    opusShortName: it.opus?.shortName,
+                    fullName: it.fullName,
+                    nameAuthor: it.nameAuthor,
+                    scientificName: it.scientificName,
+                    profileStatus: it.profileStatus,
+                    rank: it.rank,
+                    nslNameIdentifier: it.nslNameIdentifier,
+                    primaryImage: it.primaryImage,
+                    createdDate: it.createdDate,
+                    lastUpdated: it.lastUpdated
+
+            ]
+        }
     }
 
     Profile duplicateProfile(String opusId, Profile sourceProfile, Map json) {
@@ -461,7 +510,7 @@ class ProfileService extends BaseDataAccessService {
         checkState profile
 
         profile.archiveComment = archiveComment
-        profile.archivedBy = authService.getUserForUserId(authService.getUserId()).displayName
+        profile.archivedBy = userService.getUserForUserId(userService.getUserId()).displayName
         profile.archivedDate = new Date()
         profile.archivedWithName = profile.scientificName
         profile.scientificName = "${profile.scientificName} (Archived ${new SimpleDateFormat('dd/MM/yyyy H:mm a').format(profile.archivedDate)})"
@@ -561,7 +610,7 @@ class ProfileService extends BaseDataAccessService {
             save profile
         } else {
             profile.draft = profile.draft ?: CloneAndDraftUtil.createDraft(profile)
-            profile.draft.createdBy = authService.getUserForUserId(authService.getUserId()).displayName
+            profile.draft.createdBy = userService.getUserForUserId(userService.getUserId()).displayName
 
             save profile
         }
@@ -973,7 +1022,7 @@ class ProfileService extends BaseDataAccessService {
         publication.title = profile.scientificName
         publication.authors = profile.authorship.find { it.category.name ==~ /\b(?i)author.*/ }?.text
         publication.publicationDate = new Date()
-        publication.userId = authService.getUserId()
+        publication.userId = userService.getUserId()
         publication.uuid = UUID.randomUUID().toString()
         if (profile.publications) {
             publication.version = profile.publications.sort { it.version }.last().version ?: profile.publications.size()
@@ -1117,6 +1166,9 @@ class ProfileService extends BaseDataAccessService {
                 uuid: UUID.randomUUID().toString(),
                 title: titleTerm,
                 text: data.text,
+                numbers: data.numbers?.collect { Double.parseDouble(it.toString()) },
+                numberRange: data.numberRange ? new NumberRange(data.numberRange) : null,
+                constraintList: data.constraintList ?: null,
                 source: data.source
         )
         attribute.creators = creators
@@ -1180,6 +1232,9 @@ class ProfileService extends BaseDataAccessService {
             attribute.title = titleTerm
         }
         attribute.text = data.text
+        attribute.numbers = data.numbers != null ? data.numbers?.collect { Double.parseDouble(it?.toString()) } : null
+        attribute.numberRange = data.numberRange != null ? new NumberRange(data.numberRange) : null
+        attribute.constraintList = data.constraintList ?: null
         attribute.source = data.source
 
         def contributor
@@ -1254,13 +1309,14 @@ class ProfileService extends BaseDataAccessService {
                 existing.rightsHolder = metadata.rightsHolder
                 existing.licence = metadata.licence
                 existing.creator = metadata.creator
+                existing.category = metadata.category
                 existing.createdDate = createdDate
             }
         } else {
             Attachment newAttachment = new Attachment(uuid: UUID.randomUUID().toString(), url: metadata.url,
                     title: metadata.title, description: metadata.description, filename: metadata.filename,
                     contentType: file?.contentType, rights: metadata.rights, createdDate: createdDate,
-                    rightsHolder: metadata.rightsHolder, licence: metadata.licence, creator: metadata.creator)
+                    rightsHolder: metadata.rightsHolder, licence: metadata.licence, creator: metadata.creator, category: metadata.category)
             if (file) {
                 String extension = Utils.getFileExtension(file.originalFilename)
                 attachmentService.saveAttachment(profile.opus.uuid, profile.uuid, newAttachment.uuid, file, extension)

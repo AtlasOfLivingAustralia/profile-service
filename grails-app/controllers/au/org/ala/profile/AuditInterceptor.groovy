@@ -1,6 +1,5 @@
 package au.org.ala.profile
 
-
 import org.springframework.web.context.request.RequestContextHolder
 
 class AuditInterceptor {
@@ -15,7 +14,7 @@ class AuditInterceptor {
     boolean before () {
         // userId is set from either the request param userId or failing that it tries to get it from
         // the UserPrincipal
-        def userId = request.getHeader(grailsApplication.config.app.http.header.userId) ?: RequestContextHolder.currentRequestAttributes()?.getUserPrincipal()?.attributes?.userid
+        def userId = request.getHeader(grailsApplication.config.app.http.header.userId)
 
         // decode the ALA Auth cookie value to avoid double-encoding in the ala-auth plugin (yet to be fixed)
         request.getCookies()?.each {
