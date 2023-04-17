@@ -2,7 +2,6 @@ package au.org.ala.profile
 
 import au.org.ala.profile.security.Role
 import au.org.ala.profile.util.*
-import au.org.ala.web.AuthService
 import com.mongodb.DBObject
 import grails.gorm.transactions.Transactional
 import grails.plugin.dropwizard.metrics.meters.Metered
@@ -18,7 +17,7 @@ import static au.org.ala.profile.util.Utils.toBooleanWithDefault
 class OpusService extends BaseDataAccessService {
 
     EmailService emailService
-    AuthService authService
+    UserService userService
     AttachmentService attachmentService
     MasterListService masterListService
     def grailsApplication
@@ -38,9 +37,12 @@ class OpusService extends BaseDataAccessService {
         Term authorTerm = new Term(name: "Author", vocab: authorshipVocab, uuid: UUID.randomUUID(), required: true)
         authorshipVocab.addToTerms(authorTerm)
         save authorshipVocab
+        Vocab groupVocab = new Vocab(name: "${opus.title} Group Vocabulary", strict: true)
+        save groupVocab
 
         opus.attributeVocabUuid = attributeVocab.uuid
         opus.authorshipVocabUuid = authorshipVocab.uuid
+        opus.groupVocabUuid = groupVocab.uuid
 
         Glossary glossary = new Glossary()
         save glossary
@@ -335,7 +337,7 @@ class OpusService extends BaseDataAccessService {
             }
         }
 
-        if (json.privateCollection) {
+        if (json.privateCollection != null) {
             opus.privateCollection = json.privateCollection?.toBoolean() ?: false
             if (opus.privateCollection) {
                 revokeAllSupportingCollectionAccess(opus)
@@ -394,6 +396,11 @@ class OpusService extends BaseDataAccessService {
                 Term.deleteAll(vocab.terms)
                 delete vocab
             }
+            if (opus.groupVocabUuid) {
+                Vocab vocab = Vocab.findByUuid(opus.groupVocabUuid)
+                Term.deleteAll(vocab.terms)
+                delete vocab
+            }
 
             Opus.withCriteria {
                 eq "supportingOpuses.uuid", opus.uuid
@@ -439,9 +446,9 @@ class OpusService extends BaseDataAccessService {
                     if (!supportingOpus.autoApproveShareRequests) {
                         List administrators = supportingOpus.authorities.findAll {
                             it.role == Role.ROLE_PROFILE_ADMIN
-                        }.collect { authService.getUserForUserId(it.user.userId).userName }
+                        }.collect { userService.getUserForUserId(it.user.userId).userName }
 
-                        String user = authService.getUserForUserId(authService.getUserId()).displayName
+                        String user = userService.getUserForUserId(userService.getUserId()).displayName
 
                         String url = "${grailsApplication.config.profile.hub.base.url}/opus/${supportingOpus.uuid}/shareRequest/${opus.uuid}"
 
@@ -500,9 +507,9 @@ class OpusService extends BaseDataAccessService {
 
         List administrators = requestingOpus.authorities.findAll {
             it.role == Role.ROLE_PROFILE_ADMIN
-        }.collect { authService.getUserForUserId(it.user.userId)?.userName }
+        }.collect { userService.getUserForUserId(it.user.userId)?.userName }
 
-        String user = authService.getUserForUserId(authService.getUserId()).displayName
+        String user = userService.getUserForUserId(userService.getUserId()).displayName
 
         String body = groovyPageRenderer.render(template: "/email/shareResponse", model: [user: user, action: action, opus: opus])
 
@@ -673,13 +680,14 @@ class OpusService extends BaseDataAccessService {
                 existing.rightsHolder = metadata.rightsHolder
                 existing.licence = metadata.licence
                 existing.creator = metadata.creator
+                existing.category = metadata.category
                 existing.createdDate = createdDate
             }
         } else {
             Attachment newAttachment = new Attachment(uuid: UUID.randomUUID().toString(), url: metadata.url,
                     title: metadata.title, description: metadata.description, filename: metadata.filename,
                     contentType: file?.contentType, rights: metadata.rights, createdDate: createdDate,
-                    rightsHolder: metadata.rightsHolder, licence: metadata.licence, creator: metadata.creator)
+                    rightsHolder: metadata.rightsHolder, licence: metadata.licence, creator: metadata.creator, category: metadata.category)
             if (file) {
                 String extension = Utils.getFileExtension(file.originalFilename)
                 attachmentService.saveAttachment(opus.uuid, null, newAttachment.uuid, file, extension)

@@ -25,7 +25,6 @@ class SearchServiceSpec extends BaseIntegrationSpec {
 
 
     def "setup"() {
-        service.authService = Mock(AuthService)
         service.userService = Mock(UserService)
         service.mongoClient = datastore.getMongoClient()
         def mls = Stub(MasterListService)
@@ -90,7 +89,7 @@ class SearchServiceSpec extends BaseIntegrationSpec {
         Profile profile2 = save new Profile(scientificName: "name2", fullName: "name2", opus: opus2, rank: "kingdom", classification: [new Classification(rank: "kingdom", name: "Plantae")])
         Profile profile3 = save new Profile(scientificName: "name3", fullName: "name3", opus: opus3, rank: "kingdom", classification: [new Classification(rank: "kingdom", name: "Plantae")])
 
-        service.authService.userInRole("ROLE_ADMIN") >> false
+        service.userService.userInRole("ROLE_ADMIN") >> false
         service.userService.getCurrentUserDetails() >> [userId: null]
 
         when:
@@ -113,7 +112,7 @@ class SearchServiceSpec extends BaseIntegrationSpec {
         Profile profile2 = save new Profile(scientificName: "name2", fullName: "name2", opus: opus2, rank: "kingdom", classification: [new Classification(rank: "kingdom", name: "Plantae")])
         Profile profile3 = save new Profile(scientificName: "name3", fullName: "name3", opus: opus3, rank: "kingdom", classification: [new Classification(rank: "kingdom", name: "Plantae")])
 
-        service.authService.userInRole("ROLE_ADMIN") >> false
+        service.userService.userInRole("ROLE_ADMIN") >> false
         service.userService.getCurrentUserDetails() >> [userId: "1234"]
 
         when:
@@ -136,7 +135,7 @@ class SearchServiceSpec extends BaseIntegrationSpec {
         Profile profile2 = save new Profile(scientificName: "name2", fullName: "name2", opus: opus2, rank: "kingdom", classification: [new Classification(rank: "kingdom", name: "Plantae")])
         Profile profile3 = save new Profile(scientificName: "name3", fullName: "name3", opus: opus3, rank: "kingdom", classification: [new Classification(rank: "kingdom", name: "Plantae")])
 
-        service.authService.userInRole("ROLE_ADMIN") >> true
+        service.userService.userInRole("ROLE_ADMIN") >> true
         service.userService.getCurrentUserDetails() >> [userId: "1234"]
 
         when:
@@ -888,6 +887,44 @@ class SearchServiceSpec extends BaseIntegrationSpec {
         result.find { it.scientificName == profile3.scientificName } != null
     }
 
+    def "findByClassificationNameAndRank should only provide search taxon when asked"() {
+        given:
+        Opus opus1 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr1", title: "title1")
+        Opus opus2 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr2", title: "title2")
+        Opus opus3 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr3", title: "title3")
+
+        Profile profile1 = save new Profile(scientificName: "plantae", opus: opus1, rank: "kingdom", classification: [new Classification(rank: "kingdom", name: "plantae")])
+        Profile profile2 = save new Profile(scientificName: "name1", opus: opus1, rank: "phylum", classification: [new Classification(rank: "kingdom", name: "plantae"), new Classification(rank: "phylum", name: "name1")])
+        Profile profile3 = save new Profile(scientificName: "name2", opus: opus2, rank: "class", classification: [new Classification(rank: "kingdom", name: "plantae"), new Classification(rank: "phylum", name: "name1"), new Classification(rank: "class", name: "name2")])
+        Profile profile4 = save new Profile(scientificName: "name3", opus: opus3, rank: "class", classification: [new Classification(rank: "kingdom", name: "plantae"), new Classification(rank: "class", name: "name3")])
+
+        when:
+        List result = service.findByClassificationNameAndRank("kingdom", "plantae", null, ProfileSortOption.default, -1, 0, false, true)
+
+        then:
+        result.size() == 4
+        result.find { it.scientificName == 'plantae' } != null
+    }
+
+    def "findByClassificationNameAndRank should filter by rank when asked"() {
+        given:
+        Opus opus1 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr1", title: "title1")
+        Opus opus2 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr2", title: "title2")
+        Opus opus3 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr3", title: "title3")
+
+        Profile profile1 = save new Profile(scientificName: "plantae", opus: opus1, rank: "kingdom", classification: [new Classification(rank: "kingdom", name: "plantae")])
+        Profile profile2 = save new Profile(scientificName: "name1", opus: opus1, rank: "phylum", classification: [new Classification(rank: "kingdom", name: "plantae"), new Classification(rank: "phylum", name: "name1")])
+        Profile profile3 = save new Profile(scientificName: "name2", opus: opus2, rank: "class", classification: [new Classification(rank: "kingdom", name: "plantae"), new Classification(rank: "phylum", name: "name1"), new Classification(rank: "class", name: "name2")])
+        Profile profile4 = save new Profile(scientificName: "name3", opus: opus3, rank: "class", classification: [new Classification(rank: "kingdom", name: "plantae"), new Classification(rank: "class", name: "name3")])
+
+        when:
+        List result = service.findByClassificationNameAndRank("kingdom", "plantae", null, ProfileSortOption.default, -1, 0, false, true, 'phylum')
+
+        then:
+        result.size() == 1
+        result.find { it.scientificName == 'name1' } != null
+    }
+
     def "totalByClassificationNameAndRank should exclude archived profiles"() {
         given:
         Opus opus1 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr1", title: "title1")
@@ -920,6 +957,53 @@ class SearchServiceSpec extends BaseIntegrationSpec {
 
         then:
         result == 2
+    }
+
+    def "totalByClassificationNameAndRank should include searched taxon when asked"() {
+        given:
+        Opus opus1 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr1", title: "title1")
+        Opus opus2 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr2", title: "title2")
+        Opus opus3 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr3", title: "title3")
+
+        Profile profile1 = save new Profile(scientificName: "name1", opus: opus1, rank: "phylum", classification: [new Classification(rank: "kingdom", name: "plantae"), new Classification(rank: "phylum", name: "name1")])
+        Profile profile2 = save new Profile(scientificName: "name2", opus: opus2, rank: "class", classification: [new Classification(rank: "kingdom", name: "plantae"), new Classification(rank: "phylum", name: "name1"), new Classification(rank: "class", name: "name2")])
+        Profile profile3 = save new Profile(scientificName: "name3", opus: opus3, rank: "class", classification: [new Classification(rank: "kingdom", name: "plantae"), new Classification(rank: "class", name: "name3")])
+
+        when:
+        int result = service.totalDescendantsByClassificationAndRank("phylum", "name1", null, false, true)
+
+        then:
+        result == 2
+
+        when:
+        result = service.totalDescendantsByClassificationAndRank("phylum", "name1", null, false, false)
+
+        then:
+        result == 1
+    }
+
+    def "totalByClassificationNameAndRank should only provide rank filtered results when asked"() {
+        given:
+        Opus opus1 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr1", title: "title1")
+        Opus opus2 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr2", title: "title2")
+        Opus opus3 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr3", title: "title3")
+
+        Profile profile1 = save new Profile(scientificName: "name1", opus: opus1, rank: "phylum", classification: [new Classification(rank: "kingdom", name: "plantae"), new Classification(rank: "phylum", name: "name1")])
+        Profile profile2 = save new Profile(scientificName: "name2", opus: opus2, rank: "class", classification: [new Classification(rank: "kingdom", name: "plantae"), new Classification(rank: "phylum", name: "name1"), new Classification(rank: "class", name: "name2")])
+        Profile profile3 = save new Profile(scientificName: "name3", opus: opus3, rank: "class", classification: [new Classification(rank: "kingdom", name: "plantae"), new Classification(rank: "class", name: "name3")])
+
+        when:
+        int result = service.totalDescendantsByClassificationAndRank("kingdom", "plantae", null, false, false, 'phylum')
+
+        then:
+        result == 1
+
+        when:
+        result = service.totalDescendantsByClassificationAndRank("kingdom", "plantae", null, false, false, null)
+
+        then:
+        result == 3
+
     }
 
     def "hasDescendantsByClassificationAndRank should return true when there is at least one child"() {

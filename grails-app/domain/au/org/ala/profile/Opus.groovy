@@ -42,6 +42,7 @@ class Opus {
 
     String attributeVocabUuid
     String authorshipVocabUuid
+    String groupVocabUuid
     Boolean enablePhyloUpload = false
     Boolean enableOccurrenceUpload = false
     Boolean enableTaxaUpload = false
@@ -105,6 +106,7 @@ class Opus {
         help nullable: true
         attributeVocabUuid nullable: true
         authorshipVocabUuid nullable: true
+        groupVocabUuid nullable: true
         enablePhyloUpload nullable: true
         enableOccurrenceUpload nullable: true
         enableTaxaUpload nullable: true

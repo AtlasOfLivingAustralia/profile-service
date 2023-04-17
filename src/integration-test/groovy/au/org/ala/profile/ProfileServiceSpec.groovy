@@ -1,5 +1,6 @@
 package au.org.ala.profile
 
+import au.org.ala.profile.util.DataResourceOption
 import au.org.ala.profile.util.ImageOption
 import au.org.ala.web.AuthService
 import au.org.ala.web.UserDetails
@@ -25,9 +26,9 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
     def setup() {
         service.nameService = Mock(NameService)
         service.nameService.matchName(_) >> [scientificName: "sciName", author: "fred", guid: "ABC"]
-        service.authService = Mock(AuthService)
-        service.authService.getUserId() >> "fred"
-        service.authService.getUserForUserId(_) >> new UserDetails(userId: "1234", firstName: "fred", lastName: "fred")
+        service.userService = Mock(UserService)
+        service.userService.getUserId() >> "fred"
+        service.userService.getUserForUserId(_) >> new UserDetails(userId: "1234", firstName: "fred", lastName: "fred")
         bieService = Mock(BieService)
         bieService.getClassification(_) >> null
         service.bieService = bieService
@@ -1957,5 +1958,169 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
         null | null | 'abc' | 'def' | true
         'def' | 'abc' | null | null | true
     }
+
+    def "getProfiles should by default return all profiles and total count" () {
+        given:
+        Opus opus1 = new Opus(title: "opus1", dataResourceUid: "123", glossary: new Glossary())
+        save opus1
+        Profile profile1 = new Profile(opus: opus1, scientificName: "profile1", attachments: [new Attachment(uuid: "1234", title: "oldTitle", description: "oldDesc")])
+        save profile1
+        Profile profile2 = new Profile(opus: opus1, scientificName: "profile2", attachments: [new Attachment(uuid: "1234", title: "oldTitle", description: "oldDesc")])
+        save profile2
+        Profile profile3 = new Profile(opus: opus1, scientificName: "profile3", attachments: [new Attachment(uuid: "1234", title: "oldTitle", description: "oldDesc")])
+        save profile3
+
+        when:
+        def result = service.getProfiles(opus1, 1, 0, 'scientificName', 'desc')
+
+        then:
+        result.count == 3
+        result.profiles.size() == 1
+        result.profiles.collect { it.scientificName } == ['profile3']
+    }
+
+    def "getProfiles should by default return profiles filterd by rank" () {
+        given:
+        Opus opus1 = new Opus(title: "opus1", dataResourceUid: "123", glossary: new Glossary())
+        save opus1
+        Profile profile1 = new Profile(opus: opus1, scientificName: "profile1", rank: 'species', attachments: [new Attachment(uuid: "1234", title: "oldTitle", description: "oldDesc")])
+        save profile1
+        Profile profile2 = new Profile(opus: opus1, scientificName: "profile2", rank: 'species', attachments: [new Attachment(uuid: "1234", title: "oldTitle", description: "oldDesc")])
+        save profile2
+        Profile profile3 = new Profile(opus: opus1, scientificName: "profile3", rank: 'subspecies', attachments: [new Attachment(uuid: "1234", title: "oldTitle", description: "oldDesc")])
+        save profile3
+
+        when:
+        def result = service.getProfiles(opus1, 1, 0, 'scientificName', 'desc', 'species')
+
+        then:
+        result.count == 2
+        result.profiles.size() == 1
+        result.profiles.collect { it.scientificName} == ['profile2']
+    }
+
+
+    def "test create attribute"() {
+        given:
+        String profileId = "12345"
+        service.vocabService = vocabService
+        def vocab = save new Vocab(uuid: 'vocab-uuid', name: 'test', terms: [])
+        def term = save new Term(name: "Test Title", uuid: "uuid1", vocab: vocab)
+        def opus = save new Opus(
+                uuid: "opus1",
+                shortName: 'opus-short',
+                dataResourceConfig: new DataResourceConfig(recordResourceOption: DataResourceOption.ALL),
+                glossary: new Glossary(),
+                title: 'opus1',
+                dataResourceUid: 'dataResourceUid1',
+                attributeVocabUuid: "vocab-uuid"
+        )
+        save new Profile(
+                uuid: profileId,
+                scientificName: "sciName",
+                nameAuthor: "nameAuthor",
+                guid: "guid",
+                rank: "rank",
+                taxonomyTree: "taxonomyTree",
+                nslNameIdentifier: "nslId",
+                primaryImage: "primaryImage",
+                showLinkedOpusAttributes: true,
+                profileStatus: Profile.STATUS_PARTIAL,
+                attributes: [],
+                dateCreated: new Date(),
+                opus: opus
+        )
+        Map data = [
+                title: "Test Title",
+                text: "Test text",
+                numbers: [1, 2, 3, 4, 5],
+                numberRange: [from: 5, to: 10],
+                constraintList: ["term1", "term2", "term3"],
+                source: "Test source",
+                creators: ["creator1", "creator2"],
+                editors: ["editor1", "editor2"],
+                original: null,
+                userDisplayName: "User 1",
+                userId: "user1"
+        ]
+
+        when:
+        Attribute attribute = service.createAttribute(profileId, data)
+
+        then:
+        attribute.title.name == "Test Title"
+        attribute.text == "Test text"
+        attribute.numbers == [1.0, 2.0, 3.0, 4.0, 5.0]
+        attribute.numberRange.from == 5.0
+        attribute.numberRange.to == 10.0
+        attribute.constraintList == ["term1", "term2", "term3"]
+        attribute.source == "Test source"
+        attribute.creators.size() == 3
+        attribute.editors.size() == 2
+    }
+
+    def "test update attribute"() {
+        given:
+        service.vocabService = vocabService
+        String profileId = "12345"
+        String attributeId = "abcde"
+        def vocab = save new Vocab(uuid: 'vocab-uuid', name: 'test', terms: [])
+        def term = save new Term(name: "Test Title", uuid: "uuid1", vocab: vocab)
+        def opus = save new Opus(
+                uuid: "opus1",
+                shortName: 'opus-short',
+                dataResourceConfig: new DataResourceConfig(recordResourceOption: DataResourceOption.ALL),
+                glossary: new Glossary(),
+                title: 'opus1',
+                dataResourceUid: 'dataResourceUid1',
+                attributeVocabUuid: "vocab-uuid"
+        )
+        Attribute attribute = new Attribute(uuid: attributeId, title: term, text: "Test text", source: "Test source")
+        Profile profile = save new Profile(
+                uuid: profileId,
+                scientificName: "sciName",
+                nameAuthor: "nameAuthor",
+                guid: "guid",
+                rank: "rank",
+                taxonomyTree: "taxonomyTree",
+                nslNameIdentifier: "nslId",
+                primaryImage: "primaryImage",
+                showLinkedOpusAttributes: true,
+                profileStatus: Profile.STATUS_PARTIAL,
+                attributes: [attribute],
+                dateCreated: new Date(),
+                opus: opus
+        )
+
+        Map data = [
+                title: "Updated Title",
+                text: "Updated text",
+                numbers: [1, 2, 3, 4, 5],
+                numberRange: [from: 5, to: 10],
+                constraintList: ["term1", "term2", "term3"],
+                source: "Updated source",
+                attributeTo: "User 1",
+                userDisplayName: "User 1",
+                userId: "user1",
+                significantEdit: true
+        ]
+
+        when:
+        boolean result = service.updateAttribute(attributeId, profileId, data)
+        attribute = Attribute.findByUuid(attributeId)
+
+        then:
+        result == true
+        attribute.title.name == "Updated Title"
+        attribute.text == "Updated text"
+        attribute.numbers == [1.0, 2.0, 3.0, 4.0, 5.0]
+        attribute.numberRange.from == 5.0
+        attribute.numberRange.to == 10.0
+        attribute.constraintList == ["term1", "term2", "term3"]
+        attribute.source == "Updated source"
+        attribute.editors.size() == 1
+        attribute.editors.first().name == "User 1"
+    }
+
 }
 

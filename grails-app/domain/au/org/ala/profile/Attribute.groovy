@@ -23,6 +23,9 @@ class Attribute implements Comparable<Attribute> {
     String text // = "This animal lives...."
     Attribute original // The original attribute this was copied from
     String source
+    List<Double> numbers
+    NumberRange numberRange
+    List<String> constraintList
 
     Date dateCreated
     Date lastUpdated
@@ -31,10 +34,15 @@ class Attribute implements Comparable<Attribute> {
 
     static belongsTo = [profile: Profile]
 
+    static embedded = ["numberRange"]
+
     static constraints = {
         text nullable: true
         original nullable: true
         source nullable: true
+        numbers nullable: true
+        numberRange nullable: true
+        constraintList nullable: true
     }
 
     static mapping = {

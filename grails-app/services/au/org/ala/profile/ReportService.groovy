@@ -36,7 +36,11 @@ class ReportService {
 
                 or {
                     isNull "matchedName"
-                    neProperty("fullName", "matchedName.fullName")
+                    and {
+                        isNotNull "matchedName"
+                        neProperty("fullName", "matchedName.fullName")
+                    }
+
                     isNull "nslNameIdentifier"
                 }
 
@@ -52,7 +56,10 @@ class ReportService {
 
                 or {
                     isNull "matchedName"
-                    neProperty("fullName", "matchedName.fullName")
+                    and {
+                        isNotNull "matchedName"
+                        neProperty("fullName", "matchedName.fullName")
+                    }
                     isNull "nslNameIdentifier"
                 }
 
@@ -137,9 +144,15 @@ class ReportService {
             }
         }
         final profileUuids = profiles*.get(0)
-        final aggOutput = Comment.collection.aggregate([
+        def aggOutput = Comment.collection.aggregate([
 //                BaseDataAccessService.getBsonDocument([$match: [lastUpdated: [$gte: from, $lte: to], profileUuid: [$in: profileUuids]]]),
-                Aggregates.match(Filters.and(Filters.in("profileUuid", profileUuids), Filters.gte("lastUpdated", from), Filters.lte("lastUpdated", to))),
+                Aggregates.match(
+                        Filters.and(
+                                Filters.in("profileUuid", profileUuids),
+                                Filters.gte("lastUpdated", from),
+                                Filters.lte("lastUpdated", to)
+                        )
+                ).toBsonDocument(),
                 BaseDataAccessService.getBsonDocument([$sort: [lastUpdated: -1]]),
                 BaseDataAccessService.getBsonDocument([$group: [
                         _id        : '$profileUuid',

@@ -50,6 +50,16 @@ class BaseController extends BasicWSController {
             return null
         }
 
+        Closure expandConstraintList = { attr ->
+            if (attr.constraintList) {
+                attr.constraintListExpanded = Term.findAllByUuidInList(attr.constraintList)
+            }
+        }
+
+        // expand constraint list
+        profile.attributes?.each expandConstraintList
+        profile.draft?.attributes?.each expandConstraintList
+
         // if occurrenceQuery is not custom configured by user, then use default occurrenceQuery for opus/profile combo.
         if(!profile.isCustomMapConfig){
             profile.occurrenceQuery = createOccurrenceQuery(profile)

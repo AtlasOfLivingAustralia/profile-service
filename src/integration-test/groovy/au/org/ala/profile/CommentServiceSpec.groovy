@@ -1,6 +1,6 @@
 package au.org.ala.profile
 
-import au.org.ala.web.AuthService
+import au.org.ala.profile.UserService
 import au.org.ala.web.UserDetails
 import grails.gorm.transactions.Rollback
 import grails.testing.mixin.integration.Integration
@@ -12,9 +12,9 @@ class CommentServiceSpec extends BaseIntegrationSpec {
     CommentService service = new CommentService()
 
     def setup() {
-        service.authService = Mock(AuthService)
-        service.authService.getUserForUserId(_) >> new UserDetails(userId: '1234', firstName: 'fred', lastName: 'fred')
-        service.authService.getUserId() >> "1234"
+        service.userService = Mock(UserService)
+        service.userService.getUserForUserId(_) >> new UserDetails(userId: '1234', firstName: 'fred', lastName: 'fred')
+        service.userService.getUserId() >> "1234"
     }
 
     def "createComment should fail if no profileId or json are provided"() {

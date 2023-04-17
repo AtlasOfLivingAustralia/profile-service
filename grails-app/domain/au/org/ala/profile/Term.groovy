@@ -17,17 +17,27 @@ class Term implements Comparable<Term> {
 
     String uuid
     String name
+    Term groupBy
+    String dataType = 'text'
+    String unit
+    String constraintListVocab
     int order = -1
     boolean required = false
     boolean summary = false
     boolean containsName = false
 
-    static belongsTo = [vocab: Vocab]
+    static belongsTo = [vocab: Vocab, groupBy: Term]
 
-    static constraints = {}
+    static constraints = {
+        groupBy nullable: true
+        dataType nullable: true, inList: ['number', 'range', 'text', 'list', 'singleselect']
+        constraintListVocab nullable: true
+        unit nullable: true
+    }
 
     static mapping = {
         vocab fetch: 'join'
+        groupBy fetch: 'join'
     }
 
     def beforeValidate() {

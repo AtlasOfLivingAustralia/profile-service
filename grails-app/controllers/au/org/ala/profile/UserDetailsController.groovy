@@ -1,13 +1,11 @@
 package au.org.ala.profile
 
 import au.ala.org.ws.security.RequireApiKey
-import au.org.ala.web.AuthService
 import au.org.ala.web.UserDetails
 import grails.converters.JSON
 
 class UserDetailsController extends BaseController {
 
-    AuthService authService
     UserService userService
     OpusService opusService
 
@@ -17,7 +15,7 @@ class UserDetailsController extends BaseController {
             badRequest "No userId has been provided, and there is no authenticated user"
         } else {
             String userId = params.userId ?: userService.getCurrentUserDetails().userId
-            UserDetails userDetails = authService.getUserForUserId(userId)
+            UserDetails userDetails = userService.getUserForUserId(userId)
 
             Map user = [
                     userId: userId,

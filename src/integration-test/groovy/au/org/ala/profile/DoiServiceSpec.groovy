@@ -1,6 +1,6 @@
 package au.org.ala.profile
 
-import au.org.ala.web.AuthService
+import au.org.ala.profile.UserService
 import au.org.ala.web.UserDetails
 import au.org.ala.ws.service.WebService
 import grails.testing.mixin.integration.Integration
@@ -60,9 +60,9 @@ class DoiServiceSpec extends BaseIntegrationSpec {
         setup:
         service.webService = Mock(WebService)
         service.webService.post(_, _, _, _, _, _, _) >> [statusCode: org.springframework.http.HttpStatus.BAD_REQUEST.value(), error: org.springframework.http.HttpStatus.BAD_REQUEST.reasonPhrase ]
-        service.authService = Mock(AuthService)
-        service.authService.getUserId() >> "user1"
-        service.authService.getUserForUserId(_) >> new UserDetails(userId: 'user1', userName: "username1")
+        service.userService = Mock(UserService)
+        service.userService.getUserId() >> "user1"
+        service.userService.getUserForUserId(_) >> new UserDetails(userId: 'user1', userName: "username1")
 
         when:
 
@@ -76,9 +76,9 @@ class DoiServiceSpec extends BaseIntegrationSpec {
         setup:
         service.webService = Mock(WebService)
         service.webService.post(_, _, _, _, _, _, _) >> [statusCode: org.springframework.http.HttpStatus.OK.value(), resp: [ status: "error", error: org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR.reasonPhrase] ]
-        service.authService = Mock(AuthService)
-        service.authService.getUserId() >> "user1"
-        service.authService.getUserForUserId(_) >> new UserDetails(userId: 'user1', userName: "username1")
+        service.userService = Mock(UserService)
+        service.userService.getUserId() >> "user1"
+        service.userService.getUserForUserId(_) >> new UserDetails(userId: 'user1', userName: "username1")
 
         when:
 
@@ -92,9 +92,9 @@ class DoiServiceSpec extends BaseIntegrationSpec {
         setup:
         service.webService = Mock(WebService)
         service.webService.post(_, _, _, _, _, _, _) >> [statusCode: org.springframework.http.HttpStatus.OK.value(), resp: [ status: "xyz", error: org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR.reasonPhrase] ]
-        service.authService = Mock(AuthService)
-        service.authService.getUserId() >> "user1"
-        service.authService.getUserForUserId(_) >> new UserDetails(userId: 'user1', userName: "username1")
+        service.userService = Mock(UserService)
+        service.userService.getUserId() >> "user1"
+        service.userService.getUserForUserId(_) >> new UserDetails(userId: 'user1', userName: "username1")
 
         when:
 
@@ -108,9 +108,9 @@ class DoiServiceSpec extends BaseIntegrationSpec {
         setup:
         service.webService = Mock(WebService)
         service.webService.post(_, _, _, _, _, _, _) >> [statusCode: org.springframework.http.HttpStatus.OK.value(), resp: [ status: "ok", doi: "12345"] ]
-        service.authService = Mock(AuthService)
-        service.authService.getUserId() >> "user1"
-        service.authService.getUserForUserId(_) >> new UserDetails(userId: 'user1', userName: "username1")
+        service.userService = Mock(UserService)
+        service.userService.getUserId() >> "user1"
+        service.userService.getUserForUserId(_) >> new UserDetails(userId: 'user1', userName: "username1")
 
         when:
 
@@ -125,9 +125,9 @@ class DoiServiceSpec extends BaseIntegrationSpec {
         setup:
         service.webService = Mock(WebService)
         service.webService.post(_, _, _, _, _, _, _) >> [statusCode: org.springframework.http.HttpStatus.OK.value(), resp: [ status: "error", doi: "12345"] ]
-        service.authService = Mock(AuthService)
-        service.authService.getUserId() >> "user1"
-        service.authService.getUserForUserId(_) >> new UserDetails(userId: 'user1', userName: "username1")
+        service.userService = Mock(UserService)
+        service.userService.getUserId() >> "user1"
+        service.userService.getUserForUserId(_) >> new UserDetails(userId: 'user1', userName: "username1")
 
         when:
 
@@ -142,9 +142,9 @@ class DoiServiceSpec extends BaseIntegrationSpec {
         setup:
         service.webService = Mock(WebService)
         service.webService.post(_, _, _, _, _, _, _) >> [statusCode: org.springframework.http.HttpStatus.OK.value(), resp: [ status: "error", doi: "12345"] ]
-        service.authService = Mock(AuthService)
-        service.authService.getUserId() >> "user1"
-        service.authService.getUserForUserId(_) >> new UserDetails(userId: 'user1', userName: "username1")
+        service.userService = Mock(UserService)
+        service.userService.getUserId() >> "user1"
+        service.userService.getUserForUserId(_) >> new UserDetails(userId: 'user1', userName: "username1")
 
         when:
         Map result = service.buildJSONForDataCite(new Opus(title: "Opus", uuid: 'opus1'), new Publication(authors: "fred", title: "species1", publicationDate: new Date(), uuid: 'uuid1', version: 1), new Profile(uuid: 'profile1'))
