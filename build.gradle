@@ -116,9 +116,6 @@ dependencies {
     implementation ('au.org.ala:ala-name-matching:4.2')
     implementation "com.xlson.groovycsv:groovycsv:1.0"
     implementation "com.google.guava:guava:19.0"
-    implementation ("com.google.apis:google-api-services-analytics:v3-rev116-1.20.0") {
-        exclude module: 'guava-jdk5'
-    }
     implementation 'com.googlecode.owasp-java-html-sanitizer:owasp-java-html-sanitizer:20160827.1'
     implementation "com.itextpdf:itextpdf:5.5.1"
     implementation "org.imgscalr:imgscalr-lib:4.2"
