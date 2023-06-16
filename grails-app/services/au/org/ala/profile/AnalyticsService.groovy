@@ -90,7 +90,7 @@ class AnalyticsService {
         String url = grailsApplication.config.getProperty('fathom.api.url')
         String siteId = grailsApplication.config.getProperty('fathom.site-id')
         String hostName = grailsApplication.config.getProperty('fathom.hostname')
-        String pathPattern = "/opus/${opus.shortName ?: opus.uuid}/%"
+        String pathPattern = "/opus/${opus.shortName ?: opus.uuid}%"
 
         Map query = [
                 entity: "pageview",
@@ -113,7 +113,7 @@ class AnalyticsService {
         String url = grailsApplication.config.getProperty('fathom.api.url')
         String siteId = grailsApplication.config.getProperty('fathom.site-id')
         String hostName = grailsApplication.config.getProperty('fathom.hostname')
-        String pathPattern = "/opus/${opus.shortName ?: opus.uuid}/%/profile/pdf"
+        String pathPattern = "/opus/${opus.shortName ?: opus.uuid}/profile/%/pdf"
         List filters = [["property": "hostname", "operator": "is", "value": hostName],["property": "pathname", "operator": "is like", "value": pathPattern]]
 
         Map query = [
@@ -129,7 +129,7 @@ class AnalyticsService {
         Map part1 = extractData(result.resp)
 
         //  get the number of hits to publications in this opus
-        filters[1].value = "/opus/${opus.shortName ?: opus.uuid}/%/publication/%/file"
+        filters[1].value = "/opus/${opus.shortName ?: opus.uuid}/profile/%/publication/%/file"
         query.filters = (filters as JSON).toString()
         result = webService.get(url, query, ContentType.APPLICATION_JSON, false, false, getAuthorization())
         Map part2 = extractData(result.resp)
