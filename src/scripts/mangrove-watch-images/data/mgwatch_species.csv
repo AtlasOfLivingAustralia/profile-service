@@ -1,0 +1,109 @@
+﻿Taxa Code,Species Name
+0_Blank,BLANK
+Ac_ebr,Acanthus ebracteatus 
+Ac_ebr-ebr,Acanthus ebracteatus subsp. ebracteatus
+Ac_ebr-eba,Acanthus ebracteatus subsp. ebarbatus
+Ac_ili,Acanthus ilicifolius 
+Ac_vol,Acanthus volubilis
+Ar_aur,Acrostichum aureum 
+Ar_dan,Acrostichum danaeifolium 
+Ar_spe,Acrostichum speciosum 
+Ai_ann,Aegialitis annulata 
+Ai_rot,Aegialitis rotundifolia 
+Ae_cor,Aegiceras corniculatum 
+Ae_flo,Aegiceras floridum 
+Ag_cuc,Aglaia cucullata 
+Am_lat,Amphitecna latifolia 
+An_gla,Annona glabra 
+Av_alb,Avicennia alba 
+Av_bic,Avicennia bicolor 
+Av_ger,Avicennia germinans 
+Av_int,Avicennia integra 
+Av_mar,Avicennia marina 
+Av_mar-mar,Avicennia marina var. marina
+Av_mar-aus,Avicennia marina var. australasica
+Av_mar-euc,Avicennia marina var. eucalyptifolia
+Av_off,Avicennia officinalis 
+Av_rum,Avicennia rumphiana (= A. lanata)
+Av_sch,Avicennia schaueriana 
+Ba_rac,Barringtonia racemosa 
+Bo_arg,Brownlowia argentata
+Bo_ter,Brownlowia tersa
+Br_cyl,Bruguiera cylindrica 
+Br_dun,Bruguiera dungarra 
+Br_exa,Bruguiera exaristata 
+Br_gym,Bruguiera gymnorhiza 
+Br_hai,Bruguiera hainesii 
+Br_par,Bruguiera parviflora 
+Br_rhy,Bruguiera rhynchopetala 
+Br_sex,Bruguiera sexangula 
+Ca_phi,Camptostemon philippinense
+Ca_sch,Camptostemon schultzii
+Ce_aus,Ceriops australis
+Ce_dec,Ceriops decandra
+Ce_pse,Ceriops pseudodecandra (ex C. decandra)
+Ce_tag,Ceriops tagal
+Ce_zip,Ceriops zippeliana (ex C. decandra) 
+Co_ere,Conocarpus erectus
+Cr_pat,Crenea patentinervis
+Cy_iri,Cynometra iripa
+Di_lit,Diospyros littorea
+Do_spa,Dolichandrone spathacea 
+Ex_aga,Excoecaria agallocha 
+Ex_aga-aga,Excoecaria agallocha var. agallocha
+Ex_aga-ova,Excoecaria agallocha var. ovalis
+Ex_ind,Excoecaria indica 
+He_fom,Heritiera fomes 
+He_glo,Heritiera globosa
+He_lit,Heritiera littoralis 
+Hi_til, Talipariti tiliaceum (ex Hibiscus tiliaceus)
+Hp_man,Hippomane mancinella
+In_fag,Inocarpus fagifer
+Ka_can,Kandelia candel
+Ka_obo,Kandelia obovata
+Ln_pat,Lagunaria patersonia
+La_rac,Laguncularia racemosa 
+Lu_lit,Lumnitzera littorea 
+Lu_rac,Lumnitzera racemosa 
+Lu_ros,Lumnitzera rosea 
+Mo_ole,Mora oleifera 
+Lo_mon,Lonchocarus monilis (ex Muellera moniliformis)
+Ny_fru,Nypa fruticans 
+Os_oct,Osbornia octodonta 
+Pa_spi,Pavonia spicata (ex P. paludicola) 
+Pa_rhi,Pavonia rhizophorae
+Pe_ben,Pelliciera benthamii 
+Pe_rhi,Pelliciera rhizophorae 
+Pm_aci,Pemphis acidula 
+Ph_pal,Phoenix paludosa
+Pt_off,Pterocarpus officinalis
+Rh_ann,Rhizophora annamalayana 
+Rh_api,Rhizophora apiculata 
+Rh_bre,Rhizophora brevistyla
+Rh_har,Rhizophora harrisonii 
+Rh_lam,Rhizophora lamarckii 
+Rh_man,Rhizophora mangle 
+Rh_muc,Rhizophora mucronata 
+Rh_rac,Rhizophora racemosa 
+Rh_sam,Rhizophora samoensis 
+Rh_neo,Rhizophora samoensis var. neocaledonica
+Rh_sel,Rhizophora selala 
+Rh_sty,Rhizophora stylosa 
+Rh_tom,Rhizophora tomlinsonii 
+Sh_ter,Schinus terebinthifolia
+Sc_hyd,Scyphiphora hydrophylacea 
+So_alb,Sonneratia alba 
+So_ape,Sonneratia apetala 
+So_cas,Sonneratia caseolaris
+So_gri,Sonneratia griffithii 
+So_gul,Sonneratia gulngai 
+So_hai,Sonneratia hainanensis 
+So_lan,Sonneratia lanceolata
+So_ova,Sonneratia ovata 
+So_ura,Sonneratia urama 
+Ta_pal,Tabebuia palustris 
+Th_pop,Thespesia populnea
+Xy_gra,Xylocarpus granatum 
+Xy_mol,Xylocarpus moluccensis (= X. mekongensis)
+Xy_rum,Xylocarpus rumphii
+Za_roe,Zamia roezlii
