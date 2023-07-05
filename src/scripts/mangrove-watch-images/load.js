@@ -26,6 +26,7 @@ async function uploadImage(image, cookie, imagesDir = 'images') {
   form.append('dataResourceId', args.dataResourceId);
   form.append('creator', image['AUTHOR']);
   form.append('title', image['CAPTION']);
+  form.append('rights', 'Fair use with acknowledgement of rights holder.');
   form.append(
     'licence',
     'Creative Commons Attribution-Noncommercial-Share Alike (International)'
