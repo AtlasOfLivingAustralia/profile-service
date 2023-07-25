@@ -13,1215 +13,2091 @@
 12,Ac_ebr_flower 2.jpg,NC Duke,Flowers: side view
 13,Ac_ebr_flower3.jpg,NC Duke,Flowers: top view
 14,Ac_ebr_fruit1.jpg,NC Duke,Fruit or Propagule: seed capsule
-15,Ac_ebr_leaves1.jpg,NC Duke,Leaf characteristics and shape
-16,AC_ebr_leaves11.jpg,NC Duke,Leaf characteristics and shape
-17,Ac_ebr_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-18,Ac_ebr_siloA.jpg,Deirdre Bean,Silohuette of growth habit
-19,Ac_ebr_tree1.jpg,NC Duke,Tree form
-20,Ac_ebr_zone1.jpg,Diana Kleine,Intertidal zone position
-21,Ac_ebr-eba_bark1.jpg,NC Duke,Bark characteristics
-22,Ac_ebr-eba_diag1.jpg,NC Duke,Diagnostic feature
-23,Ac_ebr-eba_distribW2.jpg,NC Duke,Distribution in the world
-24,Ac_ebr-eba_estuar1.jpg,Diana Kleine,Estuarine occurrence
-25,Ac_ebr-eba_flower2.jpg,NC Duke,Flowers: side view
-26,Ac_ebr-eba_flower4.jpg,NC Duke,Flowers: top view
-27,Ac_ebr-eba_flower7.JPG,NC Duke,Flower features
-28,Ac_ebr-eba_fruit1.jpg,NC Duke,Fruit or Propagule: seed capsule
-29,Ac_ebr-eba_fruit4.JPG,NC Duke,Leaf characteristics and shape
-30,Ac_ebr-eba_leaves1.jpg,NC Duke,Leaf characteristics and shape
-31,Ac_ebr-eba_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-32,Ac_ebr-eba_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-33,Ac_ebr-eba_tree2.jpg,NC Duke,Tree form
-34,Ac_ebr-eba_zone1.jpg,Diana Kleine,Intertidal zone position
-35,Ac_ebr-ebr_bark1.jpg,NC Duke,Bark characteristics
-36,Ac_ebr-ebr_diag1.JPG,NC Duke,Diagnostic feature
-37,Ac_ebr-ebr_distribW2.jpg,NC Duke,Distribution in the world
-38,Ac_ebr-ebr_estuar1.jpg,Diana Kleine,Estuarine occurrence
-39,Ac_ebr-ebr_flower4.jpg,NC Duke,Flowers: side view
-40,Ac_ebr-ebr_flower7.JPG,NC Duke,Flowers: top view
-41,Ac_ebr-ebr_fruit1.jpg,NC Duke,Fruit or Propagule: seed capsule
-42,Ac_ebr-ebr_fruit2.jpg,NC Duke,Leaf characteristics and shape
-43,Ac_ebr-ebr_leaves1.jpg,NC Duke,Leaf characteristics and shape
-44,Ac_ebr-ebr_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-45,Ac_ebr-ebr_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-46,Ac_ebr-ebr_stembase1 (1).jpg,NC Duke,Stembase characteristics
-47,Ac_ebr-ebr_tree2 (1).JPG,NC Duke,Tree form
-48,Ac_ebr-ebr_zone1.jpg,Diana Kleine,Intertidal zone position
-49,Ac_ili_bark1.jpg,NC Duke,Bark characteristics
-50,Ac_ili_diag1.jpg,NC Duke,Diagnostic feature
-51,Ac_ili_diag2.jpg,NC Duke,Diagnostic feature
-52,Ac_ili_diag3.JPG,NC Duke,Diagnostic feature
-53,Ac_ili_distribW2.jpg,NC Duke,Distribution in the world
-54,Ac_ili_estuar1.jpg,Diana Kleine,Estuarine occurrence
-55,Ac_ili_flower6.JPG,NC Duke,Flowers: side view
-56,Ac_ili_flower8.JPG,NC Duke,Flowers: top view
-57,Ac_ili_fruit1.jpg,NC Duke,Fruit or Propagule: seed capsule
-58,Ac_ili_leaves3.JPG,NC Duke,Leaf characteristics and shape
-59,Ac_ili_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-60,Ac_ili_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-61,Ac_ili_stembase1.jpg,NC Duke,Stembase characteristics
-62,Ac_ili_tree7.JPG,NC Duke,Tree form
-63,Ac_ili_zone1.jpg,Diana Kleine,Intertidal zone position
-64,Ac_vol_distribW2.jpg,NC Duke,Distribution in the world
-65,Ac_vol_estuar1.jpg,Diana Kleine,Estuarine occurrence
-66,Ac_vol_flower3w.jpg,NC Duke,Flowers: side view
-67,Ac_vol_flower6w.jpg,NC Duke,Flowers: top view
-68,Ac_vol_fruit1w.jpg,NC Duke,Fruit or Propagule: seed capsule
-69,Ac_vol_leaves1w.jpg,NC Duke,Leaf characteristics and shape
-70,Ac_vol_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-71,Ac_vol_stembase1w.jpg,NC Duke,Stembase characteristics
-72,Ac_vol_tree1w.jpg,NC Duke,Tree form
-73,Ac_vol_zone1.jpg,Diana Kleine,Intertidal zone position
-74,Ae_cor_bark1.JPG,NC Duke,Bark characteristics
-75,Ae_cor_distribW2.jpg,NC Duke,Distribution in the world
-76,Ae_cor_flowers2.jpg,NC Duke,Flower features
-77,Ae_cor_fruit1.jpg,NC Duke,Fruit or propagule
-78,Ae_cor_fruit3.JPG,NC Duke,Fruit or propagule
-79,Ae_cor_leaves2.jpg,NC Duke,Leaf characteristics and shape
-80,Ae_cor_leaves4.JPG,NC Duke,Leaf characteristics and shape
-81,Ae_cor_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-82,Ae_cor_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-83,Ae_cor_tree2.jpg,NC Duke,Tree form
-84,Ae_flo_distribW2.jpg,NC Duke,Distribution in the world
-85,Ae_flo_flower1w.jpg,NC Duke,Flower features
-86,Ae_flo_flower4w.jpg,NC Duke,Flower features
-87,Ae_flo_fruit5.JPG,NC Duke,Fruit or propagule
-88,Ae_flo_leaves1w.jpg,NC Duke,Leaf characteristics and shape
-89,Ae_flo_leaves3w.jpg,NC Duke,Leaf characteristics and shape
-90,Ae_flo_leaves5.JPG,NC Duke,Leaf characteristics and shape
-91,Ae_flo_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-92,Ae_flo_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-93,Ae_flo_tree1w.JPG,NC Duke,Tree form
-94,Ae_flo_tree3.JPG,NC Duke,Tree form
-95,Ag_cuc_distribW2.jpg,NC Duke,Distribution in the world
-96,Ag_cuc_flower1w.jpg,NC Duke,Flower features
-97,Ag_cuc_fruit1w.jpg,NC Duke,Fruit or propagule
-98,Ag_cuc_leaves1w.jpg,NC Duke,Leaf characteristics and shape
-99,Ag_cuc_leaves2w.jpg,NC Duke,Leaf characteristics and shape
-100,Ag_cuc_leaves6B.jpg,NC Duke,Leaf characteristics and shape
-101,Ag_cuc_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-102,Ai_ann_bark1.jpg,NC Duke,Bark characteristics
-103,Ai_ann_distribW2.jpg,NC Duke,Distribution in the world
-104,Ai_ann_flower1.jpg,NC Duke,Flower features
-105,Ai_ann_flower2.JPG,NC Duke,Flower features
-106,Ai_ann_fruit2.jpg,NC Duke,Fruit or propagule
-107,Ai_ann_leaves1.jpg,NC Duke,Leaf characteristics and shape
-108,Ai_ann_leaves3.JPG,NC Duke,Leaf characteristics and shape
-109,Ai_ann_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-110,Ai_ann_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-111,Ai_ann_stembase1.jpg,NC Duke,Stembase characteristics
-112,Ai_ann_tree2.jpg,NC Duke,Tree form
-113,Ai_rot_distribW2.jpg,NC Duke,Distribution in the world
-114,Ai_rot_flowers1w.jpg,NC Duke,Flower features
-115,Ai_rot_fruit1w.jpg,NC Duke,Fruit or propagule
-116,Ai_rot_leaves1w.jpg,NC Duke,Leaf characteristics and shape
-117,Ai_rot_leaves2w.jpg,NC Duke,Leaf characteristics and shape
-118,Ai_rot_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-119,Ai_rot_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-120,Ai_rot_tree1w.jpg,NC Duke,Tree form
-121,Ai_rot_tree6B.jpg,NC Duke,Tree form
-122,Am_lat_bark1w.jpg,NC Duke,Bark characteristics
-123,Am_lat_distribW2.jpg,NC Duke,Distribution in the world
-124,Am_lat_flowers1w.jpg,NC Duke,Flower features
-125,Am_lat_flowers5w.JPG,NC Duke,Flower features
-126,Am_lat_fruit3w.jpg,NC Duke,Fruit or propagule
-127,Am_lat_leaves4w.jpg,NC Duke,Leaf characteristics and shape
-128,Am_lat_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-129,Am_lat_stembase1w.jpg,NC Duke,Stembase characteristics
-130,Am_lat_tree1w.jpg,NC Duke,Tree form
-131,An_gla_bark2.JPG,NC Duke,Bark characteristics
-132,An_gla_distribW2.jpg,NC Duke,Distribution in the world
-133,An_gla_flower6A.jpg,NC Duke,Flower features
-134,An_gla_fruit3.JPG,NC Duke,Fruit or propagule
-135,An_gla_leaves1.JPG,NC Duke,Leaf characteristics and shape
-136,An_gla_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-137,An_gla_stembase3.JPG,NC Duke,Stembase characteristics
-138,An_gla_tree6B.jpg,NC Duke,Tree form
-139,Ar_aur_diag4.JPG,NC Duke,Diagnostic feature
-140,Ar_aur_distribW2.jpg,NC Duke,Distribution in the world
-141,Ar_aur_fruit2.JPG,NC Duke,Fruit or propagule
-142,Ar_aur_fruit6.JPG,NC Duke,Fruit or propagule
-143,Ar_aur_leaves1.JPG,NC Duke,Leaf characteristics and shape
-144,Ar_aur_leaves2.JPG,NC Duke,Leaf characteristics and shape
-145,Ar_aur_leaves5.JPG,NC Duke,Leaf characteristics and shape
-146,Ar_aur_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-147,Ar_aur_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-148,Ar_aur_stembase1.JPG,NC Duke,Stembase characteristics
-149,Ar_aur_tree3.JPG,NC Duke,Tree form
-150,Ar_dan_distribW2.jpg,NC Duke,Distribution in the world
-151,Ar_dan_fruit1.JPG,NC Duke,Fruit or propagule
-152,Ar_dan_fruitCB.jpg,NC Duke,Fruit or propagule
-153,Ar_dan_leaves1.JPG,NC Duke,Leaf characteristics and shape
-154,Ar_dan_tree1.JPG,NC Duke,Tree form
-155,Ar_dan_tree2.JPG,NC Duke,Tree form
-156,Ar_dan_tree3.JPG,NC Duke,Tree form
-157,Ar_dan_tree4.JPG,NC Duke,Tree form
-158,Ar_spe_distribW2.jpg,NC Duke,Distribution in the world
-159,Ar_spe_fruit4.jpg,NC Duke,Fruit or propagule
-160,Ar_spe_fruit5.JPG,NC Duke,Fruit or propagule
-161,Ar_spe_fruit7.jpg,NC Duke,Fruit or propagule
-162,Ar_spe_leaves1.jpg,NC Duke,Leaf characteristics and shape
-163,Ar_spe_leaves2.jpg,NC Duke,Leaf characteristics and shape
-164,Ar_spe_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-165,Ar_spe_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-166,Ar_spe_tree2.jpg,NC Duke,Tree form
-167,Ar_spe_tree4.JPG,NC Duke,Tree form
-168,Ar_spe_tree7.JPG,NC Duke,Tree form
-169,Av_alb_bark1.JPG,NC Duke,Bark characteristics
-170,Av_alb_diag1.JPG,NC Duke,Diagnostic feature
-171,Av_alb_distribW2.jpg,NC Duke,Distribution in the world
-172,Av_alb_flower2.JPG,NC Duke,Flower features
-173,Av_alb_fruit1.JPG,NC Duke,Fruit or propagule
-174,Av_alb_leaves2.JPG,NC Duke,Leaf characteristics and shape
-175,Av_alb_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-176,Av_alb_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-177,Av_alb_stembase1.JPG,NC Duke,Stembase characteristics
-178,Av_alb_tree1.JPG,NC Duke,Tree form
-179,Av_alb_tree6B.jpg,NC Duke,Tree form
-180,Av_bic_bark1.jpg,NC Duke,Bark characteristics
-181,Av_bic_distribW2.jpg,NC Duke,Distribution in the world
-182,Av_bic_flower1w.JPG,NC Duke,Flower features
-183,Av_bic_flower6B.jpg,NC Duke,Flower features
-184,Av_bic_flower7B.jpg,NC Duke,Flower features
-185,Av_bic_fruit1w.jpg,NC Duke,Fruit or propagule
-186,Av_bic_fruit6B.jpg,NC Duke,Fruit or propagule
-187,Av_bic_leaves1.jpg,NC Duke,Leaf characteristics and shape
-188,Av_bic_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-189,Av_bic_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-190,Av_bic_stembase3.jpg,NC Duke,Stembase characteristics
-191,Av_bic_stembase5.jpg,NC Duke,Stembase characteristics
-192,Av_bic_tree2.jpg,NC Duke,Tree form
-193,Av_ger phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-194,Av_ger_bark2.JPG,NC Duke,Bark characteristics
-195,Av_ger_distribW2.jpg,NC Duke,Distribution in the world
-196,Av_ger_flower6A.jpg,NC Duke,Flower features
-197,Av_ger_flower7A.jpg,NC Duke,Flower features
-198,Av_ger_flower9.jpg,NC Duke,Flower features
-199,Av_ger_fruit4.JPG,NC Duke,Fruit or propagule
-200,Av_ger_leaves3.JPG,NC Duke,Leaf characteristics and shape
-201,Av_ger_leaves6.JPG,NC Duke,Leaf characteristics and shape
-202,Av_ger_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-203,Av_ger_stembase2.JPG,NC Duke,Stembase characteristics
-204,Av_ger_tree5.JPG,NC Duke,Tree form
-205,Av_int_bark1.jpg,NC Duke,Bark characteristics
-206,Av_int_distribW2.jpg,NC Duke,Distribution in the world
-207,Av_int_flower1.jpg,NC Duke,Flower features
-208,Av_int_flower3.jpg,NC Duke,Flower features
-209,Av_int_fruit6A.jpg,NC Duke,Fruit or propagule
-210,Av_int_leaves1.jpg,NC Duke,Leaf characteristics and shape
-211,Av_int_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-212,Av_int_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-213,Av_int_stembase1.jpg,NC Duke,Stembase characteristics
-214,Av_int_tree3.JPG,NC Duke,Tree form
-215,Av_mar_AusNRM1.jpg,NC Duke,Distribution in Australia
-216,Av_mar_bark2.jpg,NC Duke,Bark characteristics
-217,Av_mar_bark677.jpg,NC Duke,Bark characteristics
-218,Av_mar_distrib2.jpg,NC Duke,Distribution in the world
-219,Av_mar_estuar1.jpg,Diana Kleine,Estuarine occurrence
-220,Av_mar_flower1.jpg,NC Duke,Flower features
-221,Av_mar_flower2.jpg,NC Duke,Flower features
-222,Av_mar_fruit1.jpg,NC Duke,Fruit or propagule
-223,Av_mar_leaves1.jpg,NC Duke,Leaf characteristics and shape
-224,Av_mar_leaves2.JPG,NC Duke,Leaf characteristics and shape
-225,Av_mar_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-226,Av_mar_silo1B.jpg,Deirdre Bean,Silohuette of growth habit
-227,Av_mar_stembase1.jpg,NC Duke,Stembase characteristics
-228,Av_mar_tree1.jpg,NC Duke,Tree form
-229,Av_mar_tree6B.jpg,NC Duke,Tree form
-230,Av_mar_zone1.jpg,Diana Kleine,Intertidal zone position
-231,Av_mar-aus_bark4.JPG,NC Duke,Bark characteristics
-232,Av_mar-aus_distribW2.jpg,NC Duke,Distribution in the world
-233,Av_mar-aus_flower5.JPG,NC Duke,Flower features
-234,Av_mar-aus_flower8.JPG,NC Duke,Flower features
-235,Av_mar-aus_fruit1.jpg,NC Duke,Fruit or propagule
-236,Av_mar-aus_leaves6.jpg,NC Duke,Leaf characteristics and shape
-237,Av_mar-aus_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-238,Av_mar-aus_silo1B.jpg,Deirdre Bean,Silohuette of growth habit
-239,Av_mar-aus_tree1.jpg,NC Duke,Tree form
-240,Av_mar-aus_tree13.jpg,NC Duke,Tree form
-241,Av_mar-euc_bark2.jpg,NC Duke,Bark characteristics
-242,Av_mar-euc_distribW2.jpg,NC Duke,Distribution in the world
-243,Av_mar-euc_flower1.jpg,NC Duke,Flower features
-244,Av_mar-euc_flower3.jpg,NC Duke,Flower features
-245,Av_mar-euc_flower4.jpg,NC Duke,Flower features
-246,Av_mar-euc_fruit1.jpg,NC Duke,Fruit or propagule
-247,Av_mar-euc_leaves2.jpg,NC Duke,Leaf characteristics and shape
-248,Av_mar-euc_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-249,Av_mar-euc_silo1B.jpg,Deirdre Bean,Silohuette of growth habit
-250,Av_mar-euc_stembase1.jpg,NC Duke,Stembase characteristics
-251,Av_mar-euc_tree1.jpg,NC Duke,Tree form
-252,Av_mar-euc_tree6B.jpg,NC Duke,Tree form
-253,Av_mar-mar_bark3.JPG,NC Duke,Bark characteristics
-254,Av_mar-mar_distribW2.jpg,NC Duke,Distribution in the world
-255,Av_mar-mar_flower1.jpg,NC Duke,Flower features
-256,Av_mar-mar_flower2.jpg,NC Duke,Flower features
-257,Av_mar-mar_fruit1.JPG,NC Duke,Fruit or propagule
-258,Av_mar-mar_leaves4.JPG,NC Duke,Leaf characteristics and shape
-259,Av_mar-mar_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-260,Av_mar-mar_silo1B.jpg,Deirdre Bean,Silohuette of growth habit
-261,Av_mar-mar_stembase1.jpg,NC Duke,Stembase characteristics
-262,Av_mar-mar_tree1.jpg,NC Duke,Tree form
-263,Av_off_bark1.jpg,NC Duke,Bark characteristics
-264,Av_off_distribW2.jpg,NC Duke,Distribution in the world
-265,Av_off_flower2.JPG,NC Duke,Flower features
-266,Av_off_flower3.JPG,NC Duke,Flower features
-267,Av_off_flower4.JPG,NC Duke,Flower features
-268,Av_off_flower6A.jpg,NC Duke,Flower features
-269,Av_off_fruit2.JPG,NC Duke,Fruit or propagule
-270,Av_off_leaves2.JPG,NC Duke,Leaf characteristics and shape
-271,Av_off_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-272,Av_off_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-273,Av_off_stembase1.JPG,NC Duke,Stembase characteristics
-274,Av_off_stembase2.JPG,NC Duke,Stembase characteristics
-275,Av_off_tree2.JPG,NC Duke,Tree form
-276,Av_rum_bark2.JPG,NC Duke,Bark characteristics
-277,Av_rum_distribW2.jpg,NC Duke,Distribution in the world
-278,Av_rum_flower1.JPG,NC Duke,Flower features
-279,Av_rum_flower3.JPG,NC Duke,Flower features
-280,Av_rum_fruit1.JPG,NC Duke,Fruit or propagule
-281,Av_rum_fruit4.JPG,NC Duke,Fruit or propagule
-282,Av_rum_leaves1.JPG,NC Duke,Leaf characteristics and shape
-283,Av_rum_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-284,Av_rum_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-285,Av_rum_stembase1.JPG,NC Duke,Stembase characteristics
-286,Av_rum_tree2.JPG,NC Duke,Tree form
-287,Av_sch_bark3.JPG,NC Duke,Bark characteristics
-288,Av_sch_distribW2.jpg,NC Duke,Distribution in the world
-289,Av_sch_flower6.JPG,NC Duke,Flower features
-290,Av_sch_flower6A.jpg,NC Duke,Flower features
-291,Av_sch_fruit2.JPG,NC Duke,Fruit or propagule
-292,Av_sch_fruit6.JPG,NC Duke,Fruit or propagule
-293,Av_sch_leaves1.JPG,NC Duke,Leaf characteristics and shape
-294,Av_sch_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-295,Av_sch_siloCB.jpg,NC Duke,Silohuette of growth habit
-296,Av_sch_stembase4.JPG,NC Duke,Stembase characteristics
-297,Av_sch_tree1.JPG,NC Duke,Tree form
-298,Ba_rac_distribW2.jpg,NC Duke,Distribution in the world
-299,Ba_rac_flower1.jpg,NC Duke,Flower features
-300,Ba_rac_flower3.jpg,NC Duke,Flower features
-301,Ba_rac_fruit1.jpg,NC Duke,Fruit or propagule
-302,Ba_rac_fruit3.JPG,NC Duke,Fruit or propagule
-303,Ba_rac_leaves2.jpg,NC Duke,Leaf characteristics and shape
-304,Ba_rac_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-305,Ba_rac_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-306,Ba_rac_stembase1.jpg,NC Duke,Stembase characteristics
-307,Ba_rac_tree1.jpg,NC Duke,Tree form
-308,Bo_arg_bark1.JPG,NC Duke,Bark characteristics
-309,Bo_arg_distribW2.jpg,NC Duke,Distribution in the world
-310,Bo_arg_flower2.jpg,NC Duke,Flower features
-311,Bo_arg_fruit3.JPG,NC Duke,Fruit or propagule
-312,Bo_arg_leaves1.jpg,NC Duke,Leaf characteristics and shape
-313,Bo_arg_leaves5.JPG,NC Duke,Leaf characteristics and shape
-314,Bo_arg_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-315,Bo_arg_stembase1.JPG,NC Duke,Stembase characteristics
-316,Bo_arg_tree2.jpg,NC Duke,Tree form
-317,Bo_ter_distribW2.jpg,NC Duke,Distribution in the world
-318,Bo_ter_flower1.jpg,NC Duke,Flower features
-319,Bo_ter_fruit3.JPG,NC Duke,Fruit or propagule
-320,Bo_ter_leaves2.JPG,NC Duke,Leaf characteristics and shape
-321,Bo_ter_leaves3.JPG,NC Duke,Leaf characteristics and shape
-322,Bo_ter_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-323,Bo_ter_stembase1.JPG,NC Duke,Stembase characteristics
-324,Bo_ter_tree1.jpg,NC Duke,Tree form
-325,Bo_ter_tree2.JPG,NC Duke,Tree form
-326,Br_cyl_bark2.JPG,NC Duke,Bark characteristics
-327,Br_cyl_diag4.jpg,NC Duke,Diagnostic feature
-328,Br_cyl_distribW2.jpg,NC Duke,Distribution in the world
-329,Br_cyl_flower2.jpg,NC Duke,Flower features
-330,Br_cyl_flower6.JPG,NC Duke,Flower features
-331,Br_cyl_fruit7.JPG,NC Duke,Fruit or propagule
-332,Br_cyl_leaves1.jpg,NC Duke,Leaf characteristics and shape
-333,Br_cyl_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-334,Br_cyl_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-335,Br_cyl_stembase1.JPG,NC Duke,Stembase characteristics
-336,Br_cyl_tree2.jpg,NC Duke,Tree form
-337,Br_dun_AusNRM2a.jpg,NC Duke,Distribution in Australia
-338,Br_dun_bark1.jpg,NC Duke,Bark characteristics
-339,Br_dun_diag1.jpg,NC Duke,Diagnostic feature
-340,Br_dun_distribAA.jpeg,NC Duke,Distribution in the world
-341,Br_dun_estuar1.jpg,Diana Kleine,Estuarine occurrence
-342,Br_dun_flower1.jpg,NC Duke,Flower features
-343,Br_dun_flower2.jpg,NC Duke,Flower features
-344,Br_dun_flower3.jpg,NC Duke,Flower features
-345,Br_dun_fruit1.jpg,NC Duke,Fruit or propagule
-346,Br_dun_leaves1.jpg,NC Duke,Leaf characteristics and shape
-347,Br_dun_leaves2.jpg,NC Duke,Leaf characteristics and shape
-348,Br_dun_leaves3.jpg,NC Duke,Leaf characteristics and shape
-349,Br_dun_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-350,Br_dun_siloB1.jpg,Deirdre Bean,Silohuette of growth habit
-351,Br_dun_stembase1.jpg,NC Duke,Stembase characteristics
-352,Br_dun_stembase2.jpg,NC Duke,Stembase characteristics
-353,Br_dun_tree1.jpg,NC Duke,Tree form
-354,Br_dun_zone1.jpg,Diana Kleine,Intertidal zone position
-355,Br_exa_bark1.JPG,NC Duke,Bark characteristics
-356,Br_exa_diag4.jpg,NC Duke,Diagnostic feature
-357,Br_exa_distribW2.jpg,NC Duke,Distribution in the world
-358,Br_exa_flower3.jpg,NC Duke,Flower features
-359,Br_exa_flower11.JPG,NC Duke,Flower features
-360,Br_exa_fruit3.jpg,NC Duke,Fruit or propagule
-361,Br_exa_leaves1.jpg,NC Duke,Leaf characteristics and shape
-362,Br_exa_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-363,Br_exa_siloB.jpg,NC Duke,Silohuette of growth habit
-364,Br_exa_stembase2.jpg,NC Duke,Stembase characteristics
-365,Br_exa_tree2.jpg,NC Duke,Tree form
-366,Br_gym_bark3.JPG,NC Duke,Bark characteristics
-367,Br_gym_diag4.jpg,NC Duke,Diagnostic feature
-368,Br_gym_distribW2.jpg,NC Duke,Distribution in the world
-369,Br_gym_flower17.JPG,NC Duke,Flower features
-370,Br_gym_flower20.jpg,NC Duke,Flower features
-371,Br_gym_fruit6.JPG,NC Duke,Fruit or propagule
-372,Br_gym_leaves5.JPG,NC Duke,Leaf characteristics and shape
-373,Br_gym_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-374,Br_gym_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-375,Br_gym_stembase11.jpg,NC Duke,Stembase characteristics
-376,Br_gym_tree7.JPG,NC Duke,Tree form
-377,Br_hai_bark1.JPG,NC Duke,Bark characteristics
-378,Br_hai_diag4.jpg,NC Duke,Diagnostic feature
-379,Br_hai_distribW2.jpg,NC Duke,Distribution in the world
-380,Br_hai_flower7 (1).jpg,NC Duke,Flower features
-381,Br_hai_flower8.JPG,NC Duke,Flower features
-382,Br_hai_flower8b.jpg,NC Duke,Flower features
-383,Br_hai_fruit10.JPG,NC Duke,Fruit or propagule
-384,Br_hai_leaves2.JPG,NC Duke,Leaf characteristics and shape
-385,Br_hai_leaves3.JPG,NC Duke,Leaf characteristics and shape
-386,Br_hai_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-387,Br_hai_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-388,Br_hai_stembase5.JPG,NC Duke,Stembase characteristics
-389,Br_hai_stembase7a.jpg,NC Duke,Stembase characteristics
-390,Br_hai_tree2.JPG,NC Duke,Tree form
-391,Br_par_bark1.jpg,NC Duke,Bark characteristics
-392,Br_par_diag4.jpg,NC Duke,Diagnostic feature
-393,Br_par_distribW2.jpg,NC Duke,Distribution in the world
-394,Br_par_flower1.jpg,NC Duke,Flower features
-395,Br_par_flower5.JPG,NC Duke,Flower features
-396,Br_par_flower7BB.jpg,NC Duke,Flower features
-397,Br_par_fruit2.jpg,NC Duke,Fruit or propagule
-398,Br_par_leaves1.jpg,NC Duke,Leaf characteristics and shape
-399,Br_par_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-400,Br_par_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-401,Br_par_stembase1.jpg,NC Duke,Stembase characteristics
-402,Br_par_stembase6B.jpg,NC Duke,Stembase characteristics
-403,Br_par_tree1.jpg,NC Duke,Tree form
-404,Br_par_tree7B.jpg,NC Duke,Tree form
-405,Br_rhy_bark1.jpg,NC Duke,Bark characteristics
-406,Br_rhy_diag4.jpg,NC Duke,Diagnostic feature
-407,Br_rhy_distribW2.jpg,NC Duke,Distribution in the world
-408,Br_rhy_flower2.jpg,NC Duke,Flower features
-409,Br_rhy_flower4.jpg,NC Duke,Flower features
-410,Br_rhy_fruit5.JPG,NC Duke,Fruit or propagule
-411,Br_rhy_leaves1.jpg,NC Duke,Leaf characteristics and shape
-412,Br_rhy_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-413,Br_rhy_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-414,Br_rhy_stembase1.jpg,NC Duke,Stembase characteristics
-415,Br_rhy_tree2.jpg,NC Duke,Tree form
-416,Br_sex_bark3.JPG,NC Duke,Bark characteristics
-417,Br_sex_diag4.jpg,NC Duke,Diagnostic feature
-418,Br_sex_distribW2.jpg,NC Duke,Distribution in the world
-419,Br_sex_flower7.JPG,NC Duke,Flower features
-420,Br_sex_flower11.JPG,NC Duke,Flower features
-421,Br_sex_fruit3.jpg,NC Duke,Fruit or propagule
-422,Br_sex_fruit6B.jpg,NC Duke,Fruit or propagule
-423,Br_sex_leaves1.jpg,NC Duke,Leaf characteristics and shape
-424,Br_sex_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-425,Br_sex_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-426,Br_sex_stembase3.jpg,NC Duke,Stembase characteristics
-427,Br_sex_tree5.JPG,NC Duke,Tree form
-428,Br_sex_tree6B.jpg,NC Duke,Tree form
-429,Ca_phi_distribW2.jpg,NC Duke,Distribution in the world
-430,Ca_phi_flower1w.jpg,NC Duke,Flower features
-431,Ca_phi_flower2w.jpg,NC Duke,Flower features
-432,Ca_phi_fruit1.JPG,NC Duke,Fruit or propagule
-433,Ca_phi_fruit3.JPG,NC Duke,Fruit or propagule
-434,Ca_phi_leaves2.JPG,NC Duke,Leaf characteristics and shape
-435,Ca_phi_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-436,Ca_phi_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-437,Ca_phi_stembase3.JPG,NC Duke,Stembase characteristics
-438,Ca_phi_tree1.JPG,NC Duke,Tree form
-439,Ca_sch_distribW2.jpg,NC Duke,Distribution in the world
-440,Ca_sch_flower1.jpg,NC Duke,Flower features
-441,Ca_sch_flower2.JPG,NC Duke,Flower features
-442,Ca_sch_fruit4.jpg,NC Duke,Fruit or propagule
-443,Ca_sch_fruit7B.jpg,NC Duke,Fruit or propagule
-444,Ca_sch_leaves1.jpg,NC Duke,Leaf characteristics and shape
-445,Ca_sch_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-446,Ca_sch_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-447,Ca_sch_stembase1.jpg,NC Duke,Stembase characteristics
-448,Ca_sch_tree1.jpg,NC Duke,Tree form
-449,Ce_aus_bark1.jpg,NC Duke,Bark characteristics
-450,Ce_aus_distribW2.jpg,NC Duke,Distribution in the world
-451,Ce_aus_flower1.jpg,NC Duke,Flower features
-452,Ce_aus_fruit5.jpg,NC Duke,Fruit or propagule
-453,Ce_aus_fruit6.jpg,NC Duke,Fruit or propagule
-454,Ce_aus_fruit7.JPG,NC Duke,Fruit or propagule
-455,Ce_aus_leaves2.jpg,NC Duke,Leaf characteristics and shape
-456,Ce_aus_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-457,Ce_aus_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-458,Ce_aus_stembase1.jpg,NC Duke,Stembase characteristics
-459,Ce_aus_tree4.jpg,NC Duke,Tree form
-460,Ce_dec_distribW2.jpg,NC Duke,Distribution in the world
-461,Ce_dec_flower1.JPG,NC Duke,Flower features
-462,Ce_dec_flower3.JPG,NC Duke,Flower features
-463,Ce_dec_flower6B.jpg,NC Duke,Flower features
-464,Ce_dec_fruit1.JPG,NC Duke,Fruit or propagule
-465,Ce_dec_leaves1.JPG,NC Duke,Leaf characteristics and shape
-466,Ce_dec_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-467,Ce_dec_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-468,Ce_dec_tree1w.jpg,NC Duke,Tree form
-469,Ce_pse_distribW2.jpg,NC Duke,Distribution in the world
-470,Ce_pse_flower2.jpg,NC Duke,Flower features
-471,Ce_pse_flower4.JPG,NC Duke,Flower features
-472,Ce_pse_fruit1.jpg,NC Duke,Fruit or propagule
-473,Ce_pse_fruit3.jpg,NC Duke,Fruit or propagule
-474,Ce_pse_fruit5.jpg,NC Duke,Fruit or propagule
-475,Ce_pse_leaves1.jpg,NC Duke,Leaf characteristics and shape
-476,Ce_pse_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-477,Ce_pse_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-478,Ce_pse_tree1.jpg,NC Duke,Tree form
-479,Ce_tag_diag2.JPG,NC Duke,Diagnostic feature
-480,Ce_tag_distribW.jpg,NC Duke,Distribution in the world
-481,Ce_tag_flower1.jpg,NC Duke,Flower features
-482,Ce_tag_flower5.JPG,NC Duke,Flower features
-483,Ce_tag_fruit1.jpg,NC Duke,Fruit or propagule
-484,Ce_tag_fruit3.jpg,NC Duke,Fruit or propagule
-485,Ce_tag_fruit8.JPG,NC Duke,Fruit or propagule
-486,Ce_tag_leaves1.jpg,NC Duke,Leaf characteristics and shape
-487,Ce_tag_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-488,Ce_tag_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-489,Ce_tag_stembase2.JPG,NC Duke,Stembase characteristics
-490,Ce_tag_tree1.jpg,NC Duke,Tree form
-491,Ce_zip_bark1.JPG,NC Duke,Bark characteristics
-492,Ce_zip_distribW2.jpg,NC Duke,Distribution in the world
-493,Ce_zip_flower1.JPG,NC Duke,Flower features
-494,Ce_zip_fruit1.JPG,NC Duke,Fruit or propagule
-495,Ce_zip_fruit2.JPG,NC Duke,Fruit or propagule
-496,Ce_zip_leaves1.JPG,NC Duke,Leaf characteristics and shape
-497,Ce_zip_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-498,Ce_zip_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-499,Ce_zip_stembase1.JPG,NC Duke,Stembase characteristics
-500,Ce_zip_tree1.JPG,NC Duke,Tree form
-501,Co_ere_distribW2.jpg,NC Duke,Distribution in the world
-502,Co_ere_flower3.JPG,NC Duke,Flower features
-503,Co_ere_flower4.JPG,NC Duke,Flower features
-504,Co_ere_fruit5.JPG,NC Duke,Fruit or propagule
-505,Co_ere_leaves2.JPG,NC Duke,Leaf characteristics and shape
-506,Co_ere_leaves3.JPG,NC Duke,Leaf characteristics and shape
-507,Co_ere_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-508,Co_ere_tree2.JPG,NC Duke,Tree form
-509,Cr_pat_distribW2.jpg,NC Duke,Distribution in the world
-510,Cr_pat_flower2.JPG,NC Duke,Flower features
-511,Cr_pat_fruit2.JPG,NC Duke,Fruit or propagule
-512,Cr_pat_leaves1.JPG,NC Duke,Leaf characteristics and shape
-513,Cr_pat_leaves2.JPG,NC Duke,Leaf characteristics and shape
-514,Cr_pat_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-515,Cr_pat_stembase1.JPG,NC Duke,Stembase characteristics
-516,Cr_pat_tree1.JPG,NC Duke,Tree form
-517,Cr_pat_tree2.JPG,NC Duke,Tree form
-518,Cy_iri_bark1.jpg,NC Duke,Bark characteristics
-519,Cy_iri_distribW2.jpg,NC Duke,Distribution in the world
-520,Cy_iri_flower2.jpg,NC Duke,Flower features
-521,Cy_iri_fruit4.jpg,NC Duke,Fruit or propagule
-522,Cy_iri_fruit6.JPG,NC Duke,Fruit or propagule
-523,Cy_iri_leaves2.jpg,NC Duke,Leaf characteristics and shape
-524,Cy_iri_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-525,Cy_iri_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-526,Cy_iri_stembase1.jpg,NC Duke,Stembase characteristics
-527,Cy_iri_tree1.jpg,NC Duke,Tree form
-528,Di_lit_bark1.jpg,NC Duke,Bark characteristics
-529,Di_lit_bark6B.jpg,NC Duke,Bark characteristics
-530,Di_lit_distribW2.jpg,NC Duke,Distribution in the world
-531,Di_lit_flower4.jpg,NC Duke,Flower features
-532,Di_lit_fruit2.jpg,NC Duke,Fruit or propagule
-533,Di_lit_fruit3.jpg,NC Duke,Fruit or propagule
-534,Di_lit_leaves1.jpg,NC Duke,Leaf characteristics and shape
-535,Di_lit_leaves3.jpg,NC Duke,Leaf characteristics and shape
-536,Di_lit_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-537,Di_lit_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-538,Di_lit_tree1.jpg,NC Duke,Tree form
-539,Do_spa_bark1.jpg,NC Duke,Bark characteristics
-540,Do_spa_distribW2.jpg,NC Duke,Distribution in the world
-541,Do_spa_flower1.jpg,NC Duke,Flower features
-542,Do_spa_flower4.JPG,NC Duke,Flower features
-543,Do_spa_fruit1.JPG,NC Duke,Fruit or propagule
-544,Do_spa_fruit3.JPG,NC Duke,Fruit or propagule
-545,Do_spa_leaves3.JPG,NC Duke,Leaf characteristics and shape
-546,Do_spa_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-547,Do_spa_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-548,Do_spa_tree1.jpg,NC Duke,Tree form
-549,Do_spa_tree6B.jpg,NC Duke,Tree form
-550,Ex_aga_AusNRM1.jpg,NC Duke,Distribution in Australia
-551,Ex_aga_bark1.jpg,NC Duke,Bark characteristics
-552,Ex_aga_diag1.jpg,NC Duke,Diagnostic feature
-553,Ex_aga_diag273.jpg,NC Duke,Diagnostic feature
-554,Ex_aga_distrib2.jpg,NC Duke,Distribution in the world
-555,Ex_aga_estuar1.jpg,Diana Kleine,Estuarine occurrence
-556,Ex_aga_flower1.jpg,NC Duke,Flower features
-557,Ex_aga_flower2.jpg,NC Duke,Flower features
-558,Ex_aga_fruit1.jpg,NC Duke,Fruit or propagule
-559,Ex_aga_fruit2.jpg,NC Duke,Fruit or propagule
-560,Ex_aga_leaves1.jpg,NC Duke,Leaf characteristics and shape
-561,Ex_aga_leaves2.jpg,NC Duke,Leaf characteristics and shape
-562,Ex_aga_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-563,Ex_aga_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-564,Ex_aga_stembase1.jpg,NC Duke,Stembase characteristics
-565,Ex_aga_tree1.jpg,NC Duke,Tree form
-566,Ex_aga_tree6A.jpg,NC Duke,Tree form
-567,Ex_aga_zone1.jpg,Diana Kleine,Intertidal zone position
-568,Ex_aga-aga_bark2.jpg,NC Duke,Bark characteristics
-569,Ex_aga-aga_bark3.jpg,NC Duke,Bark characteristics
-570,Ex_aga-aga_diag2.jpg,NC Duke,Diagnostic feature
-571,Ex_aga-aga_distribW2.jpg,NC Duke,Distribution in the world
-572,Ex_aga-aga_flowerF5.jpg,NC Duke,Flower features
-573,Ex_aga-aga_flowerM3.jpg,NC Duke,Flower features
-574,Ex_aga-aga_fruit2.JPG,NC Duke,Fruit or propagule
-575,Ex_aga-aga_fruit3.JPG,NC Duke,Fruit or propagule
-576,Ex_aga-aga_leaves2.JPG,NC Duke,Leaf characteristics and shape
-577,Ex_aga-aga_leaves7.jpg,NC Duke,Leaf characteristics and shape
-578,Ex_aga-aga_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-579,Ex_aga-aga_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-580,Ex_aga-aga_tree6B.jpg,NC Duke,Tree form
-581,Ex_aga-ova_diag21.JPG,NC Duke,Diagnostic feature
-582,Ex_aga-ova_distribW2.jpg,NC Duke,Distribution in the world
-583,Ex_aga-ova_fruit1.jpg,NC Duke,Fruit or propagule
-584,Ex_aga-ova_leaves1.jpg,NC Duke,Leaf characteristics and shape
-585,Ex_aga-ova_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-586,Ex_aga-ova_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-587,Ex_aga-ova_tree1.jpg,NC Duke,Tree form
-588,Ex_ind_bark1a.jpg,NC Duke,Bark characteristics
-589,Ex_ind_distribW2B.jpg,NC Duke,Distribution in the world
-590,Ex_ind_flower1a.jpg,NC Duke,Flower features
-591,Ex_ind_flower2a.jpg,NC Duke,Flower features
-592,Ex_ind_fruit1a.jpg,NC Duke,Fruit or propagule
-593,Ex_ind_fruit2.JPG,NC Duke,Fruit or propagule
-594,Ex_ind_fruit3w.jpg,NC Duke,Fruit or propagule
-595,Ex_ind_leaves1a.jpg,NC Duke,Leaf characteristics and shape
-596,Ex_ind_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-597,Ex_ind_tree1a.jpg,NC Duke,Tree form
-598,He_fom_distribW2.jpg,NC Duke,Distribution in the world
-599,He_fom_flower1.jpg,NC Duke,Flower features
-600,He_fom_flower2.jpg,NC Duke,Flower features
-601,He_fom_flower6A.jpg,NC Duke,Flower features
-602,He_fom_fruit1.jpg,NC Duke,Fruit or propagule
-603,He_fom_fruit6A.jpg,NC Duke,Fruit or propagule
-604,He_fom_leaves1.jpg,NC Duke,Leaf characteristics and shape
-605,He_fom_leaves2.jpg,NC Duke,Leaf characteristics and shape
-606,He_fom_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-607,He_fom_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-608,He_fom_stembase3.jpg,NC Duke,Stembase characteristics
-609,He_fom_tree2.jpg,NC Duke,Tree form
-610,He_glo_distribW2.jpg,NC Duke,Distribution in the world
-611,He_glo_leaves1w.jpg,NC Duke,Leaf characteristics and shape
-612,He_glo_leaves2w.jpg,NC Duke,Leaf characteristics and shape
-613,He_glo_siloBC.jpg,Deirdre Bean,Silohuette of growth habit
-614,He_lit_bark2.jpg,NC Duke,Bark characteristics
-615,He_lit_distribW2.jpg,NC Duke,Distribution in the world
-616,He_lit_flower1.JPG,NC Duke,Flower features
-617,He_lit_flower4.JPG,NC Duke,Flower features
-618,He_lit_fruit2.jpg,NC Duke,Fruit or propagule
-619,He_lit_fruit3.JPG,NC Duke,Fruit or propagule
-620,He_lit_fruit5.jpg,NC Duke,Fruit or propagule
-621,He_lit_leaves1.JPG,NC Duke,Leaf characteristics and shape
-622,He_lit_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-623,He_lit_siloB.jpg,NC Duke,Silohuette of growth habit
-624,He_lit_stembase3.jpg,NC Duke,Stembase characteristics
-625,He_lit_stembase6A.jpg,NC Duke,Stembase characteristics
-626,He_lit_tree3.jpg,NC Duke,Tree form
-627,He_lit_tree6A.jpg,NC Duke, Tree form
-628,Hi_til_bark1.JPG,NC Duke,Bark characteristics
-629,Hi_til_distribW2.jpg,NC Duke,Distribution in the world
-630,Hi_til_flower1.JPG,NC Duke,Flower features
-631,Hi_til_flower2.JPG,NC Duke,Flower features
-632,Hi_til_flower4.JPG,NC Duke,Flower features
-633,Hi_til_fruit4.JPG,NC Duke,Fruit or propagule
-634,Hi_til_leaves3.JPG,NC Duke,Leaf characteristics and shape
-635,Hi_til_siloCB.jpg,NC Duke,Silohuette of growth habit
-636,Hi_til_stembase1.JPG,NC Duke,Stembase characteristics
-637,Hi_til_tree3.JPG,NC Duke,Tree form
-638,Hp_man_diag1w.jpg,NC Duke,Diagnostic feature
-639,Hp_man_distribW2.jpg,NC Duke,Distribution in the world
-640,Hp_man_flower1w.jpg,NC Duke,Flower features
-641,Hp_man_flower2w.jpg,NC Duke,Flower features
-642,Hp_man_fruit1w.JPG,NC Duke,Fruit or propagule
-643,Hp_man_leaves2w.jpg,NC Duke,Leaf characteristics and shape
-644,Hp_man_siloCB.jpg,NC Duke,Silohuette of growth habit
-645,Hp_man_stembase1w.jpg,NC Duke,Stembase characteristics
-646,Hp_man_tree1w.jpg,NC Duke,Tree form
-647,In_fag_bark1.JPG,NC Duke,Bark characteristics
-648,In_fag_distribW2.jpg,NC Duke,Distribution in the world
-649,In_fag_fruit1.JPG,NC Duke,Fruit or propagule
-650,In_fag_fruit2.JPG,NC Duke,Fruit or propagule
-651,In_fag_leaves3.JPG,NC Duke,Leaf characteristics and shape
-652,In_fag_leaves6.JPG,NC Duke,Leaf characteristics and shape
-653,In_fag_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-654,In_fag_stembase1.JPG,NC Duke,Stembase characteristics
-655,In_fag_tree1.JPG,NC Duke,Tree form
-656,Ka_can_distribW2.jpg,NC Duke,Distribution in the world
-657,Ka_can_flower1.jpg,NC Duke,Flower features
-658,Ka_can_flower3.jpg,NC Duke,Flower features
-659,Ka_can_fruit1.jpg,NC Duke,Fruit or propagule
-660,Ka_can_fruit2.jpg,NC Duke,Fruit or propagule
-661,Ka_can_leaves2.jpg,NC Duke,Leaf characteristics and shape
-662,Ka_can_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-663,Ka_can_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-664,Ka_can_tree2.jpg,NC Duke,Tree form
-665,Ka_obo_bark1.JPG,NC Duke,Bark characteristics
-666,Ka_obo_distribW2.jpg,NC Duke,Distribution in the world
-667,Ka_obo_flower1.JPG,NC Duke,Flower features
-668,Ka_obo_flower2.JPG,NC Duke,Flower features
-669,Ka_obo_fruit1.JPG,NC Duke,Fruit or propagule
-670,Ka_obo_fruit2.JPG,NC Duke,Fruit or propagule
-671,Ka_obo_leaves2.JPG,NC Duke,Leaf characteristics and shape
-672,Ka_obo_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-673,Ka_obo_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-674,Ka_obo_stembase1.JPG,NC Duke,Stembase characteristics
-675,Ka_obo_tree2.JPG,NC Duke,Tree form
-676,La_rac_bark1.JPG,NC Duke,Bark characteristics
-677,La_rac_distribW2.jpg,NC Duke,Distribution in the world
-678,La_rac_flower1.JPG,NC Duke,Flower features
-679,La_rac_flower3.JPG,NC Duke,Flower features
-680,La_rac_flower6A.jpg,NC Duke,Flower features
-681,La_rac_fruit2.JPG,NC Duke,Fruit or propagule
-682,La_rac_fruit5.JPG,NC Duke,Fruit or propagule
-683,La_rac_leaves6.JPG,NC Duke,Leaf characteristics and shape
-684,La_rac_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-685,La_rac_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-686,La_rac_stembase5.JPG,NC Duke,Stembase characteristics
-687,La_rac_tree8.JPG,NC Duke,Tree form
-688,La_rac_tree9.JPG,NC Duke,Tree form
-689,Ln_pat_bark1.jpg,NC Duke,Bark characteristics
-690,Ln_pat_distribW1.jpg,NC Duke,Distribution in the world
-691,Ln_pat_flower1.jpg,NC Duke,Flower features
-692,Ln_pat_fruit1.jpg,NC Duke,Fruit or propagule
-693,Ln_pat_fruit2.jpg,NC Duke,Fruit or propagule
-694,Ln_pat_leaves1.jpg,NC Duke,Leaf characteristics and shape
-695,Ln_pat_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-696,Ln_pat_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-697,Ln_pat_stembase1.jpg,NC Duke,Stembase characteristics
-698,Ln_pat_tree1.jpg,NC Duke,Tree form
-699,Lo_mon_distribW2.jpg,NC Duke,Distribution in the world
-700,Lo_mon_flower1w.jpg,NC Duke,Flower features
-701,Lo_mon_fruit1.JPG,NC Duke,Fruit or propagule
-702,Lo_mon_leaves1.JPG,NC Duke,Leaf characteristics and shape
-703,Lo_mon_leaves4.JPG,NC Duke,Leaf characteristics and shape
-704,Lo_mon_siloB2.jpg,Deirdre Bean,Silohuette of growth habit
-705,Lo_mon_stembase1.JPG,NC Duke,Stembase characteristics
-706,Lo_mon_tree2.JPG,NC Duke,Tree form
-707,Lu_lit_bark2.jpg,NC Duke,Bark characteristics
-708,Lu_lit_distribW2.jpg,NC Duke,Distribution in the world
-709,Lu_lit_flower1.JPG,NC Duke,Flower features
-710,Lu_lit_flower2.JPG,NC Duke,Flower features
-711,Lu_lit_flower5.jpg,NC Duke,Flower features
-712,Lu_lit_fruit2.jpg,NC Duke,Fruit or propagule
-713,Lu_lit_fruit3.jpg,NC Duke,Fruit or propagule
-714,Lu_lit_leaves1.JPG,NC Duke,Leaf characteristics and shape
-715,Lu_lit_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-716,Lu_lit_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-717,Lu_lit_stembase1.JPG,NC Duke,Stembase characteristics
-718,Lu_lit_tree1.JPG,NC Duke,Tree form
-719,Lu_lit_tree4.jpg,NC Duke,Tree form
-720,Lu_rac_bark3.jpg,NC Duke,Bark characteristics
-721,Lu_rac_distribW2.jpg,NC Duke,Distribution in the world
-722,Lu_rac_flower2.JPG,NC Duke,Flower features
-723,Lu_rac_flower3.jpg,NC Duke,Flower features
-724,Lu_rac_flower9.jpg,NC Duke,Flower features
-725,Lu_rac_fruit1.JPG,NC Duke,Fruit or propagule
-726,Lu_rac_fruit3.JPG,NC Duke,Fruit or propagule
-727,Lu_rac_leaves1.JPG,NC Duke,Leaf characteristics and shape
-728,Lu_rac_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-729,Lu_rac_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-730,Lu_rac_stembase1.JPG,NC Duke,Stembase characteristics
-731,Lu_rac_tree2.jpg,NC Duke,Tree form
-732,Lu_ros_bark2.jpg,NC Duke,Bark characteristics
-733,Lu_ros_distribW2.jpg,NC Duke,Distribution in the world
-734,Lu_ros_flower9.jpg,NC Duke,Flower features
-735,Lu_ros_flower10.jpg,NC Duke,Flower features
-736,Lu_ros_fruit2.jpg,NC Duke,Fruit or propagule
-737,Lu_ros_leaves3.jpg,NC Duke,Leaf characteristics and shape
-738,Lu_ros_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-739,Lu_ros_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-740,Lu_ros_stembase1.jpg,NC Duke,Stembase characteristics
-741,Lu_ros_tree3.jpg,NC Duke,Tree form
-742,Lu_ros_tree4.jpg,NC Duke,Tree form
-743,Mo_ole_bark1w.jpg,NC Duke,Bark characteristics
-744,Mo_ole_distribW2.jpg,NC Duke,Distribution in the world
-745,Mo_ole_flower1w.jpg,NC Duke,Flower features
-746,Mo_ole_flower3w.jpg,NC Duke,Flower features
-747,Mo_ole_fruit3w.jpg,NC Duke,Fruit or propagule
-748,Mo_ole_fruit4.jpg,NC Duke,Fruit or propagule
-749,Mo_ole_leaves3w.jpg,NC Duke,Leaf characteristics and shape
-750,Mo_ole_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-751,Mo_ole_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-752,Mo_ole_stembase2w.jpg,NC Duke,Stembase characteristics
-753,Mo_ole_stembase3.jpg,NC Duke,Stembase characteristics
-754,Mo_ole_tree1w.jpg,NC Duke,Tree form
-755,Ny_fru_distribW2.jpg,NC Duke,Distribution in the world
-756,Ny_fru_flower2.JPG,NC Duke,Flower features
-757,Ny_fru_flower4.jpg,NC Duke,Flower features
-758,Ny_fru_fruit2.JPG,NC Duke,Fruit or propagule
-759,Ny_fru_fruit3.JPG,NC Duke,Fruit or propagule
-760,Ny_fru_fruit4.jpg,NC Duke,Fruit or propagule
-761,Ny_fru_leaves3.jpg,NC Duke,Leaf characteristics and shape
-762,Ny_fru_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-763,Ny_fru_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-764,Ny_fru_stembase2.jpg,NC Duke,Stembase characteristics
-765,Ny_fru_tree1.JPG,NC Duke,Tree form
-766,Os_oct_bark1.jpg,NC Duke,Bark characteristics
-767,Os_oct_distribW2.jpg,NC Duke,Distribution in the world
-768,Os_oct_flower1.JPG,NC Duke,Flower features
-769,Os_oct_flower6A.jpg,NC Duke,Flower features
-770,Os_oct_fruit1.JPG,NC Duke,Fruit or propagule
-771,Os_oct_fruit2.jpg,NC Duke,Fruit or propagule
-772,Os_oct_fruit6A.jpg,NC Duke,Fruit or propagule
-773,Os_oct_leaves3.jpg,NC Duke,Leaf characteristics and shape
-774,Os_oct_leaves6A.jpg,NC Duke,Leaf characteristics and shape
-775,Os_oct_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-776,Os_oct_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-777,Os_oct_tree3.jpg,NC Duke,Tree form
-778,Os_oct_tree4.jpg,NC Duke,Tree form
-779,Os_oct_tree6B.jpg,NC Duke,Tree form
-780,Pa_rhi_distribW2.jpg,NC Duke,Distribution in the world
-781,Pa_rhi_fruit1w.jpg,NC Duke,Fruit or propagule
-782,Pa_rhi_leaves1w.jpg,NC Duke,Leaf characteristics and shape
-783,Pa_rhi_leaves2w.jpg,NC Duke,Leaf characteristics and shape
-784,Pa_rhi_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-785,Pa_spi_distribW2.jpg,NC Duke,Distribution in the world
-786,Pa_spi_flower2.JPG,NC Duke,Flower features
-787,Pa_spi_flower3.JPG,NC Duke,Flower features
-788,Pa_spi_fruit1.JPG,NC Duke,Fruit or propagule
-789,Pa_spi_fruit3.JPG,NC Duke,Fruit or propagule
-790,Pa_spi_leaves1.JPG,NC Duke,Leaf characteristics and shape
-791,Pa_spi_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-792,Pa_spi_tree1.JPG,NC Duke,Tree form
-793,Pa_spi_tree3.JPG,NC Duke,Tree form
-794,Pe_ben_bark1.JPG,NC Duke,Bark characteristics
-795,Pe_ben_distrib2.jpg,NC Duke,Distribution in the world
-796,Pe_ben_estuar1.jpg,Diana Kleine,Estuarine occurrence
-797,Pe_ben_flower1.jpg,NC Duke,Flower features
-798,Pe_ben_flower2.jpg,NC Duke,Flower features
-799,Pe_ben_fruit3.JPG,NC Duke,Fruit or propagule
-800,Pe_ben_fruit6B.jpg,NC Duke,Fruit or propagule
-801,Pe_ben_fruit11.JPG,NC Duke,Fruit or propagule
-802,Pe_ben_leaves2.JPG,NC Duke,Leaf characteristics and shape
-803,Pe_ben_leaves4.JPG,NC Duke,Leaf characteristics and shape
-804,Pe_ben_leaves6.jpg,NC Duke,Leaf characteristics and shape
-805,Pe_ben_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-806,Pe_ben_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-807,Pe_ben_stembase2.jpg,NC Duke,Stembase characteristics
-808,Pe_ben_tree1.JPG,NC Duke,Tree form
-809,Pe_ben_zone1.jpg,Diana Kleine,Intertidal zone position
-810,Pe_rhi_bark1.JPG,NC Duke,Bark characteristics
-811,Pe_rhi_distrib3.jpg,NC Duke,Distribution in the world
-812,Pe_rhi_estuar1.jpg,Diana Kleine,Estuarine occurrence
-813,Pe_rhi_flower1.JPG,NC Duke,Flower features
-814,Pe_rhi_flower2.JPG,NC Duke,Flower features
-815,Pe_rhi_flower3.JPG,NC Duke,Flower features
-816,Pe_rhi_fruit1.jpg,NC Duke,Fruit or propagule
-817,Pe_rhi_fruit2.jpg,NC Duke,Fruit or propagule
-818,Pe_rhi_leaves1.JPG,NC Duke,Leaf characteristics and shape
-819,Pe_rhi_leaves2.JPG,NC Duke,Leaf characteristics and shape
-820,Pe_rhi_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-821,Pe_rhi_siloCB1.jpg,Deirdre Bean,Silohuette of growth habit
-822,Pe_rhi_stembase1.jpg,NC Duke,Stembase characteristics
-823,Pe_rhi_stembase2.jpg,NC Duke,Stembase characteristics
-824,Pe_rhi_stembase3.jpg,NC Duke,Stembase characteristics
-825,Pe_rhi_stembase4.jpg,NC Duke,Stembase characteristics
-826,Pe_rhi_tree1.JPG,NC Duke,Tree form
-827,Pe_rhi_tree2.JPG,NC Duke,Tree form
-828,Pe_rhi_zone1.jpg,Diana Kleine,Intertidal zone position
-829,Ph_pal_bark1.JPG,NC Duke,Bark characteristics
-830,Ph_pal_distribW2.jpg,NC Duke,Distribution in the world
-831,Ph_pal_fruit1w.jpg,NC Duke,Fruit or propagule
-832,Ph_pal_leaves1.JPG,NC Duke,Leaf characteristics and shape
-833,Ph_pal_leaves2.JPG,NC Duke,Leaf characteristics and shape
-834,Ph_pal_siloBC.jpg,Deirdre Bean,Silohuette of growth habit
-835,Ph_pal_stembase2.JPG,NC Duke,Stembase characteristics
-836,Ph_pal_stembase3.JPG,NC Duke,Stembase characteristics
-837,Ph_pal_tree2.JPG,NC Duke,Tree form
-838,Ph_pal_tree4.JPG,NC Duke,Tree form
-839,Pm_aci_bark1.jpg,NC Duke,Bark characteristics
-840,Pm_aci_distribW2.jpg,NC Duke,Distribution in the world
-841,Pm_aci_flower2.jpg,NC Duke,Flower features
-842,Pm_aci_flower4.JPG,NC Duke,Flower features
-843,Pm_aci_fruit2.jpg,NC Duke,Fruit or propagule
-844,Pm_aci_leaves1.jpg,NC Duke,Leaf characteristics and shape
-845,Pm_aci_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-846,Pm_aci_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-847,Pm_aci_stembase1.jpg,NC Duke,Stembase characteristics
-848,Pm_aci_tree1.jpg,NC Duke,Tree form
-849,Pm_aci_tree6A.jpg,NC Duke,Tree form
-850,Pm_aci_tree7B.jpg,NC Duke,Tree form
-851,Pt_off_bark1.JPG,NC Duke,Bark characteristics
-852,Pt_off_distribW2.jpg,NC Duke,Distribution in the world
-853,Pt_off_flower1w.jpg,NC Duke,Flower features
-854,Pt_off_flower2w.jpg,NC Duke,Flower features
-855,Pt_off_fruit1w.jpg,NC Duke,Fruit or propagule
-856,Pt_off_leaves2w.jpg,NC Duke,Leaf characteristics and shape
-857,Pt_off_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-858,Pt_off_stembase1w.jpg,NC Duke,Stembase characteristics
-859,Pt_off_stembase4.JPG,NC Duke,Stembase characteristics
-860,Pt_off_tree2.JPG,NC Duke,Tree form
-861,Pt_off_tree3.JPG,NC Duke,Tree form
-862,Pt_off_tree6A.jpg,NC Duke,Tree form
-863,Rh_ann_diag6B.jpg,NC Duke,Diagnostic feature
-864,Rh_ann_diag26B.jpg,NC Duke,Diagnostic feature
-865,Rh_ann_distribW2.jpg,NC Duke,Distribution in the world
-866,Rh_ann_flower2.JPG,NC Duke,Flower features
-867,Rh_ann_flower3.JPG,NC Duke,Flower features
-868,Rh_ann_fruit1.JPG,NC Duke,Fruit or propagule
-869,Rh_ann_leaves1.JPG,NC Duke,Leaf characteristics and shape
-870,Rh_ann_leaves2.JPG,NC Duke,Leaf characteristics and shape
-871,Rh_ann_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-872,Rh_ann_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-873,Rh_ann_stembase1.JPG,NC Duke,Stembase characteristics
-874,Rh_ann_tree1.JPG,NC Duke,Tree form
-875,Rh_api_bark2.jpg,NC Duke,Bark characteristics
-876,Rh_api_diag1.jpg,NC Duke,Diagnostic feature
-877,Rh_api_diag17.JPG,NC Duke,Diagnostic feature
-878,Rh_api_distrib2.jpg,NC Duke,Distribution in the world
-879,Rh_api_flower1.JPG,NC Duke,Flower features
-880,Rh_api_flower6.jpg,NC Duke,Flower features
-881,Rh_api_fruit2.JPG,NC Duke,Fruit or propagule
-882,Rh_api_leaves3.jpg,NC Duke,Leaf characteristics and shape
-883,Rh_api_leaves4.JPG,NC Duke,Leaf characteristics and shape
-884,Rh_api_leaves6.JPG,NC Duke,Leaf characteristics and shape
-885,Rh_api_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-886,Rh_api_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-887,Rh_api_stembase3.jpg,NC Duke,Stembase characteristics
-888,Rh_api_tree5.JPG,NC Duke,Tree form
-889,Rh_bre_diag6A.jpg,NC Duke,Diagnostic feature
-890,Rh_bre_diag6C.jpg,NC Duke,Diagnostic feature
-891,Rh_bre_distribW2.jpg,NC Duke,Distribution in the world
-892,Rh_bre_flower1.JPG,NC Duke,Flower features
-893,Rh_bre_flower3.JPG,NC Duke,Flower features
-894,Rh_bre_flower6A.jpg,NC Duke,Flower features
-895,Rh_bre_flower7A.jpg,NC Duke,Flower features
-896,Rh_bre_leaves1.JPG,NC Duke,Leaf characteristics and shape
-897,Rh_bre_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-898,Rh_bre_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-899,Rh_har_diag6A.jpg,NC Duke,Diagnostic feature
-900,Rh_har_diag7A.jpg,NC Duke,Diagnostic feature
-901,Rh_har_distribW2.jpg,NC Duke,Distribution in the world
-902,Rh_har_flower1.JPG,NC Duke,Flower features
-903,Rh_har_flower2.jpg,NC Duke,Flower features
-904,Rh_har_flower6A.jpg,NC Duke,Flower features
-905,Rh_har_fruit6B.jpg,NC Duke,Fruit or propagule
-906,Rh_har_leaves1.JPG,NC Duke,Leaf characteristics and shape
-907,Rh_har_leaves2.JPG,NC Duke,Leaf characteristics and shape
-908,Rh_har_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-909,Rh_har_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-910,Rh_har_tree1.JPG,NC Duke,Tree form
-911,Rh_har_tree6A.jpg,NC Duke,Tree form
-912,Rh_lam_bark2.jpg,NC Duke,Bark characteristics
-913,Rh_lam_diag1.JPG,NC Duke,Diagnostic feature
-914,Rh_lam_diag11.JPG,NC Duke,Diagnostic feature
-915,Rh_lam_distribW2.jpg,NC Duke,Distribution in the world
-916,Rh_lam_flower1.jpg,NC Duke,Flower features
-917,Rh_lam_flower2.JPG,NC Duke,Flower features
-918,Rh_lam_flower3.JPG,NC Duke,Flower features
-919,Rh_lam_flower21.jpg,NC Duke,Flower features
-920,Rh_lam_leaves4.JPG,NC Duke,Leaf characteristics and shape
-921,Rh_lam_leaves7.JPG,NC Duke,Leaf characteristics and shape
-922,Rh_lam_leaves11.jpg,NC Duke,Leaf characteristics and shape
-923,Rh_lam_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-924,Rh_lam_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-925,Rh_lam_tree1.JPG,NC Duke,Tree form
-926,Rh_man_bark5.JPG,NC Duke,Bark characteristics
-927,Rh_man_diag6.JPG,NC Duke,Diagnostic feature
-928,Rh_man_diag24.JPG,NC Duke,Diagnostic feature
-929,Rh_man_distribW2.jpg,NC Duke,Distribution in the world
-930,Rh_man_flower4.JPG,NC Duke,Flower features
-931,Rh_man_flower6A.jpg,NC Duke,Flower features
-932,Rh_man_flower10.JPG,NC Duke,Flower features
-933,Rh_man_fruit3.JPG,NC Duke,Fruit or propagule
-934,Rh_man_fruit5.JPG,NC Duke,Fruit or propagule
-935,Rh_man_leaves11.JPG,NC Duke,Leaf characteristics and shape
-936,Rh_man_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-937,Rh_man_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-938,Rh_man_stembase2.JPG,NC Duke,Stembase characteristics
-939,Rh_man_tree6.JPG,NC Duke,Tree form
-940,Rh_muc_bark1.JPG,NC Duke,Bark characteristics
-941,Rh_muc_diag3.jpg,NC Duke,Diagnostic feature
-942,Rh_muc_diag6B.jpg,NC Duke,Diagnostic feature
-943,Rh_muc_distribW2.jpg,NC Duke,Distribution in the world
-944,Rh_muc_flower2.JPG,NC Duke,Flower features
-945,Rh_muc_flower6.jpg,NC Duke,Flower features
-946,Rh_muc_flower8.jpg,NC Duke,Flower features
-947,Rh_muc_fruit2.JPG,NC Duke,Fruit or propagule
-948,Rh_muc_fruit6A.jpg,NC Duke,Fruit or propagule
-949,Rh_muc_leaves1.JPG,NC Duke,Leaf characteristics and shape
-950,Rh_muc_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-951,Rh_muc_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-952,Rh_muc_stembase2.jpg,NC Duke,Stembase characteristics
-953,Rh_muc_tree4.jpg,NC Duke,Tree form
-954,Rh_muc_tree5.JPG,NC Duke,Tree form
-955,Rh_neo_bark1.JPG,NC Duke,Bark characteristics
-956,Rh_neo_diag6A.jpg,NC Duke,Diagnostic feature
-957,Rh_neo_diag13.JPG,NC Duke,Diagnostic feature
-958,Rh_neo_distribW1.jpg,NC Duke,Distribution in the world
-959,Rh_neo_flower1.JPG,NC Duke,Flower features
-960,Rh_neo_leaves1.JPG,NC Duke,Leaf characteristics and shape
-961,Rh_neo_leaves2.JPG,NC Duke,Leaf characteristics and shape
-962,Rh_neo_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-963,Rh_neo_tree1.JPG,NC Duke,Tree form
-964,Rh_neo_tree2.JPG,NC Duke,Tree form
-965,Rh_rac_bark3.JPG,NC Duke,Bark characteristics
-966,Rh_rac_diag6A.jpg,NC Duke,Diagnostic feature
-967,Rh_rac_diag16A.jpg,NC Duke,Diagnostic feature
-968,Rh_rac_distribW2.jpg,NC Duke,Distribution in the world
-969,Rh_rac_flower1.JPG,NC Duke,Flower features
-970,Rh_rac_flower2.JPG,NC Duke,Flower features
-971,Rh_rac_flower6B.jpg,NC Duke,Flower features
-972,Rh_rac_flower7B.jpg,NC Duke,Flower features
-973,Rh_rac_flower10.jpg,NC Duke,Flower features
-974,Rh_rac_fruit2.jpg,NC Duke,Fruit or propagule
-975,Rh_rac_fruit6B.jpg,NC Duke,Fruit or propagule
-976,Rh_rac_leaves2.JPG,NC Duke,Leaf characteristics and shape
-977,Rh_rac_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-978,Rh_rac_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-979,Rh_rac_stembase1.JPG,NC Duke,Stembase characteristics
-980,Rh_rac_tree2.jpg,NC Duke,Tree form
-981,Rh_rac_tree6B.jpg,NC Duke,Tree form
-982,Rh_sam_diag1.JPG,NC Duke,Diagnostic feature
-983,Rh_sam_diag3.JPG,NC Duke,Diagnostic feature
-984,Rh_sam_distribW2.jpg,NC Duke,Distribution in the world
-985,Rh_sam_flower6.JPG,NC Duke,Flower features
-986,Rh_sam_flower8.JPG,NC Duke,Flower features
-987,Rh_sam_fruit2.JPG,NC Duke,Fruit or propagule
-988,Rh_sam_leaves7.JPG,NC Duke,Leaf characteristics and shape
-989,Rh_sam_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-990,Rh_sam_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-991,Rh_sam_tree4.JPG,NC Duke,Tree form
-992,Rh_sam_tree5.JPG,NC Duke,Tree form
-993,Rh_sel_bark1.JPG,NC Duke,Bark characteristics
-994,Rh_sel_diag3.JPG,NC Duke,Diagnostic feature
-995,Rh_sel_diag13.JPG,NC Duke,Diagnostic feature
-996,Rh_sel_distribW2.jpg,NC Duke,Distribution in the world
-997,Rh_sel_flower4.JPG,NC Duke,Flower features
-998,Rh_sel_flower7.JPG,NC Duke,Flower features
-999,Rh_sel_flower10.JPG,NC Duke,Flower features
-1000,Rh_sel_leaves10.JPG,NC Duke,Leaf characteristics and shape
-1001,Rh_sel_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-1002,Rh_sel_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-1003,Rh_sel_stembase1.JPG,NC Duke,Stembase characteristics
-1004,Rh_sel_tree2.JPG,NC Duke,Tree form
-1005,Rh_sty_bark1.jpg,NC Duke,Bark characteristics
-1006,Rh_sty_diag3.JPG,NC Duke,Diagnostic feature
-1007,Rh_sty_diag8.jpg,NC Duke,Diagnostic feature
-1008,Rh_sty_distribW2.jpg,NC Duke,Distribution in the world
-1009,Rh_sty_flower2.jpg,NC Duke,Flower features
-1010,Rh_sty_flower14.JPG,NC Duke,Flower features
-1011,Rh_sty_fruit3.jpg,NC Duke,Fruit or propagule
-1012,Rh_sty_leaves1.JPG,NC Duke,Leaf characteristics and shape
-1013,Rh_sty_leaves10.JPG,NC Duke,Leaf characteristics and shape
-1014,Rh_sty_leaves11.jpg,NC Duke,Leaf characteristics and shape
-1015,Rh_sty_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-1016,Rh_sty_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-1017,Rh_sty_stembase2.JPG,NC Duke,Stembase characteristics
-1018,Rh_sty_tree4.jpg,NC Duke,Tree form
-1019,Rh_tom_bark1.JPG,NC Duke,Bark characteristics
-1020,Rh_tom_diag1.JPG,NC Duke,Diagnostic feature
-1021,Rh_tom_diag8.JPG,NC Duke,Diagnostic feature
-1022,Rh_tom_distribW2.jpg,NC Duke,Distribution in the world
-1023,Rh_tom_flower5.JPG,NC Duke,Flower features
-1024,Rh_tom_flower6.JPG,NC Duke,Flower features
-1025,Rh_tom_leaves4.JPG,NC Duke,Leaf characteristics and shape
-1026,Rh_tom_leaves5.JPG,NC Duke,Leaf characteristics and shape
-1027,Rh_tom_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-1028,Rh_tom_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-1029,Rh_tom_tree2.JPG,NC Duke,Tree form
-1030,Sc_hyd_bark3.jpg,NC Duke,Bark characteristics
-1031,Sc_hyd_diag1.JPG,NC Duke,Diagnostic feature
-1032,Sc_hyd_distribW2.jpg,NC Duke,Distribution in the world
-1033,Sc_hyd_flower1.JPG,NC Duke,Flower features
-1034,Sc_hyd_flower2.JPG,NC Duke,Flower features
-1035,Sc_hyd_fruit1.JPG,NC Duke,Fruit or propagule
-1036,Sc_hyd_fruit2.JPG,NC Duke,Fruit or propagule
-1037,Sc_hyd_leaves2.JPG,NC Duke,Leaf characteristics and shape
-1038,Sc_hyd_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-1039,Sc_hyd_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-1040,Sc_hyd_stembase2.JPG,NC Duke,Stembase characteristics
-1041,Sc_hyd_tree2.jpg,NC Duke,Tree form
-1042,Sh_ter_bark1.jpg,NC Duke,Bark characteristics
-1043,Sh_ter_distribW1.jpg,NC Duke,Distribution in the world
-1044,Sh_ter_flowers2.jpg,NC Duke,Flower features
-1045,Sh_ter_fruits1.jpg,NC Duke,Fruit or propagule
-1046,Sh_ter_fruits2.jpg,NC Duke,Fruit or propagule
-1047,Sh_ter_leaves2.jpg,NC Duke,Leaf characteristics and shape
-1048,Sh_ter_leaves3.jpg,NC Duke,Leaf characteristics and shape
-1049,Sh_ter_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-1050,Sh_ter_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-1051,Sh_ter_stembase1.jpg,NC Duke,Stembase characteristics
-1052,Sh_ter_tree1.jpg,NC Duke,Tree form
-1053,Sh_ter_tree11.jpg,NC Duke,Tree form
-1054,So_alb_bark1.JPG,NC Duke,Bark characteristics
-1055,So_alb_diag1.JPG,NC Duke,Diagnostic feature
-1056,So_alb_distribW2.jpg,NC Duke,Distribution in the world
-1057,So_alb_flower3.JPG,NC Duke,Flower features
-1058,So_alb_flower5.jpg,NC Duke,Flower features
-1059,So_alb_fruit4.jpg,NC Duke,Fruit or propagule
-1060,So_alb_fruit6.jpg,NC Duke,Fruit or propagule
-1061,So_alb_fruit8.jpg,NC Duke,Fruit or propagule
-1062,So_alb_leaves3.jpg,NC Duke,Leaf characteristics and shape
-1063,So_alb_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-1064,So_alb_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-1065,So_alb_stembase3.jpg,NC Duke,Stembase characteristics
-1066,So_alb_tree3.jpg,NC Duke,Tree form
-1067,So_ape_bark1.jpg,NC Duke,Bark characteristics
-1068,So_ape_distribW2.jpg,NC Duke,Distribution in the world
-1069,So_ape_flower3.jpg,NC Duke,Flower features
-1070,So_ape_flower4.jpg,NC Duke,Flower features
-1071,So_ape_flower5.jpg,NC Duke,Flower features
-1072,So_ape_fruit1.jpg,NC Duke,Fruit or propagule
-1073,So_ape_leaves1.jpg,NC Duke,Leaf characteristics and shape
-1074,So_ape_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-1075,So_ape_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-1076,So_ape_stembase1.jpg,NC Duke,Stembase characteristics
-1077,So_ape_tree1.jpg,NC Duke,Tree form
-1078,So_cas_bark1.JPG,NC Duke,Bark characteristics
-1079,So_cas_distribW2.jpg,NC Duke,Distribution in the world
-1080,So_cas_flower1.jpg,NC Duke,Flower features
-1081,So_cas_flower6.jpg,NC Duke,Flower features
-1082,So_cas_fruit1.JPG,NC Duke,Fruit or propagule
-1083,So_cas_fruit3.jpg,NC Duke,Fruit or propagule
-1084,So_cas_leaves3.jpg,NC Duke,Leaf characteristics and shape
-1085,So_cas_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-1086,So_cas_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-1087,So_cas_stembase4.jpg,NC Duke,Stembase characteristics
-1088,So_cas_tree6.jpg,NC Duke,Tree form
-1089,So_gri_bark1.JPG,NC Duke,Bark characteristics
-1090,So_gri_distribW2.jpg,NC Duke,Distribution in the world
-1091,So_gri_flower1.JPG,NC Duke,Flower features
-1092,So_gri_flower3.JPG,NC Duke,Flower features
-1093,So_gri_flower4.JPG,NC Duke,Flower features
-1094,So_gri_fruit1.JPG,NC Duke,Fruit or propagule
-1095,So_gri_leaves2.JPG,NC Duke,Leaf characteristics and shape
-1096,So_gri_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-1097,So_gri_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-1098,So_gri_stembase1.JPG,NC Duke,Stembase characteristics
-1099,So_gri_stembase2.JPG,NC Duke,Stembase characteristics
-1100,So_gri_stembase3.JPG,NC Duke,Stembase characteristics
-1101,So_gri_tree1.JPG,NC Duke,Tree form
-1102,So_gul_bark1.jpg,NC Duke,Bark characteristics
-1103,So_gul_distribW2.jpg,NC Duke,Distribution in the world
-1104,So_gul_flower2.jpg,NC Duke,Flower features
-1105,So_gul_flower7.jpg,NC Duke,Flower features
-1106,So_gul_fruit2.jpg,NC Duke,Fruit or propagule
-1107,So_gul_fruit4.jpg,NC Duke,Fruit or propagule
-1108,So_gul_leaves1.JPG,NC Duke,Leaf characteristics and shape
-1109,So_gul_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-1110,So_gul_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-1111,So_gul_tree2.jpg,NC Duke,Tree form
-1112,So_gul_tree6B.jpg,NC Duke,Tree form
-1113,So_hai_distribW2.jpg,NC Duke,Distribution in the world
-1114,So_hai_estuar1.jpg,Diana Kleine,Estuarine occurrence
-1115,So_hai_flower1b.jpg,NC Duke,Flower features
-1116,So_hai_flower2b.jpg,NC Duke,Flower features
-1117,So_hai_flower4.JPG,NC Duke,Flower features
-1118,So_hai_fruit1b.jpg,NC Duke,Fruit or propagule
-1119,So_hai_leaves1b.jpg,book,Leaf characteristics and shape
-1120,So_hai_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-1121,So_hai_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-1122,So_hai_tree1.JPG,NC Duke,Tree form
-1123,So_hai_tree2.JPG,NC Duke,Tree form
-1124,So_hai_tree11.JPG,NC Duke,Tree form
-1125,So_hai_zone1.jpg,Diana Kleine,Intertidal zone position
-1126,So_lan_bark1.jpg,NC Duke,Bark characteristics
-1127,So_lan_distribW2.jpg,NC Duke,Distribution in the world
-1128,So_lan_flower2.jpg,NC Duke,Flower features
-1129,So_lan_fruit1.JPG,NC Duke,Fruit or propagule
-1130,So_lan_fruit2.jpg,NC Duke,Fruit or propagule
-1131,So_lan_leaves2.jpg,NC Duke,Leaf characteristics and shape
-1132,So_lan_leaves3.jpg,NC Duke,Leaf characteristics and shape
-1133,So_lan_leaves6B.jpg,NC Duke,Leaf characteristics and shape
-1134,So_lan_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-1135,So_lan_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-1136,So_lan_tree1.jpg,NC Duke,Tree form
-1137,So_ova_diag5.JPG,NC Duke,Diagnostic feature
-1138,So_ova_distribW2.jpg,NC Duke,Distribution in the world
-1139,So_ova_flower2.JPG,NC Duke,Flower features
-1140,So_ova_flower6.JPG,NC Duke,Flower features
-1141,So_ova_flower8.JPG,NC Duke,Flower features
-1142,So_ova_fruit2.JPG,NC Duke,Fruit or propagule
-1143,So_ova_fruit5.JPG,NC Duke,Fruit or propagule
-1144,So_ova_leaves4.JPG,NC Duke,Leaf characteristics and shape
-1145,So_ova_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-1146,So_ova_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-1147,So_ova_stembase1.JPG,NC Duke,Stembase characteristics
-1148,So_ova_stembase3.JPG,NC Duke,Stembase characteristics
-1149,So_ova_tree2.JPG,NC Duke,Tree form
-1150,So_ura_bark1.jpg,NC Duke,Bark characteristics
-1151,So_ura_distribW2.jpg,NC Duke,Distribution in the world
-1152,So_ura_flower3.jpg,NC Duke,Flower features
-1153,So_ura_flower4.jpg,NC Duke,Flower features
-1154,So_ura_fruit1.jpg,NC Duke,Fruit or propagule
-1155,So_ura_fruit2B.jpg,NC Duke,Fruit or propagule
-1156,So_ura_leaves1.jpg,NC Duke,Leaf characteristics and shape
-1157,So_ura_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-1158,So_ura_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-1159,So_ura_stembase1.jpg,NC Duke,Stembase characteristics
-1160,So_ura_tree1.jpg,NC Duke,Tree form
-1161,Ta_pal_distribW2.jpg,NC Duke,Distribution in the world
-1162,Ta_pal_flower1.jpg,NC Duke,Flower features
-1163,Ta_pal_flower2.jpg,NC Duke,Flower features
-1164,Ta_pal_fruit2w.jpg,NC Duke,Fruit or propagule
-1165,Ta_pal_fruit3w.jpg,NC Duke,Fruit or propagule
-1166,Ta_pal_leaves2w.jpg,NC Duke,Leaf characteristics and shape
-1167,Ta_pal_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-1168,Ta_pal_tree1.jpg,NC Duke,Tree form
-1169,Ta_pal_tree1w.jpg,NC Duke,Tree form
-1170,Th_pop_bark1.JPG,NC Duke,Bark characteristics
-1171,Th_pop_distribW2.jpg,NC Duke,Distribution in the world
-1172,Th_pop_flower1.JPG,NC Duke,Flower features
-1173,Th_pop_fruit2.JPG,NC Duke,Fruit or propagule
-1174,Th_pop_fruit3.JPG,NC Duke,Fruit or propagule
-1175,Th_pop_leaves1.JPG,NC Duke,Leaf characteristics and shape
-1176,Th_pop_leaves4.JPG,NC Duke,Leaf characteristics and shape
-1177,Th_pop_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-1178,Th_pop_tree2.JPG,NC Duke,Tree form
-1179,Xy_gra_bark3.jpg,NC Duke,Bark characteristics
-1180,Xy_gra_distribW2.jpg,NC Duke,Distribution in the world
-1181,Xy_gra_flower3.jpg,NC Duke,Flower features
-1182,Xy_gra_flower4.jpg,NC Duke,Flower features
-1183,Xy_gra_fruit4.jpg,NC Duke,Fruit or propagule
-1184,Xy_gra_fruit6B.jpg,NC Duke,Fruit or propagule
-1185,Xy_gra_leaves2.JPG,NC Duke,Leaf characteristics and shape
-1186,Xy_gra_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-1187,Xy_gra_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-1188,Xy_gra_stembase3.jpg,NC Duke,Stembase characteristics
-1189,Xy_gra_tree1.JPG,NC Duke,Tree form
-1190,Xy_mol_bark3.jpg,NC Duke,Bark characteristics
-1191,Xy_mol_diag1.jpg,NC Duke,Diagnostic feature
-1192,Xy_mol_distribW2.jpg,NC Duke,Distribution in the world
-1193,Xy_mol_flower1.jpg,NC Duke,Flower features
-1194,Xy_mol_fruit4.jpg,NC Duke,Fruit or propagule
-1195,Xy_mol_fruit5.jpg,NC Duke,Fruit or propagule
-1196,Xy_mol_leaves1.jpg,NC Duke,Leaf characteristics and shape
-1197,Xy_mol_leaves2.jpg,NC Duke,Leaf characteristics and shape
-1198,Xy_mol_leaves4.jpg,NC Duke,Leaf characteristics and shape
-1199,Xy_mol_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
-1200,Xy_mol_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
-1201,Xy_mol_stembase4.jpg,NC Duke,Stembase characteristics
-1202,Xy_mol_tree4.jpg,NC Duke,Tree form
-1203,Xy_mol_tree6B.jpg,NC Duke,Tree form
-1204,Xy_rum_bark2.jpg,NC Duke,Bark characteristics
-1205,Xy_rum_distribW2B.jpg,NC Duke,Distribution in the world
-1206,Xy_rum_flower6B.jpg,NC Duke,Flower features
-1207,Xy_rum_fruit1.jpg,NC Duke,Fruit or propagule
-1208,Xy_rum_fruit2.jpg,NC Duke,Fruit or propagule
-1209,Xy_rum_leaves2.jpg,NC Duke,Leaf characteristics and shape
-1210,Xy_rum_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
-1211,Xy_rum_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-1212,Xy_rum_stembase3.jpg,NC Duke,Stembase characteristics
-1213,Xy_rum_tree1.jpg,NC Duke,Tree form
-1214,Xy_rum_tree2.jpg,NC Duke,Tree form
-1215,Xy_rum_tree3.jpg,NC Duke,Tree form
-1216,Za_roe_distribW2.jpg,NC Duke,Distribution in the world
-1217,Za_roe_flower1w.jpg,NC Duke,Flower features
-1218,Za_roe_fruit1w.jpg,NC Duke,Fruit or propagule
-1219,Za_roe_fruit3w.jpg,NC Duke,Fruit or propagule
-1220,Za_roe_leaves1w.jpg,NC Duke,Leaf characteristics and shape
-1221,Za_roe_leaves3w.jpg,NC Duke,Leaf characteristics and shape
-1222,Za_roe_leaves5w.jpg,NC Duke,Leaf characteristics and shape
-1223,Za_roe_leaves6w.jpg,NC Duke,Leaf characteristics and shape
-1224,Za_roe_siloB.jpg,Deirdre Bean,Silohuette of growth habit
-1225,Za_roe_tree1w.jpg,NC Duke,Tree form
-1226,Za_roe_tree4w.jpg,NC Duke,Tree form
+15,Ac_ebr_ICflower2.jpg,Diana Kleine,Flower icon
+16,Ac_ebr_ICfruit1.jpg,Diana Kleine,Dispersal icon
+17,Ac_ebr_ICleaves1.jpg,Diana Kleine,Leaf icon
+18,Ac_ebr_ICtree1.jpg,Diana Kleine,Tree icon
+19,Ac_ebr_leaves1.jpg,NC Duke,Leaf characteristics and shape
+20,AC_ebr_leaves11.jpg,NC Duke,Leaf characteristics and shape
+21,Ac_ebr_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+22,Ac_ebr_siloA.jpg,Deirdre Bean,Silohuette of growth habit
+23,Ac_ebr_tree1.jpg,NC Duke,Tree form
+24,Ac_ebr_zone1.jpg,Diana Kleine,Intertidal zone position
+25,Ac_ebr-eba_bark1.jpg,NC Duke,Bark characteristics
+26,Ac_ebr-eba_diag1.jpg,NC Duke,Diagnostic feature
+27,Ac_ebr-eba_distribW2.jpg,NC Duke,Distribution in the world
+28,Ac_ebr-eba_estuar1.jpg,Diana Kleine,Estuarine occurrence
+29,Ac_ebr-eba_flower2.jpg,NC Duke,Flowers: side view
+30,Ac_ebr-eba_flower4.jpg,NC Duke,Flowers: top view
+31,Ac_ebr-eba_flower7.JPG,NC Duke,Flower features
+32,Ac_ebr-eba_fruit1.jpg,NC Duke,Fruit or Propagule: seed capsule
+33,Ac_ebr-eba_fruit4.JPG,NC Duke,Leaf characteristics and shape
+34,Ac_ebr-eba_ICflower1.jpg,Diana Kleine,Flower icon
+35,Ac_ebr-eba_ICfruit1.jpg,Diana Kleine,Dispersal icon
+36,Ac_ebr-eba_ICleaves1.jpg,Diana Kleine,Leaf icon
+37,Ac_ebr-eba_ICtree12.jpg,Diana Kleine,Tree icon
+38,Ac_ebr-eba_leaves1.jpg,NC Duke,Leaf characteristics and shape
+39,Ac_ebr-eba_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+40,Ac_ebr-eba_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+41,Ac_ebr-eba_tree2.jpg,NC Duke,Tree form
+42,Ac_ebr-eba_zone1.jpg,Diana Kleine,Intertidal zone position
+43,Ac_ebr-ebr_bark1.jpg,NC Duke,Bark characteristics
+44,Ac_ebr-ebr_diag1.JPG,NC Duke,Diagnostic feature
+45,Ac_ebr-ebr_distribW2.jpg,NC Duke,Distribution in the world
+46,Ac_ebr-ebr_estuar1.jpg,Diana Kleine,Estuarine occurrence
+47,Ac_ebr-ebr_flower4.jpg,NC Duke,Flowers: side view
+48,Ac_ebr-ebr_flower7.JPG,NC Duke,Flowers: top view
+49,Ac_ebr-ebr_fruit1.jpg,NC Duke,Fruit or Propagule: seed capsule
+50,Ac_ebr-ebr_fruit2.jpg,NC Duke,Leaf characteristics and shape
+51,Ac_ebr-ebr_ICflower1.jpg,Diana Kleine,Flower icon
+52,Ac_ebr-ebr_ICfruit1.jpg,Diana Kleine,Dispersal icon
+53,Ac_ebr-ebr_ICleaves12.jpg,Diana Kleine,Leaf icon
+54,Ac_ebr-ebr_ICtree1.jpg,Diana Kleine,Tree icon
+55,Ac_ebr-ebr_leaves1.jpg,NC Duke,Leaf characteristics and shape
+56,Ac_ebr-ebr_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+57,Ac_ebr-ebr_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+58,Ac_ebr-ebr_stembase1 (1).jpg,NC Duke,Stembase characteristics
+59,Ac_ebr-ebr_tree2 (1).JPG,NC Duke,Tree form
+60,Ac_ebr-ebr_zone1.jpg,Diana Kleine,Intertidal zone position
+61,Ac_ili_bark1.jpg,NC Duke,Bark characteristics
+62,Ac_ili_diag1.jpg,NC Duke,Diagnostic feature
+63,Ac_ili_diag2.jpg,NC Duke,Diagnostic feature
+64,Ac_ili_diag3.JPG,NC Duke,Diagnostic feature
+65,Ac_ili_distribW2.jpg,NC Duke,Distribution in the world
+66,Ac_ili_estuar1.jpg,Diana Kleine,Estuarine occurrence
+67,Ac_ili_flower6.JPG,NC Duke,Flowers: side view
+68,Ac_ili_flower8.JPG,NC Duke,Flowers: top view
+69,Ac_ili_fruit1.jpg,NC Duke,Fruit or Propagule: seed capsule
+70,Ac_ili_ICflower1.jpg,Diana Kleine,Flower icon
+71,Ac_ili_ICflower2.jpg,Diana Kleine,Flower icon
+72,Ac_ili_ICfruit1.jpg,Diana Kleine,Dispersal icon
+73,Ac_ili_ICleaves1.jpg,Diana Kleine,Leaf icon
+74,Ac_ili_ICtree1.jpg,Diana Kleine,Tree icon
+75,Ac_ili_leaves3.JPG,NC Duke,Leaf characteristics and shape
+76,Ac_ili_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+77,Ac_ili_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+78,Ac_ili_stembase1.jpg,NC Duke,Stembase characteristics
+79,Ac_ili_tree7.JPG,NC Duke,Tree form
+80,Ac_ili_zone1.jpg,Diana Kleine,Intertidal zone position
+81,Ac_vol_distribW2.jpg,NC Duke,Distribution in the world
+82,Ac_vol_estuar1.jpg,Diana Kleine,Estuarine occurrence
+83,Ac_vol_flower3w.jpg,NC Duke,Flowers: side view
+84,Ac_vol_flower6w.jpg,NC Duke,Flowers: top view
+85,Ac_vol_fruit1w.jpg,NC Duke,Fruit or Propagule: seed capsule
+86,Ac_vol_ICflower2.jpg,Diana Kleine,Flower icon
+87,Ac_vol_ICfruit1.jpg,Diana Kleine,Dispersal icon
+88,Ac_vol_ICleaves1.jpg,Diana Kleine,Leaf icon
+89,Ac_vol_ICtree1.jpg,Diana Kleine,Tree icon
+90,Ac_vol_leaves1w.jpg,NC Duke,Leaf characteristics and shape
+91,Ac_vol_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+92,Ac_vol_stembase1w.jpg,NC Duke,Stembase characteristics
+93,Ac_vol_tree1w.jpg,NC Duke,Tree form
+94,Ac_vol_zone1.jpg,Diana Kleine,Intertidal zone position
+95,Ae_cor_bark1.JPG,NC Duke,Bark characteristics
+96,Ae_cor_distribW2.jpg,NC Duke,Distribution in the world
+97,Ae_cor_flowers2.jpg,NC Duke,Flower features
+98,Ae_cor_fruit1.jpg,NC Duke,Fruit or propagule
+99,Ae_cor_fruit3.JPG,NC Duke,Fruit or propagule
+100,Ae_cor_ICflower1.jpg,Diana Kleine,Flower icon
+101,Ae_cor_ICfruit1.jpg,Diana Kleine,Dispersal icon
+102,Ae_cor_ICleaves1.jpg,Diana Kleine,Leaf icon
+103,Ae_cor_ICtree1.jpg,Diana Kleine,Tree icon
+104,Ae_cor_leaves2.jpg,NC Duke,Leaf characteristics and shape
+105,Ae_cor_leaves4.JPG,NC Duke,Leaf characteristics and shape
+106,Ae_cor_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+107,Ae_cor_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+108,Ae_cor_tree2.jpg,NC Duke,Tree form
+109,Ae_flo_distribW2.jpg,NC Duke,Distribution in the world
+110,Ae_flo_flower1w.jpg,NC Duke,Flower features
+111,Ae_flo_flower4w.jpg,NC Duke,Flower features
+112,Ae_flo_fruit5.JPG,NC Duke,Fruit or propagule
+113,Ae_flo_ICflower1.jpg,Diana Kleine,Flower icon
+114,Ae_flo_ICfruit1.jpg,Diana Kleine,Dispersal icon
+115,Ae_flo_ICleaves1.jpg,Diana Kleine,Leaf icon
+116,Ae_flo_ICtree1.jpg,Diana Kleine,Tree icon
+117,Ae_flo_leaves1w.jpg,NC Duke,Leaf characteristics and shape
+118,Ae_flo_leaves3w.jpg,NC Duke,Leaf characteristics and shape
+119,Ae_flo_leaves5.JPG,NC Duke,Leaf characteristics and shape
+120,Ae_flo_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+121,Ae_flo_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+122,Ae_flo_tree1w.JPG,NC Duke,Tree form
+123,Ae_flo_tree3.JPG,NC Duke,Tree form
+124,Ag_cuc_distribW2.jpg,NC Duke,Distribution in the world
+125,Ag_cuc_flower1w.jpg,NC Duke,Flower features
+126,Ag_cuc_fruit1w.jpg,NC Duke,Fruit or propagule
+127,Ag_cuc_ICtree1.jpg,Diana Kleine,Tree icon
+128,Ag_cuc_leaves1w.jpg,NC Duke,Leaf characteristics and shape
+129,Ag_cuc_leaves2w.jpg,NC Duke,Leaf characteristics and shape
+130,Ag_cuc_leaves6B.jpg,NC Duke,Leaf characteristics and shape
+131,Ag_cuc_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+132,Ai_ann_bark1.jpg,NC Duke,Bark characteristics
+133,Ai_ann_distribW2.jpg,NC Duke,Distribution in the world
+134,Ai_ann_flower1.jpg,NC Duke,Flower features
+135,Ai_ann_flower2.JPG,NC Duke,Flower features
+136,Ai_ann_fruit2.jpg,NC Duke,Fruit or propagule
+137,Ai_ann_ICflower1.jpg,Diana Kleine,Flower icon
+138,Ai_ann_ICfruit1.jpg,Diana Kleine,Dispersal icon
+139,Ai_ann_ICleaves1.jpg,Diana Kleine,Leaf icon
+140,Ai_ann_ICtree1.jpg,Diana Kleine,Tree icon
+141,Ai_ann_leaves1.jpg,NC Duke,Leaf characteristics and shape
+142,Ai_ann_leaves3.JPG,NC Duke,Leaf characteristics and shape
+143,Ai_ann_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+144,Ai_ann_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+145,Ai_ann_stembase1.jpg,NC Duke,Stembase characteristics
+146,Ai_ann_tree2.jpg,NC Duke,Tree form
+147,Ai_rot_distribW2.jpg,NC Duke,Distribution in the world
+148,Ai_rot_flowers1w.jpg,NC Duke,Flower features
+149,Ai_rot_fruit1w.jpg,NC Duke,Fruit or propagule
+150,Ai_rot_ICflower1.jpg,Diana Kleine,Flower icon
+151,Ai_rot_ICfruit1.jpg,Diana Kleine,Dispersal icon
+152,Ai_rot_ICleaves1.jpg,Diana Kleine,Leaf icon
+153,Ai_rot_ICtree1.jpg,Diana Kleine,Tree icon
+154,Ai_rot_leaves1w.jpg,NC Duke,Leaf characteristics and shape
+155,Ai_rot_leaves2w.jpg,NC Duke,Leaf characteristics and shape
+156,Ai_rot_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+157,Ai_rot_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+158,Ai_rot_tree1w.jpg,NC Duke,Tree form
+159,Ai_rot_tree6B.jpg,NC Duke,Tree form
+160,Am_lat_bark1w.jpg,NC Duke,Bark characteristics
+161,Am_lat_distribW2.jpg,NC Duke,Distribution in the world
+162,Am_lat_flowers1w.jpg,NC Duke,Flower features
+163,Am_lat_flowers5w.JPG,NC Duke,Flower features
+164,Am_lat_fruit3w.jpg,NC Duke,Fruit or propagule
+165,Am_lat_ICtree1.jpg,Diana Kleine,Tree icon
+166,Am_lat_leaves4w.jpg,NC Duke,Leaf characteristics and shape
+167,Am_lat_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+168,Am_lat_stembase1w.jpg,NC Duke,Stembase characteristics
+169,Am_lat_tree1w.jpg,NC Duke,Tree form
+170,An_gla_bark2.JPG,NC Duke,Bark characteristics
+171,An_gla_distribW2.jpg,NC Duke,Distribution in the world
+172,An_gla_flower6A.jpg,NC Duke,Flower features
+173,An_gla_fruit3.JPG,NC Duke,Fruit or propagule
+174,An_gla_ICtree1.jpg,Diana Kleine,Tree icon
+175,An_gla_leaves1.JPG,NC Duke,Leaf characteristics and shape
+176,An_gla_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+177,An_gla_stembase3.JPG,NC Duke,Stembase characteristics
+178,An_gla_tree6B.jpg,NC Duke,Tree form
+179,Ar_aur_diag4.JPG,NC Duke,Diagnostic feature
+180,Ar_aur_distribW2.jpg,NC Duke,Distribution in the world
+181,Ar_aur_fruit1.jpg,Diana Kleine,Dispersal icon
+182,Ar_aur_fruit2.JPG,NC Duke,Fruit or propagule
+183,Ar_aur_fruit6.JPG,NC Duke,Fruit or propagule
+184,Ar_aur_ICflower1.jpg,Diana Kleine,Flower icon
+185,Ar_aur_ICleaves1.jpg,Diana Kleine,Leaf icon
+186,Ar_aur_ICtree1A.jpg,Diana Kleine,Tree icon
+187,Ar_aur_leaves1.JPG,NC Duke,Leaf characteristics and shape
+188,Ar_aur_leaves2.JPG,NC Duke,Leaf characteristics and shape
+189,Ar_aur_leaves5.JPG,NC Duke,Leaf characteristics and shape
+190,Ar_aur_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+191,Ar_aur_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+192,Ar_aur_stembase1.JPG,NC Duke,Stembase characteristics
+193,Ar_aur_tree3.JPG,NC Duke,Tree form
+194,Ar_dan_distribW2.jpg,NC Duke,Distribution in the world
+195,Ar_dan_flower1.jpg,Diana Kleine,Flower icon
+196,Ar_dan_fruit1.JPG,NC Duke,Fruit or propagule
+197,Ar_dan_fruit1.jpg,Diana Kleine,Dispersal icon
+198,Ar_dan_fruitCB.jpg,NC Duke,Fruit or propagule
+199,Ar_dan_leaves01.jpg,Diana Kleine,Leaf icon
+200,Ar_dan_leaves02.jpg,Diana Kleine,Leaf icon
+201,Ar_dan_leaves1.JPG,NC Duke,Leaf characteristics and shape
+202,Ar_dan_tree1.JPG,NC Duke,Tree form
+203,Ar_dan_tree1.jpg,Diana Kleine,Tree icon
+204,Ar_dan_tree2.JPG,NC Duke,Tree form
+205,Ar_dan_tree3.JPG,NC Duke,Tree form
+206,Ar_dan_tree4.JPG,NC Duke,Tree form
+207,Ar_spe_distribW2.jpg,NC Duke,Distribution in the world
+208,Ar_spe_fruit1.jpg,Diana Kleine,Dispersal icon
+209,Ar_spe_fruit4.jpg,NC Duke,Fruit or propagule
+210,Ar_spe_fruit5.JPG,NC Duke,Fruit or propagule
+211,Ar_spe_fruit7.jpg,NC Duke,Fruit or propagule
+212,Ar_spe_ICflower1.jpg,Diana Kleine,Flower icon
+213,Ar_spe_ICleaves1.jpg,Diana Kleine,Leaf icon
+214,Ar_spe_ICtree1.jpg,Diana Kleine,Tree icon
+215,Ar_spe_leaves1.jpg,NC Duke,Leaf characteristics and shape
+216,Ar_spe_leaves2.jpg,NC Duke,Leaf characteristics and shape
+217,Ar_spe_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+218,Ar_spe_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+219,Ar_spe_tree2.jpg,NC Duke,Tree form
+220,Ar_spe_tree4.JPG,NC Duke,Tree form
+221,Ar_spe_tree7.JPG,NC Duke,Tree form
+222,Av_alb_bark1.JPG,NC Duke,Bark characteristics
+223,Av_alb_diag1.JPG,NC Duke,Diagnostic feature
+224,Av_alb_distribW2.jpg,NC Duke,Distribution in the world
+225,Av_alb_flower2.JPG,NC Duke,Flower features
+226,Av_alb_fruit1.JPG,NC Duke,Fruit or propagule
+227,Av_alb_ICtree1.jpg,Diana Kleine,Tree icon
+228,Av_alb_leaves2.JPG,NC Duke,Leaf characteristics and shape
+229,Av_alb_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+230,Av_alb_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+231,Av_alb_stembase1.JPG,NC Duke,Stembase characteristics
+232,Av_alb_tree1.JPG,NC Duke,Tree form
+233,Av_alb_tree6B.jpg,NC Duke,Tree form
+234,Av_bic_bark1.jpg,NC Duke,Bark characteristics
+235,Av_bic_distribW2.jpg,NC Duke,Distribution in the world
+236,Av_bic_flower1w.JPG,NC Duke,Flower features
+237,Av_bic_flower6B.jpg,NC Duke,Flower features
+238,Av_bic_flower7B.jpg,NC Duke,Flower features
+239,Av_bic_fruit1w.jpg,NC Duke,Fruit or propagule
+240,Av_bic_fruit6B.jpg,NC Duke,Fruit or propagule
+241,Av_bic_ICflower1.jpg,Diana Kleine,Flower icon
+242,Av_bic_ICtree1.jpg,Diana Kleine,Tree icon
+243,Av_bic_leaves1.jpg,NC Duke,Leaf characteristics and shape
+244,Av_bic_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+245,Av_bic_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+246,Av_bic_stembase3.jpg,NC Duke,Stembase characteristics
+247,Av_bic_stembase5.jpg,NC Duke,Stembase characteristics
+248,Av_bic_tree2.jpg,NC Duke,Tree form
+249,Av_ger phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+250,Av_ger_bark2.JPG,NC Duke,Bark characteristics
+251,Av_ger_distribW2.jpg,NC Duke,Distribution in the world
+252,Av_ger_flower6A.jpg,NC Duke,Flower features
+253,Av_ger_flower7A.jpg,NC Duke,Flower features
+254,Av_ger_flower9.jpg,NC Duke,Flower features
+255,Av_ger_fruit4.JPG,NC Duke,Fruit or propagule
+256,Av_ger_ICflower1.jpg,Diana Kleine,Flower icon
+257,Av_ger_ICtree1.jpg,Diana Kleine,Tree icon
+258,Av_ger_leaves3.JPG,NC Duke,Leaf characteristics and shape
+259,Av_ger_leaves6.JPG,NC Duke,Leaf characteristics and shape
+260,Av_ger_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+261,Av_ger_stembase2.JPG,NC Duke,Stembase characteristics
+262,Av_ger_tree5.JPG,NC Duke,Tree form
+263,Av_int_bark1.jpg,NC Duke,Bark characteristics
+264,Av_int_distribW2.jpg,NC Duke,Distribution in the world
+265,Av_int_flower1.jpg,NC Duke,Flower features
+266,Av_int_flower3.jpg,NC Duke,Flower features
+267,Av_int_fruit6A.jpg,NC Duke,Fruit or propagule
+268,Av_int_ICflower1.jpg,Diana Kleine,Flower icon
+269,Av_int_ICfruit1.jpg,Diana Kleine,Dispersal icon
+270,Av_int_ICleaves1.jpg,Diana Kleine,Leaf icon
+271,Av_int_ICtree1.jpg,Diana Kleine,Tree icon
+272,Av_int_leaves1.jpg,NC Duke,Leaf characteristics and shape
+273,Av_int_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+274,Av_int_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+275,Av_int_stembase1.jpg,NC Duke,Stembase characteristics
+276,Av_int_tree3.JPG,NC Duke,Tree form
+277,Av_mar_AusNRM1.jpg,NC Duke,Distribution in Australia
+278,Av_mar_bark2.jpg,NC Duke,Bark characteristics
+279,Av_mar_bark677.jpg,NC Duke,Bark characteristics
+280,Av_mar_distrib2.jpg,NC Duke,Distribution in the world
+281,Av_mar_estuar1.jpg,Diana Kleine,Estuarine occurrence
+282,Av_mar_flower1.jpg,NC Duke,Flower features
+283,Av_mar_flower2.jpg,NC Duke,Flower features
+284,Av_mar_fruit1.jpg,NC Duke,Fruit or propagule
+285,Av_mar_ICflower1.jpg,Diana Kleine,Flower icon
+286,Av_mar_ICfruit1.jpg,Diana Kleine,Dispersal icon
+287,Av_mar_ICleaves1.jpg,Diana Kleine,Leaf icon
+288,Av_mar_ICtree1.jpg,Diana Kleine,Tree icon
+289,Av_mar_leaves1.jpg,NC Duke,Leaf characteristics and shape
+290,Av_mar_leaves2.JPG,NC Duke,Leaf characteristics and shape
+291,Av_mar_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+292,Av_mar_silo1B.jpg,Deirdre Bean,Silohuette of growth habit
+293,Av_mar_stembase1.jpg,NC Duke,Stembase characteristics
+294,Av_mar_tree1.jpg,NC Duke,Tree form
+295,Av_mar_tree6B.jpg,NC Duke,Tree form
+296,Av_mar_zone1.jpg,Diana Kleine,Intertidal zone position
+297,Av_mar-aus_bark4.JPG,NC Duke,Bark characteristics
+298,Av_mar-aus_distribW2.jpg,NC Duke,Distribution in the world
+299,Av_mar-aus_flower5.JPG,NC Duke,Flower features
+300,Av_mar-aus_flower8.JPG,NC Duke,Flower features
+301,Av_mar-aus_fruit1.jpg,NC Duke,Fruit or propagule
+302,Av_mar-aus_ICflower1.jpg,Diana Kleine,Flower icon
+303,Av_mar-aus_ICfruit1.jpg,Diana Kleine,Dispersal icon
+304,Av_mar-aus_ICleaves1.jpg,Diana Kleine,Leaf icon
+305,Av_mar-aus_ICtree1.jpg,Diana Kleine,Tree icon
+306,Av_mar-aus_leaves6.jpg,NC Duke,Leaf characteristics and shape
+307,Av_mar-aus_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+308,Av_mar-aus_silo1B.jpg,Deirdre Bean,Silohuette of growth habit
+309,Av_mar-aus_tree1.jpg,NC Duke,Tree form
+310,Av_mar-aus_tree13.jpg,NC Duke,Tree form
+311,Av_mar-euc_bark2.jpg,NC Duke,Bark characteristics
+312,Av_mar-euc_distribW2.jpg,NC Duke,Distribution in the world
+313,Av_mar-euc_flower1.jpg,NC Duke,Flower features
+314,Av_mar-euc_flower3.jpg,NC Duke,Flower features
+315,Av_mar-euc_flower4.jpg,NC Duke,Flower features
+316,Av_mar-euc_fruit1.jpg,NC Duke,Fruit or propagule
+317,Av_mar-euc_ICflower1.jpg,Diana Kleine,Flower icon
+318,Av_mar-euc_ICfruit1.jpg,Diana Kleine,Dispersal icon
+319,Av_mar-euc_ICleaves1.jpg,Diana Kleine,Leaf icon
+320,Av_mar-euc_ICtree13.jpg,Diana Kleine,Tree icon
+321,Av_mar-euc_leaves2.jpg,NC Duke,Leaf characteristics and shape
+322,Av_mar-euc_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+323,Av_mar-euc_silo1B.jpg,Deirdre Bean,Silohuette of growth habit
+324,Av_mar-euc_stembase1.jpg,NC Duke,Stembase characteristics
+325,Av_mar-euc_tree1.jpg,NC Duke,Tree form
+326,Av_mar-euc_tree6B.jpg,NC Duke,Tree form
+327,Av_mar-mar_bark3.JPG,NC Duke,Bark characteristics
+328,Av_mar-mar_distribW2.jpg,NC Duke,Distribution in the world
+329,Av_mar-mar_flower1.jpg,NC Duke,Flower features
+330,Av_mar-mar_flower2.jpg,NC Duke,Flower features
+331,Av_mar-mar_fruit1.JPG,NC Duke,Fruit or propagule
+332,Av_mar-mar_ICflower1.jpg,Diana Kleine,Flower icon
+333,Av_mar-mar_ICfruit1.jpg,Diana Kleine,Dispersal icon
+334,Av_mar-mar_ICleaves1.jpg,Diana Kleine,Leaf icon
+335,Av_mar-mar_ICtree12.jpg,Diana Kleine,Tree icon
+336,Av_mar-mar_leaves4.JPG,NC Duke,Leaf characteristics and shape
+337,Av_mar-mar_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+338,Av_mar-mar_silo1B.jpg,Deirdre Bean,Silohuette of growth habit
+339,Av_mar-mar_stembase1.jpg,NC Duke,Stembase characteristics
+340,Av_mar-mar_tree1.jpg,NC Duke,Tree form
+341,Av_off_bark1.jpg,NC Duke,Bark characteristics
+342,Av_off_distribW2.jpg,NC Duke,Distribution in the world
+343,Av_off_flower2.JPG,NC Duke,Flower features
+344,Av_off_flower3.JPG,NC Duke,Flower features
+345,Av_off_flower4.JPG,NC Duke,Flower features
+346,Av_off_flower6A.jpg,NC Duke,Flower features
+347,Av_off_fruit2.JPG,NC Duke,Fruit or propagule
+348,Av_off_ICflower1.jpg,Diana Kleine,Flower icon
+349,Av_off_ICfruit1.jpg,Diana Kleine,Dispersal icon
+350,Av_off_ICleaves1.jpg,Diana Kleine,Leaf icon
+351,Av_off_ICtree1.jpg,Diana Kleine,Tree icon
+352,Av_off_leaves2.JPG,NC Duke,Leaf characteristics and shape
+353,Av_off_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+354,Av_off_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+355,Av_off_stembase1.JPG,NC Duke,Stembase characteristics
+356,Av_off_stembase2.JPG,NC Duke,Stembase characteristics
+357,Av_off_tree2.JPG,NC Duke,Tree form
+358,Av_rum_bark2.JPG,NC Duke,Bark characteristics
+359,Av_rum_distribW2.jpg,NC Duke,Distribution in the world
+360,Av_rum_flower1.JPG,NC Duke,Flower features
+361,Av_rum_flower3.JPG,NC Duke,Flower features
+362,Av_rum_fruit1.JPG,NC Duke,Fruit or propagule
+363,Av_rum_fruit4.JPG,NC Duke,Fruit or propagule
+364,Av_rum_ICtree1.jpg,Diana Kleine,Tree icon
+365,Av_rum_leaves1.JPG,NC Duke,Leaf characteristics and shape
+366,Av_rum_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+367,Av_rum_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+368,Av_rum_stembase1.JPG,NC Duke,Stembase characteristics
+369,Av_rum_tree2.JPG,NC Duke,Tree form
+370,Av_sch_bark3.JPG,NC Duke,Bark characteristics
+371,Av_sch_distribW2.jpg,NC Duke,Distribution in the world
+372,Av_sch_flower6.JPG,NC Duke,Flower features
+373,Av_sch_flower6A.jpg,NC Duke,Flower features
+374,Av_sch_fruit2.JPG,NC Duke,Fruit or propagule
+375,Av_sch_fruit6.JPG,NC Duke,Fruit or propagule
+376,Av_sch_ICflower1.jpg,Diana Kleine,Flower icon
+377,Av_sch_ICtree1.jpg,Diana Kleine,Tree icon
+378,Av_sch_leaves1.JPG,NC Duke,Leaf characteristics and shape
+379,Av_sch_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+380,Av_sch_siloCB.jpg,NC Duke,Silohuette of growth habit
+381,Av_sch_stembase4.JPG,NC Duke,Stembase characteristics
+382,Av_sch_tree1.JPG,NC Duke,Tree form
+383,Ba_rac_distribW2.jpg,NC Duke,Distribution in the world
+384,Ba_rac_flower1.jpg,NC Duke,Flower features
+385,Ba_rac_flower3.jpg,NC Duke,Flower features
+386,Ba_rac_fruit1.jpg,NC Duke,Fruit or propagule
+387,Ba_rac_fruit3.JPG,NC Duke,Fruit or propagule
+388,Ba_rac_ICflower1.jpg,Diana Kleine,Flower icon
+389,Ba_rac_ICflower2.jpg,Diana Kleine,Flower icon
+390,Ba_rac_ICfruit1.jpg,Diana Kleine,Dispersal icon
+391,Ba_rac_ICleaves1.jpg,Diana Kleine,Leaf icon
+392,Ba_rac_ICtree1.jpg,Diana Kleine,Tree icon
+393,Ba_rac_leaves2.jpg,NC Duke,Leaf characteristics and shape
+394,Ba_rac_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+395,Ba_rac_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+396,Ba_rac_stembase1.jpg,NC Duke,Stembase characteristics
+397,Ba_rac_tree1.jpg,NC Duke,Tree form
+398,Bo_arg_bark1.JPG,NC Duke,Bark characteristics
+399,Bo_arg_distribW2.jpg,NC Duke,Distribution in the world
+400,Bo_arg_flower2.jpg,NC Duke,Flower features
+401,Bo_arg_fruit3.JPG,NC Duke,Fruit or propagule
+402,Bo_arg_leaves1.jpg,NC Duke,Leaf characteristics and shape
+403,Bo_arg_leaves5.JPG,NC Duke,Leaf characteristics and shape
+404,Bo_arg_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+405,Bo_arg_stembase1.JPG,NC Duke,Stembase characteristics
+406,Bo_arg_tree2.jpg,NC Duke,Tree form
+407,Bo_ter_distribW2.jpg,NC Duke,Distribution in the world
+408,Bo_ter_flower1.jpg,NC Duke,Flower features
+409,Bo_ter_fruit3.JPG,NC Duke,Fruit or propagule
+410,Bo_ter_ICtree1.jpg,Diana Kleine,Tree icon
+411,Bo_ter_leaves2.JPG,NC Duke,Leaf characteristics and shape
+412,Bo_ter_leaves3.JPG,NC Duke,Leaf characteristics and shape
+413,Bo_ter_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+414,Bo_ter_stembase1.JPG,NC Duke,Stembase characteristics
+415,Bo_ter_tree1.jpg,NC Duke,Tree form
+416,Bo_ter_tree2.JPG,NC Duke,Tree form
+417,Br_cyl_bark2.JPG,NC Duke,Bark characteristics
+418,Br_cyl_diag4.jpg,NC Duke,Diagnostic feature
+419,Br_cyl_distribW2.jpg,NC Duke,Distribution in the world
+420,Br_cyl_flower2.jpg,NC Duke,Flower features
+421,Br_cyl_flower6.JPG,NC Duke,Flower features
+422,Br_cyl_fruit7.JPG,NC Duke,Fruit or propagule
+423,Br_cyl_ICflower1.jpg,Diana Kleine,Flower icon
+424,Br_cyl_ICflower2.jpg,Diana Kleine,Flower icon
+425,Br_cyl_ICfruit1.jpg,Diana Kleine,Dispersal icon
+426,Br_cyl_ICleaves1.jpg,Diana Kleine,Leaf icon
+427,Br_cyl_ICtree1.jpg,Diana Kleine,Tree icon
+428,Br_cyl_leaves1.jpg,NC Duke,Leaf characteristics and shape
+429,Br_cyl_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+430,Br_cyl_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+431,Br_cyl_stembase1.JPG,NC Duke,Stembase characteristics
+432,Br_cyl_tree2.jpg,NC Duke,Tree form
+433,Br_dun_AusNRM2a.jpg,NC Duke,Distribution in Australia
+434,Br_dun_bark1.jpg,NC Duke,Bark characteristics
+435,Br_dun_diag1.jpg,NC Duke,Diagnostic feature
+436,Br_dun_distribAA.jpeg,NC Duke,Distribution in the world
+437,Br_dun_estuar1.jpg,Diana Kleine,Estuarine occurrence
+438,Br_dun_flower1.jpg,NC Duke,Flower features
+439,Br_dun_flower2.jpg,NC Duke,Flower features
+440,Br_dun_flower3.jpg,NC Duke,Flower features
+441,Br_dun_fruit1.jpg,NC Duke,Fruit or propagule
+442,Br_dun_ICflower1.jpg,Diana Kleine,Flower icon
+443,Br_dun_ICflower2.jpg,Diana Kleine,Flower icon
+444,Br_dun_ICfruit1.jpg,Diana Kleine,Dispersal icon
+445,Br_dun_ICleaves1.jpg,Diana Kleine,Leaf icon
+446,Br_dun_ICtree1.jpg,Diana Kleine,Tree icon
+447,Br_dun_leaves1.jpg,NC Duke,Leaf characteristics and shape
+448,Br_dun_leaves2.jpg,NC Duke,Leaf characteristics and shape
+449,Br_dun_leaves3.jpg,NC Duke,Leaf characteristics and shape
+450,Br_dun_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+451,Br_dun_siloB1.jpg,Deirdre Bean,Silohuette of growth habit
+452,Br_dun_stembase1.jpg,NC Duke,Stembase characteristics
+453,Br_dun_stembase2.jpg,NC Duke,Stembase characteristics
+454,Br_dun_tree1.jpg,NC Duke,Tree form
+455,Br_dun_zone1.jpg,Diana Kleine,Intertidal zone position
+456,Br_exa_bark1.JPG,NC Duke,Bark characteristics
+457,Br_exa_diag4.jpg,NC Duke,Diagnostic feature
+458,Br_exa_distribW2.jpg,NC Duke,Distribution in the world
+459,Br_exa_flower11.JPG,NC Duke,Flower features
+460,Br_exa_flower3.jpg,NC Duke,Flower features
+461,Br_exa_fruit3.jpg,NC Duke,Fruit or propagule
+462,Br_exa_ICflower1.jpg,Diana Kleine,Flower icon
+463,Br_exa_ICflower2.jpg,Diana Kleine,Flower icon
+464,Br_exa_ICfruit1.jpg,Diana Kleine,Dispersal icon
+465,Br_exa_ICleaves1.jpg,Diana Kleine,Leaf icon
+466,Br_exa_ICtree1.jpg,Diana Kleine,Tree icon
+467,Br_exa_leaves1.jpg,NC Duke,Leaf characteristics and shape
+468,Br_exa_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+469,Br_exa_siloB.jpg,NC Duke,Silohuette of growth habit
+470,Br_exa_stembase2.jpg,NC Duke,Stembase characteristics
+471,Br_exa_tree2.jpg,NC Duke,Tree form
+472,Br_gym_bark3.JPG,NC Duke,Bark characteristics
+473,Br_gym_diag4.jpg,NC Duke,Diagnostic feature
+474,Br_gym_distribW2.jpg,NC Duke,Distribution in the world
+475,Br_gym_flower17.JPG,NC Duke,Flower features
+476,Br_gym_flower20.jpg,NC Duke,Flower features
+477,Br_gym_fruit6.JPG,NC Duke,Fruit or propagule
+478,Br_gym_ICflower1.jpg,Diana Kleine,Flower icon
+479,Br_gym_ICflower2.jpg,Diana Kleine,Flower icon
+480,Br_gym_ICfruit1.jpg,Diana Kleine,Dispersal icon
+481,Br_gym_ICleaves1.jpg,Diana Kleine,Leaf icon
+482,Br_gym_ICtree1.jpg,Diana Kleine,Tree icon
+483,Br_gym_leaves5.JPG,NC Duke,Leaf characteristics and shape
+484,Br_gym_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+485,Br_gym_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+486,Br_gym_stembase11.jpg,NC Duke,Stembase characteristics
+487,Br_gym_tree7.JPG,NC Duke,Tree form
+488,Br_hai_bark1.JPG,NC Duke,Bark characteristics
+489,Br_hai_diag4.jpg,NC Duke,Diagnostic feature
+490,Br_hai_distribW2.jpg,NC Duke,Distribution in the world
+491,Br_hai_flower7.jpg,NC Duke,Flower features
+492,Br_hai_flower8.JPG,NC Duke,Flower features
+493,Br_hai_flower8b.jpg,NC Duke,Flower features
+494,Br_hai_fruit10.JPG,NC Duke,Fruit or propagule
+495,Br_hai_ICflower1.jpg,Diana Kleine,Flower icon
+496,Br_hai_ICflower2.jpg,Diana Kleine,Flower icon
+497,Br_hai_ICfruit1.jpg,Diana Kleine,Dispersal icon
+498,Br_hai_ICleaves1.jpg,Diana Kleine,Leaf icon
+499,Br_hai_ICtree1.jpg,Diana Kleine,Tree icon
+500,Br_hai_leaves2.JPG,NC Duke,Leaf characteristics and shape
+501,Br_hai_leaves3.JPG,NC Duke,Leaf characteristics and shape
+502,Br_hai_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+503,Br_hai_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+504,Br_hai_stembase5.JPG,NC Duke,Stembase characteristics
+505,Br_hai_stembase7a.jpg,NC Duke,Stembase characteristics
+506,Br_hai_tree2.JPG,NC Duke,Tree form
+507,Br_par_bark1.jpg,NC Duke,Bark characteristics
+508,Br_par_diag4.jpg,NC Duke,Diagnostic feature
+509,Br_par_distribW2.jpg,NC Duke,Distribution in the world
+510,Br_par_flower1.jpg,NC Duke,Flower features
+511,Br_par_flower5.JPG,NC Duke,Flower features
+512,Br_par_flower7BB.jpg,NC Duke,Flower features
+513,Br_par_fruit2.jpg,NC Duke,Fruit or propagule
+514,Br_par_ICflower1.jpg,Diana Kleine,Flower icon
+515,Br_par_ICflower2.jpg,Diana Kleine,Flower icon
+516,Br_par_ICfruit1.jpg,Diana Kleine,Dispersal icon
+517,Br_par_ICleaves1.jpg,Diana Kleine,Leaf icon
+518,Br_par_ICtree1.jpg,Diana Kleine,Tree icon
+519,Br_par_leaves1.jpg,NC Duke,Leaf characteristics and shape
+520,Br_par_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+521,Br_par_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+522,Br_par_stembase1.jpg,NC Duke,Stembase characteristics
+523,Br_par_stembase6B.jpg,NC Duke,Stembase characteristics
+524,Br_par_tree1.jpg,NC Duke,Tree form
+525,Br_par_tree7B.jpg,NC Duke,Tree form
+526,Br_rhy_bark1.jpg,NC Duke,Bark characteristics
+527,Br_rhy_diag4.jpg,NC Duke,Diagnostic feature
+528,Br_rhy_distribW2.jpg,NC Duke,Distribution in the world
+529,Br_rhy_flower2.jpg,NC Duke,Flower features
+530,Br_rhy_flower4.jpg,NC Duke,Flower features
+531,Br_rhy_fruit5.JPG,NC Duke,Fruit or propagule
+532,Br_rhy_ICflower1.jpg,Diana Kleine,Flower icon
+533,Br_rhy_ICflower2.jpg,Diana Kleine,Flower icon
+534,Br_rhy_ICfruit1.jpg,Diana Kleine,Dispersal icon
+535,Br_rhy_ICleaves1.jpg,Diana Kleine,Leaf icon
+536,Br_rhy_ICtree1.jpg,Diana Kleine,Tree icon
+537,Br_rhy_leaves1.jpg,NC Duke,Leaf characteristics and shape
+538,Br_rhy_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+539,Br_rhy_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+540,Br_rhy_stembase1.jpg,NC Duke,Stembase characteristics
+541,Br_rhy_tree2.jpg,NC Duke,Tree form
+542,Br_sex_bark3.JPG,NC Duke,Bark characteristics
+543,Br_sex_diag4.jpg,NC Duke,Diagnostic feature
+544,Br_sex_distribW2.jpg,NC Duke,Distribution in the world
+545,Br_sex_flower11.JPG,NC Duke,Flower features
+546,Br_sex_flower7.JPG,NC Duke,Flower features
+547,Br_sex_fruit3.jpg,NC Duke,Fruit or propagule
+548,Br_sex_fruit6B.jpg,NC Duke,Fruit or propagule
+549,Br_sex_ICflower1.jpg,Diana Kleine,Flower icon
+550,Br_sex_ICflower2.jpg,Diana Kleine,Flower icon
+551,Br_sex_ICfruit1.jpg,Diana Kleine,Dispersal icon
+552,Br_sex_ICleaves1.jpg,Diana Kleine,Leaf icon
+553,Br_sex_ICtree1.jpg,Diana Kleine,Tree icon
+554,Br_sex_leaves1.jpg,NC Duke,Leaf characteristics and shape
+555,Br_sex_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+556,Br_sex_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+557,Br_sex_stembase3.jpg,NC Duke,Stembase characteristics
+558,Br_sex_tree5.JPG,NC Duke,Tree form
+559,Br_sex_tree6B.jpg,NC Duke,Tree form
+560,Ca_phi_distribW2.jpg,NC Duke,Distribution in the world
+561,Ca_phi_flower1w.jpg,NC Duke,Flower features
+562,Ca_phi_flower2w.jpg,NC Duke,Flower features
+563,Ca_phi_fruit1.JPG,NC Duke,Fruit or propagule
+564,Ca_phi_fruit3.JPG,NC Duke,Fruit or propagule
+565,Ca_phi_ICflower1.jpg,Diana Kleine,Flower icon
+566,Ca_phi_ICfruit1.jpg,Diana Kleine,Dispersal icon
+567,Ca_phi_ICleaves1.jpg,Diana Kleine,Leaf icon
+568,Ca_phi_ICtree1.jpg,Diana Kleine,Tree icon
+569,Ca_phi_leaves2.JPG,NC Duke,Leaf characteristics and shape
+570,Ca_phi_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+571,Ca_phi_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+572,Ca_phi_stembase3.JPG,NC Duke,Stembase characteristics
+573,Ca_phi_tree1.JPG,NC Duke,Tree form
+574,Ca_sch_distribW2.jpg,NC Duke,Distribution in the world
+575,Ca_sch_flower1.jpg,NC Duke,Flower features
+576,Ca_sch_flower2.JPG,NC Duke,Flower features
+577,Ca_sch_fruit4.jpg,NC Duke,Fruit or propagule
+578,Ca_sch_fruit7B.jpg,NC Duke,Fruit or propagule
+579,Ca_sch_ICflower1.jpg,Diana Kleine,Flower icon
+580,Ca_sch_ICfruit1.jpg,Diana Kleine,Dispersal icon
+581,Ca_sch_ICleaves1.jpg,Diana Kleine,Leaf icon
+582,Ca_sch_ICtree1.jpg,Diana Kleine,Tree icon
+583,Ca_sch_leaves1.jpg,NC Duke,Leaf characteristics and shape
+584,Ca_sch_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+585,Ca_sch_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+586,Ca_sch_stembase1.jpg,NC Duke,Stembase characteristics
+587,Ca_sch_tree1.jpg,NC Duke,Tree form
+588,Ce_aus_bark1.jpg,NC Duke,Bark characteristics
+589,Ce_aus_distribW2.jpg,NC Duke,Distribution in the world
+590,Ce_aus_flower1.jpg,NC Duke,Flower features
+591,Ce_aus_fruit5.jpg,NC Duke,Fruit or propagule
+592,Ce_aus_fruit6.jpg,NC Duke,Fruit or propagule
+593,Ce_aus_fruit7.JPG,NC Duke,Fruit or propagule
+594,Ce_aus_ICflower1.jpg,Diana Kleine,Flower icon
+595,Ce_aus_ICfruit1.jpg,Diana Kleine,Dispersal icon
+596,Ce_aus_ICleaves1.jpg,Diana Kleine,Leaf icon
+597,Ce_aus_ICtree1.jpg,Diana Kleine,Tree icon
+598,Ce_aus_leaves2.jpg,NC Duke,Leaf characteristics and shape
+599,Ce_aus_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+600,Ce_aus_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+601,Ce_aus_stembase1.jpg,NC Duke,Stembase characteristics
+602,Ce_aus_tree4.jpg,NC Duke,Tree form
+603,Ce_dec_distribW2.jpg,NC Duke,Distribution in the world
+604,Ce_dec_flower1.JPG,NC Duke,Flower features
+605,Ce_dec_flower3.JPG,NC Duke,Flower features
+606,Ce_dec_flower6B.jpg,NC Duke,Flower features
+607,Ce_dec_fruit1.JPG,NC Duke,Fruit or propagule
+608,Ce_dec_ICflower1.jpg,Diana Kleine,Flower icon
+609,Ce_dec_ICfruit1.jpg,Diana Kleine,Dispersal icon
+610,Ce_dec_ICleaves1.jpg,Diana Kleine,Leaf icon
+611,Ce_dec_ICtree1.jpg,Diana Kleine,Tree icon
+612,Ce_dec_leaves1.JPG,NC Duke,Leaf characteristics and shape
+613,Ce_dec_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+614,Ce_dec_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+615,Ce_dec_tree1w.jpg,NC Duke,Tree form
+616,Ce_pse_distribW2.jpg,NC Duke,Distribution in the world
+617,Ce_pse_flower2.jpg,NC Duke,Flower features
+618,Ce_pse_flower4.JPG,NC Duke,Flower features
+619,Ce_pse_fruit1.jpg,NC Duke,Fruit or propagule
+620,Ce_pse_fruit3.jpg,NC Duke,Fruit or propagule
+621,Ce_pse_fruit5.jpg,NC Duke,Fruit or propagule
+622,Ce_pse_ICflower1.jpg,Diana Kleine,Flower icon
+623,Ce_pse_ICflower2.jpg,Diana Kleine,Flower icon
+624,Ce_pse_ICfruit1.jpg,Diana Kleine,Dispersal icon
+625,Ce_pse_ICleaves1.jpg,Diana Kleine,Leaf icon
+626,Ce_pse_ICtree1.jpg,Diana Kleine,Tree icon
+627,Ce_pse_leaves1.jpg,NC Duke,Leaf characteristics and shape
+628,Ce_pse_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+629,Ce_pse_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+630,Ce_pse_tree1.jpg,NC Duke,Tree form
+631,Ce_tag_diag2.JPG,NC Duke,Diagnostic feature
+632,Ce_tag_distribW.jpg,NC Duke,Distribution in the world
+633,Ce_tag_flower1.jpg,NC Duke,Flower features
+634,Ce_tag_flower5.JPG,NC Duke,Flower features
+635,Ce_tag_fruit1.jpg,NC Duke,Fruit or propagule
+636,Ce_tag_fruit3.jpg,NC Duke,Fruit or propagule
+637,Ce_tag_fruit8.JPG,NC Duke,Fruit or propagule
+638,Ce_tag_ICflower1.jpg,Diana Kleine,Flower icon
+639,Ce_tag_ICfruit1.jpg,Diana Kleine,Dispersal icon
+640,Ce_tag_ICleaves1.jpg,Diana Kleine,Leaf icon
+641,Ce_tag_ICtree1.jpg,Diana Kleine,Tree icon
+642,Ce_tag_leaves1.jpg,NC Duke,Leaf characteristics and shape
+643,Ce_tag_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+644,Ce_tag_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+645,Ce_tag_stembase2.JPG,NC Duke,Stembase characteristics
+646,Ce_tag_tree1.jpg,NC Duke,Tree form
+647,Ce_zip_bark1.JPG,NC Duke,Bark characteristics
+648,Ce_zip_distribW2.jpg,NC Duke,Distribution in the world
+649,Ce_zip_flower1.JPG,NC Duke,Flower features
+650,Ce_zip_fruit1.JPG,NC Duke,Fruit or propagule
+651,Ce_zip_fruit2.JPG,NC Duke,Fruit or propagule
+652,Ce_zip_ICflower1.jpg,Diana Kleine,Flower icon
+653,Ce_zip_ICfruit1.jpg,Diana Kleine,Dispersal icon
+654,Ce_zip_ICleaves1.jpg,Diana Kleine,Leaf icon
+655,Ce_zip_ICtree1.jpg,Diana Kleine,Tree icon
+656,Ce_zip_leaves1.JPG,NC Duke,Leaf characteristics and shape
+657,Ce_zip_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+658,Ce_zip_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+659,Ce_zip_stembase1.JPG,NC Duke,Stembase characteristics
+660,Ce_zip_tree1.JPG,NC Duke,Tree form
+661,Co_ere_distribW2.jpg,NC Duke,Distribution in the world
+662,Co_ere_flower3.JPG,NC Duke,Flower features
+663,Co_ere_flower4.JPG,NC Duke,Flower features
+664,Co_ere_fruit5.JPG,NC Duke,Fruit or propagule
+665,Co_ere_ICtree1.jpg,Diana Kleine,Tree icon
+666,Co_ere_leaves2.JPG,NC Duke,Leaf characteristics and shape
+667,Co_ere_leaves3.JPG,NC Duke,Leaf characteristics and shape
+668,Co_ere_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+669,Co_ere_tree2.JPG,NC Duke,Tree form
+670,Cr_pat_distribW2.jpg,NC Duke,Distribution in the world
+671,Cr_pat_flower2.JPG,NC Duke,Flower features
+672,Cr_pat_fruit2.JPG,NC Duke,Fruit or propagule
+673,Cr_pat_leaves1.JPG,NC Duke,Leaf characteristics and shape
+674,Cr_pat_leaves2.JPG,NC Duke,Leaf characteristics and shape
+675,Cr_pat_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+676,Cr_pat_stembase1.JPG,NC Duke,Stembase characteristics
+677,Cr_pat_tree1.JPG,NC Duke,Tree form
+678,Cr_pat_tree1.jpg,Diana Kleine,Tree icon
+679,Cr_pat_tree2.JPG,NC Duke,Tree form
+680,Cy_iri_bark1.jpg,NC Duke,Bark characteristics
+681,Cy_iri_distribW2.jpg,NC Duke,Distribution in the world
+682,Cy_iri_flower2.jpg,NC Duke,Flower features
+683,Cy_iri_fruit4.jpg,NC Duke,Fruit or propagule
+684,Cy_iri_fruit6.JPG,NC Duke,Fruit or propagule
+685,Cy_iri_ICflower1.jpg,Diana Kleine,Flower icon
+686,Cy_iri_ICfruit1.jpg,Diana Kleine,Dispersal icon
+687,Cy_iri_ICleaves1.jpg,Diana Kleine,Leaf icon
+688,Cy_iri_ICtree1.jpg,Diana Kleine,Tree icon
+689,Cy_iri_leaves2.jpg,NC Duke,Leaf characteristics and shape
+690,Cy_iri_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+691,Cy_iri_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+692,Cy_iri_stembase1.jpg,NC Duke,Stembase characteristics
+693,Cy_iri_tree1.jpg,NC Duke,Tree form
+694,Di_lit_bark1.jpg,NC Duke,Bark characteristics
+695,Di_lit_bark6B.jpg,NC Duke,Bark characteristics
+696,Di_lit_distribW2.jpg,NC Duke,Distribution in the world
+697,Di_lit_flower4.jpg,NC Duke,Flower features
+698,Di_lit_fruit2.jpg,NC Duke,Fruit or propagule
+699,Di_lit_fruit3.jpg,NC Duke,Fruit or propagule
+700,Di_lit_ICflower1.jpg,Diana Kleine,Flower icon
+701,Di_lit_ICflower2.jpg,Diana Kleine,Flower icon
+702,Di_lit_ICfruit1.jpg,Diana Kleine,Dispersal icon
+703,Di_lit_ICleaves1.jpg,Diana Kleine,Leaf icon
+704,Di_lit_ICtree1.jpg,Diana Kleine,Tree icon
+705,Di_lit_leaves1.jpg,NC Duke,Leaf characteristics and shape
+706,Di_lit_leaves3.jpg,NC Duke,Leaf characteristics and shape
+707,Di_lit_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+708,Di_lit_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+709,Di_lit_tree1.jpg,NC Duke,Tree form
+710,Do_spa_bark1.jpg,NC Duke,Bark characteristics
+711,Do_spa_distribW2.jpg,NC Duke,Distribution in the world
+712,Do_spa_flower1.jpg,NC Duke,Flower features
+713,Do_spa_flower4.JPG,NC Duke,Flower features
+714,Do_spa_fruit1.JPG,NC Duke,Fruit or propagule
+715,Do_spa_fruit3.JPG,NC Duke,Fruit or propagule
+716,Do_spa_ICflower1.jpg,Diana Kleine,Flower icon
+717,Do_spa_ICflower2.jpg,Diana Kleine,Flower icon
+718,Do_spa_ICfruit1.jpg,Diana Kleine,Dispersal icon
+719,Do_spa_ICleaves1.jpg,Diana Kleine,Leaf icon
+720,Do_spa_ICtree1.jpg,Diana Kleine,Tree icon
+721,Do_spa_leaves3.JPG,NC Duke,Leaf characteristics and shape
+722,Do_spa_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+723,Do_spa_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+724,Do_spa_tree1.jpg,NC Duke,Tree form
+725,Do_spa_tree6B.jpg,NC Duke,Tree form
+726,Ex_aga_AusNRM1.jpg,NC Duke,Distribution in Australia
+727,Ex_aga_bark1.jpg,NC Duke,Bark characteristics
+728,Ex_aga_diag1.jpg,NC Duke,Diagnostic feature
+729,Ex_aga_diag273.jpg,NC Duke,Diagnostic feature
+730,Ex_aga_distrib2.jpg,NC Duke,Distribution in the world
+731,Ex_aga_estuar1.jpg,Diana Kleine,Estuarine occurrence
+732,Ex_aga_flower1.jpg,NC Duke,Flower features
+733,Ex_aga_flower2.jpg,NC Duke,Flower features
+734,Ex_aga_fruit1.jpg,NC Duke,Fruit or propagule
+735,Ex_aga_fruit2.jpg,NC Duke,Fruit or propagule
+736,Ex_aga_ICflowerF.jpg,Diana Kleine,Flower icon
+737,Ex_aga_ICflowerM.jpg,Diana Kleine,Flower icon
+738,Ex_aga_ICfruit1.jpg,Diana Kleine,Dispersal icon
+739,Ex_aga_ICleaves1.jpg,Diana Kleine,Leaf icon
+740,Ex_aga_ICtree1.jpg,Diana Kleine,Tree icon
+741,Ex_aga_leaves1.jpg,NC Duke,Leaf characteristics and shape
+742,Ex_aga_leaves2.jpg,NC Duke,Leaf characteristics and shape
+743,Ex_aga_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+744,Ex_aga_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+745,Ex_aga_stembase1.jpg,NC Duke,Stembase characteristics
+746,Ex_aga_tree1.jpg,NC Duke,Tree form
+747,Ex_aga_tree6A.jpg,NC Duke,Tree form
+748,Ex_aga_zone1.jpg,Diana Kleine,Intertidal zone position
+749,Ex_aga-aga_bark2.jpg,NC Duke,Bark characteristics
+750,Ex_aga-aga_bark3.jpg,NC Duke,Bark characteristics
+751,Ex_aga-aga_diag2.jpg,NC Duke,Diagnostic feature
+752,Ex_aga-aga_distribW2.jpg,NC Duke,Distribution in the world
+753,Ex_aga-aga_flowerF5.jpg,NC Duke,Flower features
+754,Ex_aga-aga_flowerM3.jpg,NC Duke,Flower features
+755,Ex_aga-aga_fruit2.JPG,NC Duke,Fruit or propagule
+756,Ex_aga-aga_fruit3.JPG,NC Duke,Fruit or propagule
+757,Ex_aga-aga_ICflowerF.jpg,Diana Kleine,Flower icon
+758,Ex_aga-aga_ICfruit1.jpg,Diana Kleine,Dispersal icon
+759,Ex_aga-aga_ICleaves1.jpg,Diana Kleine,Leaf icon
+760,Ex_aga-aga_ICtree1.jpg,Diana Kleine,Tree icon
+761,Ex_aga-aga_leaves2.JPG,NC Duke,Leaf characteristics and shape
+762,Ex_aga-aga_leaves7.jpg,NC Duke,Leaf characteristics and shape
+763,Ex_aga-aga_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+764,Ex_aga-aga_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+765,Ex_aga-aga_tree6B.jpg,NC Duke,Tree form
+766,Ex_aga-ova_diag21.JPG,NC Duke,Diagnostic feature
+767,Ex_aga-ova_distribW2.jpg,NC Duke,Distribution in the world
+768,Ex_aga-ova_fruit1.jpg,NC Duke,Fruit or propagule
+769,Ex_aga-ova_ICflowerF.jpg,Diana Kleine,Flower icon
+770,Ex_aga-ova_ICfruit1.jpg,Diana Kleine,Dispersal icon
+771,Ex_aga-ova_ICleaves1.jpg,Diana Kleine,Leaf icon
+772,Ex_aga-ova_ICtree1.jpg,Diana Kleine,Tree icon
+773,Ex_aga-ova_leaves1.jpg,NC Duke,Leaf characteristics and shape
+774,Ex_aga-ova_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+775,Ex_aga-ova_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+776,Ex_aga-ova_tree1.jpg,NC Duke,Tree form
+777,Ex_ind_bark1a.jpg,NC Duke,Bark characteristics
+778,Ex_ind_distribW2B.jpg,NC Duke,Distribution in the world
+779,Ex_ind_flower1a.jpg,NC Duke,Flower features
+780,Ex_ind_flower2a.jpg,NC Duke,Flower features
+781,Ex_ind_fruit1a.jpg,NC Duke,Fruit or propagule
+782,Ex_ind_fruit2.JPG,NC Duke,Fruit or propagule
+783,Ex_ind_fruit3w.jpg,NC Duke,Fruit or propagule
+784,Ex_ind_ICtree1.jpg,Diana Kleine,Tree icon
+785,Ex_ind_leaves1a.jpg,NC Duke,Leaf characteristics and shape
+786,Ex_ind_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+787,Ex_ind_tree1a.jpg,NC Duke,Tree form
+788,He_fom_distribW2.jpg,NC Duke,Distribution in the world
+789,He_fom_flower1.jpg,NC Duke,Flower features
+790,He_fom_flower2.jpg,NC Duke,Flower features
+791,He_fom_flower6A.jpg,NC Duke,Flower features
+792,He_fom_fruit1.jpg,NC Duke,Fruit or propagule
+793,He_fom_fruit6A.jpg,NC Duke,Fruit or propagule
+794,He_fom_ICflower1.jpg,Diana Kleine,Flower icon
+795,He_fom_ICfruit1.jpg,Diana Kleine,Dispersal icon
+796,He_fom_ICleaves1.jpg,Diana Kleine,Leaf icon
+797,He_fom_ICtree1.jpg,Diana Kleine,Tree icon
+798,He_fom_leaves1.jpg,NC Duke,Leaf characteristics and shape
+799,He_fom_leaves2.jpg,NC Duke,Leaf characteristics and shape
+800,He_fom_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+801,He_fom_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+802,He_fom_stembase3.jpg,NC Duke,Stembase characteristics
+803,He_fom_tree2.jpg,NC Duke,Tree form
+804,He_glo_distribW2.jpg,NC Duke,Distribution in the world
+805,He_glo_ICflower1.jpg,Diana Kleine,Flower icon
+806,He_glo_ICfruit1.jpg,Diana Kleine,Dispersal icon
+807,He_glo_ICleaves1.jpg,Diana Kleine,Leaf icon
+808,He_glo_ICtree1.jpg,Diana Kleine,Tree icon
+809,He_glo_leaves1w.jpg,NC Duke,Leaf characteristics and shape
+810,He_glo_leaves2w.jpg,NC Duke,Leaf characteristics and shape
+811,He_glo_siloBC.jpg,Deirdre Bean,Silohuette of growth habit
+812,He_lit_bark2.jpg,NC Duke,Bark characteristics
+813,He_lit_distribW2.jpg,NC Duke,Distribution in the world
+814,He_lit_flower1.JPG,NC Duke,Flower features
+815,He_lit_flower4.JPG,NC Duke,Flower features
+816,He_lit_fruit2.jpg,NC Duke,Fruit or propagule
+817,He_lit_fruit3.JPG,NC Duke,Fruit or propagule
+818,He_lit_fruit5.jpg,NC Duke,Fruit or propagule
+819,He_lit_ICflower1.jpg,Diana Kleine,Flower icon
+820,He_lit_ICflower2.jpg,Diana Kleine,Flower icon
+821,He_lit_ICfruit1.jpg,Diana Kleine,Dispersal icon
+822,He_lit_ICleaves1.jpg,Diana Kleine,Leaf icon
+823,He_lit_ICtree1.jpg,Diana Kleine,Tree icon
+824,He_lit_leaves1.JPG,NC Duke,Leaf characteristics and shape
+825,He_lit_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+826,He_lit_siloB.jpg,NC Duke,Silohuette of growth habit
+827,He_lit_stembase3.jpg,NC Duke,Stembase characteristics
+828,He_lit_stembase6A.jpg,NC Duke,Stembase characteristics
+829,He_lit_tree3.jpg,NC Duke,Tree form
+830,He_lit_tree6A.jpg,NC Duke,Tree form
+831,Hp_man_ICtree1.jpg,Diana Kleine,Tree icon
+832,Hi_til_bark1.JPG,NC Duke,Bark characteristics
+833,Hi_til_distribW2.jpg,NC Duke,Distribution in the world
+834,Hi_til_flower1.JPG,NC Duke,Flower features
+835,Hi_til_flower2.JPG,NC Duke,Flower features
+836,Hi_til_flower4.JPG,NC Duke,Flower features
+837,Hi_til_fruit4.JPG,NC Duke,Fruit or propagule
+838,Hi_til_ICtree1.jpg,Diana Kleine,Tree icon
+839,Hi_til_leaves3.JPG,NC Duke,Leaf characteristics and shape
+840,Hi_til_siloCB.jpg,NC Duke,Silohuette of growth habit
+841,Hi_til_stembase1.JPG,NC Duke,Stembase characteristics
+842,Hi_til_tree3.JPG,NC Duke,Tree form
+843,Hp_man_diag1w.jpg,NC Duke,Diagnostic feature
+844,Hp_man_distribW2.jpg,NC Duke,Distribution in the world
+845,Hp_man_flower1w.jpg,NC Duke,Flower features
+846,Hp_man_flower2w.jpg,NC Duke,Flower features
+847,Hp_man_fruit1w.JPG,NC Duke,Fruit or propagule
+848,Hp_man_leaves2w.jpg,NC Duke,Leaf characteristics and shape
+849,Hp_man_siloCB.jpg,NC Duke,Silohuette of growth habit
+850,Hp_man_stembase1w.jpg,NC Duke,Stembase characteristics
+851,Hp_man_tree1w.jpg,NC Duke,Tree form
+852,In_fag_bark1.JPG,NC Duke,Bark characteristics
+853,In_fag_distribW2.jpg,NC Duke,Distribution in the world
+854,In_fag_fruit1.JPG,NC Duke,Fruit or propagule
+855,In_fag_fruit2.JPG,NC Duke,Fruit or propagule
+856,In_fag_leaves3.JPG,NC Duke,Leaf characteristics and shape
+857,In_fag_leaves6.JPG,NC Duke,Leaf characteristics and shape
+858,In_fag_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+859,In_fag_stembase1.JPG,NC Duke,Stembase characteristics
+860,In_fag_tree1.JPG,NC Duke,Tree form
+861,In_fag_tree1.jpg,Diana Kleine,Tree icon
+862,Ka_can_distribW2.jpg,NC Duke,Distribution in the world
+863,Ka_can_flower1.jpg,NC Duke,Flower features
+864,Ka_can_flower3.jpg,NC Duke,Flower features
+865,Ka_can_fruit1.jpg,NC Duke,Fruit or propagule
+866,Ka_can_fruit2.jpg,NC Duke,Fruit or propagule
+867,Ka_can_ICtree1.jpg,Diana Kleine,Tree icon
+868,Ka_can_leaves2.jpg,NC Duke,Leaf characteristics and shape
+869,Ka_can_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+870,Ka_can_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+871,Ka_can_tree2.jpg,NC Duke,Tree form
+872,Ka_obo_bark1.JPG,NC Duke,Bark characteristics
+873,Ka_obo_distribW2.jpg,NC Duke,Distribution in the world
+874,Ka_obo_flower1.JPG,NC Duke,Flower features
+875,Ka_obo_flower2.JPG,NC Duke,Flower features
+876,Ka_obo_fruit1.JPG,NC Duke,Fruit or propagule
+877,Ka_obo_fruit2.JPG,NC Duke,Fruit or propagule
+878,Ka_obo_ICtree1.jpg,Diana Kleine,Tree icon
+879,Ka_obo_leaves2.JPG,NC Duke,Leaf characteristics and shape
+880,Ka_obo_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+881,Ka_obo_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+882,Ka_obo_stembase1.JPG,NC Duke,Stembase characteristics
+883,Ka_obo_tree2.JPG,NC Duke,Tree form
+884,La_rac_bark1.JPG,NC Duke,Bark characteristics
+885,La_rac_distribW2.jpg,NC Duke,Distribution in the world
+886,La_rac_flower1.JPG,NC Duke,Flower features
+887,La_rac_flower3.JPG,NC Duke,Flower features
+888,La_rac_flower6A.jpg,NC Duke,Flower features
+889,La_rac_fruit2.JPG,NC Duke,Fruit or propagule
+890,La_rac_fruit5.JPG,NC Duke,Fruit or propagule
+891,La_rac_ICtree1.jpg,Diana Kleine,Tree icon
+892,La_rac_leaves6.JPG,NC Duke,Leaf characteristics and shape
+893,La_rac_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+894,La_rac_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+895,La_rac_stembase5.JPG,NC Duke,Stembase characteristics
+896,La_rac_tree8.JPG,NC Duke,Tree form
+897,La_rac_tree9.JPG,NC Duke,Tree form
+898,Ln_pat_bark1.jpg,NC Duke,Bark characteristics
+899,Ln_pat_distribW1.jpg,NC Duke,Distribution in the world
+900,Ln_pat_flower1.jpg,NC Duke,Flower features
+901,Ln_pat_fruit1.jpg,NC Duke,Fruit or propagule
+902,Ln_pat_fruit2.jpg,NC Duke,Fruit or propagule
+903,Ln_pat_ICtree1.jpg,Diana Kleine,Tree icon
+904,Ln_pat_leaves1.jpg,NC Duke,Leaf characteristics and shape
+905,Ln_pat_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+906,Ln_pat_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+907,Ln_pat_stembase1.jpg,NC Duke,Stembase characteristics
+908,Ln_pat_tree1.jpg,NC Duke,Tree form
+909,Lo_mon_distribW2.jpg,NC Duke,Distribution in the world
+910,Lo_mon_flower1w.jpg,NC Duke,Flower features
+911,Lo_mon_fruit1.JPG,NC Duke,Fruit or propagule
+912,Lo_mon_ICtree1.jpg,Diana Kleine,Tree icon
+913,Lo_mon_leaves1.JPG,NC Duke,Leaf characteristics and shape
+914,Lo_mon_leaves4.JPG,NC Duke,Leaf characteristics and shape
+915,Lo_mon_siloB2.jpg,Deirdre Bean,Silohuette of growth habit
+916,Lo_mon_stembase1.JPG,NC Duke,Stembase characteristics
+917,Lo_mon_tree2.JPG,NC Duke,Tree form
+918,Lu_lit_bark2.jpg,NC Duke,Bark characteristics
+919,Lu_lit_distribW2.jpg,NC Duke,Distribution in the world
+920,Lu_lit_flower1.JPG,NC Duke,Flower features
+921,Lu_lit_flower2.JPG,NC Duke,Flower features
+922,Lu_lit_flower5.jpg,NC Duke,Flower features
+923,Lu_lit_fruit2.jpg,NC Duke,Fruit or propagule
+924,Lu_lit_fruit3.jpg,NC Duke,Fruit or propagule
+925,Lu_lit_ICflower1.jpg,Diana Kleine,Flower icon
+926,Lu_lit_ICflower2.jpg,Diana Kleine,Flower icon
+927,Lu_lit_ICfruit10.jpg,Diana Kleine,Dispersal icon
+928,Lu_lit_ICleaves1.jpg,Diana Kleine,Leaf icon
+929,Lu_lit_ICtree1.jpg,Diana Kleine,Tree icon
+930,Lu_lit_leaves1.JPG,NC Duke,Leaf characteristics and shape
+931,Lu_lit_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+932,Lu_lit_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+933,Lu_lit_stembase1.JPG,NC Duke,Stembase characteristics
+934,Lu_lit_tree1.JPG,NC Duke,Tree form
+935,Lu_lit_tree4.jpg,NC Duke,Tree form
+936,Lu_rac_bark3.jpg,NC Duke,Bark characteristics
+937,Lu_rac_distribW2.jpg,NC Duke,Distribution in the world
+938,Lu_rac_flower2.JPG,NC Duke,Flower features
+939,Lu_rac_flower3.jpg,NC Duke,Flower features
+940,Lu_rac_flower9.jpg,NC Duke,Flower features
+941,Lu_rac_fruit1.JPG,NC Duke,Fruit or propagule
+942,Lu_rac_fruit3.JPG,NC Duke,Fruit or propagule
+943,Lu_rac_ICflower10.jpg,Diana Kleine,Flower icon
+944,Lu_rac_ICflower22.jpg,Diana Kleine,Flower icon
+945,Lu_rac_ICfruit10.jpg,Diana Kleine,Dispersal icon
+946,Lu_rac_ICleaves1.jpg,Diana Kleine,Leaf icon
+947,Lu_rac_ICtree1.jpg,Diana Kleine,Tree icon
+948,Lu_rac_leaves1.JPG,NC Duke,Leaf characteristics and shape
+949,Lu_rac_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+950,Lu_rac_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+951,Lu_rac_stembase1.JPG,NC Duke,Stembase characteristics
+952,Lu_rac_tree2.jpg,NC Duke,Tree form
+953,Lu_ros_bark2.jpg,NC Duke,Bark characteristics
+954,Lu_ros_distribW2.jpg,NC Duke,Distribution in the world
+955,Lu_ros_flower10.jpg,NC Duke,Flower features
+956,Lu_ros_flower9.jpg,NC Duke,Flower features
+957,Lu_ros_fruit2.jpg,NC Duke,Fruit or propagule
+958,Lu_ros_ICflower1.jpg,Diana Kleine,Flower icon
+959,Lu_ros_ICflower2.jpg,Diana Kleine,Flower icon
+960,Lu_ros_ICfruit1.jpg,Diana Kleine,Dispersal icon
+961,Lu_ros_ICleaves1.jpg,Diana Kleine,Leaf icon
+962,Lu_ros_ICtree1.jpg,Diana Kleine,Tree icon
+963,Lu_ros_leaves3.jpg,NC Duke,Leaf characteristics and shape
+964,Lu_ros_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+965,Lu_ros_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+966,Lu_ros_stembase1.jpg,NC Duke,Stembase characteristics
+967,Lu_ros_tree3.jpg,NC Duke,Tree form
+968,Lu_ros_tree4.jpg,NC Duke,Tree form
+969,Mo_ole_bark1w.jpg,NC Duke,Bark characteristics
+970,Mo_ole_distribW2.jpg,NC Duke,Distribution in the world
+971,Mo_ole_flower1w.jpg,NC Duke,Flower features
+972,Mo_ole_flower3w.jpg,NC Duke,Flower features
+973,Mo_ole_fruit3w.jpg,NC Duke,Fruit or propagule
+974,Mo_ole_fruit4.jpg,NC Duke,Fruit or propagule
+975,Mo_ole_ICtree1.jpg,Diana Kleine,Tree icon
+976,Mo_ole_leaves3w.jpg,NC Duke,Leaf characteristics and shape
+977,Mo_ole_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+978,Mo_ole_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+979,Mo_ole_stembase2w.jpg,NC Duke,Stembase characteristics
+980,Mo_ole_stembase3.jpg,NC Duke,Stembase characteristics
+981,Mo_ole_tree1w.jpg,NC Duke,Tree form
+982,Ny_fru_distribW2.jpg,NC Duke,Distribution in the world
+983,Ny_fru_flower2.JPG,NC Duke,Flower features
+984,Ny_fru_flower4.jpg,NC Duke,Flower features
+985,Ny_fru_fruit2.JPG,NC Duke,Fruit or propagule
+986,Ny_fru_fruit3.JPG,NC Duke,Fruit or propagule
+987,Ny_fru_fruit4.jpg,NC Duke,Fruit or propagule
+988,Ny_fru_ICflowerF.jpg,Diana Kleine,Flower icon
+989,Ny_fru_ICflowerM.jpg,Diana Kleine,Flower icon
+990,Ny_fru_ICfruit1.jpg,Diana Kleine,Dispersal icon
+991,Ny_fru_ICfruit2.jpg,Diana Kleine,Dispersal icon
+992,Ny_fru_ICleaves1.jpg,Diana Kleine,Leaf icon
+993,Ny_fru_ICtree1.jpg,Diana Kleine,Tree icon
+994,Ny_fru_leaves3.jpg,NC Duke,Leaf characteristics and shape
+995,Ny_fru_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+996,Ny_fru_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+997,Ny_fru_stembase2.jpg,NC Duke,Stembase characteristics
+998,Ny_fru_tree1.JPG,NC Duke,Tree form
+999,Os_oct_bark1.jpg,NC Duke,Bark characteristics
+1000,Os_oct_distribW2.jpg,NC Duke,Distribution in the world
+1001,Os_oct_flower1.JPG,NC Duke,Flower features
+1002,Os_oct_flower6A.jpg,NC Duke,Flower features
+1003,Os_oct_fruit1.JPG,NC Duke,Fruit or propagule
+1004,Os_oct_fruit2.jpg,NC Duke,Fruit or propagule
+1005,Os_oct_fruit6A.jpg,NC Duke,Fruit or propagule
+1006,Os_oct_ICflower1.jpg,Diana Kleine,Flower icon
+1007,Os_oct_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1008,Os_oct_ICleaves1.jpg,Diana Kleine,Leaf icon
+1009,Os_oct_ICtree1.jpg,Diana Kleine,Tree icon
+1010,Os_oct_leaves3.jpg,NC Duke,Leaf characteristics and shape
+1011,Os_oct_leaves6A.jpg,NC Duke,Leaf characteristics and shape
+1012,Os_oct_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1013,Os_oct_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1014,Os_oct_tree3.jpg,NC Duke,Tree form
+1015,Os_oct_tree4.jpg,NC Duke,Tree form
+1016,Os_oct_tree6B.jpg,NC Duke,Tree form
+1017,Pa_rhi_distribW2.jpg,NC Duke,Distribution in the world
+1018,Pa_rhi_fruit1w.jpg,NC Duke,Fruit or propagule
+1019,Pa_rhi_ICtree1.jpg,Diana Kleine,Tree icon
+1020,Pa_rhi_leaves1w.jpg,NC Duke,Leaf characteristics and shape
+1021,Pa_rhi_leaves2w.jpg,NC Duke,Leaf characteristics and shape
+1022,Pa_rhi_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1023,Pa_spi_distribW2.jpg,NC Duke,Distribution in the world
+1024,Pa_spi_flower2.JPG,NC Duke,Flower features
+1025,Pa_spi_flower3.JPG,NC Duke,Flower features
+1026,Pa_spi_fruit1.JPG,NC Duke,Fruit or propagule
+1027,Pa_spi_fruit3.JPG,NC Duke,Fruit or propagule
+1028,Pa_spi_ICtree1.jpg,Diana Kleine,Tree icon
+1029,Pa_spi_leaves1.JPG,NC Duke,Leaf characteristics and shape
+1030,Pa_spi_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1031,Pa_spi_tree1.JPG,NC Duke,Tree form
+1032,Pa_spi_tree3.JPG,NC Duke,Tree form
+1033,Pe_ben_bark1.JPG,NC Duke,Bark characteristics
+1034,Pe_ben_distrib2.jpg,NC Duke,Distribution in the world
+1035,Pe_ben_estuar1.jpg,Diana Kleine,Estuarine occurrence
+1036,Pe_ben_flower1.jpg,NC Duke,Flower features
+1037,Pe_ben_flower2.jpg,NC Duke,Flower features
+1038,Pe_ben_fruit11.JPG,NC Duke,Fruit or propagule
+1039,Pe_ben_fruit3.JPG,NC Duke,Fruit or propagule
+1040,Pe_ben_fruit6B.jpg,NC Duke,Fruit or propagule
+1041,Pe_ben_ICtree1.jpg,Diana Kleine,Tree icon
+1042,Pe_ben_leaves2.JPG,NC Duke,Leaf characteristics and shape
+1043,Pe_ben_leaves4.JPG,NC Duke,Leaf characteristics and shape
+1044,Pe_ben_leaves6.jpg,NC Duke,Leaf characteristics and shape
+1045,Pe_ben_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1046,Pe_ben_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+1047,Pe_ben_stembase2.jpg,NC Duke,Stembase characteristics
+1048,Pe_ben_tree1.JPG,NC Duke,Tree form
+1049,Pe_ben_zone1.jpg,Diana Kleine,Intertidal zone position
+1050,Pe_rhi_bark1.JPG,NC Duke,Bark characteristics
+1051,Pe_rhi_distrib3.jpg,NC Duke,Distribution in the world
+1052,Pe_rhi_estuar1.jpg,Diana Kleine,Estuarine occurrence
+1053,Pe_rhi_flower1.JPG,NC Duke,Flower features
+1054,Pe_rhi_flower2.JPG,NC Duke,Flower features
+1055,Pe_rhi_flower3.JPG,NC Duke,Flower features
+1056,Pe_rhi_fruit1.jpg,NC Duke,Fruit or propagule
+1057,Pe_rhi_fruit2.jpg,NC Duke,Fruit or propagule
+1058,Pe_rhi_ICtree1.jpg,Diana Kleine,Tree icon
+1059,Pe_rhi_leaves1.JPG,NC Duke,Leaf characteristics and shape
+1060,Pe_rhi_leaves2.JPG,NC Duke,Leaf characteristics and shape
+1061,Pe_rhi_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1062,Pe_rhi_siloCB1.jpg,Deirdre Bean,Silohuette of growth habit
+1063,Pe_rhi_stembase1.jpg,NC Duke,Stembase characteristics
+1064,Pe_rhi_stembase2.jpg,NC Duke,Stembase characteristics
+1065,Pe_rhi_stembase3.jpg,NC Duke,Stembase characteristics
+1066,Pe_rhi_stembase4.jpg,NC Duke,Stembase characteristics
+1067,Pe_rhi_tree1.JPG,NC Duke,Tree form
+1068,Pe_rhi_tree2.JPG,NC Duke,Tree form
+1069,Pe_rhi_zone1.jpg,Diana Kleine,Intertidal zone position
+1070,Ph_pal_bark1.JPG,NC Duke,Bark characteristics
+1071,Ph_pal_distribW2.jpg,NC Duke,Distribution in the world
+1072,Ph_pal_fruit1w.jpg,NC Duke,Fruit or propagule
+1073,Ph_pal_ICtree1.jpg,Diana Kleine,Tree icon
+1074,Ph_pal_leaves1.JPG,NC Duke,Leaf characteristics and shape
+1075,Ph_pal_leaves2.JPG,NC Duke,Leaf characteristics and shape
+1076,Ph_pal_siloBC.jpg,Deirdre Bean,Silohuette of growth habit
+1077,Ph_pal_stembase2.JPG,NC Duke,Stembase characteristics
+1078,Ph_pal_stembase3.JPG,NC Duke,Stembase characteristics
+1079,Ph_pal_tree2.JPG,NC Duke,Tree form
+1080,Ph_pal_tree4.JPG,NC Duke,Tree form
+1081,Pm_aci_bark1.jpg,NC Duke,Bark characteristics
+1082,Pm_aci_distribW2.jpg,NC Duke,Distribution in the world
+1083,Pm_aci_flower2.jpg,NC Duke,Flower features
+1084,Pm_aci_flower4.JPG,NC Duke,Flower features
+1085,Pm_aci_fruit2.jpg,NC Duke,Fruit or propagule
+1086,Pm_aci_ICflower1.jpg,Diana Kleine,Flower icon
+1087,Pm_aci_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1088,Pm_aci_ICleaves1.jpg,Diana Kleine,Leaf icon
+1089,Pm_aci_ICtree1.jpg,Diana Kleine,Tree icon
+1090,Pm_aci_leaves1.jpg,NC Duke,Leaf characteristics and shape
+1091,Pm_aci_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1092,Pm_aci_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1093,Pm_aci_stembase1.jpg,NC Duke,Stembase characteristics
+1094,Pm_aci_tree1.jpg,NC Duke,Tree form
+1095,Pm_aci_tree6A.jpg,NC Duke,Tree form
+1096,Pm_aci_tree7B.jpg,NC Duke,Tree form
+1097,Pt_off_bark1.JPG,NC Duke,Bark characteristics
+1098,Pt_off_distribW2.jpg,NC Duke,Distribution in the world
+1099,Pt_off_flower1w.jpg,NC Duke,Flower features
+1100,Pt_off_flower2w.jpg,NC Duke,Flower features
+1101,Pt_off_fruit1w.jpg,NC Duke,Fruit or propagule
+1102,Pt_off_ICtree1.jpg,Diana Kleine,Tree icon
+1103,Pt_off_leaves2w.jpg,NC Duke,Leaf characteristics and shape
+1104,Pt_off_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1105,Pt_off_stembase1w.jpg,NC Duke,Stembase characteristics
+1106,Pt_off_stembase4.JPG,NC Duke,Stembase characteristics
+1107,Pt_off_tree2.JPG,NC Duke,Tree form
+1108,Pt_off_tree3.JPG,NC Duke,Tree form
+1109,Pt_off_tree6A.jpg,NC Duke,Tree form
+1110,Rh_ann_diag26B.jpg,NC Duke,Diagnostic feature
+1111,Rh_ann_diag6B.jpg,NC Duke,Diagnostic feature
+1112,Rh_ann_distribW2.jpg,NC Duke,Distribution in the world
+1113,Rh_ann_flower2.JPG,NC Duke,Flower features
+1114,Rh_ann_flower3.JPG,NC Duke,Flower features
+1115,Rh_ann_fruit1.JPG,NC Duke,Fruit or propagule
+1116,Rh_ann_ICflower1.jpg,Diana Kleine,Flower icon
+1117,Rh_ann_ICflower2.jpg,Diana Kleine,Flower icon
+1118,Rh_ann_ICleaves1.jpg,Diana Kleine,Leaf icon
+1119,Rh_ann_ICtree1.jpg,Diana Kleine,Tree icon
+1120,Rh_ann_leaves1.JPG,NC Duke,Leaf characteristics and shape
+1121,Rh_ann_leaves2.JPG,NC Duke,Leaf characteristics and shape
+1122,Rh_ann_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1123,Rh_ann_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1124,Rh_ann_stembase1.JPG,NC Duke,Stembase characteristics
+1125,Rh_ann_tree1.JPG,NC Duke,Tree form
+1126,Rh_api_bark2.jpg,NC Duke,Bark characteristics
+1127,Rh_api_diag1.jpg,NC Duke,Diagnostic feature
+1128,Rh_api_diag17.JPG,NC Duke,Diagnostic feature
+1129,Rh_api_distrib2.jpg,NC Duke,Distribution in the world
+1130,Rh_api_flower1.JPG,NC Duke,Flower features
+1131,Rh_api_flower6.jpg,NC Duke,Flower features
+1132,Rh_api_fruit2.JPG,NC Duke,Fruit or propagule
+1133,Rh_api_ICflower1.jpg,Diana Kleine,Flower icon
+1134,Rh_api_ICflower2.jpg,Diana Kleine,Flower icon
+1135,Rh_api_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1136,Rh_api_ICleaves1.jpg,Diana Kleine,Leaf icon
+1137,Rh_api_ICtree1.jpg,Diana Kleine,Tree icon
+1138,Rh_api_leaves3.jpg,NC Duke,Leaf characteristics and shape
+1139,Rh_api_leaves4.JPG,NC Duke,Leaf characteristics and shape
+1140,Rh_api_leaves6.JPG,NC Duke,Leaf characteristics and shape
+1141,Rh_api_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1142,Rh_api_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1143,Rh_api_stembase3.jpg,NC Duke,Stembase characteristics
+1144,Rh_api_tree5.JPG,NC Duke,Tree form
+1145,Rh_bre_diag6A.jpg,NC Duke,Diagnostic feature
+1146,Rh_bre_diag6C.jpg,NC Duke,Diagnostic feature
+1147,Rh_bre_distribW2.jpg,NC Duke,Distribution in the world
+1148,Rh_bre_flower1.JPG,NC Duke,Flower features
+1149,Rh_bre_flower3.JPG,NC Duke,Flower features
+1150,Rh_bre_flower6A.jpg,NC Duke,Flower features
+1151,Rh_bre_flower7A.jpg,NC Duke,Flower features
+1152,Rh_bre_ICtree1.jpg,Diana Kleine,Tree icon
+1153,Rh_bre_leaves1.JPG,NC Duke,Leaf characteristics and shape
+1154,Rh_bre_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1155,Rh_bre_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1156,Rh_har_diag6A.jpg,NC Duke,Diagnostic feature
+1157,Rh_har_diag7A.jpg,NC Duke,Diagnostic feature
+1158,Rh_har_distribW2.jpg,NC Duke,Distribution in the world
+1159,Rh_har_flower1.JPG,NC Duke,Flower features
+1160,Rh_har_flower2.jpg,NC Duke,Flower features
+1161,Rh_har_flower6A.jpg,NC Duke,Flower features
+1162,Rh_har_fruit6B.jpg,NC Duke,Fruit or propagule
+1163,Rh_har_ICtree1.jpg,Diana Kleine,Tree icon
+1164,Rh_har_leaves1.JPG,NC Duke,Leaf characteristics and shape
+1165,Rh_har_leaves2.JPG,NC Duke,Leaf characteristics and shape
+1166,Rh_har_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1167,Rh_har_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1168,Rh_har_tree1.JPG,NC Duke,Tree form
+1169,Rh_har_tree6A.jpg,NC Duke,Tree form
+1170,Rh_lam_bark2.jpg,NC Duke,Bark characteristics
+1171,Rh_lam_diag1.JPG,NC Duke,Diagnostic feature
+1172,Rh_lam_diag11.JPG,NC Duke,Diagnostic feature
+1173,Rh_lam_distribW2.jpg,NC Duke,Distribution in the world
+1174,Rh_lam_flower1.jpg,NC Duke,Flower features
+1175,Rh_lam_flower2.JPG,NC Duke,Flower features
+1176,Rh_lam_flower21.jpg,NC Duke,Flower features
+1177,Rh_lam_flower3.JPG,NC Duke,Flower features
+1178,Rh_lam_ICflower1.jpg,Diana Kleine,Flower icon
+1179,Rh_lam_ICflower2.jpg,Diana Kleine,Flower icon
+1180,Rh_lam_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1181,Rh_lam_ICleaves1.jpg,Diana Kleine,Leaf icon
+1182,Rh_lam_ICtree1.jpg,Diana Kleine,Tree icon
+1183,Rh_lam_leaves11.jpg,NC Duke,Leaf characteristics and shape
+1184,Rh_lam_leaves4.JPG,NC Duke,Leaf characteristics and shape
+1185,Rh_lam_leaves7.JPG,NC Duke,Leaf characteristics and shape
+1186,Rh_lam_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1187,Rh_lam_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1188,Rh_lam_tree1.JPG,NC Duke,Tree form
+1189,Rh_man_bark5.JPG,NC Duke,Bark characteristics
+1190,Rh_man_diag24.JPG,NC Duke,Diagnostic feature
+1191,Rh_man_diag6.JPG,NC Duke,Diagnostic feature
+1192,Rh_man_distribW2.jpg,NC Duke,Distribution in the world
+1193,Rh_man_flower10.JPG,NC Duke,Flower features
+1194,Rh_man_flower4.JPG,NC Duke,Flower features
+1195,Rh_man_flower6A.jpg,NC Duke,Flower features
+1196,Rh_man_fruit3.JPG,NC Duke,Fruit or propagule
+1197,Rh_man_fruit5.JPG,NC Duke,Fruit or propagule
+1198,Rh_man_ICtree1.jpg,Diana Kleine,Tree icon
+1199,Rh_man_leaves11.JPG,NC Duke,Leaf characteristics and shape
+1200,Rh_man_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1201,Rh_man_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1202,Rh_man_stembase2.JPG,NC Duke,Stembase characteristics
+1203,Rh_man_tree6.JPG,NC Duke,Tree form
+1204,Rh_muc_bark1.JPG,NC Duke,Bark characteristics
+1205,Rh_muc_diag3.jpg,NC Duke,Diagnostic feature
+1206,Rh_muc_diag6B.jpg,NC Duke,Diagnostic feature
+1207,Rh_muc_distribW2.jpg,NC Duke,Distribution in the world
+1208,Rh_muc_flower2.JPG,NC Duke,Flower features
+1209,Rh_muc_flower6.jpg,NC Duke,Flower features
+1210,Rh_muc_flower8.jpg,NC Duke,Flower features
+1211,Rh_muc_fruit2.JPG,NC Duke,Fruit or propagule
+1212,Rh_muc_fruit6A.jpg,NC Duke,Fruit or propagule
+1213,Rh_muc_ICflower1.jpg,Diana Kleine,Flower icon
+1214,Rh_muc_ICflower2.jpg,Diana Kleine,Flower icon
+1215,Rh_muc_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1216,Rh_muc_ICleaves1.jpg,Diana Kleine,Leaf icon
+1217,Rh_muc_ICtree1.jpg,Diana Kleine,Tree icon
+1218,Rh_muc_leaves1.JPG,NC Duke,Leaf characteristics and shape
+1219,Rh_muc_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1220,Rh_muc_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1221,Rh_muc_stembase2.jpg,NC Duke,Stembase characteristics
+1222,Rh_muc_tree4.jpg,NC Duke,Tree form
+1223,Rh_muc_tree5.JPG,NC Duke,Tree form
+1224,Rh_neo_bark1.JPG,NC Duke,Bark characteristics
+1225,Rh_neo_diag13.JPG,NC Duke,Diagnostic feature
+1226,Rh_neo_diag6A.jpg,NC Duke,Diagnostic feature
+1227,Rh_neo_distribW1.jpg,NC Duke,Distribution in the world
+1228,Rh_neo_flower1.JPG,NC Duke,Flower features
+1229,Rh_neo_ICtree1.jpg,Diana Kleine,Tree icon
+1230,Rh_neo_leaves1.JPG,NC Duke,Leaf characteristics and shape
+1231,Rh_neo_leaves2.JPG,NC Duke,Leaf characteristics and shape
+1232,Rh_neo_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+1233,Rh_neo_tree1.JPG,NC Duke,Tree form
+1234,Rh_neo_tree2.JPG,NC Duke,Tree form
+1235,Rh_rac_bark3.JPG,NC Duke,Bark characteristics
+1236,Rh_rac_diag16A.jpg,NC Duke,Diagnostic feature
+1237,Rh_rac_diag6A.jpg,NC Duke,Diagnostic feature
+1238,Rh_rac_distribW2.jpg,NC Duke,Distribution in the world
+1239,Rh_rac_flower1.JPG,NC Duke,Flower features
+1240,Rh_rac_flower10.jpg,NC Duke,Flower features
+1241,Rh_rac_flower2.JPG,NC Duke,Flower features
+1242,Rh_rac_flower6B.jpg,NC Duke,Flower features
+1243,Rh_rac_flower7B.jpg,NC Duke,Flower features
+1244,Rh_rac_fruit2.jpg,NC Duke,Fruit or propagule
+1245,Rh_rac_fruit6B.jpg,NC Duke,Fruit or propagule
+1246,Rh_rac_ICtree1.jpg,Diana Kleine,Tree icon
+1247,Rh_rac_leaves2.JPG,NC Duke,Leaf characteristics and shape
+1248,Rh_rac_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1249,Rh_rac_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1250,Rh_rac_stembase1.JPG,NC Duke,Stembase characteristics
+1251,Rh_rac_tree2.jpg,NC Duke,Tree form
+1252,Rh_rac_tree6B.jpg,NC Duke,Tree form
+1253,Rh_sam_diag1.JPG,NC Duke,Diagnostic feature
+1254,Rh_sam_diag3.JPG,NC Duke,Diagnostic feature
+1255,Rh_sam_distribW2.jpg,NC Duke,Distribution in the world
+1256,Rh_sam_flower6.JPG,NC Duke,Flower features
+1257,Rh_sam_flower8.JPG,NC Duke,Flower features
+1258,Rh_sam_fruit2.JPG,NC Duke,Fruit or propagule
+1259,Rh_sam_ICtree1.jpg,Diana Kleine,Tree icon
+1260,Rh_sam_leaves7.JPG,NC Duke,Leaf characteristics and shape
+1261,Rh_sam_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1262,Rh_sam_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1263,Rh_sam_tree4.JPG,NC Duke,Tree form
+1264,Rh_sam_tree5.JPG,NC Duke,Tree form
+1265,Rh_sel_bark1.JPG,NC Duke,Bark characteristics
+1266,Rh_sel_diag13.JPG,NC Duke,Diagnostic feature
+1267,Rh_sel_diag3.JPG,NC Duke,Diagnostic feature
+1268,Rh_sel_distribW2.jpg,NC Duke,Distribution in the world
+1269,Rh_sel_flower10.JPG,NC Duke,Flower features
+1270,Rh_sel_flower4.JPG,NC Duke,Flower features
+1271,Rh_sel_flower7.JPG,NC Duke,Flower features
+1272,Rh_sel_ICtree1.jpg,Diana Kleine,Tree icon
+1273,Rh_sel_leaves10.JPG,NC Duke,Leaf characteristics and shape
+1274,Rh_sel_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1275,Rh_sel_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1276,Rh_sel_stembase1.JPG,NC Duke,Stembase characteristics
+1277,Rh_sel_tree2.JPG,NC Duke,Tree form
+1278,Rh_sty_bark1.jpg,NC Duke,Bark characteristics
+1279,Rh_sty_diag3.JPG,NC Duke,Diagnostic feature
+1280,Rh_sty_diag8.jpg,NC Duke,Diagnostic feature
+1281,Rh_sty_distribW2.jpg,NC Duke,Distribution in the world
+1282,Rh_sty_flower14.JPG,NC Duke,Flower features
+1283,Rh_sty_flower2.jpg,NC Duke,Flower features
+1284,Rh_sty_fruit3.jpg,NC Duke,Fruit or propagule
+1285,Rh_sty_ICflower1.jpg,Diana Kleine,Flower icon
+1286,Rh_sty_ICflower2.jpg,Diana Kleine,Flower icon
+1287,Rh_sty_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1288,Rh_sty_ICleaves1.jpg,Diana Kleine,Leaf icon
+1289,Rh_sty_ICtree1.jpg,Diana Kleine,Tree icon
+1290,Rh_sty_leaves1.JPG,NC Duke,Leaf characteristics and shape
+1291,Rh_sty_leaves10.JPG,NC Duke,Leaf characteristics and shape
+1292,Rh_sty_leaves11.jpg,NC Duke,Leaf characteristics and shape
+1293,Rh_sty_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1294,Rh_sty_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1295,Rh_sty_stembase2.JPG,NC Duke,Stembase characteristics
+1296,Rh_sty_tree4.jpg,NC Duke,Tree form
+1297,Rh_tom_bark1.JPG,NC Duke,Bark characteristics
+1298,Rh_tom_diag1.JPG,NC Duke,Diagnostic feature
+1299,Rh_tom_diag8.JPG,NC Duke,Diagnostic feature
+1300,Rh_tom_distribW2.jpg,NC Duke,Distribution in the world
+1301,Rh_tom_flower5.JPG,NC Duke,Flower features
+1302,Rh_tom_flower6.JPG,NC Duke,Flower features
+1303,Rh_tom_ICtree1.jpg,Diana Kleine,Tree icon
+1304,Rh_tom_leaves4.JPG,NC Duke,Leaf characteristics and shape
+1305,Rh_tom_leaves5.JPG,NC Duke,Leaf characteristics and shape
+1306,Rh_tom_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1307,Rh_tom_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1308,Rh_tom_tree2.JPG,NC Duke,Tree form
+1309,Sc_hyd_bark3.jpg,NC Duke,Bark characteristics
+1310,Sc_hyd_diag1.JPG,NC Duke,Diagnostic feature
+1311,Sc_hyd_distribW2.jpg,NC Duke,Distribution in the world
+1312,Sc_hyd_flower1.JPG,NC Duke,Flower features
+1313,Sc_hyd_flower2.JPG,NC Duke,Flower features
+1314,Sc_hyd_fruit1.JPG,NC Duke,Fruit or propagule
+1315,Sc_hyd_fruit2.JPG,NC Duke,Fruit or propagule
+1316,Sc_hyd_ICflower1.jpg,Diana Kleine,Flower icon
+1317,Sc_hyd_ICflower2.jpg,Diana Kleine,Flower icon
+1318,Sc_hyd_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1319,Sc_hyd_ICleaves1.jpg,Diana Kleine,Leaf icon
+1320,Sc_hyd_ICtree1.jpg,Diana Kleine,Tree icon
+1321,Sc_hyd_leaves2.JPG,NC Duke,Leaf characteristics and shape
+1322,Sc_hyd_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1323,Sc_hyd_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1324,Sc_hyd_stembase2.JPG,NC Duke,Stembase characteristics
+1325,Sc_hyd_tree2.jpg,NC Duke,Tree form
+1326,Sh_ter_bark1.jpg,NC Duke,Bark characteristics
+1327,Sh_ter_distribW1.jpg,NC Duke,Distribution in the world
+1328,Sh_ter_flowers2.jpg,NC Duke,Flower features
+1329,Sh_ter_fruits1.jpg,NC Duke,Fruit or propagule
+1330,Sh_ter_fruits2.jpg,NC Duke,Fruit or propagule
+1331,Sh_ter_ICflower2.jpg,Diana Kleine,Flower icon
+1332,Sh_ter_ICfruit3.jpg,Diana Kleine,Dispersal icon
+1333,Sh_ter_ICtree1.jpg,Diana Kleine,Tree icon
+1334,Sh_ter_leaves2.jpg,NC Duke,Leaf characteristics and shape
+1335,Sh_ter_leaves3.jpg,NC Duke,Leaf characteristics and shape
+1336,Sh_ter_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1337,Sh_ter_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+1338,Sh_ter_stembase1.jpg,NC Duke,Stembase characteristics
+1339,Sh_ter_tree1.jpg,NC Duke,Tree form
+1340,Sh_ter_tree11.jpg,NC Duke,Tree form
+1341,So_alb_bark1.JPG,NC Duke,Bark characteristics
+1342,So_alb_diag1.JPG,NC Duke,Diagnostic feature
+1343,So_alb_distribW2.jpg,NC Duke,Distribution in the world
+1344,So_alb_flower3.JPG,NC Duke,Flower features
+1345,So_alb_flower5.jpg,NC Duke,Flower features
+1346,So_alb_fruit4.jpg,NC Duke,Fruit or propagule
+1347,So_alb_fruit6.jpg,NC Duke,Fruit or propagule
+1348,So_alb_fruit8.jpg,NC Duke,Fruit or propagule
+1349,So_alb_ICflower1.jpg,Diana Kleine,Flower icon
+1350,So_alb_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1351,So_alb_ICleaves1.jpg,Diana Kleine,Leaf icon
+1352,So_alb_ICtree1.jpg,Diana Kleine,Tree icon
+1353,So_alb_leaves3.jpg,NC Duke,Leaf characteristics and shape
+1354,So_alb_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1355,So_alb_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1356,So_alb_stembase3.jpg,NC Duke,Stembase characteristics
+1357,So_alb_tree3.jpg,NC Duke,Tree form
+1358,So_ape_bark1.jpg,NC Duke,Bark characteristics
+1359,So_ape_distribW2.jpg,NC Duke,Distribution in the world
+1360,So_ape_flower3.jpg,NC Duke,Flower features
+1361,So_ape_flower4.jpg,NC Duke,Flower features
+1362,So_ape_flower5.jpg,NC Duke,Flower features
+1363,So_ape_fruit1.jpg,NC Duke,Fruit or propagule
+1364,So_ape_ICtree1.jpg,Diana Kleine,Tree icon
+1365,So_ape_leaves1.jpg,NC Duke,Leaf characteristics and shape
+1366,So_ape_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1367,So_ape_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1368,So_ape_stembase1.jpg,NC Duke,Stembase characteristics
+1369,So_ape_tree1.jpg,NC Duke,Tree form
+1370,So_cas_bark1.JPG,NC Duke,Bark characteristics
+1371,So_cas_distribW2.jpg,NC Duke,Distribution in the world
+1372,So_cas_flower1.jpg,NC Duke,Flower features
+1373,So_cas_flower6.jpg,NC Duke,Flower features
+1374,So_cas_fruit1.JPG,NC Duke,Fruit or propagule
+1375,So_cas_fruit3.jpg,NC Duke,Fruit or propagule
+1376,So_cas_ICflower1.jpg,Diana Kleine,Flower icon
+1377,So_cas_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1378,So_cas_ICleaves1.jpg,Diana Kleine,Leaf icon
+1379,So_cas_ICtree1.jpg,Diana Kleine,Tree icon
+1380,So_cas_leaves3.jpg,NC Duke,Leaf characteristics and shape
+1381,So_cas_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1382,So_cas_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1383,So_cas_stembase4.jpg,NC Duke,Stembase characteristics
+1384,So_cas_tree6.jpg,NC Duke,Tree form
+1385,So_gri_bark1.JPG,NC Duke,Bark characteristics
+1386,So_gri_distribW2.jpg,NC Duke,Distribution in the world
+1387,So_gri_flower1.JPG,NC Duke,Flower features
+1388,So_gri_flower3.JPG,NC Duke,Flower features
+1389,So_gri_flower4.JPG,NC Duke,Flower features
+1390,So_gri_fruit1.JPG,NC Duke,Fruit or propagule
+1391,So_gri_ICtree1.jpg,Diana Kleine,Tree icon
+1392,So_gri_leaves2.JPG,NC Duke,Leaf characteristics and shape
+1393,So_gri_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1394,So_gri_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1395,So_gri_stembase1.JPG,NC Duke,Stembase characteristics
+1396,So_gri_stembase2.JPG,NC Duke,Stembase characteristics
+1397,So_gri_stembase3.JPG,NC Duke,Stembase characteristics
+1398,So_gri_tree1.JPG,NC Duke,Tree form
+1399,So_gul_bark1.jpg,NC Duke,Bark characteristics
+1400,So_gul_distribW2.jpg,NC Duke,Distribution in the world
+1401,So_gul_flower2.jpg,NC Duke,Flower features
+1402,So_gul_flower7.jpg,NC Duke,Flower features
+1403,So_gul_fruit2.jpg,NC Duke,Fruit or propagule
+1404,So_gul_fruit4.jpg,NC Duke,Fruit or propagule
+1405,So_gul_ICflower1.jpg,Diana Kleine,Flower icon
+1406,So_gul_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1407,So_gul_ICleaves1.jpg,Diana Kleine,Leaf icon
+1408,So_gul_ICtree1.jpg,Diana Kleine,Tree icon
+1409,So_gul_leaves1.JPG,NC Duke,Leaf characteristics and shape
+1410,So_gul_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1411,So_gul_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1412,So_gul_tree2.jpg,NC Duke,Tree form
+1413,So_gul_tree6B.jpg,NC Duke,Tree form
+1414,So_hai_distribW2.jpg,NC Duke,Distribution in the world
+1415,So_hai_estuar1.jpg,Diana Kleine,Estuarine occurrence
+1416,So_hai_flower1b.jpg,NC Duke,Flower features
+1417,So_hai_flower2b.jpg,NC Duke,Flower features
+1418,So_hai_flower4.JPG,NC Duke,Flower features
+1419,So_hai_fruit1b.jpg,NC Duke,Fruit or propagule
+1420,So_hai_ICtree1.jpg,Diana Kleine,Tree icon
+1421,So_hai_leaves1b.jpg,book,Leaf characteristics and shape
+1422,So_hai_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1423,So_hai_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1424,So_hai_tree1.JPG,NC Duke,Tree form
+1425,So_hai_tree11.JPG,NC Duke,Tree form
+1426,So_hai_tree2.JPG,NC Duke,Tree form
+1427,So_hai_zone1.jpg,Diana Kleine,Intertidal zone position
+1428,So_lan_bark1.jpg,NC Duke,Bark characteristics
+1429,So_lan_distribW2.jpg,NC Duke,Distribution in the world
+1430,So_lan_flower2.jpg,NC Duke,Flower features
+1431,So_lan_fruit1.JPG,NC Duke,Fruit or propagule
+1432,So_lan_fruit2.jpg,NC Duke,Fruit or propagule
+1433,So_lan_ICflower1.jpg,Diana Kleine,Flower icon
+1434,So_lan_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1435,So_lan_ICleaves1.jpg,Diana Kleine,Leaf icon
+1436,So_lan_ICtree1.jpg,Diana Kleine,Tree icon
+1437,So_lan_leaves2.jpg,NC Duke,Leaf characteristics and shape
+1438,So_lan_leaves3.jpg,NC Duke,Leaf characteristics and shape
+1439,So_lan_leaves6B.jpg,NC Duke,Leaf characteristics and shape
+1440,So_lan_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1441,So_lan_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1442,So_lan_tree1.jpg,NC Duke,Tree form
+1443,So_ova_diag5.JPG,NC Duke,Diagnostic feature
+1444,So_ova_distribW2.jpg,NC Duke,Distribution in the world
+1445,So_ova_flower2.JPG,NC Duke,Flower features
+1446,So_ova_flower6.JPG,NC Duke,Flower features
+1447,So_ova_flower8.JPG,NC Duke,Flower features
+1448,So_ova_fruit2.JPG,NC Duke,Fruit or propagule
+1449,So_ova_fruit5.JPG,NC Duke,Fruit or propagule
+1450,So_ova_ICflower1.jpg,Diana Kleine,Flower icon
+1451,So_ova_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1452,So_ova_ICleaves1.jpg,Diana Kleine,Leaf icon
+1453,So_ova_ICtree1.jpg,Diana Kleine,Tree icon
+1454,So_ova_leaves4.JPG,NC Duke,Leaf characteristics and shape
+1455,So_ova_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1456,So_ova_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1457,So_ova_stembase1.JPG,NC Duke,Stembase characteristics
+1458,So_ova_stembase3.JPG,NC Duke,Stembase characteristics
+1459,So_ova_tree2.JPG,NC Duke,Tree form
+1460,So_ura_bark1.jpg,NC Duke,Bark characteristics
+1461,So_ura_distribW2.jpg,NC Duke,Distribution in the world
+1462,So_ura_flower3.jpg,NC Duke,Flower features
+1463,So_ura_flower4.jpg,NC Duke,Flower features
+1464,So_ura_fruit1.jpg,NC Duke,Fruit or propagule
+1465,So_ura_fruit2B.jpg,NC Duke,Fruit or propagule
+1466,So_ura_ICflower1.jpg,Diana Kleine,Flower icon
+1467,So_ura_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1468,So_ura_ICleaves1.jpg,Diana Kleine,Leaf icon
+1469,So_ura_ICtree1.jpg,Diana Kleine,Tree icon
+1470,So_ura_leaves1.jpg,NC Duke,Leaf characteristics and shape
+1471,So_ura_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1472,So_ura_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1473,So_ura_stembase1.jpg,NC Duke,Stembase characteristics
+1474,So_ura_tree1.jpg,NC Duke,Tree form
+1475,Ta_pal_distribW2.jpg,NC Duke,Distribution in the world
+1476,Ta_pal_flower1.jpg,NC Duke,Flower features
+1477,Ta_pal_flower2.jpg,NC Duke,Flower features
+1478,Ta_pal_fruit2w.jpg,NC Duke,Fruit or propagule
+1479,Ta_pal_fruit3w.jpg,NC Duke,Fruit or propagule
+1480,Ta_pal_ICtree1.jpg,Diana Kleine,Tree icon
+1481,Ta_pal_leaves2w.jpg,NC Duke,Leaf characteristics and shape
+1482,Ta_pal_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+1483,Ta_pal_tree1.jpg,NC Duke,Tree form
+1484,Ta_pal_tree1w.jpg,NC Duke,Tree form
+1485,Th_pop_bark1.JPG,NC Duke,Bark characteristics
+1486,Th_pop_distribW2.jpg,NC Duke,Distribution in the world
+1487,Th_pop_flower1.JPG,NC Duke,Flower features
+1488,Th_pop_fruit2.JPG,NC Duke,Fruit or propagule
+1489,Th_pop_fruit3.JPG,NC Duke,Fruit or propagule
+1490,Th_pop_ICtree1.jpg,Diana Kleine,Tree icon
+1491,Th_pop_leaves1.JPG,NC Duke,Leaf characteristics and shape
+1492,Th_pop_leaves4.JPG,NC Duke,Leaf characteristics and shape
+1493,Th_pop_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1494,Th_pop_tree2.JPG,NC Duke,Tree form
+1495,Xy_gra_bark3.jpg,NC Duke,Bark characteristics
+1496,Xy_gra_distribW2.jpg,NC Duke,Distribution in the world
+1497,Xy_gra_flower3.jpg,NC Duke,Flower features
+1498,Xy_gra_flower4.jpg,NC Duke,Flower features
+1499,Xy_gra_fruit4.jpg,NC Duke,Fruit or propagule
+1500,Xy_gra_fruit6B.jpg,NC Duke,Fruit or propagule
+1501,Xy_gra_ICflower1.jpg,Diana Kleine,Flower icon
+1502,Xy_gra_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1503,Xy_gra_ICleaves1.jpg,Diana Kleine,Leaf icon
+1504,Xy_gra_ICtree1.jpg,Diana Kleine,Tree icon
+1505,Xy_gra_leaves2.JPG,NC Duke,Leaf characteristics and shape
+1506,Xy_gra_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1507,Xy_gra_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+1508,Xy_gra_stembase3.jpg,NC Duke,Stembase characteristics
+1509,Xy_gra_tree1.JPG,NC Duke,Tree form
+1510,Xy_mol_bark3.jpg,NC Duke,Bark characteristics
+1511,Xy_mol_diag1.jpg,NC Duke,Diagnostic feature
+1512,Xy_mol_distribW2.jpg,NC Duke,Distribution in the world
+1513,Xy_mol_flower1.jpg,NC Duke,Flower features
+1514,Xy_mol_fruit4.jpg,NC Duke,Fruit or propagule
+1515,Xy_mol_fruit5.jpg,NC Duke,Fruit or propagule
+1516,Xy_mol_ICflower1.jpg,Diana Kleine,Flower icon
+1517,Xy_mol_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1518,Xy_mol_ICleaves1.jpg,Diana Kleine,Leaf icon
+1519,Xy_mol_ICtree1.jpg,Diana Kleine,Tree icon
+1520,Xy_mol_leaves1.jpg,NC Duke,Leaf characteristics and shape
+1521,Xy_mol_leaves2.jpg,NC Duke,Leaf characteristics and shape
+1522,Xy_mol_leaves4.jpg,NC Duke,Leaf characteristics and shape
+1523,Xy_mol_phen1.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1524,Xy_mol_siloCB.jpg,Deirdre Bean,Silohuette of growth habit
+1525,Xy_mol_stembase4.jpg,NC Duke,Stembase characteristics
+1526,Xy_mol_tree4.jpg,NC Duke,Tree form
+1527,Xy_mol_tree6B.jpg,NC Duke,Tree form
+1528,Xy_rum_bark2.jpg,NC Duke,Bark characteristics
+1529,Xy_rum_distribW2B.jpg,NC Duke,Distribution in the world
+1530,Xy_rum_flower6B.jpg,NC Duke,Flower features
+1531,Xy_rum_fruit1.jpg,NC Duke,Fruit or propagule
+1532,Xy_rum_fruit2.jpg,NC Duke,Fruit or propagule
+1533,Xy_rum_ICflower1.jpg,Diana Kleine,Flower icon
+1534,Xy_rum_ICleaves1.jpg,Diana Kleine,Leaf icon
+1535,Xy_rum_ICtree1.jpg,Diana Kleine,Tree icon
+1536,Xy_rum_leaves2.jpg,NC Duke,Leaf characteristics and shape
+1537,Xy_rum_phen2.jpg,NC Duke,Months of flowering and fruiting by Latitude
+1538,Xy_rum_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1539,Xy_rum_stembase3.jpg,NC Duke,Stembase characteristics
+1540,Xy_rum_tree1.jpg,NC Duke,Tree form
+1541,Xy_rum_tree2.jpg,NC Duke,Tree form
+1542,Xy_rum_tree3.jpg,NC Duke,Tree form
+1543,Za_roe_distribW2.jpg,NC Duke,Distribution in the world
+1544,Za_roe_flower1w.jpg,NC Duke,Flower features
+1545,Za_roe_fruit1w.jpg,NC Duke,Fruit or propagule
+1546,Za_roe_fruit3w.jpg,NC Duke,Fruit or propagule
+1547,Za_roe_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1548,Za_roe_ICtree2.jpg,Diana Kleine,Tree icon
+1549,Za_roe_leaves1w.jpg,NC Duke,Leaf characteristics and shape
+1550,Za_roe_leaves3w.jpg,NC Duke,Leaf characteristics and shape
+1551,Za_roe_leaves5w.jpg,NC Duke,Leaf characteristics and shape
+1552,Za_roe_leaves6w.jpg,NC Duke,Leaf characteristics and shape
+1553,Za_roe_siloB.jpg,Deirdre Bean,Silohuette of growth habit
+1554,Za_roe_tree1w.jpg,NC Duke,Tree form
+1555,Za_roe_tree4w.jpg,NC Duke,Tree form
+1556,Ac_ebr_ICtree1.jpg,Diana Kleine,Tree icon
+1557,Ac_ebr-eba_ICtree12.jpg,Diana Kleine,Tree icon
+1558,Ac_ebr-ebr_ICtree1.jpg,Diana Kleine,Tree icon
+1559,Ac_ili_ICtree1.jpg,Diana Kleine,Tree icon
+1560,Ac_vol_ICtree1.jpg,Diana Kleine,Tree icon
+1561,Ae_cor_ICtree1.jpg,Diana Kleine,Tree icon
+1562,Ae_flo_ICtree1.jpg,Diana Kleine,Tree icon
+1563,Ag_cuc_ICtree1.jpg,Diana Kleine,Tree icon
+1564,Ai_ann_ICtree1.jpg,Diana Kleine,Tree icon
+1565,Ai_rot_ICtree1.jpg,Diana Kleine,Tree icon
+1566,Am_lat_ICtree1.jpg,Diana Kleine,Tree icon
+1567,An_gla_ICtree1.jpg,Diana Kleine,Tree icon
+1568,Ar_aur_ICtree1A.jpg,Diana Kleine,Tree icon
+1569,Ar_dan_tree1.jpg,Diana Kleine,Tree icon
+1570,Ar_spe_ICtree1.jpg,Diana Kleine,Tree icon
+1571,Av_alb_ICtree1.jpg,Diana Kleine,Tree icon
+1572,Av_bic_ICtree1.jpg,Diana Kleine,Tree icon
+1573,Av_ger_ICtree1.jpg,Diana Kleine,Tree icon
+1574,Av_int_ICtree1.jpg,Diana Kleine,Tree icon
+1575,Av_mar_ICtree1.jpg,Diana Kleine,Tree icon
+1576,Av_mar-aus_ICtree1.jpg,Diana Kleine,Tree icon
+1577,Av_mar-euc_ICtree13.jpg,Diana Kleine,Tree icon
+1578,Av_mar-mar_ICtree12.jpg,Diana Kleine,Tree icon
+1579,Av_off_ICtree1.jpg,Diana Kleine,Tree icon
+1580,Av_rum_ICtree1.jpg,Diana Kleine,Tree icon
+1581,Av_sch_ICtree1.jpg,Diana Kleine,Tree icon
+1582,Ba_rac_ICtree1.jpg,Diana Kleine,Tree icon
+1583,Bo_ter_ICtree1.jpg,Diana Kleine,Tree icon
+1584,Br_cyl_ICtree1.jpg,Diana Kleine,Tree icon
+1585,Br_dun_ICtree1.jpg,Diana Kleine,Tree icon
+1586,Br_exa_ICtree1.jpg,Diana Kleine,Tree icon
+1587,Br_gym_ICtree1.jpg,Diana Kleine,Tree icon
+1588,Br_hai_ICtree1.jpg,Diana Kleine,Tree icon
+1589,Br_par_ICtree1.jpg,Diana Kleine,Tree icon
+1590,Br_rhy_ICtree1.jpg,Diana Kleine,Tree icon
+1591,Br_sex_ICtree1.jpg,Diana Kleine,Tree icon
+1592,Ca_phi_ICtree1.jpg,Diana Kleine,Tree icon
+1593,Ca_sch_ICtree1.jpg,Diana Kleine,Tree icon
+1594,Ce_aus_ICtree1.jpg,Diana Kleine,Tree icon
+1595,Ce_dec_ICtree1.jpg,Diana Kleine,Tree icon
+1596,Ce_pse_ICtree1.jpg,Diana Kleine,Tree icon
+1597,Ce_tag_ICtree1.jpg,Diana Kleine,Tree icon
+1598,Ce_zip_ICtree1.jpg,Diana Kleine,Tree icon
+1599,Co_ere_ICtree1.jpg,Diana Kleine,Tree icon
+1600,Cr_pat_tree1.jpg,Diana Kleine,Tree icon
+1601,Cy_iri_ICtree1.jpg,Diana Kleine,Tree icon
+1602,Di_lit_ICtree1.jpg,Diana Kleine,Tree icon
+1603,Do_spa_ICtree1.jpg,Diana Kleine,Tree icon
+1604,Ex_aga_ICtree1.jpg,Diana Kleine,Tree icon
+1605,Ex_aga-aga_ICtree1.jpg,Diana Kleine,Tree icon
+1606,Ex_aga-ova_ICtree1.jpg,Diana Kleine,Tree icon
+1607,Ex_ind_ICtree1.jpg,Diana Kleine,Tree icon
+1608,He_fom_ICtree1.jpg,Diana Kleine,Tree icon
+1609,He_glo_ICtree1.jpg,Diana Kleine,Tree icon
+1610,He_lit_ICtree1.jpg,Diana Kleine,Tree icon
+1611,Hi_til_ICtree1.jpg,Diana Kleine,Tree icon
+1612,In_fag_tree1.jpg,Diana Kleine,Tree icon
+1613,Ka_can_ICtree1.jpg,Diana Kleine,Tree icon
+1614,Ka_obo_ICtree1.jpg,Diana Kleine,Tree icon
+1615,La_rac_ICtree1.jpg,Diana Kleine,Tree icon
+1616,Ln_pat_ICtree1.jpg,Diana Kleine,Tree icon
+1617,Lo_mon_ICtree1.jpg,Diana Kleine,Tree icon
+1618,Lu_lit_ICtree1.jpg,Diana Kleine,Tree icon
+1619,Lu_rac_ICtree1.jpg,Diana Kleine,Tree icon
+1620,Lu_ros_ICtree1.jpg,Diana Kleine,Tree icon
+1621,Mo_ole_ICtree1.jpg,Diana Kleine,Tree icon
+1622,Ny_fru_ICtree1.jpg,Diana Kleine,Tree icon
+1623,Os_oct_ICtree1.jpg,Diana Kleine,Tree icon
+1624,Pa_rhi_ICtree1.jpg,Diana Kleine,Tree icon
+1625,Pa_spi_ICtree1.jpg,Diana Kleine,Tree icon
+1626,Pe_ben_ICtree1.jpg,Diana Kleine,Tree icon
+1627,Pe_rhi_ICtree1.jpg,Diana Kleine,Tree icon
+1628,Ph_pal_ICtree1.jpg,Diana Kleine,Tree icon
+1629,Pm_aci_ICtree1.jpg,Diana Kleine,Tree icon
+1630,Pt_off_ICtree1.jpg,Diana Kleine,Tree icon
+1631,Rh_ann_ICtree1.jpg,Diana Kleine,Tree icon
+1632,Rh_api_ICtree1.jpg,Diana Kleine,Tree icon
+1633,Rh_bre_ICtree1.jpg,Diana Kleine,Tree icon
+1634,Rh_har_ICtree1.jpg,Diana Kleine,Tree icon
+1635,Rh_lam_ICtree1.jpg,Diana Kleine,Tree icon
+1636,Rh_man_ICtree1.jpg,Diana Kleine,Tree icon
+1637,Rh_muc_ICtree1.jpg,Diana Kleine,Tree icon
+1638,Rh_neo_ICtree1.jpg,Diana Kleine,Tree icon
+1639,Rh_rac_ICtree1.jpg,Diana Kleine,Tree icon
+1640,Rh_sam_ICtree1.jpg,Diana Kleine,Tree icon
+1641,Rh_sel_ICtree1.jpg,Diana Kleine,Tree icon
+1642,Rh_sty_ICtree1.jpg,Diana Kleine,Tree icon
+1643,Rh_tom_ICtree1.jpg,Diana Kleine,Tree icon
+1644,Sc_hyd_ICtree1.jpg,Diana Kleine,Tree icon
+1645,Sh_ter_ICtree1.jpg,Diana Kleine,Tree icon
+1646,So_alb_ICtree1.jpg,Diana Kleine,Tree icon
+1647,So_ape_ICtree1.jpg,Diana Kleine,Tree icon
+1648,So_cas_ICtree1.jpg,Diana Kleine,Tree icon
+1649,So_gri_ICtree1.jpg,Diana Kleine,Tree icon
+1650,So_gul_ICtree1.jpg,Diana Kleine,Tree icon
+1651,So_hai_ICtree1.jpg,Diana Kleine,Tree icon
+1652,So_lan_ICtree1.jpg,Diana Kleine,Tree icon
+1653,So_ova_ICtree1.jpg,Diana Kleine,Tree icon
+1654,So_ura_ICtree1.jpg,Diana Kleine,Tree icon
+1655,Ta_pal_ICtree1.jpg,Diana Kleine,Tree icon
+1656,Th_pop_ICtree1.jpg,Diana Kleine,Tree icon
+1657,Xy_gra_ICtree1.jpg,Diana Kleine,Tree icon
+1658,Xy_mol_ICtree1.jpg,Diana Kleine,Tree icon
+1659,Xy_rum_ICtree1.jpg,Diana Kleine,Tree icon
+1660,Za_roe_ICtree2.jpg,Diana Kleine,Tree icon
+1661,Ac_ebr_ICleaves1.jpg,Diana Kleine,Leaf icon
+1662,Ac_ebr-eba_ICleaves1.jpg,Diana Kleine,Leaf icon
+1663,Ac_ebr-ebr_ICleaves12.jpg,Diana Kleine,Leaf icon
+1664,Ac_ili_ICleaves1.jpg,Diana Kleine,Leaf icon
+1665,Ac_vol_ICleaves1.jpg,Diana Kleine,Leaf icon
+1666,Ae_cor_ICleaves1.jpg,Diana Kleine,Leaf icon
+1667,Ae_flo_ICleaves1.jpg,Diana Kleine,Leaf icon
+1668,Ai_ann_ICleaves1.jpg,Diana Kleine,Leaf icon
+1669,Ai_rot_ICleaves1.jpg,Diana Kleine,Leaf icon
+1670,Ar_aur_ICleaves1.jpg,Diana Kleine,Leaf icon
+1671,Ar_dan_leaves01.jpg,Diana Kleine,Leaf icon
+1672,Ar_dan_leaves02.jpg,Diana Kleine,Leaf icon
+1673,Ar_spe_ICleaves1.jpg,Diana Kleine,Leaf icon
+1674,Av_int_ICleaves1.jpg,Diana Kleine,Leaf icon
+1675,Av_mar_ICleaves1.jpg,Diana Kleine,Leaf icon
+1676,Av_mar-aus_ICleaves1.jpg,Diana Kleine,Leaf icon
+1677,Av_mar-euc_ICleaves1.jpg,Diana Kleine,Leaf icon
+1678,Av_mar-mar_ICleaves1.jpg,Diana Kleine,Leaf icon
+1679,Av_off_ICleaves1.jpg,Diana Kleine,Leaf icon
+1680,Ba_rac_ICleaves1.jpg,Diana Kleine,Leaf icon
+1681,Br_cyl_ICleaves1.jpg,Diana Kleine,Leaf icon
+1682,Br_dun_ICleaves1.jpg,Diana Kleine,Leaf icon
+1683,Br_exa_ICleaves1.jpg,Diana Kleine,Leaf icon
+1684,Br_gym_ICleaves1.jpg,Diana Kleine,Leaf icon
+1685,Br_hai_ICleaves1.jpg,Diana Kleine,Leaf icon
+1686,Br_par_ICleaves1.jpg,Diana Kleine,Leaf icon
+1687,Br_rhy_ICleaves1.jpg,Diana Kleine,Leaf icon
+1688,Br_sex_ICleaves1.jpg,Diana Kleine,Leaf icon
+1689,Ca_phi_ICleaves1.jpg,Diana Kleine,Leaf icon
+1690,Ca_sch_ICleaves1.jpg,Diana Kleine,Leaf icon
+1691,Ce_aus_ICleaves1.jpg,Diana Kleine,Leaf icon
+1692,Ce_dec_ICleaves1.jpg,Diana Kleine,Leaf icon
+1693,Ce_pse_ICleaves1.jpg,Diana Kleine,Leaf icon
+1694,Ce_tag_ICleaves1.jpg,Diana Kleine,Leaf icon
+1695,Ce_zip_ICleaves1.jpg,Diana Kleine,Leaf icon
+1696,Cy_iri_ICleaves1.jpg,Diana Kleine,Leaf icon
+1697,Di_lit_ICleaves1.jpg,Diana Kleine,Leaf icon
+1698,Do_spa_ICleaves1.jpg,Diana Kleine,Leaf icon
+1699,Ex_aga_ICleaves1.jpg,Diana Kleine,Leaf icon
+1700,Ex_aga-aga_ICleaves1.jpg,Diana Kleine,Leaf icon
+1701,Ex_aga-ova_ICleaves1.jpg,Diana Kleine,Leaf icon
+1702,He_fom_ICleaves1.jpg,Diana Kleine,Leaf icon
+1703,He_glo_ICleaves1.jpg,Diana Kleine,Leaf icon
+1704,He_lit_ICleaves1.jpg,Diana Kleine,Leaf icon
+1705,Lu_lit_ICleaves1.jpg,Diana Kleine,Leaf icon
+1706,Lu_rac_ICleaves1.jpg,Diana Kleine,Leaf icon
+1707,Lu_ros_ICleaves1.jpg,Diana Kleine,Leaf icon
+1708,Ny_fru_ICleaves1.jpg,Diana Kleine,Leaf icon
+1709,Os_oct_ICleaves1.jpg,Diana Kleine,Leaf icon
+1710,Pm_aci_ICleaves1.jpg,Diana Kleine,Leaf icon
+1711,Rh_ann_ICleaves1.jpg,Diana Kleine,Leaf icon
+1712,Rh_api_ICleaves1.jpg,Diana Kleine,Leaf icon
+1713,Rh_lam_ICleaves1.jpg,Diana Kleine,Leaf icon
+1714,Rh_muc_ICleaves1.jpg,Diana Kleine,Leaf icon
+1715,Rh_sty_ICleaves1.jpg,Diana Kleine,Leaf icon
+1716,Sc_hyd_ICleaves1.jpg,Diana Kleine,Leaf icon
+1717,So_alb_ICleaves1.jpg,Diana Kleine,Leaf icon
+1718,So_cas_ICleaves1.jpg,Diana Kleine,Leaf icon
+1719,So_gul_ICleaves1.jpg,Diana Kleine,Leaf icon
+1720,So_lan_ICleaves1.jpg,Diana Kleine,Leaf icon
+1721,So_ova_ICleaves1.jpg,Diana Kleine,Leaf icon
+1722,So_ura_ICleaves1.jpg,Diana Kleine,Leaf icon
+1723,Xy_gra_ICleaves1.jpg,Diana Kleine,Leaf icon
+1724,Xy_mol_ICleaves1.jpg,Diana Kleine,Leaf icon
+1725,Xy_rum_ICleaves1.jpg,Diana Kleine,Leaf icon
+1726,Ac_ebr_ICflower2.jpg,Diana Kleine,Flower icon
+1727,Ac_ebr-eba_ICflower1.jpg,Diana Kleine,Flower icon
+1728,Ac_ebr-ebr_ICflower1.jpg,Diana Kleine,Flower icon
+1729,Ac_ili_ICflower1.jpg,Diana Kleine,Flower icon
+1730,Ac_ili_ICflower2.jpg,Diana Kleine,Flower icon
+1731,Ac_vol_ICflower2.jpg,Diana Kleine,Flower icon
+1732,Ae_cor_ICflower1.jpg,Diana Kleine,Flower icon
+1733,Ae_flo_ICflower1.jpg,Diana Kleine,Flower icon
+1734,Ai_ann_ICflower1.jpg,Diana Kleine,Flower icon
+1735,Ai_rot_ICflower1.jpg,Diana Kleine,Flower icon
+1736,Ar_aur_ICflower1.jpg,Diana Kleine,Flower icon
+1737,Ar_dan_flower1.jpg,Diana Kleine,Flower icon
+1738,Ar_spe_ICflower1.jpg,Diana Kleine,Flower icon
+1739,Av_bic_ICflower1.jpg,Diana Kleine,Flower icon
+1740,Av_ger_ICflower1.jpg,Diana Kleine,Flower icon
+1741,Av_int_ICflower1.jpg,Diana Kleine,Flower icon
+1742,Av_mar_ICflower1.jpg,Diana Kleine,Flower icon
+1743,Av_mar-aus_ICflower1.jpg,Diana Kleine,Flower icon
+1744,Av_mar-euc_ICflower1.jpg,Diana Kleine,Flower icon
+1745,Av_mar-mar_ICflower1.jpg,Diana Kleine,Flower icon
+1746,Av_off_ICflower1.jpg,Diana Kleine,Flower icon
+1747,Av_sch_ICflower1.jpg,Diana Kleine,Flower icon
+1748,Ba_rac_ICflower1.jpg,Diana Kleine,Flower icon
+1749,Ba_rac_ICflower2.jpg,Diana Kleine,Flower icon
+1750,Br_cyl_ICflower1.jpg,Diana Kleine,Flower icon
+1751,Br_cyl_ICflower2.jpg,Diana Kleine,Flower icon
+1752,Br_dun_ICflower1.jpg,Diana Kleine,Flower icon
+1753,Br_dun_ICflower2.jpg,Diana Kleine,Flower icon
+1754,Br_exa_ICflower1.jpg,Diana Kleine,Flower icon
+1755,Br_exa_ICflower2.jpg,Diana Kleine,Flower icon
+1756,Br_gym_ICflower1.jpg,Diana Kleine,Flower icon
+1757,Br_gym_ICflower2.jpg,Diana Kleine,Flower icon
+1758,Br_hai_ICflower1.jpg,Diana Kleine,Flower icon
+1759,Br_hai_ICflower2.jpg,Diana Kleine,Flower icon
+1760,Br_par_ICflower1.jpg,Diana Kleine,Flower icon
+1761,Br_par_ICflower2.jpg,Diana Kleine,Flower icon
+1762,Br_rhy_ICflower1.jpg,Diana Kleine,Flower icon
+1763,Br_rhy_ICflower2.jpg,Diana Kleine,Flower icon
+1764,Br_sex_ICflower1.jpg,Diana Kleine,Flower icon
+1765,Br_sex_ICflower2.jpg,Diana Kleine,Flower icon
+1766,Ca_phi_ICflower1.jpg,Diana Kleine,Flower icon
+1767,Ca_sch_ICflower1.jpg,Diana Kleine,Flower icon
+1768,Ce_aus_ICflower1.jpg,Diana Kleine,Flower icon
+1769,Ce_dec_ICflower1.jpg,Diana Kleine,Flower icon
+1770,Ce_pse_ICflower1.jpg,Diana Kleine,Flower icon
+1771,Ce_pse_ICflower2.jpg,Diana Kleine,Flower icon
+1772,Ce_tag_ICflower1.jpg,Diana Kleine,Flower icon
+1773,Ce_zip_ICflower1.jpg,Diana Kleine,Flower icon
+1774,Cy_iri_ICflower1.jpg,Diana Kleine,Flower icon
+1775,Di_lit_ICflower1.jpg,Diana Kleine,Flower icon
+1776,Di_lit_ICflower2.jpg,Diana Kleine,Flower icon
+1777,Do_spa_ICflower1.jpg,Diana Kleine,Flower icon
+1778,Do_spa_ICflower2.jpg,Diana Kleine,Flower icon
+1779,Ex_aga_ICflowerF.jpg,Diana Kleine,Flower icon
+1780,Ex_aga_ICflowerM.jpg,Diana Kleine,Flower icon
+1781,Ex_aga-aga_ICflowerF.jpg,Diana Kleine,Flower icon
+1782,Ex_aga-ova_ICflowerF.jpg,Diana Kleine,Flower icon
+1783,He_fom_ICflower1.jpg,Diana Kleine,Flower icon
+1784,He_glo_ICflower1.jpg,Diana Kleine,Flower icon
+1785,He_lit_ICflower1.jpg,Diana Kleine,Flower icon
+1786,He_lit_ICflower2.jpg,Diana Kleine,Flower icon
+1787,Lu_lit_ICflower1.jpg,Diana Kleine,Flower icon
+1788,Lu_lit_ICflower2.jpg,Diana Kleine,Flower icon
+1789,Lu_rac_ICflower10.jpg,Diana Kleine,Flower icon
+1790,Lu_rac_ICflower22.jpg,Diana Kleine,Flower icon
+1791,Lu_ros_ICflower1.jpg,Diana Kleine,Flower icon
+1792,Lu_ros_ICflower2.jpg,Diana Kleine,Flower icon
+1793,Ny_fru_ICflowerF.jpg,Diana Kleine,Flower icon
+1794,Ny_fru_ICflowerM.jpg,Diana Kleine,Flower icon
+1795,Os_oct_ICflower1.jpg,Diana Kleine,Flower icon
+1796,Pm_aci_ICflower1.jpg,Diana Kleine,Flower icon
+1797,Rh_ann_ICflower1.jpg,Diana Kleine,Flower icon
+1798,Rh_ann_ICflower2.jpg,Diana Kleine,Flower icon
+1799,Rh_api_ICflower1.jpg,Diana Kleine,Flower icon
+1800,Rh_api_ICflower2.jpg,Diana Kleine,Flower icon
+1801,Rh_lam_ICflower1.jpg,Diana Kleine,Flower icon
+1802,Rh_lam_ICflower2.jpg,Diana Kleine,Flower icon
+1803,Rh_muc_ICflower1.jpg,Diana Kleine,Flower icon
+1804,Rh_muc_ICflower2.jpg,Diana Kleine,Flower icon
+1805,Rh_sty_ICflower1.jpg,Diana Kleine,Flower icon
+1806,Rh_sty_ICflower2.jpg,Diana Kleine,Flower icon
+1807,Sc_hyd_ICflower1.jpg,Diana Kleine,Flower icon
+1808,Sc_hyd_ICflower2.jpg,Diana Kleine,Flower icon
+1809,Sh_ter_ICflower2.jpg,Diana Kleine,Flower icon
+1810,So_alb_ICflower1.jpg,Diana Kleine,Flower icon
+1811,So_cas_ICflower1.jpg,Diana Kleine,Flower icon
+1812,So_gul_ICflower1.jpg,Diana Kleine,Flower icon
+1813,So_lan_ICflower1.jpg,Diana Kleine,Flower icon
+1814,So_ova_ICflower1.jpg,Diana Kleine,Flower icon
+1815,So_ura_ICflower1.jpg,Diana Kleine,Flower icon
+1816,Xy_gra_ICflower1.jpg,Diana Kleine,Flower icon
+1817,Xy_mol_ICflower1.jpg,Diana Kleine,Flower icon
+1818,Xy_rum_ICflower1.jpg,Diana Kleine,Flower icon
+1819,Ac_ebr_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1820,Ac_ebr-eba_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1821,Ac_ebr-ebr_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1822,Ac_ili_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1823,Ac_vol_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1824,Ae_cor_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1825,Ae_flo_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1826,Ai_ann_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1827,Ai_rot_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1828,Ar_aur_fruit1.jpg,Diana Kleine,Dispersal icon
+1829,Ar_dan_fruit1.jpg,Diana Kleine,Dispersal icon
+1830,Ar_spe_fruit1.jpg,Diana Kleine,Dispersal icon
+1831,Av_int_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1832,Av_mar_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1833,Av_mar-aus_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1834,Av_mar-euc_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1835,Av_mar-mar_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1836,Av_off_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1837,Ba_rac_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1838,Br_cyl_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1839,Br_dun_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1840,Br_exa_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1841,Br_gym_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1842,Br_hai_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1843,Br_par_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1844,Br_rhy_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1845,Br_sex_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1846,Ca_phi_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1847,Ca_sch_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1848,Ce_aus_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1849,Ce_dec_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1850,Ce_pse_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1851,Ce_tag_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1852,Ce_zip_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1853,Cy_iri_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1854,Di_lit_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1855,Do_spa_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1856,Ex_aga_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1857,Ex_aga-aga_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1858,Ex_aga-ova_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1859,He_fom_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1860,He_glo_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1861,He_lit_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1862,Lu_lit_ICfruit10.jpg,Diana Kleine,Dispersal icon
+1863,Lu_rac_ICfruit10.jpg,Diana Kleine,Dispersal icon
+1864,Lu_ros_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1865,Ny_fru_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1866,Ny_fru_ICfruit2.jpg,Diana Kleine,Dispersal icon
+1867,Os_oct_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1868,Pm_aci_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1869,Rh_api_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1870,Rh_lam_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1871,Rh_muc_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1872,Rh_sty_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1873,Sc_hyd_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1874,Sh_ter_ICfruit3.jpg,Diana Kleine,Dispersal icon
+1875,So_alb_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1876,So_cas_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1877,So_gul_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1878,So_lan_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1879,So_ova_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1880,So_ura_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1881,Xy_gra_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1882,Xy_mol_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1883,Za_roe_ICfruit1.jpg,Diana Kleine,Dispersal icon
+1884,Ac_ebr_estuar5.jpg,Diana Kleine,Estuarine position
+1885,Ac_ebr_tide2.jpg,Diana Kleine,Intertidal Zone
+1886,Ac_ebr-eba_estuar5.jpg,Diana Kleine,Estuarine position
+1887,Ac_ebr-eba_tide2.jpg,Diana Kleine,Intertidal Zone
+1888,Ac_ebr-ebr_estuar5.jpg,Diana Kleine,Estuarine position
+1889,Ac_ebr-ebr_tide2.jpg,Diana Kleine,Intertidal Zone
+1890,Ac_ili_estuar5.jpg,Diana Kleine,Estuarine position
+1891,Ac_ili_tide1.jpg,Diana Kleine,Intertidal Zone
+1892,Ac_vol_estuar6.jpg,Diana Kleine,Estuarine position
+1893,Ac_vol_tide7.jpg,Diana Kleine,Intertidal Zone
+1894,Ae_cor_estuar4.jpg,Diana Kleine,Estuarine position
+1895,Ae_cor_tide6.jpg,Diana Kleine,Intertidal Zone
+1896,Ae_flo_estuar4.jpg,Diana Kleine,Estuarine position
+1897,Ae_flo_tide2.jpg,Diana Kleine,Intertidal Zone
+1898,Ag_cuc_estuar6.jpg,Diana Kleine,Estuarine position
+1899,Ag_cuc_tide7.jpg,Diana Kleine,Intertidal Zone
+1900,Ai_ann_estuar3.jpg,Diana Kleine,Estuarine position
+1901,Ai_ann_tide1.jpg,Diana Kleine,Intertidal Zone
+1902,Ai_rot_estuar3.jpg,Diana Kleine,Estuarine position
+1903,Ai_rot_tide1.jpg,Diana Kleine,Intertidal Zone
+1904,Am_lat_estuar6.jpg,Diana Kleine,Estuarine position
+1905,Am_lat_tide7.jpg,Diana Kleine,Intertidal Zone
+1906,An_gla_estuar5.jpg,Diana Kleine,Estuarine position
+1907,An_gla_tide3.jpg,Diana Kleine,Intertidal Zone
+1908,Ar_aur_estuar6.jpg,Diana Kleine,Estuarine position
+1909,Ar_aur_tide3.jpg,Diana Kleine,Intertidal Zone
+1910,Ar_dan_estuar4.jpg,Diana Kleine,Estuarine position
+1911,Ar_dan_ICtree1.jpg,Diana Kleine,Tree icon
+1912,Ar_dan_tide1.jpg,Diana Kleine,Intertidal Zone
+1913,Ar_spe_estuar5.jpg,Diana Kleine,Estuarine position
+1914,Ar_spe_tide3.jpg,Diana Kleine,Intertidal Zone
+1915,Av_alb_estuar2.jpg,Diana Kleine,Estuarine position
+1916,Av_alb_tide4.jpg,Diana Kleine,Intertidal Zone
+1917,Av_bic_estuar5.jpg,Diana Kleine,Estuarine position
+1918,Av_bic_tide5.jpg,Diana Kleine,Intertidal Zone
+1919,Av_ger_estuar2.jpg,Diana Kleine,Estuarine position
+1920,Av_ger_tide2.jpg,Diana Kleine,Intertidal Zone
+1921,Av_int_estuar5.jpg,Diana Kleine,Estuarine position
+1922,Av_int_tide6.jpg,Diana Kleine,Intertidal Zone
+1923,Av_mar_estuar2.jpg,Diana Kleine,Estuarine position
+1924,Av_mar_tide1.jpg,Diana Kleine,Intertidal Zone
+1925,Av_mar-aus_estuar2.jpg,Diana Kleine,Estuarine position
+1926,Av_mar-aus_tide1.jpg,Diana Kleine,Intertidal Zone
+1927,Av_mar-euc_estuar2.jpg,Diana Kleine,Estuarine position
+1928,Av_mar-euc_tide1.jpg,Diana Kleine,Intertidal Zone
+1929,Av_mar-mar_estuar2.jpg,Diana Kleine,Estuarine position
+1930,Av_mar-mar_tide1.jpg,Diana Kleine,Intertidal Zone
+1931,Av_off_estuar5.jpg,Diana Kleine,Estuarine position
+1932,Av_off_tide6.jpg,Diana Kleine,Intertidal Zone
+1933,Av_rum_estuar2.jpg,Diana Kleine,Estuarine position
+1934,Av_rum_tide4.jpg,Diana Kleine,Intertidal Zone
+1935,Av_sch_estuar2.jpg,Diana Kleine,Estuarine position
+1936,Av_sch_tide2.jpg,Diana Kleine,Intertidal Zone
+1937,Ba_rac_estuar6.jpg,Diana Kleine,Estuarine position
+1938,Ba_rac_ICtree2.jpg,Diana Kleine,Tree icon
+1939,Ba_rac_tide5.jpg,Diana Kleine,Intertidal Zone
+1940,Bo_arg_estuar6.jpg,Diana Kleine,Estuarine position
+1941,Bo_arg_ICtree2.jpg,Diana Kleine,Tree icon
+1942,Bo_arg_tide7.jpg,Diana Kleine,Intertidal Zone
+1943,Bo_ter_estuar4.jpg,Diana Kleine,Estuarine position
+1944,Bo_ter_tide2.jpg,Diana Kleine,Intertidal Zone
+1945,Br_cyl_estuar2.jpg,Diana Kleine,Estuarine position
+1946,Br_cyl_tide5.jpg,Diana Kleine,Intertidal Zone
+1947,Br_dun_estuar3.jpg,Diana Kleine,Estuarine position
+1948,Br_dun_tide2.jpg,Diana Kleine,Intertidal Zone
+1949,Br_exa_estuar4.jpg,Diana Kleine,Estuarine position
+1950,Br_exa_tide3.jpg,Diana Kleine,Intertidal Zone
+1951,Br_gym_estuar2.jpg,Diana Kleine,Estuarine position
+1952,Br_gym_tide2.jpg,Diana Kleine,Intertidal Zone
+1953,Br_hai_estuar3.jpg,Diana Kleine,Estuarine position
+1954,Br_hai_tide2.jpg,Diana Kleine,Intertidal Zone
+1955,Br_par_estuar5.jpg,Diana Kleine,Estuarine position
+1956,Br_par_tide5.jpg,Diana Kleine,Intertidal Zone
+1957,Br_rhy_estuar4.jpg,Diana Kleine,Estuarine position
+1958,Br_rhy_tide5.jpg,Diana Kleine,Intertidal Zone
+1959,Br_sex_estuar6.jpg,Diana Kleine,Estuarine position
+1960,Br_sex_tide5.jpg,Diana Kleine,Intertidal Zone
+1961,Ca_phi_estuar2.jpg,Diana Kleine,Estuarine position
+1962,Ca_phi_tide4.jpg,Diana Kleine,Intertidal Zone
+1963,Ca_sch_estuar2.jpg,Diana Kleine,Estuarine position
+1964,Ca_sch_tide4.jpg,Diana Kleine,Intertidal Zone
+1965,Ce_aus_estuar2.jpg,Diana Kleine,Estuarine position
+1966,Ce_aus_tide2.jpg,Diana Kleine,Intertidal Zone
+1967,Ce_dec_estuar5.jpg,Diana Kleine,Estuarine position
+1968,Ce_dec_tide2.jpg,Diana Kleine,Intertidal Zone
+1969,Ce_pse_estuar5.jpg,Diana Kleine,Estuarine position
+1970,Ce_pse_tide2.jpg,Diana Kleine,Intertidal Zone
+1971,Ce_tag_estuar2.jpg,Diana Kleine,Estuarine position
+1972,Ce_tag_tide2.jpg,Diana Kleine,Intertidal Zone
+1973,Ce_zip_estuar5.jpg,Diana Kleine,Estuarine position
+1974,Ce_zip_tide2.jpg,Diana Kleine,Intertidal Zone
+1975,Co_ere_estuar6.jpg,Diana Kleine,Estuarine position
+1976,Co_ere_tide3.jpg,Diana Kleine,Intertidal Zone
+1977,Cr_pat_estuar4.jpg,Diana Kleine,Estuarine position
+1978,Cr_pat_tide3.jpg,Diana Kleine,Intertidal Zone
+1979,Cy_iri_estuar4.jpg,Diana Kleine,Estuarine position
+1980,Cy_iri_tide3.jpg,Diana Kleine,Intertidal Zone
+1981,Di_lit_estuar4.jpg,Diana Kleine,Estuarine position
+1982,Di_lit_tide2.jpg,Diana Kleine,Intertidal Zone
+1983,Do_spa_estuar6.jpg,Diana Kleine,Estuarine position
+1984,Do_spa_tide4.jpg,Diana Kleine,Intertidal Zone
+1985,Ex_aga_estuar1.jpg,Diana Kleine,Estuarine position
+1986,Ex_aga_tide2.jpg,Diana Kleine,Intertidal Zone
+1987,Ex_aga-aga_estuar1.jpg,Diana Kleine,Estuarine position
+1988,Ex_aga-aga_tide2.jpg,Diana Kleine,Intertidal Zone
+1989,Ex_aga-ova_estuar1.jpg,Diana Kleine,Estuarine position
+1990,Ex_aga-ova_tide2.jpg,Diana Kleine,Intertidal Zone
+1991,Ex_ind_estuar6.jpg,Diana Kleine,Estuarine position
+1992,Ex_ind_tide7.jpg,Diana Kleine,Intertidal Zone
+1993,He_fom_estuar6.jpg,Diana Kleine,Estuarine position
+1994,He_fom_tide3.jpg,Diana Kleine,Intertidal Zone
+1995,He_glo_estuar6.jpg,Diana Kleine,Estuarine position
+1996,He_glo_tide7.jpg,Diana Kleine,Intertidal Zone
+1997,He_lit_estuar5.jpg,Diana Kleine,Estuarine position
+1998,He_lit_tide3.jpg,Diana Kleine,Intertidal Zone
+1999,Hi_til_estuar6.jpg,Diana Kleine,Estuarine position
+2000,Hi_til_tide7.jpg,Diana Kleine,Intertidal Zone
+2001,Hp_man_estuar3.jpg,Diana Kleine,Estuarine position
+2002,Hp_man_ICtree1.jpg,Diana Kleine,Tree icon
+2003,Hp_man_tide7.jpg,Diana Kleine,Intertidal Zone
+2004,In_fag_estuar6.jpg,Diana Kleine,Estuarine position
+2005,In_fag_ICtree1.jpg,Diana Kleine,Tree icon
+2006,In_fag_tide7.jpg,Diana Kleine,Intertidal Zone
+2007,Ka_can_estuar3.jpg,Diana Kleine,Estuarine position
+2008,Ka_can_tide3.jpg,Diana Kleine,Intertidal Zone
+2009,Ka_obo_estuar3.jpg,Diana Kleine,Estuarine position
+2010,Ka_obo_tide3.jpg,Diana Kleine,Intertidal Zone
+2011,La_rac_estuar1.jpg,Diana Kleine,Estuarine position
+2012,La_rac_tide4.jpg,Diana Kleine,Intertidal Zone
+2013,Ln_pat_estuar4.jpg,Diana Kleine,Estuarine position
+2014,Ln_pat_tide7.jpg,Diana Kleine,Intertidal Zone
+2015,Lo_mon_estuar5.jpg,Diana Kleine,Estuarine position
+2016,Lo_mon_tide2.jpg,Diana Kleine,Intertidal Zone
+2017,Lu_lit_estuar5.jpg,Diana Kleine,Estuarine position
+2018,Lu_lit_tide5.jpg,Diana Kleine,Intertidal Zone
+2019,Lu_rac_estuar5.jpg,Diana Kleine,Estuarine position
+2020,Lu_rac_tide2.jpg,Diana Kleine,Intertidal Zone
+2021,Lu_ros_estuar5.jpg,Diana Kleine,Estuarine position
+2022,Lu_ros_tide3.jpg,Diana Kleine,Intertidal Zone
+2023,Mo_ole_estuar6.jpg,Diana Kleine,Estuarine position
+2024,Mo_ole_tide3.jpg,Diana Kleine,Intertidal Zone
+2025,Ny_fru_estuar6.jpg,Diana Kleine,Estuarine position
+2026,Ny_fru_tide4.jpg,Diana Kleine,Intertidal Zone
+2027,Os_oct_estuar3.jpg,Diana Kleine,Estuarine position
+2028,Os_oct_tide2.jpg,Diana Kleine,Intertidal Zone
+2029,Pa_rhi_estuar4.jpg,Diana Kleine,Estuarine position
+2030,Pa_rhi_tide2.jpg,Diana Kleine,Intertidal Zone
+2031,Pa_spi_estuar6.jpg,Diana Kleine,Estuarine position
+2032,Pa_spi_tide3.jpg,Diana Kleine,Intertidal Zone
+2033,Pe_ben_estuar5.jpg,Diana Kleine,Estuarine position
+2034,Pe_ben_tide4.jpg,Diana Kleine,Intertidal Zone
+2035,Pe_rhi_estuar5.jpg,Diana Kleine,Estuarine position
+2036,Pe_rhi_tide4.jpg,Diana Kleine,Intertidal Zone
+2037,Ph_pal_estuar4.jpg,Diana Kleine,Estuarine position
+2038,Ph_pal_tide7.jpg,Diana Kleine,Intertidal Zone
+2039,Pm_aci_estuar3.jpg,Diana Kleine,Estuarine position
+2040,Pm_aci_tide3.jpg,Diana Kleine,Intertidal Zone
+2041,Pt_off_estuar6.jpg,Diana Kleine,Estuarine position
+2042,Pt_off_tide7.jpg,Diana Kleine,Intertidal Zone
+2043,Rh_ann_estuar2.jpg,Diana Kleine,Estuarine position
+2044,Rh_ann_tide5.jpg,Diana Kleine,Intertidal Zone
+2045,Rh_api_estuar5.jpg,Diana Kleine,Estuarine position
+2046,Rh_api_tide5.jpg,Diana Kleine,Intertidal Zone
+2047,Rh_bre_estuar2.jpg,Diana Kleine,Estuarine position
+2048,Rh_bre_tide6.jpg,Diana Kleine,Intertidal Zone
+2049,Rh_har_estuar2.jpg,Diana Kleine,Estuarine position
+2050,Rh_har_tide5.jpg,Diana Kleine,Intertidal Zone
+2051,Rh_lam_estuar2.jpg,Diana Kleine,Estuarine position
+2052,Rh_lam_tide5.jpg,Diana Kleine,Intertidal Zone
+2053,Rh_man_estuar2.jpg,Diana Kleine,Estuarine position
+2054,Rh_man_tide4.jpg,Diana Kleine,Intertidal Zone
+2055,Rh_muc_estuar4.jpg,Diana Kleine,Estuarine position
+2056,Rh_muc_tide4.jpg,Diana Kleine,Intertidal Zone
+2057,Rh_neo_estuar5.jpg,Diana Kleine,Estuarine position
+2058,Rh_neo_tide6.jpg,Diana Kleine,Intertidal Zone
+2059,Rh_rac_estuar3.jpg,Diana Kleine,Estuarine position
+2060,Rh_rac_tide4.jpg,Diana Kleine,Intertidal Zone
+2061,Rh_sam_estuar4.jpg,Diana Kleine,Estuarine position
+2062,Rh_sam_tide4.jpg,Diana Kleine,Intertidal Zone
+2063,Rh_sel_estuar2.jpg,Diana Kleine,Estuarine position
+2064,Rh_sel_tide2.jpg,Diana Kleine,Intertidal Zone
+2065,Rh_sty_estuar3.jpg,Diana Kleine,Estuarine position
+2066,Rh_sty_tide4.jpg,Diana Kleine,Intertidal Zone
+2067,Rh_tom_estuar5.jpg,Diana Kleine,Estuarine position
+2068,Rh_tom_tide2.jpg,Diana Kleine,Intertidal Zone
+2069,Sc_hyd_estuar5.jpg,Diana Kleine,Estuarine position
+2070,Sc_hyd_tide3.jpg,Diana Kleine,Intertidal Zone
+2071,Sh_ter_estuar4.jpg,Diana Kleine,Estuarine position
+2072,Sh_ter_tide7.jpg,Diana Kleine,Intertidal Zone
+2073,So_alb_estuar3.jpg,Diana Kleine,Estuarine position
+2074,So_alb_tide6.jpg,Diana Kleine,Intertidal Zone
+2075,So_ape_estuar5.jpg,Diana Kleine,Estuarine position
+2076,So_ape_tide6.jpg,Diana Kleine,Intertidal Zone
+2077,So_cas_estuar6.jpg,Diana Kleine,Estuarine position
+2078,So_cas_tide6.jpg,Diana Kleine,Intertidal Zone
+2079,So_gri_estuar5.jpg,Diana Kleine,Estuarine position
+2080,So_gri_tide5.jpg,Diana Kleine,Intertidal Zone
+2081,So_gul_estuar5.jpg,Diana Kleine,Estuarine position
+2082,So_gul_tide5.jpg,Diana Kleine,Intertidal Zone
+2083,So_hai_estuar5.jpg,Diana Kleine,Estuarine position
+2084,So_hai_tide3.jpg,Diana Kleine,Intertidal Zone
+2085,So_lan_estuar6.jpg,Diana Kleine,Estuarine position
+2086,So_lan_tide6.jpg,Diana Kleine,Intertidal Zone
+2087,So_ova_estuar2.jpg,Diana Kleine,Estuarine position
+2088,So_ova_tide3.jpg,Diana Kleine,Intertidal Zone
+2089,So_ura_estuar5.jpg,Diana Kleine,Estuarine position
+2090,So_ura_tide5.jpg,Diana Kleine,Intertidal Zone
+2091,Ta_pal_estuar6.jpg,Diana Kleine,Estuarine position
+2092,Ta_pal_tide4.jpg,Diana Kleine,Intertidal Zone
+2093,Th_pop_estuar3.jpg,Diana Kleine,Estuarine position
+2094,Th_pop_tide7.jpg,Diana Kleine,Intertidal Zone
+2095,Xy_gra_estuar5.jpg,Diana Kleine,Estuarine position
+2096,Xy_gra_tide2.jpg,Diana Kleine,Intertidal Zone
+2097,Xy_mol_estuar5.jpg,Diana Kleine,Estuarine position
+2098,Xy_mol_tide2.jpg,Diana Kleine,Intertidal Zone
+2099,Xy_rum_estuar3.jpg,Diana Kleine,Estuarine position
+2100,Xy_rum_tide7.jpg,Diana Kleine,Intertidal Zone
+2101,Za_roe_estuar6.jpg,Diana Kleine,Estuarine position
+2102,Za_roe_tide7.jpg,Diana Kleine,Intertidal Zone

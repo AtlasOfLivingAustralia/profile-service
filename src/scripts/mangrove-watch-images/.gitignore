@@ -4,3 +4,5 @@ node_modules
 images
 additional_images
 cookie.txt
+
+.DS_Store
