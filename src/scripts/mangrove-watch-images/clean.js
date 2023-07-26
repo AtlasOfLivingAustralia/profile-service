@@ -68,7 +68,9 @@ async function getImagesForSpecies(species) {
   let response;
   try {
     response = await axios.get(URL);
-    return response.data.images.map(({ imageId }) => imageId);
+    return response.data.images
+      .filter(({ type }) => type.name === 'PRIVATE')
+      .map(({ imageId }) => imageId);
   } catch (error) {
     await log(
       `Could not retrieve images for '${species}' (${
