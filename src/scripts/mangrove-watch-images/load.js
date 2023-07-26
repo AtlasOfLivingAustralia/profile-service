@@ -7,12 +7,19 @@ const axios = require('axios').default;
 const yargs = require('yargs/yargs');
 const { hideBin } = require('yargs/helpers');
 
+const LOG_FILE = `./load-${Date.now()}.log`;
+
+const log = async (message, ...optionalParams) => {
+  await fsp.appendFile(LOG_FILE, `${message}\n`);
+  console.log(message, ...optionalParams);
+};
+
 // Parameter parsing & check
 const parameters = ['dataResourceId'];
 const args = yargs(hideBin(process.argv)).argv;
 for (const param of parameters) {
   if (!args[param]) {
-    console.log(`Missing '${param}' parameter!`);
+    log(`Missing '${param}' parameter!`);
     return;
   }
 }
@@ -55,18 +62,29 @@ async function uploadImage(image, cookie, imagesDir = 'images') {
       },
     });
   } catch (error) {
-    console.log(
-      `Image upload failed (${error?.response?.status || 'Unknown Error'})`,
-      image
+    if (error?.response?.status === 403) {
+      await log('Cookie is invalid!');
+      throw new Error('Cookie is invalid!');
+    }
+
+    await log(
+      `Image upload failed (${
+        error?.response?.status || 'Unknown Error'
+      })\n${URL}`
     );
+    await log(JSON.stringify(image, null, 2));
+    if (!error?.response?.status) {
+      await log(error.message);
+    }
   }
 
   // If the response data is a string, it also means the request was unsuccessful.
   if (
     (typeof response?.data === 'string' &&
       response?.data.includes('Sign in to the ALA')) ||
-    response.status === 403
+    response?.status === 403
   ) {
+    await log('Cookie is invalid!');
     throw new Error('Cookie is invalid!');
   }
 
@@ -75,10 +93,9 @@ async function uploadImage(image, cookie, imagesDir = 'images') {
 
 async function bulkUpload(cookie) {
   // Load species & images CSV
-  let [species, images, additional] = await Promise.all([
+  let [species, images] = await Promise.all([
     await csv().fromFile('./data/mgwatch_species.csv'),
     await csv().fromFile('./data/mgwatch_images.csv'),
-    await fsp.readdir('./additional_images'),
   ]);
 
   // Sort the species by the length of the code so that names aren't preliminarily matched
@@ -91,34 +108,12 @@ async function bulkUpload(cookie) {
   // Map each image to include the species name based on the taxon code
   let mapped = images.map((image) => ({
     ...image,
-    'Species Name': encodeURIComponent(
-      species.find((species) =>
-        image['IMAGE FILENAME']
-          .toLowerCase()
-          .startsWith(species['Taxa Code'].toLowerCase())
-      )?.['Species Name']
-    ),
+    'Species Name': species.find((species) =>
+      image['IMAGE FILENAME']
+        .toLowerCase()
+        .startsWith(species['Taxa Code'].toLowerCase())
+    )?.['Species Name'],
   }));
-
-  // Map the additional images
-  mapped = [
-    ...mapped,
-    ...additional.map((image) => {
-      // Find the species name from the species codes CSV
-      const speciesName = species.find((species) =>
-        image.toLowerCase().startsWith(species['Taxa Code'].toLowerCase())
-      )?.['Species Name'];
-
-      // Generate an image entry to be uploaded
-      return {
-        _additional: true,
-        AUTHOR: 'NCDuke',
-        CAPTION: `Diagram for ${speciesName}`,
-        'IMAGE FILENAME': image,
-        'Species Name': speciesName || 'BLANK',
-      };
-    }),
-  ];
 
   // Sequentially upload each image
   for (
@@ -128,17 +123,13 @@ async function bulkUpload(cookie) {
   ) {
     const image = mapped[uploadIndex];
 
-    console.log(
+    await log(
       `Uploading image ${uploadIndex + 1}/${mapped.length}... (${
         image['Species Name']
       }, ${image['IMAGE FILENAME']})`
     );
 
-    await uploadImage(
-      image,
-      cookie,
-      image._additional ? 'additional_images' : 'images'
-    );
+    await uploadImage(image, cookie, 'images');
   }
 }
 
