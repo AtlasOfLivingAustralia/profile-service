@@ -49,16 +49,16 @@ class SearchService extends BaseDataAccessService {
 
     Map search(List<String> opusIds, String term, int offset, int pageSize, SearchOptions options) {
         log.debug("Searching for ${term} in collection(s) ${opusIds} with options ${options}")
-
-        List<Opus> opusList = getAccessibleCollections(opusIds)
+        List<Opus> opusList = getAccessibleCollections(opusIds, isAlaAdmin())
         String[] accessibleCollections = opusList?.collect { it.uuid } as String[]
+        boolean isAccessible = alaAdmin? true : (accessibleCollections? true : false)
         List<Vocab> vocabs = Vocab.findAllByUuidInList(opusList*.attributeVocabUuid)
         String[] summaryTerms = Term.findAllByVocabInListAndSummary(vocabs, true)*.uuid
         String[] nameTerms = Term.findAllByVocabInListAndContainsName(vocabs, true)*.uuid
         Map<String, List<String>> filterLists = opusList.collectEntries { [(it.uuid) : masterListService.getCombinedLowerCaseNamesListForUser(it) ]}
 
         Map results = [:]
-        if (accessibleCollections) {
+        if (isAccessible) {
             Map params = [
                     indices:  Profile,
                     types: Profile,
@@ -121,6 +121,11 @@ class SearchService extends BaseDataAccessService {
         }
 
         results
+    }
+
+    private boolean isAlaAdmin() {
+        boolean alaAdmin = userService.userInRole("ROLE_ADMIN")
+        return alaAdmin
     }
 
     private Map getProfileMatchReason (String term, Profile profile, Map nslResult) {
@@ -287,7 +292,7 @@ class SearchService extends BaseDataAccessService {
             wildcard = '\\s*$' // regex end of line to ensure full word matching
         }
 
-        List<Opus> accessibleCollections = getAccessibleCollections(opusIds)
+        List<Opus> accessibleCollections = getAccessibleCollections(opusIds, isAlaAdmin())
         Map<Long, Opus> opusMap = accessibleCollections?.collectEntries { [(it.id): it] }
 
         if (max == -1) {
@@ -729,11 +734,10 @@ class SearchService extends BaseDataAccessService {
         match
     }
 
-    private List<Opus> getAccessibleCollections(List<String> opusIds) {
+    private List<Opus> getAccessibleCollections(List<String> opusIds, boolean alaAdmin) {
         List<Opus> opusList = opusIds?.findResults { Opus.findByUuidOrShortName(it, it) }
 
         // search results from private collections can only be seen by ALA Admins or users registered with the collection
-        boolean alaAdmin = userService.userInRole("ROLE_ADMIN")
         String userId = userService.getCurrentUserDetails()?.userId
 
         // if the user is ala admin, do nothing
@@ -746,6 +750,8 @@ class SearchService extends BaseDataAccessService {
             filteredOpusList = (opusList ?: Opus.list()).findAll {
                 !it?.privateCollection || it?.authorities?.find { auth -> auth.user.userId == userId }
             }
+        } else if (alaAdmin && !opusList) {
+            filteredOpusList = Opus.list()
         }
 
         filteredOpusList
