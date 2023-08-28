@@ -35,6 +35,7 @@ class SearchService extends BaseDataAccessService {
     static final Integer DEFAULT_MAX_CHILDREN_RESULTS = 15
     static final Integer DEFAULT_MAX_OPUS_SEARCH_RESULTS = 25
     static final Integer DEFAULT_MAX_BROAD_SEARCH_RESULTS = 50
+    static final String ASTERISK = "*"
 
     UserService userService
     BieService bieService
@@ -224,7 +225,7 @@ class SearchService extends BaseDataAccessService {
         // a name attribute is one where the attribute title contains the word 'name'
         boolQuery()
                 .must(nestedQuery("attributes.title", boolQuery().must(termsQuery("attributes.title.uuid", nameTerms*.uuid)), ScoreMode.Avg))
-                .must(matchQuery("text", term).operator(AND))
+                .must(wildcardQuery("text", term+ASTERISK))
     }
 
     private static QueryBuilder buildFilter(String[] accessibleCollections, boolean includeArchived = false, Map<String, List<String>> filterLists = [:]) {
@@ -270,10 +271,10 @@ class SearchService extends BaseDataAccessService {
             query.mustNot(termQuery("profileStatus", Profile.STATUS_EMPTY))
         }
 
-        query.should(matchQuery("scientificName", term).boost(4))
-        query.should(nestedQuery("matchedName", boolQuery().must(matchQuery("matchedName.scientificName", term).operator(AND)), ScoreMode.Avg))
+        query.should(wildcardQuery("scientificName", term+"*").boost(4))
+        query.should(nestedQuery("matchedName", boolQuery().must(wildcardQuery("matchedName.scientificName", term+ASTERISK)), ScoreMode.Avg))
         query.should(nestedQuery("attributes", attributesWithNames, ScoreMode.Avg).boost(3)) // score name-related attributes higher
-        query.should(nestedQuery("attributes", boolQuery().must(matchQuery("text", term).operator(operator)), ScoreMode.Avg))
+        query.should(nestedQuery("attributes", boolQuery().must(wildcardQuery("text", term+ASTERISK)), ScoreMode.Avg))
         query.should(nestedQuery("attributes", boolQuery().must(matchPhrasePrefixQuery("text", term)), ScoreMode.Avg))
         [query: query]
     }
