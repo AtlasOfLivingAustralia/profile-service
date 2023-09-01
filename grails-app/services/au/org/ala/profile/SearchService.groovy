@@ -220,12 +220,23 @@ class SearchService extends BaseDataAccessService {
         query
     }
 
-    private static QueryBuilder getNameAttributeQuery(String term) {
+    private static QueryBuilder getNameAttributeQuery(String term, List<String> termList) {
         List<Term> nameTerms = Term.findAllByContainsName(true)
         // a name attribute is one where the attribute title contains the word 'name'
-        boolQuery()
-                .must(nestedQuery("attributes.title", boolQuery().must(termsQuery("attributes.title.uuid", nameTerms*.uuid)), ScoreMode.Avg))
-                .must(wildcardQuery("text", term+ASTERISK))
+        QueryBuilder query = boolQuery()
+            query.must(nestedQuery("attributes.title", boolQuery().must(termsQuery("attributes.title.uuid", nameTerms*.uuid)), ScoreMode.Avg))
+            for (termItem in termList) {
+                query.must(wildcardQuery("text", termItem))
+            }
+        query
+    }
+
+    private static QueryBuilder getWildcardQuery(String fieldName, List<String> termList) {
+        QueryBuilder query = boolQuery()
+        for (termItem in termList) {
+            query.must(wildcardQuery(fieldName, ASTERISK+termItem+ASTERISK).boost(4))
+        }
+        query
     }
 
     private static QueryBuilder buildFilter(String[] accessibleCollections, boolean includeArchived = false, Map<String, List<String>> filterLists = [:]) {
@@ -259,7 +270,12 @@ class SearchService extends BaseDataAccessService {
             operator = OR
         }
 
-        QueryBuilder attributesWithNames = getNameAttributeQuery(term)
+        def termList = new ArrayList<String>()
+        if (term) {
+            termList = Arrays.asList(term.split())
+        }
+
+        QueryBuilder attributesWithNames = getNameAttributeQuery(term, termList)
 
         QueryBuilder query = boolQuery()
         if (options.includeArchived) {
@@ -271,10 +287,10 @@ class SearchService extends BaseDataAccessService {
             query.mustNot(termQuery("profileStatus", Profile.STATUS_EMPTY))
         }
 
-        query.should(wildcardQuery("scientificName", term+"*").boost(4))
-        query.should(nestedQuery("matchedName", boolQuery().must(wildcardQuery("matchedName.scientificName", term+ASTERISK)), ScoreMode.Avg))
+        query.must(getWildcardQuery("scientificName", termList))
+        query.should(nestedQuery("matchedName", boolQuery().must(matchQuery("matchedName.scientificName", term).operator(AND)), ScoreMode.Avg))
         query.should(nestedQuery("attributes", attributesWithNames, ScoreMode.Avg).boost(3)) // score name-related attributes higher
-        query.should(nestedQuery("attributes", boolQuery().must(wildcardQuery("text", term+ASTERISK)), ScoreMode.Avg))
+        query.should(nestedQuery("attributes", boolQuery().must(getWildcardQuery("text", termList)), ScoreMode.Avg))
         query.should(nestedQuery("attributes", boolQuery().must(matchPhrasePrefixQuery("text", term)), ScoreMode.Avg))
         [query: query]
     }
