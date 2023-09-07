@@ -35,7 +35,6 @@ class SearchService extends BaseDataAccessService {
     static final Integer DEFAULT_MAX_CHILDREN_RESULTS = 15
     static final Integer DEFAULT_MAX_OPUS_SEARCH_RESULTS = 25
     static final Integer DEFAULT_MAX_BROAD_SEARCH_RESULTS = 50
-    static final String ASTERISK = "*"
 
     UserService userService
     BieService bieService
