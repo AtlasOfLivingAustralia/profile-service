@@ -252,7 +252,7 @@ class SearchService extends BaseDataAccessService {
      * A text search will look for the term(s) in any indexed field
      *
      */
-    private static Map buildTextSearch(String term, SearchOptions options) {
+    static Map buildTextSearch(String term, SearchOptions options) {
         Operator operator = AND
         if (!options.matchAll) {
             operator = OR
