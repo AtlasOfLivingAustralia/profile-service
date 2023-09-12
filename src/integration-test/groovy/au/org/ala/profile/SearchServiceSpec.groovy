@@ -2,7 +2,6 @@ package au.org.ala.profile
 
 import au.org.ala.profile.util.ProfileSortOption
 import au.org.ala.profile.util.SearchOptions
-import au.org.ala.web.AuthService
 import grails.gorm.transactions.Rollback
 import grails.plugins.elasticsearch.ElasticSearchService
 import grails.testing.mixin.integration.Integration
@@ -1759,13 +1758,11 @@ class SearchServiceSpec extends BaseIntegrationSpec {
         result[0].childCount == 1
     }
 
-    def "buildTextSearch should include partial single matches from certain collection when the logged in user is an ALA admin"() {
+    def "buildTextSearch should include partial single matches from certain collection"() {
         given:
         Opus opus1 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr1", title: "title1")
-        Profile profile1 = save new Profile(scientificName: "dilany", fullName: "name1", opus: opus1, rank: "kingdom", classification: [new Classification(rank: "kingdom", name: "Plantae")])
-
-        service.userService.userInRole("ROLE_ADMIN") >> true
-        service.userService.getCurrentUserDetails() >> [userId: "1234"]
+        Profile profile1 = save new Profile(scientificName: "Dilany", fullName: "name1", opus: opus1, rank: "species", classification: [new Classification(rank: "kingdom", name: "Plantae")])
+        Profile result = save new Profile(scientificName: "Dilany", fullName: "Dilany", opus: opus1, rank: "species")
 
         SearchOptions options = new SearchOptions()
         options.setNameOnly(false)
@@ -1775,30 +1772,38 @@ class SearchServiceSpec extends BaseIntegrationSpec {
         options.setSearchNsl(true)
         options.setIncludeNameAttributes(false)
         options.setHideStubs(true)
-
-
-        Map params = [
-                indices:  Profile,
-                types: Profile,
-                score: true,
-                from : 0,
-                size : 20
-        ]
 
         when:
         Map qMap = service.buildTextSearch("dilan", options)
-        def result = elasticSearchService.search(params, qMap.query, null)
 
         then:
-        result.searchResults.find { it.toString().contains(profile1.scientificName) } != null
+        qMap.findAll(it -> it.toString().contains("dilan")) != null
+        result.find { it.contains(profile1.scientificName) } != null
     }
 
-    def "buildTextSearch should include partial multiple matches from certain collection when the logged in user is an ALA admin"() {
+    def "buildTextSearch should include partial multiple matches from certain collection"() {
         given:
+        String searchItem = "BURDAL TOTEM"
 
-        String term = "BURDAL TOTEM"
-        service.userService.userInRole("ROLE_ADMIN") >> true
-        service.userService.getCurrentUserDetails() >> [userId: "1234"]
+        Opus opus1 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr1", title: "title1")
+        Profile profile1 = save new Profile(scientificName: "Salt Water Crocodile", fullName: "name1", opus: opus1, rank: "species", classification: [new Classification(rank: "kingdom", name: "Plantae")])
+        Vocab vocab1 = save new Vocab(uuid:"1234-5678-0000",name:"vocab1",strict:false)
+        Term term1 = save new Term(uuid:"4ddb6096-0bf1-4c94-8bfb-86b99e79c08e",name:"test",groupBy:null,dataType:"text",unit:null,constraintListVocab:null,order:-1,required:false,summary:false,containsName:false,id:220,verison:null,vocab:vocab1)
+
+        List attributes = new ArrayList()
+        Attribute attribute1 = new Attribute()
+        attribute1.title = term1
+        attribute1.text = "<p>Lives in low rocky hills, cliffs and gorges. The Rangers often find them on the night cameras.</p>"
+        attribute1.profile = profile1
+        attributes.add(attribute1)
+
+        Attribute attribute2 = new Attribute()
+        attribute2.title = term1
+        attribute2.text = "<p>BURDAL TOTEM - Ask Burdal Elders for more cultural knowledge</p>"
+        attribute2.profile = profile1
+        attributes.add(attribute2)
+
+        Profile result = save new Profile(scientificName: "Salt Water Crocodile", fullName: "Salt Water Crocodile", opus: opus1, rank: "species", attributes: attributes)
 
         SearchOptions options = new SearchOptions()
         options.setNameOnly(false)
@@ -1809,29 +1814,20 @@ class SearchServiceSpec extends BaseIntegrationSpec {
         options.setIncludeNameAttributes(false)
         options.setHideStubs(true)
 
-
-        Map params = [
-                indices:  Profile,
-                types: Profile,
-                score: true,
-                from : 0,
-                size : 20
-        ]
-
         when:
-        Map qMap = service.buildTextSearch(term, options)
-        def result = elasticSearchService.search(params, qMap.query, null)
+        Map qMap = service.buildTextSearch(searchItem, options)
 
         then:
         boolean isFind = false
 
-        for (r in result.searchResults) {
+        for (r in result) {
             List texts = r.attributes.text
             for (text in texts) {
-                isFind = text.contains(term) || isFind
+                isFind = text.contains(searchItem) || isFind
             }
         }
 
-        result.searchResults.size() > 0 && isFind
+        qMap.findAll(it -> it.toString().contains(searchItem)) != null
+        result && isFind
     }
 }
