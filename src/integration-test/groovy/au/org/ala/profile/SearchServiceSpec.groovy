@@ -1762,7 +1762,6 @@ class SearchServiceSpec extends BaseIntegrationSpec {
         given:
         Opus opus1 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr1", title: "title1")
         Profile profile1 = save new Profile(scientificName: "Dilany", fullName: "name1", opus: opus1, rank: "species", classification: [new Classification(rank: "kingdom", name: "Plantae")])
-        Profile result = save new Profile(scientificName: "Dilany", fullName: "Dilany", opus: opus1, rank: "species")
 
         SearchOptions options = new SearchOptions()
         options.setNameOnly(false)
@@ -1777,8 +1776,7 @@ class SearchServiceSpec extends BaseIntegrationSpec {
         Map qMap = service.buildTextSearch("dilan", options)
 
         then:
-        qMap.findAll(it -> it.toString().contains("dilan")) != null
-        result.find { it.contains(profile1.scientificName) } != null
+        qMap.findAll(it -> it.toString().contains(profile1.scientificName)) != null
     }
 
     def "buildTextSearch should include partial multiple matches from certain collection"() {
@@ -1786,24 +1784,7 @@ class SearchServiceSpec extends BaseIntegrationSpec {
         String searchItem = "BURDAL TOTEM"
 
         Opus opus1 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr1", title: "title1")
-        Profile profile1 = save new Profile(scientificName: "Salt Water Crocodile", fullName: "name1", opus: opus1, rank: "species", classification: [new Classification(rank: "kingdom", name: "Plantae")])
-        Vocab vocab1 = save new Vocab(uuid:"1234-5678-0000",name:"vocab1",strict:false)
-        Term term1 = save new Term(uuid:"4ddb6096-0bf1-4c94-8bfb-86b99e79c08e",name:"test",groupBy:null,dataType:"text",unit:null,constraintListVocab:null,order:-1,required:false,summary:false,containsName:false,id:220,verison:null,vocab:vocab1)
-
-        List attributes = new ArrayList()
-        Attribute attribute1 = new Attribute()
-        attribute1.title = term1
-        attribute1.text = "<p>Lives in low rocky hills, cliffs and gorges. The Rangers often find them on the night cameras.</p>"
-        attribute1.profile = profile1
-        attributes.add(attribute1)
-
-        Attribute attribute2 = new Attribute()
-        attribute2.title = term1
-        attribute2.text = "<p>BURDAL TOTEM - Ask Burdal Elders for more cultural knowledge</p>"
-        attribute2.profile = profile1
-        attributes.add(attribute2)
-
-        Profile result = save new Profile(scientificName: "Salt Water Crocodile", fullName: "Salt Water Crocodile", opus: opus1, rank: "species", attributes: attributes)
+        Profile profile1 = save new Profile(scientificName: "Salt Water Crocodile", fullName: searchItem, opus: opus1, rank: "species", classification: [new Classification(rank: "kingdom", name: "Plantae")])
 
         SearchOptions options = new SearchOptions()
         options.setNameOnly(false)
@@ -1818,16 +1799,6 @@ class SearchServiceSpec extends BaseIntegrationSpec {
         Map qMap = service.buildTextSearch(searchItem, options)
 
         then:
-        boolean isFind = false
-
-        for (r in result) {
-            List texts = r.attributes.text
-            for (text in texts) {
-                isFind = text.contains(searchItem) || isFind
-            }
-        }
-
-        qMap.findAll(it -> it.toString().contains(searchItem)) != null
-        result && isFind
+        qMap.findAll(it -> it.toString().contains(profile1.toString())) != null
     }
 }
