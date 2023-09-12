@@ -252,7 +252,7 @@ class SearchService extends BaseDataAccessService {
      * A text search will look for the term(s) in any indexed field
      *
      */
-    private static Map buildTextSearch(String term, SearchOptions options) {
+    static Map buildTextSearch(String term, SearchOptions options) {
         Operator operator = AND
         if (!options.matchAll) {
             operator = OR
@@ -273,8 +273,8 @@ class SearchService extends BaseDataAccessService {
         query.should(matchQuery("scientificName", term).boost(4))
         query.should(nestedQuery("matchedName", boolQuery().must(matchQuery("matchedName.scientificName", term).operator(AND)), ScoreMode.Avg))
         query.should(nestedQuery("attributes", attributesWithNames, ScoreMode.Avg).boost(3)) // score name-related attributes higher
-        query.should(nestedQuery("attributes", boolQuery().must(matchQuery("text", term).operator(operator)), ScoreMode.Avg))
-        query.should(nestedQuery("attributes", boolQuery().must(matchPhrasePrefixQuery("text", term)), ScoreMode.Avg))
+        query.should(nestedQuery("attributes", boolQuery().must(matchQuery("attributes.text", term).operator(operator)), ScoreMode.Avg))
+        query.should(nestedQuery("attributes", boolQuery().must(matchPhrasePrefixQuery("attributes.text", term)), ScoreMode.Avg))
         [query: query]
     }
 
