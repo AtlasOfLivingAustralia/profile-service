@@ -6,7 +6,6 @@ class UrlMappings {
 
         // Public API
         "/api/v1/opus/$opusId/export" controller: "export", action: [GET: "exportCollection"]
-        "/opus/list" controller: "list", action: [GET: "listCollections"]
         "/api/v1/opus/$opusId/count" controller: "export", action: [GET: "countProfiles"]
 
         "/api/v1/profiles/" controller: "export", action: [GET: "getProfiles"]
