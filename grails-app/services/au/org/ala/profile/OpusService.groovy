@@ -72,6 +72,8 @@ class OpusService extends BaseDataAccessService {
                 opus.markDirty('approvedLists')
             }
             opus.approvedLists.addAll(json.approvedLists)
+        } else {
+            opus.approvedLists.removeAll(opus.approvedLists)
         }
 
         if (json.featureLists) {
@@ -82,6 +84,8 @@ class OpusService extends BaseDataAccessService {
                 opus.markDirty('featureLists')
             }
             opus.featureLists.addAll(json.featureLists)
+        } else {
+            opus.featureLists.removeAll(opus.featureLists)
         }
         opus.featureListSectionName = json.featureListSectionName ? json.featureListSectionName : null;
 
