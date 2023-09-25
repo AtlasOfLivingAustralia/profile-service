@@ -7,6 +7,7 @@ import au.org.ala.web.UserDetails
 import grails.gorm.transactions.Rollback
 import grails.gsp.PageRenderer
 import grails.testing.mixin.integration.Integration
+import net.sf.json.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 
@@ -270,5 +271,70 @@ class OpusServiceSpec extends BaseIntegrationSpec {
         opus1.attachments[1].title == "newTitle"
         1 * service.attachmentService.saveAttachment(_, _, _, _, _)
         0 * service.attachmentService.deleteAttachment(_, _, _, _)
+    }
+
+    def "update opus for approved lists"() {
+        given:
+        Opus opus1 = new Opus(title: "opus1", dataResourceUid: "123", glossary: new Glossary(), approvedLists: ["dr123", "dr345"])
+
+        def opus2 = [
+                title         : "opus1",
+                dataResourceUid      : "123",
+                approvedLists        : ["dr123"],
+        ]
+
+
+        JSONObject json1 = new JSONObject(opus2)
+        save opus1
+
+        when:
+        Opus updateOpus = service.updateOpus(opus1.uuid, json1)
+
+        then:
+        updateOpus.approvedLists.size() == json1.approvedLists.size()
+    }
+
+    def "update opus for featured lists"() {
+        given:
+        Opus opus1 = new Opus(title: "opus1", dataResourceUid: "123", glossary: new Glossary(), featureLists: ["dr123", "dr345", "dr678"])
+
+        def opus2 = [
+                title         : "opus1",
+                dataResourceUid      : "123",
+                featureLists        : ["dr345"],
+        ]
+
+
+        JSONObject json1 = new JSONObject(opus2)
+        save opus1
+
+        when:
+        Opus updateOpus = service.updateOpus(opus1.uuid, json1)
+
+        then:
+        updateOpus.featureLists.size() == json1.featureLists.size()
+    }
+
+    def "update opus for approved lists and feature lists"() {
+        given:
+        Opus opus1 = new Opus(title: "opus1", dataResourceUid: "123", glossary: new Glossary(), approvedLists: ["dr123", "dr345"], featureLists: ["fl123","fl456","fl789"])
+
+        def opus2 = [
+                title         : "opus1",
+                dataResourceUid      : "123",
+                approvedLists        : ["dr123"],
+                featureLists         : ["fl123", "fl456"]
+         ]
+
+
+        JSONObject json1 = new JSONObject(opus2)
+        save opus1
+
+        when:
+        Opus updateOpus = service.updateOpus(opus1.uuid, json1)
+
+        then:
+        updateOpus.approvedLists.size() == json1.approvedLists.size()
+        updateOpus.featureLists.size() == json1.featureLists.size()
     }
 }
