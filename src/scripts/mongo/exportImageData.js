@@ -1,4 +1,5 @@
-var profiles = db.getCollection('profile').find({'privateImages':{$exists: true}})
+var opusId = 3;
+var profiles = db.getCollection('profile').find({opus: opusId, 'privateImages':{$exists: true}})
 
 var privateImages = ['Profile id,Image id,Scientific Name,Title,Description,Rights Holder,Rights,Licence,Creator,Original File Name,Created']
 
