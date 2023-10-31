@@ -445,7 +445,8 @@ class OpusController extends BaseController {
         String NWMG = "National Weed Management Guide"
         String NSP = "National Strategic Plan"
         String OMR = "Other Management Resources"
-        render ([[key: GNR, title: GNR],[key: MGM, title: MGM],[key: NBPM, title: NBPM],[key: NWMG, title: NWMG],[key: NSP, title: NSP],[key: OMR, title: OMR]] as JSON)
+        def result =  [[key: GNR, title: GNR],[key: MGM, title: MGM],[key: NBPM, title: NBPM],[key: NWMG, title: NWMG],[key: NSP, title: NSP],[key: OMR, title: OMR]]
+        render(result as JSON)
     }
 
     def getTags() {
