@@ -438,6 +438,16 @@ class OpusController extends BaseController {
         }
     }
 
+    def getCategories() {
+        String GNR = "General"
+        String MGM = "Management"
+        String NBPM = "National Best Practice Manual"
+        String NWMG = "National Weed Management Guide"
+        String NSP = "National Strategic Plan"
+        String OMR = "Other Management Resources"
+        render ([[key: GNR, title: GNR],[key: MGM, title: MGM],[key: NBPM, title: NBPM],[key: NWMG, title: NWMG],[key: NSP, title: NSP],[key: OMR, title: OMR]] as JSON)
+    }
+
     def getTags() {
         render([tags: Tag.list()] as JSON)
     }
