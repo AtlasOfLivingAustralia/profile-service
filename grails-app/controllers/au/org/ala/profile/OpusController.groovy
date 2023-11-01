@@ -439,14 +439,8 @@ class OpusController extends BaseController {
     }
 
     def getCategories() {
-        String GNR = "General"
-        String MGM = "Management"
-        String NBPM = "National Best Practice Manual"
-        String NWMG = "National Weed Management Guide"
-        String NSP = "National Strategic Plan"
-        String OMR = "Other Management Resources"
-        def result =  [[key: GNR, title: GNR],[key: MGM, title: MGM],[key: NBPM, title: NBPM],[key: NWMG, title: NWMG],[key: NSP, title: NSP],[key: OMR, title: OMR]]
-        render(result as JSON)
+        def categories = grailsApplication.config.attachement.categories as List
+        render(categories as JSON)
     }
 
     def getTags() {

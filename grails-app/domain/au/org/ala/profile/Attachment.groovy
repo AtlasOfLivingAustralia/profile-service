@@ -39,6 +39,6 @@ class Attachment {
     }
 
     static constraints = {
-        category blank: true,  inList: ['Management', 'General']
+        category blank: true,  validator: {val, obj -> obj.category === val}
     }
 }
