@@ -166,6 +166,7 @@ attachement {
                   [key:"National Best Practice Manual", value:"National Best Practice Manual"],
                   [key:"National Weed Management Guide", value:"National Weed Management Guide"],
                   [key:"National Strategic Plan", value:"National Strategic Plan"],
+                  [key:"Management", value:"Management"],
                   [key:"Other Management Resources", value:"Other Management Resources"],
                   [key:"General", value:"General"]
     ]

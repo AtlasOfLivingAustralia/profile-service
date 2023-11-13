@@ -39,6 +39,6 @@ class Attachment {
     }
 
     static constraints = {
-        category blank: true,  validator: {val, obj -> obj.category === val}
+        category blank: true,  validator: {grailsApplication.config.getProperty('attachement.categories',List).value.contains(val)}
     }
 }
