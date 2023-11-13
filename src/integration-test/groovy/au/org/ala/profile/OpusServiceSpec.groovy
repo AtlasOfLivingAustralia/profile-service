@@ -337,4 +337,27 @@ class OpusServiceSpec extends BaseIntegrationSpec {
         updateOpus.approvedLists.size() == json1.approvedLists.size()
         updateOpus.featureLists.size() == json1.featureLists.size()
     }
+
+    def "update opus for approved lists and feature lists are empty"() {
+        given:
+        Opus opus1 = new Opus(title: "opus1", dataResourceUid: "123", glossary: new Glossary(), approvedLists: [], featureLists: [])
+
+        def opus2 = [
+                title         : "opus1",
+                dataResourceUid      : "123",
+                approvedLists        : [],
+                featureLists         : []
+        ]
+
+
+        JSONObject json1 = new JSONObject(opus2)
+        save opus1
+
+        when:
+        Opus updateOpus = service.updateOpus(opus1.uuid, json1)
+
+        then:
+        updateOpus.approvedLists.size() == json1.approvedLists.size()
+        updateOpus.featureLists.size() == json1.featureLists.size()
+    }
 }
