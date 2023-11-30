@@ -163,11 +163,11 @@ elasticSearch {
 
 attachement {
     categories = [
-                  [key:"National Best Practice Manual", value:"National Best Practice Manual"],
-                  [key:"National Weed Management Guide", value:"National Weed Management Guide"],
-                  [key:"National Strategic Plan", value:"National Strategic Plan"],
+                  [key:"General", value:"General"],
                   [key:"Management", value:"Management"],
-                  [key:"Other Management Resources", value:"Other Management Resources"],
-                  [key:"General", value:"General"]
+                  [key:"National Best Practice Manual", value:"National Best Practice Manual"],
+                  [key:"National Strategic Plan", value:"National Strategic Plan"],
+                  [key:"National Weed Management Guide", value:"National Weed Management Guide"],
+                  [key:"Other Management Resources", value:"Other Management Resources"]
     ]
 }
