@@ -438,6 +438,11 @@ class OpusController extends BaseController {
         }
     }
 
+    def getCategories() {
+        def categories = grailsApplication.config.getProperty('attachement.categories', List)
+        render(categories as JSON)
+    }
+
     def getTags() {
         render([tags: Tag.list()] as JSON)
     }
