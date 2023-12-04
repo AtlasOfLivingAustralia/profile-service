@@ -1,8 +1,9 @@
 package au.org.ala.profile
 
 import au.org.ala.profile.util.ProfileSortOption
-import au.org.ala.web.AuthService
+import au.org.ala.profile.util.SearchOptions
 import grails.gorm.transactions.Rollback
+import grails.plugins.elasticsearch.ElasticSearchService
 import grails.testing.mixin.integration.Integration
 import org.grails.datastore.mapping.core.Datastore
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,6 +15,8 @@ class SearchServiceSpec extends BaseIntegrationSpec {
     SearchService service
     @Autowired
     Datastore datastore
+    @Autowired
+    ElasticSearchService elasticSearchService
 
     Closure doWithSpring () {
         System.println("Test")
@@ -1753,5 +1756,49 @@ class SearchServiceSpec extends BaseIntegrationSpec {
         then: "the result list should contain one profile (the species), and the child count of that profile should be 1 (for the subsp.)"
         result.size() == 1
         result[0].childCount == 1
+    }
+
+    def "buildTextSearch should include partial single matches from certain collection"() {
+        given:
+        Opus opus1 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr1", title: "title1")
+        Profile profile1 = save new Profile(scientificName: "Dilany", fullName: "name1", opus: opus1, rank: "species", classification: [new Classification(rank: "kingdom", name: "Plantae")])
+
+        SearchOptions options = new SearchOptions()
+        options.setNameOnly(false)
+        options.setMatchAll(true)
+        options.setIncludeArchived(false)
+        options.setSearchAla(true)
+        options.setSearchNsl(true)
+        options.setIncludeNameAttributes(false)
+        options.setHideStubs(true)
+
+        when:
+        Map qMap = service.buildTextSearch("dilan", options)
+
+        then:
+        qMap.findAll(it -> it.toString().contains(profile1.scientificName)) != null
+    }
+
+    def "buildTextSearch should include partial multiple matches from certain collection"() {
+        given:
+        String searchItem = "BURDAL TOTEM"
+
+        Opus opus1 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr1", title: "title1")
+        Profile profile1 = save new Profile(scientificName: "Salt Water Crocodile", fullName: searchItem, opus: opus1, rank: "species", classification: [new Classification(rank: "kingdom", name: "Plantae")])
+
+        SearchOptions options = new SearchOptions()
+        options.setNameOnly(false)
+        options.setMatchAll(true)
+        options.setIncludeArchived(false)
+        options.setSearchAla(true)
+        options.setSearchNsl(true)
+        options.setIncludeNameAttributes(false)
+        options.setHideStubs(true)
+
+        when:
+        Map qMap = service.buildTextSearch(searchItem, options)
+
+        then:
+        qMap.findAll(it -> it.toString().contains(profile1.toString())) != null
     }
 }
