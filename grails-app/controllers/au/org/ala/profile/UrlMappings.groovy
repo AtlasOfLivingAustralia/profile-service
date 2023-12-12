@@ -118,6 +118,9 @@ class UrlMappings {
         "/opus/$opusId/restore/$profileId" controller: "profile", action: [POST: "restoreArchivedProfile"]
         "/opus/$opusId/reindex" controller: "opus", action: [POST: "reindex"]
 
+        "/opus/$opusId/image/$imageId/metadata" controller: "image", action: [GET: "getImageInfo", POST: "updateMetadata"]
+        "/image/$imageId" controller: "image", action: [GET: "getImageInfo"]
+
         "/checkName" controller: "profile", action: [GET: "checkName"]
 
         "/report/archivedProfiles" controller: "report", action: [GET: "archivedProfiles"]
@@ -130,9 +133,6 @@ class UrlMappings {
         "/job/$jobType/$jobId" controller: "job", action: [DELETE: "deleteJob", POST: "updateJob"]
         "/job/$jobType" controller: "job", action: [GET: "listAllPendingJobs", PUT: "createJob"]
         "/job/" controller: "job", action: [GET: "listAllPendingJobs", PUT: "createJob"]
-
-        "/image/$imageId" controller: "image", action: [GET: "getImageInfo"]
-        "/image/$imageId/metadata" controller: "image", action: [GET: "getImageInfo", POST: "updateMetadata"]
 
         "/statistics/" controller: "statistics", action: [GET: "index"]
 
