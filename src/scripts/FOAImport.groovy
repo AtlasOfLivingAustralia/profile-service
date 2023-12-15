@@ -27,15 +27,17 @@ class FOAImport {
     static String PROFILE_SERVICE_IMPORT_URL
     static String PROFILE_SERVICE_REPORT_URL
     static String DELIMITER
+    static String ACCESS_TOKEN
 
 
     static void main(args) {
-        def cli = new CliBuilder(usage: "groovy FOAImport -f <datadir> -o opusId -p <profileServiceBaseUrl> -d <delimiter default ,> -r <reportfile>")
+        def cli = new CliBuilder(usage: "groovy FOAImport -f <datadir> -o opusId -p <profileServiceBaseUrl> -d <delimiter default ,> -r <reportfile> -a <accessToken>")
         cli.f(longOpt: "dir", "source data directory", required: true, args: 1)
         cli.o(longOpt: "opusId", "UUID of the FOA Opus", required: true, args: 1)
         cli.p(longOpt: "profileServiceBaseUrl", "Base URL of the profile service", required: true, args: 1)
         cli.d(longOpt: "delimiter", "Data file delimiter (defaults to ,)", required: false, args: 1)
         cli.r(longOpt: "reportFile", "File to write the results of the import to", required: false, args: 1)
+        cli.a(longOpt: "accessToken", "Bearer token to access profiles service", required: true, args: 1)
 
         OptionAccessor opt = cli.parse(args)
 
@@ -50,6 +52,7 @@ class FOAImport {
         PROFILE_SERVICE_IMPORT_URL = "${opt.p}/import/profile"
         PROFILE_SERVICE_REPORT_URL = "${opt.p}/"
         DELIMITER = opt.d ?: ","
+        ACCESS_TOKEN = opt.a ?: ""
 
         List profiles = []
 
@@ -104,7 +107,7 @@ class FOAImport {
             StringBuilder volume = new StringBuilder("<p>")
             volume.append(cleanupText(line.VOLUME_REFERENCE))
             volume.append("</p>")
-            attributes << [title: "Source citation", text: volume.toString(), creators: [], stripHtml: false]
+//            attributes << [title: "Source citation", text: volume.toString(), creators: [], stripHtml: false]
 
             String author = attrs ? attrs["Author"]?.join(", ") : null
 
@@ -135,6 +138,8 @@ class FOAImport {
         println "Importing ${profiles.size()} profiles..."
         println(PROFILE_SERVICE_IMPORT_URL)
         def service = new RESTClient(PROFILE_SERVICE_IMPORT_URL)
+        service.setHeaders(["Authorization": "Bearer ${ACCESS_TOKEN}"])
+        service.handler.failure = { resp ->     println "Unexpected failure: ${resp.statusLine}"   }
 
         def resp = service.post(body: opus, requestContentType: JSON)
 
@@ -148,6 +153,8 @@ class FOAImport {
         Thread.sleep(sleepTime)
 
         service = new RESTClient("${PROFILE_SERVICE_REPORT_URL}import/${importId}/report")
+        service.setHeaders(["Authorization": "Bearer ${ACCESS_TOKEN}"])
+        service.handler.failure = { re ->     println "Unexpected failure: ${re.statusLine}"   }
         resp = service.get([:]).data
 
         while (resp.status == "IN_PROGRESS") {
@@ -249,7 +256,7 @@ class FOAImport {
                 println "Failed to extract attribute titles from line [${line}]"
             }
         }
-
+        println "Loaded ${attributeTitles.size()} attribute titles"
         attributeTitles
     }
 
@@ -274,6 +281,7 @@ class FOAImport {
             }
         }
 
+        println "Loaded ${attributes.size()} taxa attributes"
         attributes
     }
 

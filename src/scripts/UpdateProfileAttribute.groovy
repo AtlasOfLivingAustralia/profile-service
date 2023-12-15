@@ -47,9 +47,10 @@ class UpdateProfileAttribute {
     static String USER_DISPLAY_NAME
     static String OUTPUT_FILE
     static String IMPORT_OUTPUT_FILE
+    static String ACCESS_TOKEN
 
     static void main(args) {
-        def cli = new CliBuilder(usage: "groovy UpdateProfileAttribute -f <datadir> -o opusId -p <profileServiceBaseUrl> -u <emailAddress> -r <reportfile>")
+        def cli = new CliBuilder(usage: "groovy UpdateProfileAttribute -f <datadir> -o opusId -p <profileServiceBaseUrl> -u <emailAddress> -r <reportfile> -a <accessToken>")
         cli.f(longOpt: "dir", "source data directory", required: true, args: 1)
         cli.o(longOpt: "opusId", "UUID of the FOA Opus", required: true, args: 1)
         cli.p(longOpt: "profileServiceBaseUrl", "Base URL of the profile service", required: true, args: 1)
@@ -57,6 +58,7 @@ class UpdateProfileAttribute {
         cli.d(longOpt: "displayName", "Display name of a ALA user importing script", required: true, args: 1)
         cli.i(longOpt: "importFile", "Email address of the ALA user importing script", required: true, args: 1)
         cli.r(longOpt: "reportFile", "File to write the results of the import to", required: false, args: 1)
+        cli.a(longOpt: "accessToken", "Bearer token to access profiles service", required: true, args: 1)
 
         OptionAccessor opt = cli.parse(args)
         if(!opt) {
@@ -71,7 +73,8 @@ class UpdateProfileAttribute {
         DATA_DIR = opt.f
         IMPORT_OUTPUT_FILE = opt.i
         OUTPUT_FILE = opt.r ?: "updatedAttributes.json"
-        ATTRIBUTE_OPTION = OVERWRITE
+        ACCESS_TOKEN = opt.a ?: ""
+        ATTRIBUTE_OPTION = APPEND
 
         Map<Integer, String> attributeTitles = loadAttributeTitles()
         Map<Integer, Map<String, List<String>>> taxaAttributes = loadAttributes(attributeTitles)
@@ -94,6 +97,7 @@ class UpdateProfileAttribute {
                 println PROFILE_SERVICE_PROFILE_URL
 
                 RESTClient client = new RESTClient(PROFILE_SERVICE_PROFILE_URL)
+                client.setHeaders(["Authorization": "Bearer ${ACCESS_TOKEN}"])
                 def resp = client.get([:])
                 def profile = resp.getData()
                 println new JsonBuilder(profile).toPrettyString()
@@ -128,6 +132,7 @@ class UpdateProfileAttribute {
                     try {
                         if (body.text != attribute?.text) {
                             client = new RESTClient(ATTRIBUTE_URL)
+                            client.setHeaders(["Authorization": "Bearer ${ACCESS_TOKEN}"])
                             def respData = client.post(body: body, requestContentType: JSON)
                             if (respData.success) {
                                 println "Successfully updated $PROFILE_ID $name"
@@ -166,7 +171,7 @@ class UpdateProfileAttribute {
             switch (ATTRIBUTE_OPTION) {
                 case APPEND:
                     if (!attribute.text?.contains(additionalContent)) {
-                        return attribute.text + decorateText(additionalContent)
+                        return attribute.text + "<br>--------------------<br>"+ decorateText(additionalContent)
                     }
 
                     return attribute.text
