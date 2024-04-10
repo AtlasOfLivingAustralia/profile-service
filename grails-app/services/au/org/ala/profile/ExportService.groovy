@@ -148,6 +148,7 @@ class ExportService extends BaseDataAccessService {
                                 title  : title.name,
                                 text   : title.containsName ? Utils.cleanupText(attribute.text) : attribute.text,
                                 name   : title.containsName,
+                                source : attribute.source,
                                 summary: title.summary
                         ]
                     }
