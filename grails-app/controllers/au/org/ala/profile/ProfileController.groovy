@@ -3,6 +3,7 @@ package au.org.ala.profile
 import au.ala.org.ws.security.RequireApiKey
 import au.ala.org.ws.security.SkipApiKeyCheck
 import au.org.ala.profile.util.Utils
+import com.google.common.base.Stopwatch
 import grails.converters.JSON
 import groovy.json.JsonSlurper
 import org.springframework.http.HttpStatus
@@ -437,15 +438,20 @@ class ProfileController extends BaseController {
     }
 
     def getByUuid() {
+        Stopwatch sw = new Stopwatch().start()
         log.debug("Fetching profile by profileId ${params.profileId}")
         Profile profile = getProfile()
-
+        log.trace("Profile db fetched in ${sw}")
+        sw.reset().start()
         if (profile) {
             final fullClassification = params.boolean('fullClassification', false)
             final latest = params.boolean("latest", false)
             if (fullClassification) {
                 profileService.decorateProfile(profile, latest, true)
             }
+
+            log.trace("Profile decorated in ${sw}")
+            sw.reset().start()
 
             if (profile && profile.draft && latest) {
                 Opus opus = profile.opus
@@ -455,10 +461,17 @@ class ProfileController extends BaseController {
                 profile.privateMode = true
             }
 
+            log.trace("Profile darft check ${sw}")
+            sw.reset().start()
+
             def florulaListId = masterListService.getFlorulaListIdForUser(request, profile.opus.uuid)
             profile.opus.florulaListId = florulaListId
 
+            log.trace("Profile florula check ${sw}")
+            sw.reset().start()
+
             render (profile as JSON)
+            log.trace("Profile fetched in ${sw}")
         } else {
             notFound()
         }

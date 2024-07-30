@@ -135,7 +135,7 @@ class Opus {
     static mapping = {
         autoTimestamp true
         glossary cascade: "all-delete-orphan"
-        authorities cascade: "all-delete-orphan", fetch: 'join'
+        authorities cascade: "all-delete-orphan", fetch: 'join', batchSize: 20
         shortName index: true
         uuid index: true
         additionalOccurrenceResources fetch: 'join'

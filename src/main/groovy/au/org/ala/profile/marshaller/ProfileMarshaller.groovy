@@ -2,13 +2,17 @@ package au.org.ala.profile.marshaller
 
 import au.org.ala.profile.Profile
 import au.org.ala.profile.util.Utils
+import com.google.common.base.Stopwatch
 import grails.converters.JSON
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 class ProfileMarshaller {
-
+    Logger log = LoggerFactory.getLogger(ProfileMarshaller.class)
     void register() {
         JSON.registerObjectMarshaller(Profile) { Profile profile ->
-            return [
+            Stopwatch sw = new Stopwatch().start()
+            def value = [
                     uuid                     : profile.uuid,
                     guid                     : profile.guid && profile.guid != "null" ? "${profile.guid}" : "",
                     nslNameIdentifier        : profile.nslNameIdentifier,
@@ -68,6 +72,9 @@ class ProfileMarshaller {
                     profileStatus            : profile.profileStatus,
                     profileSettings          : profile.profileSettings? [ autoFormatProfileName: profile.profileSettings.autoFormatProfileName, formattedNameText: profile.profileSettings.formattedNameText ]: null
             ]
+
+            log.trace("profileMarshaller() - Get profile by UUID ${profile.uuid}: $sw")
+            return value
         }
     }
 }
