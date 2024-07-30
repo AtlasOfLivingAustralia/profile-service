@@ -27,15 +27,17 @@ class FOAImport {
     static String PROFILE_SERVICE_IMPORT_URL
     static String PROFILE_SERVICE_REPORT_URL
     static String DELIMITER
+    static String ACCESS_TOKEN
 
 
     static void main(args) {
-        def cli = new CliBuilder(usage: "groovy FOAImport -f <datadir> -o opusId -p <profileServiceBaseUrl> -d <delimiter default ,> -r <reportfile>")
+        def cli = new CliBuilder(usage: "groovy FOAImport -f <datadir> -o opusId -p <profileServiceBaseUrl> -d <delimiter default ,> -r <reportfile> -a <accessToken>")
         cli.f(longOpt: "dir", "source data directory", required: true, args: 1)
         cli.o(longOpt: "opusId", "UUID of the FOA Opus", required: true, args: 1)
         cli.p(longOpt: "profileServiceBaseUrl", "Base URL of the profile service", required: true, args: 1)
         cli.d(longOpt: "delimiter", "Data file delimiter (defaults to ,)", required: false, args: 1)
         cli.r(longOpt: "reportFile", "File to write the results of the import to", required: false, args: 1)
+        cli.a(longOpt: "accessToken", "Bearer token to access profiles service", required: true, args: 1)
 
         OptionAccessor opt = cli.parse(args)
 
@@ -50,6 +52,7 @@ class FOAImport {
         PROFILE_SERVICE_IMPORT_URL = "${opt.p}/import/profile"
         PROFILE_SERVICE_REPORT_URL = "${opt.p}/"
         DELIMITER = opt.d ?: ","
+        ACCESS_TOKEN = opt.a ?: ""
 
         List profiles = []
 
@@ -66,12 +69,12 @@ class FOAImport {
         }
 
         // Gets a map of attribute name and its id - [1: "NOMENCLATURE", 2: "NOTE", 3: "SOURCE"]
-        Map<Integer, String> attributeTitles = loadAttributeTitles()
+        Map<String, String> attributeTitles = loadAttributeTitles()
 
-        Map<Integer, Map<String, List<String>>> taxaAttributes = loadAttributes(attributeTitles)
+        Map<String, Map<String, List<String>>> taxaAttributes = loadAttributes(attributeTitles)
 
-        Map<Integer, List<Map<String, String>>> images = loadImages()
-        Map<Integer, List<String>> maps = loadMaps()
+        Map<String, List<Map<String, String>>> images = loadImages()
+        Map<String, List<String>> maps = loadMaps()
 
         List collectionImages = []
 
@@ -79,7 +82,7 @@ class FOAImport {
         csv.each { line ->
             if (count++ % 50 == 0) println "Processing taxa line ${count}..."
 
-            Integer id = line.TAXA_ID as int
+            String id = line.TAXA_ID
             String scientificName = line.NAME?.trim()
 
             String fullName = constructFullName(line.NAME, line.GENUS, line.SPECIES, line.INFRASPECIES_RANK, line.INFRASPECIES, line.AUTHOR)
@@ -104,7 +107,7 @@ class FOAImport {
             StringBuilder volume = new StringBuilder("<p>")
             volume.append(cleanupText(line.VOLUME_REFERENCE))
             volume.append("</p>")
-            attributes << [title: "Source citation", text: volume.toString(), creators: [], stripHtml: false]
+//            attributes << [title: "Source citation", text: volume.toString(), creators: [], stripHtml: false]
 
             String author = attrs ? attrs["Author"]?.join(", ") : null
 
@@ -135,6 +138,8 @@ class FOAImport {
         println "Importing ${profiles.size()} profiles..."
         println(PROFILE_SERVICE_IMPORT_URL)
         def service = new RESTClient(PROFILE_SERVICE_IMPORT_URL)
+        service.setHeaders(["Authorization": "Bearer ${ACCESS_TOKEN}"])
+        service.handler.failure = { resp ->     println "Unexpected failure: ${resp.statusLine}"   }
 
         def resp = service.post(body: opus, requestContentType: JSON)
 
@@ -148,6 +153,8 @@ class FOAImport {
         Thread.sleep(sleepTime)
 
         service = new RESTClient("${PROFILE_SERVICE_REPORT_URL}import/${importId}/report")
+        service.setHeaders(["Authorization": "Bearer ${ACCESS_TOKEN}"])
+        service.handler.failure = { re ->     println "Unexpected failure: ${re.statusLine}"   }
         resp = service.get([:]).data
 
         while (resp.status == "IN_PROGRESS") {
@@ -237,19 +244,19 @@ class FOAImport {
         fullName
     }
 
-    static Map<Integer, String> loadAttributeTitles() {
-        Map<Integer, String> attributeTitles = [:]
+    static Map<String, String> loadAttributeTitles() {
+        Map<String, String> attributeTitles = [:]
         def csv = parseCsv(new File("${DATA_DIR}/foa_export_attr.csv").newReader(FILE_ENCODING))
         csv.each { line ->
             try {
                 String propertyName = line.PROPERTY_NAME?.replaceAll("_", " ")?.trim()
                 propertyName = StringUtils.capitalize(propertyName)
-                attributeTitles << [(line.PROPERTY_ID as Integer): propertyName]
+                attributeTitles << [(line.PROPERTY_ID): propertyName]
             } catch (e) {
                 println "Failed to extract attribute titles from line [${line}]"
             }
         }
-
+        println "Loaded ${attributeTitles.size()} attribute titles"
         attributeTitles
     }
 
@@ -259,21 +266,22 @@ class FOAImport {
      * @param attributeTitles
      * @return Map<Integer, Map<String, List<String>>>
      */
-    static Map<Integer, Map<String, List<String>>> loadAttributes(Map<Integer, String> attributeTitles) {
-        Map<Integer, Map<String, List<String>>> attributes = [:]
+    static Map<String, Map<String, List<String>>> loadAttributes(Map<String, String> attributeTitles) {
+        Map<String, Map<String, List<String>>> attributes = [:]
         int count = 0
         def csv = parseCsv(new File("${DATA_DIR}/foa_export_attr.csv").newReader(FILE_ENCODING))
         csv.each { line ->
             if (count++ % 50 == 0) println "Processing attribute line ${count}..."
             try {
-                String title = attributeTitles[line.PROPERTY_ID as Integer]
+                String title = attributeTitles[line.PROPERTY_ID]
 
-                attributes.get(line.TAXA_ID as Integer, [:]).get(title, []) << cleanupText(line.VAL)
+                attributes.get(line.TAXA_ID, [:]).get(title, []) << cleanupText(line.VAL)
             } catch (e) {
                 println "${e.message} - ${line}"
             }
         }
 
+        println "Loaded ${attributes.size()} taxa attributes"
         attributes
     }
 
