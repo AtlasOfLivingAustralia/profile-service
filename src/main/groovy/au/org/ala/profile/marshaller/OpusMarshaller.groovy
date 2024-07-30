@@ -8,12 +8,17 @@ import au.org.ala.profile.Theme
 import au.org.ala.profile.util.DataResourceOption
 import au.org.ala.profile.util.ImageOption
 import au.org.ala.profile.util.ShareRequestStatus
+import com.google.common.base.Stopwatch
 import grails.converters.JSON
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
 
 class OpusMarshaller {
-
+    Logger log = LoggerFactory.getLogger(OpusMarshaller.class)
     void register() {
         JSON.registerObjectMarshaller(Opus) { Opus opus ->
+            Stopwatch sw = new Stopwatch().start()
             def value = [
                     uuid                       : opus.uuid,
                     dataResourceUid            : opus.dataResourceUid,
@@ -80,6 +85,7 @@ class OpusMarshaller {
                     dateCreated                : opus.dateCreated?.time,
                     lastUpdated                : opus.lastUpdated?.time
             ]
+            log.trace("opusMarshaller() - Get opus by UUID ${opus.uuid}: $sw")
             return value
         }
     }
