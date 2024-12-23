@@ -78,7 +78,7 @@ class FOAImport {
 
         List collectionImages = []
 
-        def csv = parseCsv(new File("${DATA_DIR}/foa_export_name.csv").newReader(FILE_ENCODING))
+        def csv = parseCsv(new File("${DATA_DIR}/taxon_TMAG_insects.csv").newReader(FILE_ENCODING))
         csv.each { line ->
             if (count++ % 50 == 0) println "Processing taxa line ${count}..."
 
@@ -246,7 +246,7 @@ class FOAImport {
 
     static Map<String, String> loadAttributeTitles() {
         Map<String, String> attributeTitles = [:]
-        def csv = parseCsv(new File("${DATA_DIR}/foa_export_attr.csv").newReader(FILE_ENCODING))
+        def csv = parseCsv(new File("${DATA_DIR}/attributes_TMAG_Insects.csv").newReader(FILE_ENCODING))
         csv.each { line ->
             try {
                 String propertyName = line.PROPERTY_NAME?.replaceAll("_", " ")?.trim()
@@ -269,7 +269,7 @@ class FOAImport {
     static Map<String, Map<String, List<String>>> loadAttributes(Map<String, String> attributeTitles) {
         Map<String, Map<String, List<String>>> attributes = [:]
         int count = 0
-        def csv = parseCsv(new File("${DATA_DIR}/foa_export_attr.csv").newReader(FILE_ENCODING))
+        def csv = parseCsv(new File("${DATA_DIR}/attributes_TMAG_Insects.csv").newReader(FILE_ENCODING))
         csv.each { line ->
             if (count++ % 50 == 0) println "Processing attribute line ${count}..."
             try {

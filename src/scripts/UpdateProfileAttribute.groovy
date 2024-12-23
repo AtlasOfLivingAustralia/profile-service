@@ -47,9 +47,10 @@ class UpdateProfileAttribute {
     static String USER_DISPLAY_NAME
     static String OUTPUT_FILE
     static String IMPORT_OUTPUT_FILE
+    static String ACCESS_TOKEN
 
     static void main(args) {
-        def cli = new CliBuilder(usage: "groovy UpdateProfileAttribute -f <datadir> -o opusId -p <profileServiceBaseUrl> -u <emailAddress> -r <reportfile>")
+        def cli = new CliBuilder(usage: "groovy UpdateProfileAttribute -f <datadir> -o opusId -p <profileServiceBaseUrl> -u <emailAddress> -r <reportfile> -a <accessToken>")
         cli.f(longOpt: "dir", "source data directory", required: true, args: 1)
         cli.o(longOpt: "opusId", "UUID of the FOA Opus", required: true, args: 1)
         cli.p(longOpt: "profileServiceBaseUrl", "Base URL of the profile service", required: true, args: 1)
@@ -57,8 +58,11 @@ class UpdateProfileAttribute {
         cli.d(longOpt: "displayName", "Display name of a ALA user importing script", required: true, args: 1)
         cli.i(longOpt: "importFile", "Email address of the ALA user importing script", required: true, args: 1)
         cli.r(longOpt: "reportFile", "File to write the results of the import to", required: false, args: 1)
+        cli.a(longOpt: "accessToken", "Bearer token to access profiles service", required: true, args: 1)
+
 
         OptionAccessor opt = cli.parse(args)
+        println opt: opt
         if(!opt) {
             cli.usage()
             return
@@ -72,6 +76,7 @@ class UpdateProfileAttribute {
         IMPORT_OUTPUT_FILE = opt.i
         OUTPUT_FILE = opt.r ?: "updatedAttributes.json"
         ATTRIBUTE_OPTION = OVERWRITE
+        ACCESS_TOKEN = opt.a ?: ""
 
         Map<Integer, String> attributeTitles = loadAttributeTitles()
         Map<Integer, Map<String, List<String>>> taxaAttributes = loadAttributes(attributeTitles)
@@ -84,8 +89,7 @@ class UpdateProfileAttribute {
             output.createNewFile()
         }
 
-
-        def csv = parseCsv(new File("${DATA_DIR}/foa_export_name.csv").newReader(FILE_ENCODING))
+        def csv = parseCsv(new File("${DATA_DIR}/taxon_TMAG_insects.csv").newReader(FILE_ENCODING))
         csv.each { taxon ->
             if (existingProfile[taxon.NAME.toLowerCase()]) {
                 PROFILE_ID = URLEncoder.encode(taxon.NAME, FILE_ENCODING)
@@ -93,12 +97,21 @@ class UpdateProfileAttribute {
                 PROFILE_SERVICE_PROFILE_URL = "$PROFILE_URL/opus/$OPUS_ID/profile/$PROFILE_ID?latest=true"
                 println PROFILE_SERVICE_PROFILE_URL
 
-                RESTClient client = new RESTClient(PROFILE_SERVICE_PROFILE_URL)
-                def resp = client.get([:])
-                def profile = resp.getData()
-                println new JsonBuilder(profile).toPrettyString()
+                def client = new RESTClient(PROFILE_SERVICE_PROFILE_URL)
+                client.setHeaders(["Authorization": "Bearer ${ACCESS_TOKEN}"])
+                def profile
+                try {
+                    def resp = client.get([:])
+                    profile = resp.getData()
+                    println new JsonBuilder(profile).toPrettyString()
+                } catch (groovyx.net.http.HttpResponseException e) {
+                    println "statusCode: " + e.statusCode
+                    println "response data: " + e.response.data
+                    return
 
-                Integer taxonId = taxon.TAXA_ID as int
+                }
+
+                String taxonId = taxon.TAXA_ID
                 Map<String, List<String>> attrs = taxaAttributes.get(taxonId)
                 attrs.each { k, v ->
                     def ATTRIBUTE_URL
@@ -192,12 +205,12 @@ class UpdateProfileAttribute {
 
     static Map<Integer, String> loadAttributeTitles() {
         Map<Integer, String> attributeTitles = [:]
-        def csv = parseCsv(new File("${DATA_DIR}/foa_export_attr.csv").newReader(FILE_ENCODING))
+        def csv = parseCsv(new File("${DATA_DIR}/attributes_TMAG_Insects.csv").newReader(FILE_ENCODING))
         csv.each { line ->
             try {
                 String propertyName = line.PROPERTY_NAME?.replaceAll("_", " ")?.trim()
                 propertyName = StringUtils.capitalize(propertyName)
-                attributeTitles << [(line.PROPERTY_ID as Integer): propertyName]
+                attributeTitles << [(line.PROPERTY_ID): propertyName]
             } catch (e) {
                 println "Failed to extract attribute titles from line [${line}]"
                 e.printStackTrace()
@@ -216,13 +229,16 @@ class UpdateProfileAttribute {
     static Map<Integer, Map<String, List<String>>> loadAttributes(Map<Integer, String> attributeTitles) {
         Map<Integer, Map<String, List<String>>> attributes = [:]
         int count = 0
-        def csv = parseCsv(new File("${DATA_DIR}/foa_export_attr.csv").newReader(FILE_ENCODING))
+
+        def csv = parseCsv(new File("${DATA_DIR}/attributes_TMAG_Insects.csv").newReader(FILE_ENCODING))
         csv.each { line ->
             if (count++ % 50 == 0) println "Processing attribute line ${count}..."
             try {
-                String title = attributeTitles[line.PROPERTY_ID as Integer]
 
-                attributes.get(line.TAXA_ID as Integer, [:]).get(title, []) << cleanupText(line.VAL)
+                String title = attributeTitles[line.PROPERTY_ID]
+
+                attributes.get(line.TAXA_ID, [:]).get(title, []) << cleanupText(line.VAL)
+
             } catch (e) {
                 println "${e.message} - ${line}"
             }
