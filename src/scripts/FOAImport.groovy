@@ -69,20 +69,20 @@ class FOAImport {
         }
 
         // Gets a map of attribute name and its id - [1: "NOMENCLATURE", 2: "NOTE", 3: "SOURCE"]
-        Map<Integer, String> attributeTitles = loadAttributeTitles()
+        Map<String, String> attributeTitles = loadAttributeTitles()
 
-        Map<Integer, Map<String, List<String>>> taxaAttributes = loadAttributes(attributeTitles)
+        Map<String, Map<String, List<String>>> taxaAttributes = loadAttributes(attributeTitles)
 
-        Map<Integer, List<Map<String, String>>> images = loadImages()
-        Map<Integer, List<String>> maps = loadMaps()
+        Map<String, List<Map<String, String>>> images = loadImages()
+        Map<String, List<String>> maps = loadMaps()
 
         List collectionImages = []
 
-        def csv = parseCsv(new File("${DATA_DIR}/foa_export_name.csv").newReader(FILE_ENCODING))
+        def csv = parseCsv(new File("${DATA_DIR}/taxon_TMAG_insects.csv").newReader(FILE_ENCODING))
         csv.each { line ->
             if (count++ % 50 == 0) println "Processing taxa line ${count}..."
 
-            Integer id = line.TAXA_ID as int
+            String id = line.TAXA_ID
             String scientificName = line.NAME?.trim()
 
             String fullName = constructFullName(line.NAME, line.GENUS, line.SPECIES, line.INFRASPECIES_RANK, line.INFRASPECIES, line.AUTHOR)
@@ -244,14 +244,14 @@ class FOAImport {
         fullName
     }
 
-    static Map<Integer, String> loadAttributeTitles() {
-        Map<Integer, String> attributeTitles = [:]
-        def csv = parseCsv(new File("${DATA_DIR}/foa_export_attr.csv").newReader(FILE_ENCODING))
+    static Map<String, String> loadAttributeTitles() {
+        Map<String, String> attributeTitles = [:]
+        def csv = parseCsv(new File("${DATA_DIR}/attributes_TMAG_Insects.csv").newReader(FILE_ENCODING))
         csv.each { line ->
             try {
                 String propertyName = line.PROPERTY_NAME?.replaceAll("_", " ")?.trim()
                 propertyName = StringUtils.capitalize(propertyName)
-                attributeTitles << [(line.PROPERTY_ID as Integer): propertyName]
+                attributeTitles << [(line.PROPERTY_ID): propertyName]
             } catch (e) {
                 println "Failed to extract attribute titles from line [${line}]"
             }
@@ -266,16 +266,16 @@ class FOAImport {
      * @param attributeTitles
      * @return Map<Integer, Map<String, List<String>>>
      */
-    static Map<Integer, Map<String, List<String>>> loadAttributes(Map<Integer, String> attributeTitles) {
-        Map<Integer, Map<String, List<String>>> attributes = [:]
+    static Map<String, Map<String, List<String>>> loadAttributes(Map<String, String> attributeTitles) {
+        Map<String, Map<String, List<String>>> attributes = [:]
         int count = 0
-        def csv = parseCsv(new File("${DATA_DIR}/foa_export_attr.csv").newReader(FILE_ENCODING))
+        def csv = parseCsv(new File("${DATA_DIR}/attributes_TMAG_Insects.csv").newReader(FILE_ENCODING))
         csv.each { line ->
             if (count++ % 50 == 0) println "Processing attribute line ${count}..."
             try {
-                String title = attributeTitles[line.PROPERTY_ID as Integer]
+                String title = attributeTitles[line.PROPERTY_ID]
 
-                attributes.get(line.TAXA_ID as Integer, [:]).get(title, []) << cleanupText(line.VAL)
+                attributes.get(line.TAXA_ID, [:]).get(title, []) << cleanupText(line.VAL)
             } catch (e) {
                 println "${e.message} - ${line}"
             }
