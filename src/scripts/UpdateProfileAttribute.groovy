@@ -60,7 +60,6 @@ class UpdateProfileAttribute {
         cli.r(longOpt: "reportFile", "File to write the results of the import to", required: false, args: 1)
         cli.a(longOpt: "accessToken", "Bearer token to access profiles service", required: true, args: 1)
 
-
         OptionAccessor opt = cli.parse(args)
         println opt: opt
         if(!opt) {
@@ -108,7 +107,6 @@ class UpdateProfileAttribute {
                     println "statusCode: " + e.statusCode
                     println "response data: " + e.response.data
                     return
-
                 }
 
                 String taxonId = taxon.TAXA_ID
@@ -141,6 +139,7 @@ class UpdateProfileAttribute {
                     try {
                         if (body.text != attribute?.text) {
                             client = new RESTClient(ATTRIBUTE_URL)
+                            client.setHeaders(["Authorization": "Bearer ${ACCESS_TOKEN}"])
                             def respData = client.post(body: body, requestContentType: JSON)
                             if (respData.success) {
                                 println "Successfully updated $PROFILE_ID $name"
@@ -179,7 +178,7 @@ class UpdateProfileAttribute {
             switch (ATTRIBUTE_OPTION) {
                 case APPEND:
                     if (!attribute.text?.contains(additionalContent)) {
-                        return attribute.text + decorateText(additionalContent)
+                        return attribute.text + "<br>--------------------<br>"+ decorateText(additionalContent)
                     }
 
                     return attribute.text

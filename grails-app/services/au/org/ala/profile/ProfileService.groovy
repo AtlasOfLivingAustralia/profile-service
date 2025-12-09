@@ -610,7 +610,12 @@ class ProfileService extends BaseDataAccessService {
             save profile
         } else {
             profile.draft = profile.draft ?: CloneAndDraftUtil.createDraft(profile)
-            profile.draft.createdBy = userService.getUserForUserId(userService.getUserId()).displayName
+
+            if (userService.getUserId()) {
+                profile.draft.createdBy = userService.getUserForUserId(userService.getUserId()).displayName
+            } else {
+                log.debug("No user ID when switching profile to draft")
+            }
 
             save profile
         }

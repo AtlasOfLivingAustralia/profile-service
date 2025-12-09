@@ -18,9 +18,10 @@ class ImageController extends BaseController {
 
     def updateMetadata() {
         String imageId = params.imageId
+        String opusId = params.opusId
         final metadata = request.getJSON()
-        if (!imageId || !metadata) {
-            badRequest "imageId and request body are required parameters"
+        if (!opusId || !imageId || !metadata) {
+            badRequest "opusId, imageId and request body are required parameters"
         } else {
             def image = localImageService.updateMetadata(imageId, metadata)
             render image as JSON
