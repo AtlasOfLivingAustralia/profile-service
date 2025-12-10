@@ -124,7 +124,7 @@ class AdminService extends BaseDataAccessService {
             results[opus.uuid].profilesUpdated << [
                     (profile.uuid): [
                             'profileName': profile.scientificName,
-                            'old'        : [guid: profile.guid, name: profile.matchedName?.fullName],
+                            'old'        : [guid: profile.matchedName?.guid, name: profile.matchedName?.fullName],
                             'new'        : [guid: newMatchedName?.guid, name: newMatchedName?.fullName]
                     ]
             ]
