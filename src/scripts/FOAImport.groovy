@@ -78,7 +78,7 @@ class FOAImport {
 
         List collectionImages = []
 
-        def csv = parseCsv(new File("${DATA_DIR}/foa_export_name.csv").newReader(FILE_ENCODING))
+        def csv = parseCsv(new File("${DATA_DIR}/taxon_TMAG_insects.csv").newReader(FILE_ENCODING))
         csv.each { line ->
             if (count++ % 50 == 0) println "Processing taxa line ${count}..."
 
@@ -137,24 +137,47 @@ class FOAImport {
 
         println "Importing ${profiles.size()} profiles..."
         println(PROFILE_SERVICE_IMPORT_URL)
+
         def service = new RESTClient(PROFILE_SERVICE_IMPORT_URL)
         service.setHeaders(["Authorization": "Bearer ${ACCESS_TOKEN}"])
-        service.handler.failure = { resp ->     println "Unexpected failure: ${resp.statusLine}"   }
+
+        service.handler.failure = { resp ->
+            println "POST failed: ${resp.statusLine}"
+            println "Content-Type: ${resp.contentType}"
+            try { println "Body: ${resp.data}" } catch (ignored) {}
+            return resp
+        }
 
         def resp = service.post(body: opus, requestContentType: JSON)
 
-        String importId = resp.data.id
+        println "POST status: ${resp.status}"
+        println "POST contentType: ${resp.contentType}"
+        println "POST data class: ${resp.data?.getClass()?.name}"
+        println "POST data (first 2000 chars): ${resp.data?.toString()?.take(2000)}"
+
+        String importId = resp?.data?.id
+        if (!importId) {
+            println "ERROR: importId was not returned."
+            System.exit(2)
+        }
 
         println "Import report will be available at ${PROFILE_SERVICE_REPORT_URL}import/${importId}/report"
 
-//        int sleepTime = 5 * 60 * 1000
+        //        int sleepTime = 5 * 60 * 1000
         int sleepTime = 1 * 30 * 1000
         println "${new SimpleDateFormat("HH:mm:ss.S").format(new Date())} Waiting for import to complete..."
         Thread.sleep(sleepTime)
 
         service = new RESTClient("${PROFILE_SERVICE_REPORT_URL}import/${importId}/report")
         service.setHeaders(["Authorization": "Bearer ${ACCESS_TOKEN}"])
-        service.handler.failure = { re ->     println "Unexpected failure: ${re.statusLine}"   }
+
+        service.handler.failure = { re ->
+            println "GET failed: ${re.statusLine}"
+            println "Content-Type: ${re.contentType}"
+            try { println "Body: ${re.data}" } catch (ignored) {}
+            return re
+        }
+
         resp = service.get([:]).data
 
         while (resp.status == "IN_PROGRESS") {
@@ -246,7 +269,7 @@ class FOAImport {
 
     static Map<String, String> loadAttributeTitles() {
         Map<String, String> attributeTitles = [:]
-        def csv = parseCsv(new File("${DATA_DIR}/foa_export_attr.csv").newReader(FILE_ENCODING))
+        def csv = parseCsv(new File("${DATA_DIR}/attributes_TMAG_Insects_trimmed.csv").newReader(FILE_ENCODING))
         csv.each { line ->
             try {
                 String propertyName = line.PROPERTY_NAME?.replaceAll("_", " ")?.trim()
@@ -269,7 +292,7 @@ class FOAImport {
     static Map<String, Map<String, List<String>>> loadAttributes(Map<String, String> attributeTitles) {
         Map<String, Map<String, List<String>>> attributes = [:]
         int count = 0
-        def csv = parseCsv(new File("${DATA_DIR}/foa_export_attr.csv").newReader(FILE_ENCODING))
+        def csv = parseCsv(new File("${DATA_DIR}/attributes_TMAG_Insects_trimmed.csv").newReader(FILE_ENCODING))
         csv.each { line ->
             if (count++ % 50 == 0) println "Processing attribute line ${count}..."
             try {
