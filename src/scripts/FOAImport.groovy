@@ -128,11 +128,11 @@ class FOAImport {
                 authorship                : author ? [[category: "Author", text: author]] : []
             ]
 
-            if (!scientificNames.containsKey(scientificName.trim().toLowerCase())) {
+            String snKey = (scientificName ?: "").trim().toLowerCase()
+            if (snKey && !scientificNames.containsKey(snKey)) {
                 profiles << profile
             }
-
-            scientificNames.get(scientificName.trim().toLowerCase(), []) << count
+            scientificNames.get(snKey, []) << count
         }
 
         Map opus = [
@@ -306,7 +306,9 @@ class FOAImport {
             try {
                 String taxaId = col(line, "TAXA_ID")
                 String title  = attributeTitles[col(line, "PROPERTY_ID")]
-                attributes.get(taxaId, [:]).get(title, []) << cleanupText(col(line, "VAL"))
+                if (taxaId && title) {
+                    attributes.get(taxaId, [:]).get(title, []) << cleanupText(col(line, "VAL"))
+                }
             } catch (e) {
                 println "${e.message} - ${line}"
             }
