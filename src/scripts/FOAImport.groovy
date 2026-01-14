@@ -82,10 +82,17 @@ class FOAImport {
         csv.each { line ->
             if (count++ % 50 == 0) println "Processing taxa line ${count}..."
 
-            String id = line.TAXA_ID
-            String scientificName = line.NAME?.trim()
+            String id = col(line, "TAXA_ID")
+            String scientificName = col(line, "NAME")?.trim()
 
-            String fullName = constructFullName(line.NAME, line.GENUS, line.SPECIES, line.INFRASPECIES_RANK, line.INFRASPECIES, line.AUTHOR)
+            String fullName = constructFullName(
+                col(line, "NAME"),
+                col(line, "GENUS"),
+                col(line, "SPECIES"),
+                col(line, "INFRASPECIES_RANK"),
+                col(line, "INFRASPECIES"),
+                col(line, "AUTHOR")
+            )
 
             List attributes = []
             Map<String, List<String>> attrs = taxaAttributes.get(id)
@@ -101,23 +108,24 @@ class FOAImport {
             }
 
             Map<String, String> classification = [:]
-            classification.family = line.FAMILY
-            classification.genus = line.GENUS
+            classification.family = col(line, "FAMILY")
+            classification.genus  = col(line, "GENUS")
 
             StringBuilder volume = new StringBuilder("<p>")
-            volume.append(cleanupText(line.VOLUME_REFERENCE))
+            volume.append(cleanupText(col(line, "VOLUME_REFERENCE")))
             volume.append("</p>")
 //            attributes << [title: "Source citation", text: volume.toString(), creators: [], stripHtml: false]
 
             String author = attrs ? attrs["Author"]?.join(", ") : null
 
-            Map profile = [scientificName: scientificName,
-                           classification: classification,
-                           nameAuthor: line.AUTHOR,
-                           fullName: fullName,
-                           attributes: attributes,
-                           nslNomenclatureIdentifier: line.NSL_ID,
-                           authorship: author ? [[category: "Author", text: author]] : []
+            Map profile = [
+                scientificName            : scientificName,
+                classification            : classification,
+                nameAuthor                : col(line, "AUTHOR"),
+                fullName                  : fullName,
+                attributes                : attributes,
+                nslNomenclatureIdentifier : col(line, "NSL_ID"),
+                authorship                : author ? [[category: "Author", text: author]] : []
             ]
 
             if (!scientificNames.containsKey(scientificName.trim().toLowerCase())) {
@@ -272,9 +280,9 @@ class FOAImport {
         def csv = parseCsv(new File("${DATA_DIR}/attributes_TMAG_Insects_trimmed.csv").newReader(FILE_ENCODING))
         csv.each { line ->
             try {
-                String propertyName = line.PROPERTY_NAME?.replaceAll("_", " ")?.trim()
+                String propertyName = col(line, "PROPERTY_NAME")?.replaceAll("_", " ")?.trim()
                 propertyName = StringUtils.capitalize(propertyName)
-                attributeTitles << [(line.PROPERTY_ID): propertyName]
+                attributeTitles << [(col(line, "PROPERTY_ID")): propertyName]
             } catch (e) {
                 println "Failed to extract attribute titles from line [${line}]"
             }
@@ -296,9 +304,9 @@ class FOAImport {
         csv.each { line ->
             if (count++ % 50 == 0) println "Processing attribute line ${count}..."
             try {
-                String title = attributeTitles[line.PROPERTY_ID]
-
-                attributes.get(line.TAXA_ID, [:]).get(title, []) << cleanupText(line.VAL)
+                String taxaId = col(line, "TAXA_ID")
+                String title  = attributeTitles[col(line, "PROPERTY_ID")]
+                attributes.get(taxaId, [:]).get(title, []) << cleanupText(col(line, "VAL"))
             } catch (e) {
                 println "${e.message} - ${line}"
             }
@@ -357,6 +365,10 @@ class FOAImport {
         }
 
         str
+    }
+
+    static String col(def line, String name) {
+        line[name] ?: line["\uFEFF${name}"]
     }
 
     static createImageFiles(List collectionImages) {
