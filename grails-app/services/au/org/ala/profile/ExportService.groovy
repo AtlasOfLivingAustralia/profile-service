@@ -136,6 +136,16 @@ class ExportService extends BaseDataAccessService {
                     profile.bibliography = data.bibliography?.collect { it.text }
                     profile.specimens = data.specimens?.collect { it }
                     profile.occurrenceQuery = data.occurrenceQuery
+
+                    profile.comments = Comment.findAllByProfileUuid(data.uuid).collect { Comment comment ->
+                        [
+                            uuid       : comment.uuid,
+                            text       : comment.text,
+                            author     : [userId: comment.author?.userId, name  : comment.author?.name],
+                            dateCreated: comment.dateCreated,
+                            children   : comment.children
+                        ]
+                    }
                 }
 
                 def attributeCursor = Attribute.collection.find([profile: data._id]).iterator()
