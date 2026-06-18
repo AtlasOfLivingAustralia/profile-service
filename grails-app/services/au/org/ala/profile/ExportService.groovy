@@ -129,8 +129,13 @@ class ExportService extends BaseDataAccessService {
                     profile.acknowledgements = data.authorship?.collectEntries {
                         [(authorCategories[it.category].name): it.text]
                     }
-                    profile.links = data.links?.collectEntries {
-                        [url: it.url, description: it.description, name: it.name]
+                    profile.links = data.links?.collect {
+                        [
+                            uuid   : it.uuid,
+                            title  : it.title,
+                            url    : it.url,
+                            version: it.version
+                        ]
                     }
                     profile.bhlLinks = data.bhlLinks?.collect {
                         [
