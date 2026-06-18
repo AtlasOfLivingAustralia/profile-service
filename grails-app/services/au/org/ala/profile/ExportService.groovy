@@ -103,6 +103,7 @@ class ExportService extends BaseDataAccessService {
                         matchedName      : data.matchedName,
                         dateCreated      : data.dateCreated,
                         lastUpdate       : data.lastUpdated,
+                        lastUpdatedBy    : data.lastUpdatedBy,
                         nameAuthor       : data.nameAuthor,
                         nslNameId        : data.nslNameIdentifier,
                         nslNomenclatureId: data.nslNomenclatureIdentifier,
