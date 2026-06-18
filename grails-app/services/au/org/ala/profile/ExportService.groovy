@@ -107,6 +107,7 @@ class ExportService extends BaseDataAccessService {
                         nslNameId        : data.nslNameIdentifier,
                         nslNomenclatureId: data.nslNomenclatureIdentifier,
                         draft: data.draft,
+                        imageSettings    : data.imageSettings,
                         attributes       : [],
                         thumbnailUrl     : constructThumbnailUrl(data, opus),
                         url              : "${grailsApplication.config.profile.hub.base.url}/opus/${opus.shortName ?: opus.uuid}/profile/${data.scientificName}".toString(),
