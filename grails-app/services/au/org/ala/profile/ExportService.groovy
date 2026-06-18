@@ -108,6 +108,7 @@ class ExportService extends BaseDataAccessService {
                         nslNomenclatureId: data.nslNomenclatureIdentifier,
                         draft: data.draft,
                         imageSettings    : data.imageSettings,
+                        mapSnapshot: constructMapSnapshotUrl(data, opus),
                         attributes       : [],
                         thumbnailUrl     : constructThumbnailUrl(data, opus),
                         url              : "${grailsApplication.config.profile.hub.base.url}/opus/${opus.shortName ?: opus.uuid}/profile/${data.scientificName}".toString(),
@@ -236,5 +237,9 @@ class ExportService extends BaseDataAccessService {
         }
 
         url
+    }
+
+    private String constructMapSnapshotUrl(profile, Opus opus) {
+        "${grailsApplication.config.profile.hub.base.url}/opus/${opus.uuid}/profile/${profile.uuid}/image/thumbnail/mapSnapshot.jpg?type=PRIVATE"
     }
 }
