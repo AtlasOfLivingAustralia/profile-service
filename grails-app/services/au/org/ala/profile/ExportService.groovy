@@ -107,9 +107,9 @@ class ExportService extends BaseDataAccessService {
                         nameAuthor       : data.nameAuthor,
                         nslNameId        : data.nslNameIdentifier,
                         nslNomenclatureId: data.nslNomenclatureIdentifier,
-                        draft: data.draft,
+                        draft            : data.draft,
                         imageSettings    : data.imageSettings,
-                        mapSnapshot: constructMapSnapshotUrl(data, opus),
+                        mapSnapshot      : constructMapSnapshotUrl(data, opus),
                         attributes       : [],
                         thumbnailUrl     : constructThumbnailUrl(data, opus),
                         url              : "${grailsApplication.config.profile.hub.base.url}/opus/${opus.shortName ?: opus.uuid}/profile/${data.scientificName}".toString(),
@@ -150,8 +150,20 @@ class ExportService extends BaseDataAccessService {
                             version      : it.version
                         ]
                     }
+                    profile.versions = data.publications?.collect {
+                        [
+                            uuid           : it.uuid,
+                            title          : it.title,
+                            authors        : it.authors,
+                            publicationDate: it.publicationDate,
+                            doi            : it.doi,
+                            fileType       : it.fileType,
+                            userId         : it.userId,
+                            version        : it.version
+                        ]
+                    }
                     profile.bibliography = data.bibliography?.collect { it.text }
-                    profile.specimens = data.specimens?.collect { it }
+                    profile.specimens = data.specimenIds
                     profile.occurrenceQuery = data.occurrenceQuery
 
                     profile.comments = Comment.findAllByProfileUuid(data.uuid).collect { Comment comment ->
