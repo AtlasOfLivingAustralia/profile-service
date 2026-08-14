@@ -36,19 +36,19 @@ class BackupRestoreService {
     }
 
     private String getCurrentDB() {
-        return grailsApplication.config.grails.mongodb.databaseName?:"profiles"
+        return grailsApplication.config.getProperty('grails.mongodb.databaseName')?:"profiles"
     }
 
     private String getDBUser() {
-        return grailsApplication.config.grails.mongodb.username?:""
+        return grailsApplication.config.getProperty('grails.mongodb.username')?:""
     }
 
     private String getDBPassword() {
-        return grailsApplication.config.grails.mongodb.password?:""
+        return grailsApplication.config.getProperty('grails.mongodb.password')?:""
     }
 
     private String getScriptPath() {
-        return grailsApplication.config.backupScript.path?:"/data/profile-service/config"
+        return grailsApplication.config.getProperty('backupScript.path')?:"/data/profile-service/config"
     }
 
     private executeOnShell(String command) {

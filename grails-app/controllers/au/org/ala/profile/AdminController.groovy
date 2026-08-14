@@ -3,7 +3,7 @@ package au.org.ala.profile
 import au.ala.org.ws.security.RequireApiKey
 import grails.converters.JSON
 
-import javax.validation.constraints.NotNull
+import jakarta.validation.constraints.NotNull
 
 @RequireApiKey
 class AdminController extends BaseController {

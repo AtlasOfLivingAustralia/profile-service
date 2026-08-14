@@ -628,7 +628,7 @@ class SearchService extends BaseDataAccessService {
             BasicDBObject query = new BasicDBObject()
             query.put("opus", opus.id)
 
-            MongoCollection collection = mongoClient.getDatabase(grailsApplication.config.grails.mongodb.databaseName).getCollection('profile')
+            MongoCollection collection = mongoClient.getDatabase(grailsApplication.config.getProperty('grails.mongodb.databaseName')).getCollection('profile')
             //            MapReduceCommand command = new MapReduceCommand(Profile.collection, mapFunction, reduceFunction,
 
             BasicDBObject scope = new BasicDBObject()
@@ -642,7 +642,7 @@ class SearchService extends BaseDataAccessService {
 
             // Use an aggregation to extract the individual classification entries from the standard mongo 'value' object
             // and sort them by rank then name. The results are then flattened into a single list of classification entries
-            outputCollectionObject = mongoClient.getDatabase(grailsApplication.config.grails.mongodb.databaseName).getCollection(outputCollection)
+            outputCollectionObject = mongoClient.getDatabase(grailsApplication.config.getProperty('grails.mongodb.databaseName')).getCollection(outputCollection)
             results = outputCollectionObject.aggregate([
                     getBsonDocument([$unwind: '$value']),
                     getBsonDocument([$sort: ["value.rankOrder": 1, "value.name": 1]]),
@@ -814,7 +814,7 @@ class SearchService extends BaseDataAccessService {
     }
 
     def deleteUnsearchableData() {
-        String elasticSearchUrl = grailsApplication.config.elasticSearch.url ?: "http://localhost:9200"
+        String elasticSearchUrl = grailsApplication.config.getProperty('elasticSearch.url') ?: "http://localhost:9200"
 
         def jsonSlurper = new JsonSlurper()
         def query = jsonSlurper.parseText('{"query": {"match_all": {}}}')

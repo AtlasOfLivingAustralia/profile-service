@@ -9,7 +9,7 @@ import grails.gsp.PageRenderer
 import grails.testing.mixin.integration.Integration
 import net.sf.json.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.multipart.commons.CommonsMultipartFile
+import org.springframework.web.multipart.MultipartFile
 
 @Integration
 @Rollback
@@ -262,7 +262,7 @@ class OpusServiceSpec extends BaseIntegrationSpec {
         save opus1
 
         when:
-        service.saveAttachment(opus1.uuid, [title: "newTitle"], Mock(CommonsMultipartFile))
+        service.saveAttachment(opus1.uuid, [title: "newTitle"], Mock(MultipartFile))
         opus1 = Opus.findByUuid(opus1.uuid)
 
         then:

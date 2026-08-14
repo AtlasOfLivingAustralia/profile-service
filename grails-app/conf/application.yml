@@ -23,6 +23,8 @@ info:
         version: '@info.app.version@'
         grailsVersion: '@info.app.grailsVersion@'
 spring:
+    jmx:
+        unique-names: true
     main:
         banner-mode: "off"
     groovy:
@@ -34,11 +36,14 @@ spring:
                 - grails-app/views/**
                 - grails-app/i18n/**
                 - grails-app/conf/**
-# Spring Actuator Endpoints are Disabled by Default
-endpoints:
-    enabled: false
-    jmx:
-        enabled: true
+management:
+    endpoints:
+        enabled-by-default: false
+
+server:
+    tomcat:
+        # Tomcat 10.1 defaults to 10 parts per multipart request which breaks large multipart forms
+        max-part-count: 100
 
 ---
 grails:
@@ -92,7 +97,7 @@ grails:
             htmlcodec: xml
             codecs:
                 expression: html
-                scriptlets: html
+                scriptlet: html
                 taglib: none
                 staticparts: none
 
@@ -153,3 +158,4 @@ server:
         port-header: 'X-Forwarded-Port'
         protocol-header: 'X-Forwarded-Proto'
         remote-ip-header: 'X-Forwarded-For'
+        max-part-count: 100

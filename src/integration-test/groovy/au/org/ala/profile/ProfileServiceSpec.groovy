@@ -8,7 +8,6 @@ import grails.gorm.transactions.Rollback
 import grails.testing.mixin.integration.Integration
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.multipart.MultipartFile
-import org.springframework.web.multipart.commons.CommonsMultipartFile
 import spock.lang.Unroll
 
 import static au.org.ala.profile.util.ImageOption.EXCLUDE
@@ -34,7 +33,8 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
         service.bieService = bieService
         service.doiService = Mock(DoiService)
         service.doiService.mintDOI(_, _, _) >> [status: "success", doi: "1234"]
-        service.grailsApplication = [config: [snapshot: [directory: "bla"]]]
+        service.grailsApplication = grailsApplication
+        grailsApplication.config.snapshot.directory = "bla"
         service.vocabService = Mock(VocabService)
         service.vocabService.getOrCreateTerm(_, _) >> { name, id -> [name: name, vocabId: id] }
         service.attachmentService = Mock(AttachmentService)
@@ -1675,7 +1675,7 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
         save profile
 
         when:
-        service.saveAttachment(profile.uuid, [title: "newTitle"], Mock(CommonsMultipartFile))
+        service.saveAttachment(profile.uuid, [title: "newTitle"], Mock(MultipartFile))
         profile = Profile.findByUuid(profile.uuid)
 
         then:
@@ -1696,7 +1696,7 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
         save profile
 
         when:
-        service.saveAttachment(profile.uuid, [title: "newTitle"], Mock(CommonsMultipartFile))
+        service.saveAttachment(profile.uuid, [title: "newTitle"], Mock(MultipartFile))
         profile = Profile.findByUuid(profile.uuid)
 
         then:

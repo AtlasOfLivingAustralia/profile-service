@@ -6,7 +6,7 @@ import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoCollection
 import grails.gorm.transactions.Transactional
 
-import javax.persistence.PersistenceException
+import jakarta.persistence.PersistenceException
 
 @Transactional
 class VocabService extends BaseDataAccessService {
@@ -191,7 +191,7 @@ class VocabService extends BaseDataAccessService {
 
     def replaceTerm = { opus, vocabId, existingTermId, newTermName ->
 
-        def db = mongo.getDatabase(grailsApplication.config.grails.mongodb.databaseName)
+        def db = mongo.getDatabase(grailsApplication.config.getProperty('grails.mongodb.databaseName'))
         int replacedUsages = 0
 
         // There can be more than 1 terms having same term names. So, checking by term id is necessary.
@@ -205,7 +205,7 @@ class VocabService extends BaseDataAccessService {
             if (opus.authorshipVocabUuid == vocabId) {
 
                 // Bulk update for profiles and profiles draft acknowledgement term as GORM update takes long time for many records.
-                MongoCollection<Profile> profileCollection = mongo.getDatabase(grailsApplication.config.grails.mongodb.databaseName).getCollection('profile')
+                MongoCollection<Profile> profileCollection = mongo.getDatabase(grailsApplication.config.getProperty('grails.mongodb.databaseName')).getCollection('profile')
                 def updateQuery = new BasicDBObject('$set', new BasicDBObject('authorship.$.category', newTerm.id))
                 def searchQuery = new BasicDBObject(['authorship.category': existingTerm.id])
                 UpdateResult updateResult = profileCollection.updateMany(searchQuery, updateQuery)
@@ -221,8 +221,8 @@ class VocabService extends BaseDataAccessService {
                 }
 
             } else {
-                MongoCollection<Profile> profileCollection = mongo.getDatabase(grailsApplication.config.grails.mongodb.databaseName).getCollection('profile')
-                MongoCollection<Attribute> attributeCollection = mongo.getDatabase(grailsApplication.config.grails.mongodb.databaseName).getCollection('attribute')
+                MongoCollection<Profile> profileCollection = mongo.getDatabase(grailsApplication.config.getProperty('grails.mongodb.databaseName')).getCollection('profile')
+                MongoCollection<Attribute> attributeCollection = mongo.getDatabase(grailsApplication.config.getProperty('grails.mongodb.databaseName')).getCollection('attribute')
 
                 def attributeUpdateQuery = new BasicDBObject('$set', new BasicDBObject('title', newTerm.id))
                 def attributeSearchQuery = new BasicDBObject('title': existingTerm.id)

@@ -16,16 +16,10 @@ class DoiServiceSpec extends BaseIntegrationSpec {
     DoiService service = new DoiService()
 
     def setup() {
-        service.grailsApplication = [config:
-                                             [ doi : [
-                                                      service: [url: "http://ands.bla.bla/"],
-                                                      resolution: [
-                                                              url: [prefix: "http://blabla/publication/"]
-                                                      ]
-                                              ],
-                                               profile : [hub: [base: [url: "https://prod.blah"]]]
-                                             ]
-        ]
+        grailsApplication.config.doi.service.url = "http://ands.bla.bla/"
+        grailsApplication.config.doi.resolution.url.prefix = "http://blabla/publication/"
+        grailsApplication.config.profile.hub.base.url = "https://prod.blah"
+        service.grailsApplication = grailsApplication
     }
 
     def mockServiceResponse(int statusResponseCode, Map statusJson, int mintResponseCode, Map mintJson) {

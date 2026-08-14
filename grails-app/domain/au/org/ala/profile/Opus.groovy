@@ -5,7 +5,7 @@ import au.org.ala.profile.util.ImageOption
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
-import javax.persistence.Transient
+import jakarta.persistence.Transient
 
 @EqualsAndHashCode(excludes = 'additionalOccurrenceResources,authorities,tags')
 @ToString(allProperties=false, excludes = 'additionalOccurrenceResources,authorities,tags')

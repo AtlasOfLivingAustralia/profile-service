@@ -55,10 +55,10 @@ class ImportController extends BaseController {
         if (!params.importId) {
             badRequest "importId is a required parameter"
         } else {
-            File reportFile = new File("${grailsApplication.config.temp.file.directory}/${params.importId}.json")
+            File reportFile = new File("${grailsApplication.config.getProperty('temp.file.directory')}/${params.importId}.json")
 
             if (!reportFile.exists()) {
-                reportFile = new File("${grailsApplication.config.temp.file.directory}/${params.importId}.json.inprogress")
+                reportFile = new File("${grailsApplication.config.getProperty('temp.file.directory')}/${params.importId}.json.inprogress")
 
                 if (!reportFile.exists()) {
                     notFound "No matching import report was found for id ${params.id}"

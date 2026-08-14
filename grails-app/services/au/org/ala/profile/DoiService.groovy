@@ -26,7 +26,7 @@ class DoiService {
         Map result = [:]
 
         log.debug "Requesting new DOI from doi-service..."
-        String doiURL = "${grailsApplication.config.doi.service.url}api/doi"
+        String doiURL = "${grailsApplication.config.getProperty('doi.service.url')}api/doi"
         Map requestJSON = buildJSONForDataCite(opus, publication, profile)
         log.debug ((requestJSON as JSON).toString())
 
@@ -75,7 +75,7 @@ class DoiService {
      * @return
      */
     Map buildJSONForDataCite(Opus opus, Publication publication, Profile profile = null) {
-        String applicationUrl = profile ? "${grailsApplication.config.profile.hub.base.url}/opus/${opus.uuid}/profile/${profile.uuid}" : grailsApplication.config.profile.hub.base.url
+        String applicationUrl = profile ? "${grailsApplication.config.getProperty('profile.hub.base.url')}/opus/${opus.uuid}/profile/${profile.uuid}" : grailsApplication.config.getProperty('profile.hub.base.url')
 
         // Assign a UUID if it does not exist. UUID is normally created during the first save. But need it here to create
         // custom landing page.
@@ -89,7 +89,7 @@ class DoiService {
                 "authors"             : publication.authors,
                 "description"         : "Taxonomic treatment for ${publication.title}",
                 "applicationUrl"      : applicationUrl,
-                "customLandingPageUrl": "${grailsApplication.config.doi.resolution.url.prefix}${publication.uuid}",
+                "customLandingPageUrl": "${grailsApplication.config.getProperty('doi.resolution.url.prefix')}${publication.uuid}",
                 "userId"              : "${userService.getUserId()}",
                 "providerMetadata"    : [
                         "resourceType"   : "Text",

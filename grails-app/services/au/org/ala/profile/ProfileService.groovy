@@ -1041,11 +1041,11 @@ class ProfileService extends BaseDataAccessService {
             publication.doi = doiResult.doi
 
             if (profile.attachments) {
-                String fileName = "${grailsApplication.config.snapshot.directory}/${publication.uuid}.zip"
+                String fileName = "${grailsApplication.config.getProperty('snapshot.directory')}/${publication.uuid}.zip"
                 savePublicationWithAttachments(profile, file, fileName)
                 publication.setFileType(StorageExtension.ZIP)
             } else {
-                String fileName = "${grailsApplication.config.snapshot.directory}/${publication.uuid}.pdf"
+                String fileName = "${grailsApplication.config.getProperty('snapshot.directory')}/${publication.uuid}.pdf"
                 //this copies the incoming 'file' data into a file object and saves this object to the file system
                 file.transferTo(new File(fileName))
                 publication.setFileType(StorageExtension.PDF)
@@ -1061,7 +1061,7 @@ class ProfileService extends BaseDataAccessService {
     File getPublicationFile(String publicationId) {
         checkArgument publicationId
         String extension = determineFileExtension(publicationId)
-        String fileName = "${grailsApplication.config.snapshot.directory}/${publicationId}${extension}"
+        String fileName = "${grailsApplication.config.getProperty('snapshot.directory')}/${publicationId}${extension}"
 
         new File(fileName)
     }

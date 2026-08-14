@@ -11,7 +11,7 @@ import groovy.json.JsonSlurper
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.multipart.MultipartHttpServletRequest
 
-import javax.servlet.http.HttpServletResponse
+import jakarta.servlet.http.HttpServletResponse
 
 import static au.org.ala.profile.ImportService.SyncResponse.*
 
@@ -351,7 +351,7 @@ class OpusController extends BaseController {
                    if (!attachment) {
                        notFound "No attachment exists in opus ${params.opusId} with id ${params.attachmentId}"
                    } else {
-                       attachment.downloadUrl = "${grailsApplication.config.profile.hub.base.url}/opus/${opus.uuid}/attachment/${attachment.uuid}/download"
+                       attachment.downloadUrl = "${grailsApplication.config.getProperty('profile.hub.base.url')}/opus/${opus.uuid}/attachment/${attachment.uuid}/download"
 
                        render ([attachment] as JSON)
                    }
@@ -362,7 +362,7 @@ class OpusController extends BaseController {
                        // external resource. If they have a local file, then the filename property will be set. If they
                        // are an external link, then the url property will be set.
                        if (it.filename) {
-                           it.downloadUrl = "${grailsApplication.config.profile.hub.base.url}/opus/${opus.uuid}/attachment/${it.uuid}/download"
+                           it.downloadUrl = "${grailsApplication.config.getProperty('profile.hub.base.url')}/opus/${opus.uuid}/attachment/${it.uuid}/download"
                        }
                    }
 
