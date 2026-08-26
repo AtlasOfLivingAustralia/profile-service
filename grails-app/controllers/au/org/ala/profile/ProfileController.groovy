@@ -630,7 +630,7 @@ class ProfileController extends BaseController {
             def result = profileService.setPrimaryMultimedia(profile, props)
 
             if (result) {
-                response.sendError(204)
+                response.status = 204
             } else {
                 log.error "Couldn't update $profile primary multimedia with $props"
                 response.sendError(500)

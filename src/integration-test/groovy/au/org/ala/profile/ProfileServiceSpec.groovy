@@ -1959,6 +1959,55 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
         'def' | 'abc' | null | null | true
     }
 
+    def "create and update document should persist multimedia metadata"() {
+        given:
+        Opus opus = new Opus(title: "opus1", dataResourceUid: "123", glossary: new Glossary())
+        save opus
+        Profile profile = new Profile(opus: opus, scientificName: "profile1", documents: [])
+        save profile
+
+        when:
+        Map created = service.createDocument(profile, [
+                name: "Original title",
+                type: "audio",
+                url: "https://soundcloud.com/example/original"
+        ])
+        Map updated = service.updateDocument(profile, [
+                documentId: created.documentId,
+                name: "Updated title",
+                type: "audio",
+                url: "https://soundcloud.com/example/updated"
+        ], created.documentId)
+
+        then:
+        created.status == 'ok'
+        updated.status == 'ok'
+        profile.documents.size() == 1
+        profile.documents[0].documentId == created.documentId
+        profile.documents[0].name == "Updated title"
+        profile.documents[0].url == "https://soundcloud.com/example/updated"
+    }
+
+    def "delete document should clear matching primary multimedia"() {
+        given:
+        Opus opus = new Opus(title: "opus1", dataResourceUid: "123", glossary: new Glossary())
+        save opus
+        Document audio = new Document(documentId: "audio-id", name: "Audio", type: "audio", url: "https://soundcloud.com/example/audio")
+        Document video = new Document(documentId: "video-id", name: "Video", type: "video", url: "https://vimeo.com/123")
+        Profile profile = new Profile(opus: opus, scientificName: "profile1", documents: [audio, video],
+                primaryAudio: audio.documentId, primaryVideo: video.documentId)
+        save profile
+
+        when:
+        Map result = service.deleteDocument(profile.uuid, audio.documentId)
+
+        then:
+        result.status == 'ok'
+        profile.documents*.documentId == [video.documentId]
+        profile.primaryAudio == null
+        profile.primaryVideo == video.documentId
+    }
+
     def "getProfiles should by default return all profiles and total count" () {
         given:
         Opus opus1 = new Opus(title: "opus1", dataResourceUid: "123", glossary: new Glossary())
@@ -2123,4 +2172,3 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
     }
 
 }
-

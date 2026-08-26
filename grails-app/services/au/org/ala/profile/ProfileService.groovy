@@ -868,24 +868,43 @@ class ProfileService extends BaseDataAccessService {
         }
     }
 
-    boolean updateDocument(Profile profile, Map newDocument, String id) {
-        checkArgument profile
+    Map updateDocument(Profile originalProfile, Map newDocument, String id) {
+        checkArgument originalProfile
         checkArgument newDocument
+        checkArgument id
 
-        profile = profileOrDraft(profile)
+        def profile = profileOrDraft(originalProfile)
 
-        if(profile.documents) {
+        if (!profile.documents) {
             profile.documents = new ArrayList<Document>()
         }
 
-        if(id) {
-            Document existingDocument = profile.documents.find {
-                it.documentId == id
-            }
-
-            updateProperties(existingDocument, newDocument)
+        Document existingDocument = profile.documents.find {
+            it.documentId == id
         }
 
+        if (!existingDocument) {
+            def error = "Error updating document - no such id ${id}"
+            log.error error
+            return [status: 'error', error: error]
+        }
+
+        try {
+            Map properties = new LinkedHashMap(newDocument)
+            properties.remove('documentId')
+            properties.remove('id')
+
+            updateDocumentProperties(existingDocument, properties)
+            if (!save(originalProfile)) {
+                throw new IllegalStateException("Profile validation failed")
+            }
+            return [status: 'ok', documentId: existingDocument.documentId, url: existingDocument.url]
+        } catch (Exception e) {
+            Profile.withSession { session -> session.clear() }
+            def error = "Error updating document ${id} - ${e.message}"
+            log.error error, e
+            return [status: 'error', error: error]
+        }
     }
 
     /**
@@ -1383,12 +1402,14 @@ class ProfileService extends BaseDataAccessService {
         def d = new Document(documentId: UUID.randomUUID().toString())
 
         try {
-            profile.documents << d
-            save originalProfile
-            props.remove 'documentId'
+            Map properties = new LinkedHashMap(props)
+            properties.remove 'documentId'
 
-            updateDocumentProperties(d, props)
-            save originalProfile
+            updateDocumentProperties(d, properties)
+            profile.documents << d
+            if (!save(originalProfile)) {
+                throw new IllegalStateException("Profile validation failed")
+            }
             return [status: 'ok', documentId: d.documentId, url: d.url]
         } catch (Exception e) {
             // clear session to avoid exception when GORM tries to autoflush the changes
@@ -1421,7 +1442,15 @@ class ProfileService extends BaseDataAccessService {
         if (document) {
             try {
                 profile.documents.remove(document)
-                save originalProfile
+                if (profile.primaryAudio == documentId) {
+                    profile.primaryAudio = null
+                }
+                if (profile.primaryVideo == documentId) {
+                    profile.primaryVideo = null
+                }
+                if (!save(originalProfile)) {
+                    throw new IllegalStateException("Profile validation failed")
+                }
                 return [status: 'ok', documentId: document.documentId]
             } catch (Exception e) {
                 Profile.withSession { session -> session.clear() }
