@@ -1492,7 +1492,7 @@ class ProfileService extends BaseDataAccessService {
              * UTC time. They are converted to java dates by forcing a zero time offset so that local timezone is
              * not used. All conversions to and from local time are the responsibility of the service consumer.
              */
-            if (v instanceof String && domainDescriptor.hasProperty(k) && domainDescriptor?.getPropertyByName(k)?.getType() == Date) {
+            if (v instanceof String && domainDescriptor.hasProperty(k) && domainDescriptor?.getPropertyType(k) == Date) {
                 v = v ? parseDate(v) : null
             }
             if (v == "false") {
