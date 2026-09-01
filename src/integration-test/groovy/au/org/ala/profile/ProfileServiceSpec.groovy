@@ -1970,7 +1970,7 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
         Map created = service.createDocument(profile, [name: "Original title", type: "audio", url: "https://soundcloud.com/example/original"])
 
         then:
-        created.status == 'ok'
+        assert created.status == 'ok' : created.error
         created.documentId
         profile.documents.size() == 1
         profile.documents[0].name == "Original title"
