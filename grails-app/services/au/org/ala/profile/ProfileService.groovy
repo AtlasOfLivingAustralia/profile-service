@@ -896,7 +896,9 @@ class ProfileService extends BaseDataAccessService {
 
             updateDocumentProperties(existingDocument, properties)
             if (!save(originalProfile)) {
-                throw new IllegalStateException("Profile validation failed")
+                Profile.withSession { session -> session.clear() }
+                def error = "Error updating document ${id} - Profile validation failed"
+                return [status: 'error', error: error]
             }
             return [status: 'ok', documentId: existingDocument.documentId, url: existingDocument.url]
         } catch (Exception e) {
@@ -1408,7 +1410,9 @@ class ProfileService extends BaseDataAccessService {
             updateDocumentProperties(d, properties)
             profile.documents << d
             if (!save(originalProfile)) {
-                throw new IllegalStateException("Profile validation failed")
+                Document.withSession { session -> session.clear() }
+                def error = "Error creating document for ${props.filename} - Profile validation failed"
+                return [status: 'error', error: error]
             }
             return [status: 'ok', documentId: d.documentId, url: d.url]
         } catch (Exception e) {
