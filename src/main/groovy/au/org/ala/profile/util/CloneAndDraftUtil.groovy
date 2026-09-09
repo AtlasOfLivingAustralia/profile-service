@@ -21,6 +21,8 @@ class CloneAndDraftUtil {
         profile.nslNameIdentifier = profile.draft.nslNameIdentifier
         profile.nslNomenclatureIdentifier = profile.draft.nslNomenclatureIdentifier
         profile.primaryImage = profile.draft.primaryImage
+        profile.primaryVideo = profile.draft.primaryVideo
+        profile.primaryAudio = profile.draft.primaryAudio
         profile.showLinkedOpusAttributes = profile.draft.showLinkedOpusAttributes
         profile.occurrenceQuery = profile.draft.occurrenceQuery
         profile.isCustomMapConfig = profile.draft.isCustomMapConfig
@@ -88,6 +90,8 @@ class CloneAndDraftUtil {
         clone.nslNameIdentifier = profile.nslNameIdentifier
         clone.nslNomenclatureIdentifier = profile.nslNomenclatureIdentifier
         clone.primaryImage = profile.primaryImage
+        clone.primaryVideo = profile.primaryVideo
+        clone.primaryAudio = profile.primaryAudio
         clone.showLinkedOpusAttributes = profile.showLinkedOpusAttributes
         clone.occurrenceQuery = profile.occurrenceQuery
         clone.isCustomMapConfig = profile.isCustomMapConfig
