@@ -1,14 +1,52 @@
 package au.org.ala.profile
 
+import au.org.ala.ws.service.WebService
 import com.codahale.metrics.MetricRegistry
 import grails.testing.services.ServiceUnitTest
+import org.apache.http.HttpStatus
+import org.apache.http.entity.ContentType
 import spock.lang.Specification
 
 class ImportServiceSpec extends Specification implements ServiceUnitTest<ImportService> {
+
+    Closure doWithConfig() {{ config ->
+        config.image.upload.url = 'https://images.example.org/ws/'
+        config.image.upload.apiKey = 'test-api-key'
+    }}
+
     void setup ( ) {
         defineBeans {
             metricRegistry(MetricRegistry)
         }
+    }
+
+    def 'uploadImage posts the multimedia metadata to the image service as JSON'() {
+        given:
+        WebService webService = Mock()
+        service.webService = webService
+        Map metadata = [identifier: 'https://example.org/image.jpg', title: 'An image']
+
+        when:
+        service.uploadImage('Acacia dealbata', 'dr1', metadata)
+
+        then:
+        1 * webService.post('https://images.example.org/ws/dr3',
+                [scientificName: 'Acacia dealbata', multimedia: [metadata]],
+                [apiKey: 'test-api-key'],
+                ContentType.APPLICATION_JSON, false, false, _) >> [statusCode: HttpStatus.SC_CREATED, resp: [:]]
+    }
+
+    def 'uploadImage does not throw when the image service returns an error'() {
+        given:
+        WebService webService = Mock()
+        service.webService = webService
+
+        when:
+        service.uploadImage('Acacia dealbata', 'dr1', [identifier: 'https://example.org/image.jpg'])
+
+        then:
+        1 * webService.post(*_) >> [statusCode: HttpStatus.SC_INTERNAL_SERVER_ERROR, error: 'Failed calling web service']
+        noExceptionThrown()
     }
 
     def 'test getRange'() {

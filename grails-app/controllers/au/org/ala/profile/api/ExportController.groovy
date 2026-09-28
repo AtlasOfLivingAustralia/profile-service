@@ -5,7 +5,6 @@ import au.org.ala.profile.ExportService
 import au.org.ala.profile.Opus
 import au.org.ala.profile.security.RequiresAccessToken
 import grails.converters.JSON
-import groovyx.net.http.ContentType
 
 class ExportController extends BaseController {
 
@@ -46,7 +45,7 @@ class ExportController extends BaseController {
                 boolean includeArchived = params.includeArchived?.toBoolean()
                 boolean summary = params.summary?.toBoolean()
 
-                response.contentType = ContentType.JSON
+                response.contentType = 'application/json'
                 exportService.exportCollection(response.outputStream, opus, max, offset, summary, includeArchived)
             }
         }
@@ -62,7 +61,7 @@ class ExportController extends BaseController {
             List<String> guids = params.guids?.split(",") ?: []
             boolean summary = params.summary?.toBoolean()
 
-            response.contentType = ContentType.JSON
+            response.contentType = 'application/json'
             exportService.exportProfiles(response.outputStream, opusIds, tags, profileNames, guids, summary)
         }
     }

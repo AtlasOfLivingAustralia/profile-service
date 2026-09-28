@@ -106,7 +106,6 @@ dependencies {
     testRuntimeOnly "org.seleniumhq.selenium:selenium-chrome-driver:$seleniumVersion"
     testRuntimeOnly "org.seleniumhq.selenium:selenium-firefox-driver:$seleniumVersion"
 
-    implementation "commons-fileupload:commons-fileupload:1.5"
     runtimeOnly "jakarta.xml.bind:jakarta.xml.bind-api:4.0.2"
     runtimeOnly "org.glassfish.jaxb:jaxb-runtime:4.0.5"
 
@@ -118,6 +117,8 @@ dependencies {
         exclude module: 'xerces'
     }
 
+    // ala-ws-plugin only brings http-builder in at runtime, but WebService's public API references
+    // HTTPBuilder, so it must be on the compile classpath for specs that mock WebService.
     implementation "org.codehaus.groovy.modules.http-builder:http-builder:0.7.1"
 
     implementation 'au.org.ala:ala-name-matching-search:4.2'

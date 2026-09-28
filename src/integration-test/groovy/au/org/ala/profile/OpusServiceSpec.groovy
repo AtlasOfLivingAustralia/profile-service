@@ -7,7 +7,7 @@ import au.org.ala.web.UserDetails
 import grails.gorm.transactions.Rollback
 import grails.gsp.PageRenderer
 import grails.testing.mixin.integration.Integration
-import net.sf.json.JSONObject
+import org.grails.web.json.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.multipart.MultipartFile
 

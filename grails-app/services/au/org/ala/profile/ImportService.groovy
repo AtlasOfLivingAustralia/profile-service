@@ -3,6 +3,7 @@ package au.org.ala.profile
 
 import au.org.ala.profile.util.NSLNomenclatureMatchStrategy
 import au.org.ala.profile.util.Utils
+import au.org.ala.ws.service.WebService
 import com.google.common.collect.Sets
 import grails.converters.JSON
 import grails.plugin.dropwizard.metrics.meters.Metered
@@ -12,9 +13,8 @@ import groovy.transform.ToString
 import groovyx.gpars.actor.Actors
 import groovyx.gpars.actor.DefaultActor
 import groovyx.gpars.dataflow.Promise
-import groovyx.net.http.ContentType
-import groovyx.net.http.RESTClient
 import org.apache.http.HttpStatus
+import org.apache.http.entity.ContentType
 
 //import grails.plugins.elasticsearch.ElasticSearchService
 
@@ -39,6 +39,7 @@ class ImportService extends BaseDataAccessService {
     VocabService vocabService
 
     ElasticSearchService elasticSearchService
+    WebService webService
     def grailsApplication
     def masterListService
 
@@ -421,14 +422,12 @@ class ImportService extends BaseDataAccessService {
         Map payload = [scientificName: scientificName, multimedia: [metadata]]
 
         try {
-            RESTClient client = new RESTClient("${grailsApplication.config.getProperty('image.upload.url')}dr3")
-            def resp = client.post(headers: ["User-Agent": "groovy"],
-                    query: [apiKey: "${grailsApplication.config.getProperty('image.upload.apiKey')}"],
-                    requestContentType: ContentType.JSON,
-                    body: payload)
+            Map resp = webService.post("${grailsApplication.config.getProperty('image.upload.url')}dr3", payload,
+                    [apiKey: grailsApplication.config.getProperty('image.upload.apiKey')],
+                    ContentType.APPLICATION_JSON, false, false, ["User-Agent": "groovy"])
 
-            if (resp.status != HttpStatus.SC_OK && resp.status != HttpStatus.SC_CREATED) {
-                log.warn("Failed to upload image: ${resp.data}")
+            if (resp.statusCode != HttpStatus.SC_OK && resp.statusCode != HttpStatus.SC_CREATED) {
+                log.warn("Failed to upload image: ${resp.error ?: resp.resp}")
             }
         }
         catch (Exception e) {
