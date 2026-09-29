@@ -8,8 +8,8 @@ import org.grails.web.util.WebUtils
 import grails.plugin.dropwizard.metrics.meters.Metered
 import grails.plugin.dropwizard.metrics.timers.Timed
 
-import javax.annotation.PostConstruct
-import javax.servlet.http.HttpServletRequest
+import jakarta.annotation.PostConstruct
+import jakarta.servlet.http.HttpServletRequest
 import java.util.concurrent.ExecutionException
 
 import static au.org.ala.profile.util.Utils.closureCacheLoader
@@ -30,7 +30,7 @@ class MasterListService {
 
     @PostConstruct
     def init() {
-        listCache = CacheBuilder.from(grailsApplication.config.lists.items.cacheSpec ?: DEFAULT_CACHE_CONFIG).build(closureCacheLoader(String, this.&_getProfileList))
+        listCache = CacheBuilder.from(grailsApplication.config.getProperty('lists.items.cacheSpec') ?: DEFAULT_CACHE_CONFIG).build(closureCacheLoader(String, this.&_getProfileList))
     }
 
     /**
@@ -63,7 +63,7 @@ class MasterListService {
     }
 
     private List<Map<String, String>> _getProfileList(String listId) throws ProfileListUnavailableException {
-        def baseUrl = grailsApplication.config.lists.base.url ?: 'https://lists.ala.org.au'
+        def baseUrl = grailsApplication.config.getProperty('lists.base.url') ?: 'https://lists.ala.org.au'
         def response = webService.get("$baseUrl/ws/speciesListItems/${encPath(listId)}")
         if (response.statusCode >= 400) {
             log.error("Can't get master list for ${listId}")

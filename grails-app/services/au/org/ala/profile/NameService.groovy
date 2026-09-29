@@ -20,7 +20,7 @@ import au.org.ala.names.search.ALANameSearcher
 import groovy.json.JsonSlurper
 import grails.gorm.transactions.Transactional
 
-import javax.annotation.PostConstruct
+import jakarta.annotation.PostConstruct
 
 import static java.util.concurrent.TimeUnit.SECONDS
 import static org.springframework.web.util.UriUtils.encodeQueryParam
@@ -39,7 +39,7 @@ class NameService extends BaseDataAccessService {
     @PostConstruct
     def init() {
         try {
-            nameSearcher = new ALANameSearcher("${grailsApplication.config.name.index.location}")
+            nameSearcher = new ALANameSearcher("${grailsApplication.config.getProperty('name.index.location')}")
         } catch (FileNotFoundException ex) {
             log.error("Names matching index not found. Check configuration.", ex)
         }
@@ -168,7 +168,7 @@ class NameService extends BaseDataAccessService {
     Map matchNSLName(String name, String rank = '') {
         Map match
         try {
-            String url = grailsApplication.config.nsl.name.match.url.prefix + encodeQueryParam(name, 'UTF-8')
+            String url = grailsApplication.config.getProperty('nsl.name.match.url.prefix') + encodeQueryParam(name, 'UTF-8')
             log.debug("GET request to $url")
             def json = new JsonSlurper().parse(url.toURL(), 'UTF-8')
             if (json.count == 1) {
@@ -215,7 +215,7 @@ class NameService extends BaseDataAccessService {
     Map<String, Map> searchNSLName(String name) {
         Map<String, Map> matches = [:]
 
-        String url = "${grailsApplication.config.nsl.search.service.url.prefix}?tree=${NSL_APC_PRODUCT}&q=${enc(StringUtils.capitalize(name))}"
+        String url = "${grailsApplication.config.getProperty('nsl.search.service.url.prefix')}?tree=${NSL_APC_PRODUCT}&q=${enc(StringUtils.capitalize(name))}"
         Map result = webService.get(url)
 
         if (result?.resp && isSuccessful(result?.statusCode) && result?.resp?.records) {
@@ -316,7 +316,7 @@ class NameService extends BaseDataAccessService {
         Map match = [:]
 
         if (nslNomenclatureIdentifier) {
-            String resp = new URL("${grailsApplication.config.nsl.name.instance.url.prefix}${nslNomenclatureIdentifier}.json").text
+            String resp = new URL("${grailsApplication.config.getProperty('nsl.name.instance.url.prefix')}${nslNomenclatureIdentifier}.json").text
             def json = new JsonSlurper().parseText(resp)
 
             String instanceLink = json?.instance?.name?._links?.permalink?.link
@@ -362,7 +362,7 @@ class NameService extends BaseDataAccessService {
         List concepts = []
 
         try {
-            String resp = new URL("${grailsApplication.config.nsl.service.url.prefix}${nslNameIdentifier}${grailsApplication.config.nsl.service.apni.concept.suffix}").text
+            String resp = new URL("${grailsApplication.config.getProperty('nsl.service.url.prefix')}${nslNameIdentifier}${grailsApplication.config.getProperty('nsl.service.apni.concept.suffix')}").text
             def json = new JsonSlurper().parseText(resp)
 
             if (json.references) {
@@ -398,8 +398,8 @@ class NameService extends BaseDataAccessService {
 
         try {
             if (text) {
-                String prefix = grailsApplication.config.nsl.service.url.prefix
-                String suffix = grailsApplication.config.nsl.find.concept.service.suffix
+                String prefix = grailsApplication.config.getProperty('nsl.service.url.prefix')
+                String suffix = grailsApplication.config.getProperty('nsl.find.concept.service.suffix')
 
                 String resp = new URL("${prefix}${nslNameIdentifier}${suffix}${enc(text)}").text
 
@@ -446,7 +446,7 @@ class NameService extends BaseDataAccessService {
                               'nom. cons., orth. cons.', 'nom. et typ. cons.', 'orth. cons.', 'typ. cons.', '[default]']
 
         try {
-            URL url = new URL("${grailsApplication.config.nsl.name.export.url}")
+            URL url = new URL("${grailsApplication.config.getProperty('nsl.name.export.url')}")
 
             return url.withReader { reader ->
                 def csv = parseCsv(reader)

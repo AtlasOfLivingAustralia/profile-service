@@ -2,7 +2,7 @@ package au.org.ala.profile
 
 import au.org.ala.profile.util.JobType
 
-import javax.validation.constraints.NotNull
+import jakarta.validation.constraints.NotNull
 
 class JobController extends BaseController {
 

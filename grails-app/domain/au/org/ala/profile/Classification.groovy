@@ -4,7 +4,7 @@ import grails.gorm.dirty.checking.DirtyCheck
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
-import javax.persistence.Transient
+import jakarta.persistence.Transient
 
 @ToString
 @EqualsAndHashCode

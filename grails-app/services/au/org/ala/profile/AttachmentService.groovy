@@ -26,7 +26,7 @@ class AttachmentService {
     }
 
     String getPath(String opusId, String profileId, String attachmentId, String extension) {
-        "${grailsApplication.config.attachments.directory}/${opusId}/${profileId ? profileId + '/' : ''}${attachmentId}.${extension}"
+        "${grailsApplication.config.getProperty('attachments.directory')}/${opusId}/${profileId ? profileId + '/' : ''}${attachmentId}.${extension}"
     }
 
     Map<String,File> collectAllAttachmentsIncludingOriginalNames(Profile profile) {
