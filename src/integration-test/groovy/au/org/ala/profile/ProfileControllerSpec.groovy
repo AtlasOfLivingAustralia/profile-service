@@ -171,6 +171,48 @@ class ProfileControllerSpec extends BaseIntegrationSpec {
         1 * controller.attachmentService.getAttachment("opusId", profile.uuid, "1234", _)
     }
 
+    def "streamSound should serve a published sound inline"() {
+        given:
+        Opus opus = save new Opus(uuid: "opusId", shortName: "opusid", title: "opusName", glossary: new Glossary(), dataResourceUid: "dr1")
+        Profile profile = save new Profile(scientificName: "sciName", opus: opus,
+                attachments: [new Attachment(uuid: "sound1", filename: "call.mp3", contentType: "audio/mpeg", type: Attachment.TYPE_SOUND)])
+        File soundFile = File.createTempFile("profile-sound-", ".mp3")
+        soundFile.bytes = [1, 2, 3] as byte[]
+
+        when:
+        controller.params.profileId = profile.uuid
+        controller.params.opusId = "opusId"
+        controller.params.attachmentId = "sound1"
+        controller.streamSound()
+
+        then:
+        1 * controller.attachmentService.getAttachment("opusId", profile.uuid, "sound1", "mp3") >> soundFile
+        controller.response.status == 200
+        controller.response.contentType == "audio/mpeg"
+        controller.response.getHeader("Content-Disposition") == 'inline; filename="call.mp3"'
+        controller.response.contentAsByteArray == ([1, 2, 3] as byte[])
+
+        cleanup:
+        soundFile?.delete()
+    }
+
+    def "streamSound should not serve a non-sound attachment"() {
+        given:
+        Opus opus = save new Opus(uuid: "opusId", shortName: "opusid", title: "opusName", glossary: new Glossary(), dataResourceUid: "dr1")
+        Profile profile = save new Profile(scientificName: "sciName", opus: opus,
+                attachments: [new Attachment(uuid: "document1", filename: "document.pdf", contentType: "application/pdf")])
+
+        when:
+        controller.params.profileId = profile.uuid
+        controller.params.opusId = "opusId"
+        controller.params.attachmentId = "document1"
+        controller.streamSound()
+
+        then:
+        controller.response.status == 404
+        0 * controller.attachmentService.getAttachment(_, _, _, _)
+    }
+
     def "getProfiles should get all profiles in an opus"() {
         Opus opus = save new Opus(uuid: "opusId", shortName: "opusid", title: "opusName", glossary: new Glossary(), dataResourceUid: "dr1")
         Profile profile = save new Profile(scientificName: "sciName", opus: opus, rank: "subspecies", attachments: [new Attachment(uuid: "1234")])

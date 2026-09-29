@@ -1599,6 +1599,22 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
         1 * service.attachmentService.deleteAttachment(opus1.uuid, profile.uuid, "1234", _)
     }
 
+    def "deleteAttachment should clear primaryAudio when deleting the primary sound"() {
+        given:
+        Opus opus = save new Opus(title: "opus", dataResourceUid: "123", glossary: new Glossary())
+        Profile profile = save new Profile(opus: opus, scientificName: "profile", primaryAudio: "sound1",
+                attachments: [new Attachment(uuid: "sound1", filename: "sound.mp3", type: Attachment.TYPE_SOUND)])
+
+        when:
+        service.deleteAttachment(profile.uuid, "sound1")
+        profile = Profile.findByUuid(profile.uuid)
+
+        then:
+        profile.primaryAudio == null
+        profile.attachments.isEmpty()
+        1 * service.attachmentService.deleteAttachment(opus.uuid, profile.uuid, "sound1", "mp3")
+    }
+
     def "deleteAttachment should not attempt to remove a file when there is no filename"() {
         given:
         Opus opus1 = new Opus(title: "opus1", dataResourceUid: "123", glossary: new Glossary())
@@ -1625,12 +1641,13 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
         save profile
 
         when:
-        service.deleteAttachment(profile.uuid, "1234")
+        List<Attachment> attachments = service.deleteAttachment(profile.uuid, "1234")
         profile = Profile.findByUuid(profile.uuid)
 
         then:
         profile.attachments.size() == 1
         profile.draft.attachments.isEmpty()
+        attachments.isEmpty()
         0 * service.attachmentService.deleteAttachment(opus1.uuid, profile.uuid, "1234", _)
     }
 
@@ -1684,6 +1701,44 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
         profile.attachments[1].title == "newTitle"
         1 * service.attachmentService.saveAttachment(_, _, _, _, _)
         0 * service.attachmentService.deleteAttachment(_, _, _, _)
+    }
+
+    def "saveAttachment should validate and create a sound attachment"() {
+        given:
+        Opus opus = save new Opus(title: "opus", dataResourceUid: "123", glossary: new Glossary())
+        Profile profile = save new Profile(opus: opus, scientificName: "profile", attachments: [])
+        CommonsMultipartFile sound = Mock(CommonsMultipartFile) {
+            getOriginalFilename() >> "call.mp3"
+            getContentType() >> "audio/mpeg"
+        }
+        service.attachmentService.validateSound(sound) >> [valid: true, extension: "mp3", contentType: "audio/mpeg"]
+
+        when:
+        service.saveAttachment(profile.uuid, [type: Attachment.TYPE_SOUND, title: "Call"], sound)
+        profile = Profile.findByUuid(profile.uuid)
+
+        then:
+        profile.attachments.size() == 1
+        profile.attachments[0].type == Attachment.TYPE_SOUND
+        profile.attachments[0].filename == "call.mp3"
+        profile.attachments[0].contentType == "audio/mpeg"
+        1 * service.attachmentService.saveAttachment(opus.uuid, profile.uuid, _, sound, "mp3")
+    }
+
+    def "saveAttachment should reject an invalid sound attachment"() {
+        given:
+        Opus opus = save new Opus(title: "opus", dataResourceUid: "123", glossary: new Glossary())
+        Profile profile = save new Profile(opus: opus, scientificName: "profile", attachments: [])
+        CommonsMultipartFile sound = Mock(CommonsMultipartFile)
+        service.attachmentService.validateSound(sound) >> [valid: false, error: "invalid sound"]
+
+        when:
+        service.saveAttachment(profile.uuid, [type: Attachment.TYPE_SOUND, title: "Call"], sound)
+
+        then:
+        thrown(IllegalArgumentException)
+        profile.attachments.isEmpty()
+        0 * service.attachmentService.saveAttachment(_, _, _, _, _)
     }
 
     def "saveAttachment should operate on the draft if the profile is in draft mode"() {
@@ -1957,6 +2012,32 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
         'def' | 'abc' | null | null | false
         null | null | 'abc' | 'def' | true
         'def' | 'abc' | null | null | true
+    }
+
+    def "setPrimaryMultimedia should accept an uploaded sound attachment"() {
+        given:
+        Opus opus = save new Opus(title: "opus", dataResourceUid: "123", glossary: new Glossary())
+        Profile profile = save new Profile(opus: opus, scientificName: "profile",
+                attachments: [new Attachment(uuid: "sound1", type: Attachment.TYPE_SOUND)])
+
+        when:
+        service.setPrimaryMultimedia(profile, [primaryAudio: "sound1"])
+
+        then:
+        profile.primaryAudio == "sound1"
+    }
+
+    def "setPrimaryMultimedia should reject an unknown primary audio id"() {
+        given:
+        Opus opus = save new Opus(title: "opus", dataResourceUid: "123", glossary: new Glossary())
+        Profile profile = save new Profile(opus: opus, scientificName: "profile", attachments: [])
+
+        when:
+        service.setPrimaryMultimedia(profile, [primaryAudio: "missing"])
+
+        then:
+        thrown(IllegalArgumentException)
+        profile.primaryAudio == null
     }
 
     def "create and update document should persist multimedia metadata"() {

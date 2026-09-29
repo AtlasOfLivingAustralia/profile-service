@@ -22,7 +22,8 @@ class AttachmentMarshaller {
                     creator     : attachment.creator,
                     createdDate : attachment.createdDate,
                     downloadUrl : attachment.downloadUrl,
-                    category    : attachment.category
+                    category    : attachment.category,
+                    type        : attachment.type
             ]
         }
     }

@@ -238,6 +238,7 @@ class CloneAndDraftUtil {
         clone.uuid = source.uuid
         clone.url = source.url
         clone.category = source.category
+        clone.type = source.type
 
         clone
     }

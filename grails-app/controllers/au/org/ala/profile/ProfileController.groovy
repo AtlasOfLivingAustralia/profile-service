@@ -186,9 +186,45 @@ class ProfileController extends BaseController {
                 if (request instanceof MultipartHttpServletRequest) {
                     file = request.getFile(request.fileNames[0])
                 }
-                List<Attachment> attachments = profileService.saveAttachment(profile.uuid, metadata, file)
+                try {
+                    List<Attachment> attachments = profileService.saveAttachment(profile.uuid, metadata, file)
+                    render (attachments as JSON)
+                } catch (IllegalArgumentException e) {
+                    badRequest e.message
+                }
+            }
+        }
+    }
 
-                render (attachments as JSON)
+    def streamSound() {
+        if (!params.opusId || !params.profileId || !params.attachmentId) {
+            badRequest "opusId, profileId and attachmentId are required parameters"
+        } else {
+            Profile profile = getProfile()
+
+            if (!profile) {
+                notFound "No profile was found for id ${params.profileId}"
+            } else {
+                def profileOrDraft = (params.latest == "true" && profile.draft) ? profile.draft : profile
+                Attachment attachment = profileOrDraft.attachments?.find {
+                    it.uuid == params.attachmentId && it.type == Attachment.TYPE_SOUND
+                }
+                File file = attachment ? attachmentService.getAttachment(
+                        profile.opus.uuid, profile.uuid, attachment.uuid,
+                        Utils.getFileExtension(attachment.filename)) : null
+
+                if (!file) {
+                    notFound "No sound was found with id ${params.attachmentId}"
+                } else {
+                    String filename = (attachment.filename ?: 'sound').replaceAll('[\\r\\n"]', '_')
+                    response.setContentType(attachment.contentType)
+                    response.setContentLengthLong(file.length())
+                    response.setHeader("Content-Disposition", "inline; filename=\"${filename}\"")
+                    file.withInputStream { InputStream input ->
+                        response.outputStream << input
+                    }
+                    response.outputStream.flush()
+                }
             }
         }
     }
@@ -640,13 +676,17 @@ class ProfileController extends BaseController {
             notFound()
         } else {
 
-            def result = profileService.setPrimaryMultimedia(profile, props)
+            try {
+                def result = profileService.setPrimaryMultimedia(profile, props)
 
-            if (result) {
-                response.status = 204
-            } else {
-                log.error "Couldn't update $profile primary multimedia with $props"
-                response.sendError(500)
+                if (result) {
+                    response.status = 204
+                } else {
+                    log.error "Couldn't update $profile primary multimedia with $props"
+                    response.sendError(500)
+                }
+            } catch (IllegalArgumentException e) {
+                badRequest e.message
             }
         }
     }
