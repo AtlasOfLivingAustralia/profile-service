@@ -180,6 +180,17 @@ class ExportService extends BaseDataAccessService {
                                 license: audio.license,
                                 url: audio.url
                         ]
+                    } else {
+                        def sound = data.attachments?.find { it.uuid == pa && it.type == Attachment.TYPE_SOUND }
+                        if (sound) {
+                            profile.mainAudio = [
+                                    id: sound.uuid,
+                                    name: sound.title,
+                                    attribution: sound.creator,
+                                    license: sound.licence,
+                                    url: "${grailsApplication.config.profile.hub.base.url}/opus/${opus.uuid}/profile/${data.uuid}/sound/${sound.uuid}"
+                            ]
+                        }
                     }
                 }
 

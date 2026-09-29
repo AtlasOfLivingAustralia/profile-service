@@ -8,6 +8,8 @@ import javax.persistence.Transient
 @EqualsAndHashCode
 class Attachment {
 
+    static final String TYPE_SOUND = "sound"
+
     String uuid
     String filename
     String url
@@ -19,6 +21,7 @@ class Attachment {
     String licence
     String creator
     String category
+    String type
     Date createdDate
 
     @Transient
@@ -36,6 +39,7 @@ class Attachment {
         licence nullable: true
         createdDate nullable: true
         category nullable: true
+        type nullable: true
     }
 
     static constraints = {

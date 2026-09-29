@@ -59,7 +59,7 @@ class CloneAndDraftUtilTest extends Specification {
                 bibliography: [new Bibliography(text: "bib1"), new Bibliography(text: "bib2")],
                 publications: [new Publication(title: "pub1"), new Publication(title: "pub2")],
                 attributes: [attribute1, attribute2],
-                attachments: [new Attachment(title: "doc1"), new Attachment(title: "doc2")],
+                attachments: [new Attachment(title: "sound1", type: Attachment.TYPE_SOUND), new Attachment(title: "doc2")],
                 dateCreated: new Date(),
                 isCustomMapConfig: true,
                 occurrenceQuery: "q=lsid:http://id.biodiversity.org.au/node/apni/2903532&fq=state:%22New%20South%20Wales%22"
@@ -162,6 +162,7 @@ class CloneAndDraftUtilTest extends Specification {
 
         !draft.attachments.is(original.attachments)
         draft.attachments == original.attachments as List
+        draft.attachments[0].type == Attachment.TYPE_SOUND
 
         draft.isCustomMapConfig == original.isCustomMapConfig
         draft.occurrenceQuery == original.occurrenceQuery

@@ -1324,6 +1324,15 @@ class ProfileService extends BaseDataAccessService {
         checkState profile
 
         Date createdDate = metadata.createdDate ? new SimpleDateFormat("yyyy-MM-dd").parse(metadata.createdDate) : null
+        String attachmentType = metadata.type?.toString()?.toLowerCase()
+        Map soundValidation = null
+        if (!metadata.uuid && attachmentType == Attachment.TYPE_SOUND) {
+            soundValidation = attachmentService.validateSound(file)
+            if (!soundValidation.valid) {
+                throw new IllegalArgumentException(soundValidation.error as String)
+            }
+            metadata.filename = file.originalFilename
+        }
 
         if (metadata.uuid) {
             Attachment existing = profileOrDraft(profile).attachments.find { it.uuid == metadata.uuid }
@@ -1341,8 +1350,9 @@ class ProfileService extends BaseDataAccessService {
         } else {
             Attachment newAttachment = new Attachment(uuid: UUID.randomUUID().toString(), url: metadata.url,
                     title: metadata.title, description: metadata.description, filename: metadata.filename,
-                    contentType: file?.contentType, rights: metadata.rights, createdDate: createdDate,
-                    rightsHolder: metadata.rightsHolder, licence: metadata.licence, creator: metadata.creator, category: metadata.category)
+                    contentType: soundValidation?.contentType ?: file?.contentType, rights: metadata.rights, createdDate: createdDate,
+                    rightsHolder: metadata.rightsHolder, licence: metadata.licence, creator: metadata.creator,
+                    category: metadata.category, type: attachmentType)
             if (file) {
                 String extension = Utils.getFileExtension(file.originalFilename)
                 attachmentService.saveAttachment(profile.opus.uuid, profile.uuid, newAttachment.uuid, file, extension)
@@ -1352,7 +1362,7 @@ class ProfileService extends BaseDataAccessService {
 
         save profile
 
-        profile.attachments
+        profileOrDraft(profile).attachments
     }
 
     List<Attachment> deleteAttachment(String profileId, String attachmentId) {
@@ -1362,6 +1372,9 @@ class ProfileService extends BaseDataAccessService {
         Attachment attachment = profileOrDraft(profile).attachments?.find { it.uuid == attachmentId }
         if (attachment) {
             profileOrDraft(profile).attachments.remove(attachment)
+            if (profileOrDraft(profile).primaryAudio == attachmentId) {
+                profileOrDraft(profile).primaryAudio = null
+            }
 
             // Only delete the file if we are not in draft mode.
             // If we are in draft mode, then the file will be deleted when the draft is published.
@@ -1372,7 +1385,7 @@ class ProfileService extends BaseDataAccessService {
 
         save profile
 
-        profile.attachments
+        profileOrDraft(profile).attachments
     }
 
     /**
@@ -1537,7 +1550,20 @@ class ProfileService extends BaseDataAccessService {
 
         def profile = profileOrDraft(originalProfile)
 
-        profile.primaryAudio = json?.primaryAudio ?: null
+        String primaryAudio = json?.primaryAudio ?: null
+        if (primaryAudio) {
+            boolean externalAudioExists = profile.documents?.any {
+                it.documentId == primaryAudio && it.type?.equalsIgnoreCase('audio')
+            }
+            boolean uploadedSoundExists = profile.attachments?.any {
+                it.uuid == primaryAudio && it.type == Attachment.TYPE_SOUND
+            }
+            if (!externalAudioExists && !uploadedSoundExists) {
+                throw new IllegalArgumentException("No audio document or uploaded sound exists with id ${primaryAudio}")
+            }
+        }
+
+        profile.primaryAudio = primaryAudio
         profile.primaryVideo = json?.primaryVideo ?: null
 
         originalProfile.save(true)
