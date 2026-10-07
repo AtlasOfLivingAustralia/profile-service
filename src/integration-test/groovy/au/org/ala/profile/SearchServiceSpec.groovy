@@ -928,6 +928,34 @@ class SearchServiceSpec extends BaseIntegrationSpec {
         result.find { it.scientificName == 'name1' } != null
     }
 
+    def "findByClassificationNameAndRank should filter descendants by scientific name prefix"() {
+        given:
+        Opus opus1 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr1", title: "title1")
+        Opus opus2 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr2", title: "title2")
+        Opus opus3 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr3", title: "title3")
+
+        save new Profile(scientificName: "plantae", opus: opus1, rank: "kingdom", classification: [new Classification(rank: "kingdom", name: "plantae")])
+        save new Profile(scientificName: "name1", opus: opus1, rank: "phylum", classification: [new Classification(rank: "kingdom", name: "plantae"), new Classification(rank: "phylum", name: "name1")])
+        save new Profile(scientificName: "name2", opus: opus2, rank: "class", classification: [new Classification(rank: "kingdom", name: "plantae"), new Classification(rank: "phylum", name: "name1"), new Classification(rank: "class", name: "name2")])
+        save new Profile(scientificName: "other", opus: opus3, rank: "class", classification: [new Classification(rank: "kingdom", name: "plantae"), new Classification(rank: "class", name: "other")])
+
+        when:
+        List result = service.findByClassificationNameAndRank("kingdom", "plantae", null, ProfileSortOption.default, -1, 0, false, false, null, "name")
+
+        then:
+        result.size() == 2
+        result.find { it.scientificName == "name1" } != null
+        result.find { it.scientificName == "name2" } != null
+        result.find { it.scientificName == "other" } == null
+        result.find { it.scientificName == "plantae" } == null
+
+        when:
+        result = service.findByClassificationNameAndRank("kingdom", "plantae", null, ProfileSortOption.default, 1, 0, false, false, null, "name")
+
+        then:
+        result.size() == 1
+    }
+
     def "totalByClassificationNameAndRank should exclude archived profiles"() {
         given:
         Opus opus1 = save new Opus(glossary: new Glossary(), dataResourceUid: "dr1", title: "title1")

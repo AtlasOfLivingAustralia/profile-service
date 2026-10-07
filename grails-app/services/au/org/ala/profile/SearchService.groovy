@@ -381,14 +381,15 @@ class SearchService extends BaseDataAccessService {
      * @param max Maximum number of results to return
      * @param startFrom The 0-based offset to start the results from (for paging)
      * @param immediateChildrenOnly True if only children who list the rank:sciName as a direct parent should be returned.
+     * @param nameFilter Optional case-insensitive scientificName prefix. Applied before max and startFrom.
      * @return List of descendant taxa of the specified Rank/ScientificName
      */
-    List<Map>   findByClassificationNameAndRank(String rank, String scientificName, List<String> opusIds, ProfileSortOption sortBy = ProfileSortOption.getDefault(), int max = -1, int startFrom = 0, boolean immediateChildrenOnly = false, boolean includeTaxon = false, String rankFilter = null) {
+    List<Map>   findByClassificationNameAndRank(String rank, String scientificName, List<String> opusIds, ProfileSortOption sortBy = ProfileSortOption.getDefault(), int max = -1, int startFrom = 0, boolean immediateChildrenOnly = false, boolean includeTaxon = false, String rankFilter = null, String nameFilter = null) {
 
         List<Opus> opusList = opusIds?.findResults { Opus.findByUuidOrShortName(it, it) }
         Map<Long, Opus> opusMap = opusList?.collectEntries { [(it.id): it] }
 
-        def pipeline = commonClassificationAndRankAggregationElements(rank, scientificName, opusList, immediateChildrenOnly, includeTaxon, rankFilter)
+        def pipeline = commonClassificationAndRankAggregationElements(rank, scientificName, opusList, immediateChildrenOnly, includeTaxon, rankFilter, nameFilter)
 
         if (max == -1) {
             max = opusList ? DEFAULT_MAX_OPUS_SEARCH_RESULTS : DEFAULT_MAX_BROAD_SEARCH_RESULTS
@@ -429,15 +430,15 @@ class SearchService extends BaseDataAccessService {
      * @param immediateChildrenOnly True if only children who list the rank:sciName as a direct parent should be returned.
      * @return List of descendant taxa of the specified Rank/ScientificName
      */
-    int totalDescendantsByClassificationAndRank(String rank, String scientificName, List<String> opusIds, boolean immediateChildrenOnly = false, boolean includeTaxon = false, String rankFilter = null) {
+    int totalDescendantsByClassificationAndRank(String rank, String scientificName, List<String> opusIds, boolean immediateChildrenOnly = false, boolean includeTaxon = false, String rankFilter = null, String nameFilter = null) {
         List<Opus> opusList = opusIds?.findResults { Opus.findByUuidOrShortName(it, it) }
-        countDescendantsByClassificationAndRank(rank, scientificName, opusList, immediateChildrenOnly, includeTaxon, rankFilter)
+        countDescendantsByClassificationAndRank(rank, scientificName, opusList, immediateChildrenOnly, includeTaxon, rankFilter, nameFilter)
     }
 
     // renamed version of above because erasure
-    int countDescendantsByClassificationAndRank(String rank, String scientificName, List<Opus> opusList, boolean immediateChildrenOnly = false, boolean includeTaxon = false, String rankFilter = null) {
+    int countDescendantsByClassificationAndRank(String rank, String scientificName, List<Opus> opusList, boolean immediateChildrenOnly = false, boolean includeTaxon = false, String rankFilter = null, String nameFilter = null) {
 
-        def pipeline = commonClassificationAndRankAggregationElements(rank, scientificName, opusList, immediateChildrenOnly, includeTaxon, rankFilter)
+        def pipeline = commonClassificationAndRankAggregationElements(rank, scientificName, opusList, immediateChildrenOnly, includeTaxon, rankFilter, nameFilter)
 
         def countResult = Profile.collection.aggregate(pipeline + [
                 getBsonDocument([$group: ['_id': null, count: [ $sum: 1 ]]])
@@ -457,17 +458,29 @@ class SearchService extends BaseDataAccessService {
         return (aggregation.iterator()?.size() ?: 0) > 0
     }
 
-    private List<Map> commonClassificationAndRankAggregationElements(String rank, String scientificName, List<Opus> opusList, boolean immediateChildrenOnly, boolean includeTaxon = false, String rankFilter = null) {
+    private List<Map> commonClassificationAndRankAggregationElements(String rank, String scientificName, List<Opus> opusList, boolean immediateChildrenOnly, boolean includeTaxon = false, String rankFilter = null, String nameFilter = null) {
         checkArgument rank
         checkArgument scientificName
 
         scientificName = Utils.sanitizeRegex(scientificName)
+        String descendantName = Utils.sanitizeRegex(nameFilter)?.trim()
 
         // Do a filter first before projection so that the projection
         // isn't run on all documents.
         Map preMatchCriteria = [archivedDate: null]
-        if(!includeTaxon) {
-            preMatchCriteria << ["scientificName": [$regex: /^(?!(${scientificName})$)/, $options: "i"]] // case insensitive NOT condition
+        List scientificNameMatchers = []
+        if (!includeTaxon) {
+            // case insensitive NOT condition
+            scientificNameMatchers << [$regex: /^(?!(${scientificName})$)/, $options: "i"]
+        }
+        // Prefix match on the profile name. Applied before skip/limit.
+        if (descendantName) {
+            scientificNameMatchers << [$regex: /^${descendantName}/, $options: "i"]
+        }
+        if (scientificNameMatchers.size() == 1) {
+            preMatchCriteria.scientificName = scientificNameMatchers[0]
+        } else if (scientificNameMatchers.size() > 1) {
+            preMatchCriteria.'$and' = scientificNameMatchers.collect { [scientificName: it] }
         }
 
         if (rankFilter) {

@@ -68,7 +68,7 @@ class SearchController extends BaseController {
             boolean immediateChildrenOnly = params.boolean('immediateChildrenOnly', false)
             boolean includeTaxon = params.boolean('includeTaxon', false)
             ProfileSortOption sortBy = ProfileSortOption.byName(params.sortBy) ?: ProfileSortOption.getDefault()
-            List<Map> profiles = searchService.findByClassificationNameAndRank(params.taxon, params.scientificName, opusIds, sortBy, max, startFrom, immediateChildrenOnly, includeTaxon)
+            List<Map> profiles = searchService.findByClassificationNameAndRank(params.taxon, params.scientificName, opusIds, sortBy, max, startFrom, immediateChildrenOnly, includeTaxon, null, params.filter)
 
             response.setContentType("application/json")
             render profiles.collect { profile ->
