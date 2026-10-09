@@ -42,4 +42,45 @@ class MasterListServiceSpec extends Specification implements ServiceUnitTest<Mas
         }
 
     }
+
+    def 'an unavailable florula list is not applied'() {
+        given:
+        service.webService = Stub(WebService)
+        service.webService.get(_) >> { String url ->
+            if (url.contains('missing')) {
+                [statusCode: 404, resp: null]
+            } else {
+                [statusCode: 200, resp: [[name: 'Acacia']]]
+            }
+        }
+        def opus = new Opus(masterListUid: 'master')
+
+        when:
+        def withMasterList = service.getCombinedListForUser(opus, 'missing')
+        def withoutMasterList = service.getCombinedListForUser(new Opus(), 'missing')
+
+        then:
+        withMasterList*.name == ['Acacia']
+        withoutMasterList == null
+    }
+
+    def 'checkFlorulaList distinguishes a missing list from an outage'() {
+        given:
+        service.webService = Stub(WebService)
+        service.webService.get(_) >> { String url ->
+            if (url.contains('/missing')) {
+                [statusCode: 404]
+            } else if (url.contains('/down')) {
+                [statusCode: 503]
+            } else {
+                [statusCode: 200, resp: [dataResourceUid: 'dr1']]
+            }
+        }
+
+        expect:
+        service.checkFlorulaList('dr1') == 204
+        service.checkFlorulaList('missing') == 404
+        service.checkFlorulaList('down') == 502
+        service.checkFlorulaList('') == 400
+    }
 }

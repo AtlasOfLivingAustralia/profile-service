@@ -163,7 +163,7 @@ class MasterListService {
     @Timed(value = 'Timed: get combined list for user', useClassPrefix = true)
     @Metered(value = 'Metered: get combined list for user', useClassPrefix = true)
     List<Map<String,String>> getCombinedListForUser(Opus opus, String florulaId) throws ProfileListUnavailableException {
-        def florulaListItems = florulaId ? getProfileList(florulaId) : null
+        def florulaListItems = florulaListItems(florulaId)
         def masterListItems = opus?.masterListUid ?  getProfileList(opus?.masterListUid) : null
         def result
         if (florulaListItems != null && masterListItems != null) {
@@ -179,6 +179,41 @@ class MasterListService {
             result = null
         }
         return result
+    }
+
+    /**
+     * Whether a list id can be saved as a florula filter.
+     * 204 when the lists service has the list, 404 when it does not, 400 when the id
+     * is blank, and 502 when the lists service cannot be reached.
+     */
+    int checkFlorulaList(String listId) {
+        if (!listId) return 400
+        def baseUrl = grailsApplication.config.getProperty('lists.base.url') ?: 'https://lists.ala.org.au'
+        try {
+            def response = webService.get("$baseUrl/ws/speciesList/${encPath(listId)}")
+            if (!response) return 502
+            int code = response.statusCode as int
+            if (code >= 500) return 502
+            if (code >= 400) return 404
+            return 204
+        } catch (Exception e) {
+            log.warn("Florula list check failed for ${listId}", e)
+            return 502
+        }
+    }
+
+    /**
+     * A florula id that the lists service cannot load is not a filter. Callers then
+     * see the master list, or no list at all.
+     */
+    private List<Map<String, String>> florulaListItems(String florulaId) {
+        if (!florulaId) return null
+        try {
+            return getProfileList(florulaId)
+        } catch (Exception e) {
+            log.warn("Ignoring florula list ${florulaId}", e)
+            return null
+        }
     }
 
     class ProfileListUnavailableException extends IOException {
