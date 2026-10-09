@@ -3,6 +3,7 @@ package au.org.ala.profile
 import au.org.ala.ws.service.WebService
 import com.codahale.metrics.MetricRegistry
 import grails.testing.services.ServiceUnitTest
+import jakarta.servlet.http.HttpServletRequest
 import spock.lang.Specification
 
 
@@ -62,5 +63,37 @@ class MasterListServiceSpec extends Specification implements ServiceUnitTest<Mas
         then:
         withMasterList*.name == ['Acacia']
         withoutMasterList == null
+    }
+
+    def 'an explicit florula override is used for a signed-in user'() {
+        given:
+        service.userService = [currentUserDetails: [userId: 'user-1']]
+        service.userSettingsService = [
+                getUserSettings: { String id ->
+                    [allFlorulaSettings: [opus1: [drUid: 'saved-list']]]
+                }
+        ]
+        def request = Stub(HttpServletRequest) {
+            getParameterMap() >> ['florulaOverrideId-opus1': ['dr9'] as String[]]
+        }
+
+        expect:
+        service.getFlorulaListIdForUser(request, 'opus1') == 'dr9'
+    }
+
+    def 'a signed-in user without an override uses their saved list'() {
+        given:
+        service.userService = [currentUserDetails: [userId: 'user-1']]
+        service.userSettingsService = [
+                getUserSettings: { String id ->
+                    [allFlorulaSettings: [opus1: [drUid: 'saved-list']]]
+                }
+        ]
+        def request = Stub(HttpServletRequest) {
+            getParameterMap() >> [:]
+        }
+
+        expect:
+        service.getFlorulaListIdForUser(request, 'opus1') == 'saved-list'
     }
 }

@@ -131,19 +131,24 @@ class MasterListService {
     }
 
     String getFlorulaListIdForUser(HttpServletRequest request, String opusUuid) {
-        String florulaId
+        // A request that names a list (the SPA, or the anonymous cookie forwarded by
+        // the hub) applies to that collection even when the caller is signed in.
+        // Signed-in Grails sessions fall back to the list saved on the user.
+        String overrideId = null
+        try {
+            overrideId = request?.parameterMap?.get(MASTER_LIST_OVERRIDE_PARAM + '-' + opusUuid)?.first()
+        } catch (e) {
+            log.error("Not in a request context", e)
+        }
+        if (overrideId) {
+            return overrideId
+        }
+
         def userid = userService.currentUserDetails?.userId
         if (!userid) {
-            try {
-                florulaId = request.parameterMap[MASTER_LIST_OVERRIDE_PARAM + '-' + opusUuid]?.first()
-            } catch (e) {
-                log.error("Not in a request context", e)
-                florulaId = null
-            }
-        } else {
-            florulaId = userSettingsService.getUserSettings(userid)?.allFlorulaSettings?.get(opusUuid)?.drUid
+            return null
         }
-        return florulaId
+        return userSettingsService.getUserSettings(userid)?.allFlorulaSettings?.get(opusUuid)?.drUid
     }
 
     private void logUri() {
