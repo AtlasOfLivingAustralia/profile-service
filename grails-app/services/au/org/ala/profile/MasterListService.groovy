@@ -182,27 +182,6 @@ class MasterListService {
     }
 
     /**
-     * Whether a list id can be saved as a florula filter.
-     * 204 when the lists service has the list, 404 when it does not, 400 when the id
-     * is blank, and 502 when the lists service cannot be reached.
-     */
-    int checkFlorulaList(String listId) {
-        if (!listId) return 400
-        def baseUrl = grailsApplication.config.getProperty('lists.base.url') ?: 'https://lists.ala.org.au'
-        try {
-            def response = webService.get("$baseUrl/ws/speciesList/${encPath(listId)}")
-            if (!response) return 502
-            int code = response.statusCode as int
-            if (code >= 500) return 502
-            if (code >= 400) return 404
-            return 204
-        } catch (Exception e) {
-            log.warn("Florula list check failed for ${listId}", e)
-            return 502
-        }
-    }
-
-    /**
      * A florula id that the lists service cannot load is not a filter. Callers then
      * see the master list, or no list at all.
      */

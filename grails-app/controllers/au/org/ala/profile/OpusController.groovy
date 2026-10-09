@@ -533,19 +533,6 @@ class OpusController extends BaseController {
             }
         }
     }
-    def checkFlorulaList() {
-        if (!params.listId) {
-            badRequest "listId is required"
-            return
-        }
-        int code = masterListService.checkFlorulaList(params.listId as String)
-        if (code == HttpServletResponse.SC_NO_CONTENT) {
-            render status: code
-        } else {
-            response.sendError(code)
-        }
-    }
-
     @Transactional
     def updateFlorulaListForUser() {
         if (!params.opusId) {
