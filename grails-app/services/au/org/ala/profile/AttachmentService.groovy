@@ -35,6 +35,102 @@ class AttachmentService {
         "${grailsApplication.config.attachments.directory}/${opusId}/${profileId ? profileId + '/' : ''}${attachmentId}.${extension}"
     }
 
+    String getDraftSoundPath(String opusId, String profileId, String attachmentId, String extension) {
+        "${grailsApplication.config.attachments.directory}/${opusId}/${profileId}/draft/${attachmentId}.${extension}"
+    }
+
+    void saveDraftSoundReplacement(String opusId, String profileId, String attachmentId,
+                                   MultipartFile incomingFile, String extension) {
+        File destination = new File(getDraftSoundPath(opusId, profileId, attachmentId, extension))
+        destination.parentFile.mkdirs()
+
+        File temporary = File.createTempFile("sound-replacement-", ".tmp", destination.parentFile)
+
+        try {
+            incomingFile.transferTo(temporary)
+
+            java.nio.file.Files.move(
+                temporary.toPath(),
+                destination.toPath(),
+                java.nio.file.StandardCopyOption.REPLACE_EXISTING
+            )
+        } finally {
+            temporary.delete()
+        }
+    }
+
+    File getDraftSoundReplacement(String opusId, String profileId, String attachmentId, String extension) {
+        File file = new File(getDraftSoundPath(opusId, profileId, attachmentId, extension))
+        file.exists() ? file : null
+    }
+
+    void deleteDraftSoundReplacements(String opusId, String profileId, String attachmentId, String exceptExtension = null) {
+        SOUND_CONTENT_TYPES.keySet().each { String extension ->
+            if (extension != exceptExtension) {
+                File file = new File(getDraftSoundPath(opusId, profileId, attachmentId, extension))
+                if (file.exists() && !file.delete()) {
+                    throw new IOException("Failed to delete staged sound replacement")
+                }
+            }
+        }
+    }
+
+    void publishDraftSoundReplacement(String opusId, String profileId, String attachmentId, String extension) {
+        File staged = getDraftSoundReplacement(opusId, profileId, attachmentId, extension)
+
+        if (!staged) {
+            throw new IllegalStateException("Staged sound replacement not found")
+        }
+
+        File destination = new File(getPath(opusId, profileId, attachmentId, extension))
+        destination.parentFile.mkdirs()
+
+        File temporary = File.createTempFile("sound-publish-", ".tmp", destination.parentFile)
+
+        try {
+            java.nio.file.Files.copy(
+                staged.toPath(),
+                temporary.toPath(),
+                java.nio.file.StandardCopyOption.REPLACE_EXISTING
+            )
+
+            java.nio.file.Files.move(
+                temporary.toPath(),
+                destination.toPath(),
+                java.nio.file.StandardCopyOption.REPLACE_EXISTING
+            )
+        } finally {
+            temporary.delete()
+        }
+    }
+
+    File backupPublishedSound(String opusId, String profileId,
+                              String attachmentId, String extension) {
+        File original = getAttachment(opusId, profileId, attachmentId, extension)
+
+        if (!original) {
+            throw new IllegalStateException("Published sound file not found")
+        }
+
+        File backup = File.createTempFile(
+            "sound-backup-",
+            ".${extension}",
+            original.parentFile
+        )
+
+        try {
+            java.nio.file.Files.copy(
+                original.toPath(),
+                backup.toPath(),
+                java.nio.file.StandardCopyOption.REPLACE_EXISTING
+            )
+            return backup
+        } catch (Exception e) {
+            backup.delete()
+            throw e
+        }
+    }
+
     Map validateSound(MultipartFile incomingFile) {
         if (!incomingFile || incomingFile.empty) {
             return [valid: false, error: 'A sound file is required']

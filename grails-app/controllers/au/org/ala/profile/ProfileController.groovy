@@ -186,6 +186,7 @@ class ProfileController extends BaseController {
                 if (request instanceof MultipartHttpServletRequest) {
                     file = request.getFile(request.fileNames[0])
                 }
+
                 try {
                     List<Attachment> attachments = profileService.saveAttachment(profile.uuid, metadata, file)
                     render (attachments as JSON)
@@ -204,20 +205,53 @@ class ProfileController extends BaseController {
 
             if (!profile) {
                 notFound "No profile was found for id ${params.profileId}"
+            } else if (profile.opus?.uuid != params.opusId &&
+                profile.opus?.shortName != params.opusId) {
+                notFound "No profile was found for id ${params.profileId} in opus ${params.opusId}"
             } else {
                 def profileOrDraft = (params.latest == "true" && profile.draft) ? profile.draft : profile
                 Attachment attachment = profileOrDraft.attachments?.find {
                     it.uuid == params.attachmentId && it.type == Attachment.TYPE_SOUND
                 }
-                File file = attachment ? attachmentService.getAttachment(
-                        profile.opus.uuid, profile.uuid, attachment.uuid,
-                        Utils.getFileExtension(attachment.filename)) : null
+
+                File file = null
+                Attachment fileAttachment = attachment
+
+                if (attachment) {
+                    String extension = Utils.getFileExtension(attachment.filename)
+
+                    if (params.latest == "true" && profile.draft) {
+                        file = attachmentService.getDraftSoundReplacement(
+                            profile.opus.uuid,
+                            profile.uuid,
+                            attachment.uuid,
+                            extension
+                        )
+                    }
+
+                    if (!file) {
+                        Attachment publishedAttachment = profile.attachments?.find {
+                            it.uuid == attachment.uuid && it.type == Attachment.TYPE_SOUND
+                        }
+
+                        Attachment originalAttachment = publishedAttachment ?: attachment
+
+                        file = attachmentService.getAttachment(
+                            profile.opus.uuid,
+                            profile.uuid,
+                            originalAttachment.uuid,
+                            Utils.getFileExtension(originalAttachment.filename)
+                        )
+
+                        fileAttachment = originalAttachment
+                    }
+                }
 
                 if (!file) {
                     notFound "No sound was found with id ${params.attachmentId}"
                 } else {
-                    String filename = (attachment.filename ?: 'sound').replaceAll('[\\r\\n"]', '_')
-                    response.setContentType(attachment.contentType)
+                    String filename = (fileAttachment.filename ?: 'sound').replaceAll('[\\r\\n"]', '_')
+                    response.setContentType(fileAttachment.contentType)
                     response.setContentLengthLong(file.length())
                     response.setHeader("Content-Disposition", "inline; filename=\"${filename}\"")
                     file.withInputStream { InputStream input ->
