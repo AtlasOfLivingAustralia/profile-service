@@ -2,9 +2,11 @@ package au.org.ala.profile
 
 import grails.core.DefaultGrailsApplication
 import grails.testing.services.ServiceUnitTest
+import org.springframework.mock.web.MockMultipartFile
 import org.springframework.web.multipart.MultipartFile
 import spock.lang.Specification
 import spock.lang.Unroll
+import java.nio.file.Files
 
 class AttachmentServiceSpec extends Specification implements ServiceUnitTest<AttachmentService> {
 
@@ -72,4 +74,149 @@ class AttachmentServiceSpec extends Specification implements ServiceUnitTest<Att
         'call.mp3' | 'audio/wav'
         'call.wav' | 'audio/mpeg'
     }
+
+    def "saveDraftSoundReplacement stages a replacement without modifying the published sound"() {
+        given:
+        File attachmentsDirectory = Files.createTempDirectory("profile-sound-test-").toFile()
+        service.grailsApplication.config.attachments.directory = attachmentsDirectory.absolutePath
+
+        String opusId = "opus-1"
+        String profileId = "profile-1"
+        String attachmentId = "sound-1"
+
+        File published = new File(
+            service.getPath(opusId, profileId, attachmentId, "mp3")
+        )
+        published.parentFile.mkdirs()
+        published.bytes = "original recording".bytes
+
+        MockMultipartFile replacement = new MockMultipartFile(
+            "file",
+            "replacement.mp3",
+            "audio/mpeg",
+            "replacement recording".bytes
+        )
+
+        when:
+        service.saveDraftSoundReplacement(opusId, profileId, attachmentId, replacement, "mp3")
+
+        then:
+        published.text == "original recording"
+
+        and:
+        File staged = service.getDraftSoundReplacement(
+            opusId, profileId, attachmentId, "mp3"
+        )
+        staged != null
+        staged.text == "replacement recording"
+
+        cleanup:
+        attachmentsDirectory?.deleteDir()
+    }
+
+    def "publishDraftSoundReplacement replaces the published file while preserving its backup"() {
+        given:
+        File attachmentsDirectory = Files.createTempDirectory("profile-sound-test-").toFile()
+        service.grailsApplication.config.attachments.directory = attachmentsDirectory.absolutePath
+
+        String opusId = "opus-1"
+        String profileId = "profile-1"
+        String attachmentId = "sound-1"
+
+        File published = new File(
+            service.getPath(opusId, profileId, attachmentId, "mp3")
+        )
+        published.parentFile.mkdirs()
+        published.text = "original recording"
+
+        MockMultipartFile replacement = new MockMultipartFile(
+            "file",
+            "replacement.mp3",
+            "audio/mpeg",
+            "replacement recording".bytes
+        )
+
+        service.saveDraftSoundReplacement(
+            opusId, profileId, attachmentId, replacement, "mp3"
+        )
+
+        when:
+        File backup = service.backupPublishedSound(
+            opusId, profileId, attachmentId, "mp3"
+        )
+
+        service.publishDraftSoundReplacement(
+            opusId, profileId, attachmentId, "mp3"
+        )
+
+        then:
+        published.text == "replacement recording"
+
+        and:
+        backup.exists()
+        backup.text == "original recording"
+
+        and:
+        File staged = service.getDraftSoundReplacement(
+            opusId, profileId, attachmentId, "mp3"
+        )
+        staged != null
+        staged.text == "replacement recording"
+
+        cleanup:
+        attachmentsDirectory?.deleteDir()
+    }
+
+    def "publishDraftSoundReplacement supports changing from MP3 to WAV"() {
+        given:
+        File attachmentsDirectory = Files.createTempDirectory("profile-sound-test-").toFile()
+        service.grailsApplication.config.attachments.directory = attachmentsDirectory.absolutePath
+
+        String opusId = "opus-1"
+        String profileId = "profile-1"
+        String attachmentId = "sound-1"
+
+        File original = new File(
+            service.getPath(opusId, profileId, attachmentId, "mp3")
+        )
+        original.parentFile.mkdirs()
+        original.text = "original MP3 recording"
+
+        MockMultipartFile replacement = new MockMultipartFile(
+            "file",
+            "replacement.wav",
+            "audio/wav",
+            "replacement WAV recording".bytes
+        )
+
+        service.saveDraftSoundReplacement(
+            opusId, profileId, attachmentId, replacement, "wav"
+        )
+
+        when:
+        service.publishDraftSoundReplacement(
+            opusId, profileId, attachmentId, "wav"
+        )
+
+        then:
+        File published = service.getAttachment(
+            opusId, profileId, attachmentId, "wav"
+        )
+
+        published != null
+        published.text == "replacement WAV recording"
+
+        and:
+        original.exists()
+        original.text == "original MP3 recording"
+
+        and:
+        service.getDraftSoundReplacement(
+            opusId, profileId, attachmentId, "wav"
+        ) != null
+
+        cleanup:
+        attachmentsDirectory?.deleteDir()
+    }
+
 }

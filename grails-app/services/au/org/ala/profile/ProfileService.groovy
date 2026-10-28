@@ -17,6 +17,9 @@ import java.text.SimpleDateFormat
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 
+import org.springframework.transaction.support.TransactionSynchronization
+import org.springframework.transaction.support.TransactionSynchronizationManager
+
 @Transactional
 class ProfileService extends BaseDataAccessService {
 
@@ -562,20 +565,72 @@ class ProfileService extends BaseDataAccessService {
         Profile profile = Profile.findByUuid(profileId)
         checkState profile
 
-        if (profile.draft) {
-            // clean up any draft attachment files
-            List existingIds = profile.attachments?.collect { it.uuid } ?: []
+        if (!profile.draft) {
+            return false
+        }
 
-            profile.draft.attachments?.each { draftAttachment ->
-                if (!existingIds.contains(draftAttachment.uuid)) {
-                    attachmentService.deleteAttachment(profile.opus.uuid, profile.uuid, draftAttachment.uuid, Utils.getFileExtension(draftAttachment.filename))
+        String opusId = profile.opus.uuid
+        String profileUuid = profile.uuid
+
+        List<Attachment> draftAttachments =
+            new ArrayList<Attachment>(profile.draft.attachments ?: [])
+
+        Set<String> publishedAttachmentIds =
+            (profile.attachments ?: []).collect { it.uuid } as Set<String>
+
+        // Save the profile without the draft before deleting any files.
+        def originalDraft = profile.draft
+        profile.draft = null
+
+        try {
+            if (!save(profile)) {
+                throw new IllegalStateException(
+                    "Failed to discard draft for profile ${profileUuid}"
+                )
+            }
+        } catch (Exception e) {
+            profile.draft = originalDraft
+            throw e
+        }
+
+        draftAttachments.each { Attachment attachment ->
+
+            // Remove staged sound replacements associated with this draft.
+            if (attachment.type == Attachment.TYPE_SOUND) {
+                try {
+                    attachmentService.deleteDraftSoundReplacements(
+                        opusId,
+                        profileUuid,
+                        attachment.uuid
+                    )
+                } catch (IOException e) {
+                    log.warn(
+                        "Failed to clean up staged sound replacement ${attachment.uuid}",
+                        e
+                    )
                 }
             }
 
-            profile.draft = null
+            // Remove files uploaded exclusively into the discarded draft.
+            if (!publishedAttachmentIds.contains(attachment.uuid) &&
+                attachment.filename) {
 
-            save profile
+                boolean deleted = attachmentService.deleteAttachment(
+                    opusId,
+                    profileUuid,
+                    attachment.uuid,
+                    Utils.getFileExtension(attachment.filename)
+                )
+
+                if (!deleted) {
+                    log.warn(
+                        "Failed to delete draft-only attachment file ${attachment.uuid}"
+                    )
+                }
+            }
         }
+
+        true
     }
 
     boolean toggleDraftMode(String profileId, boolean publish = false) {
@@ -585,29 +640,163 @@ class ProfileService extends BaseDataAccessService {
         checkState profile
 
         if (profile.draft && publish) {
-            // delete files for attachments that were removed during the draft stage
-            profile.attachments?.each { attachment ->
-                if (profile.draft.attachments?.find { it.uuid == attachment.uuid } == null) {
-                    attachmentService.deleteAttachment(profile.opus.uuid, profile.uuid, attachment.uuid, Utils.getFileExtension(attachment.filename))
+            // Record removed attachments, but preserve their files until publication succeeds.
+            List<Attachment> removedPublishedAttachments =
+                (profile.attachments ?: []).findAll { attachment ->
+                    !profile.draft.attachments?.any { it.uuid == attachment.uuid }
                 }
+
+            // Prepare staged sound replacements and preserve any files that
+            // would be overwritten during publication.
+            List<Map> soundReplacements = []
+
+            try {
+                profile.draft.attachments?.each { draftAttachment ->
+                    if (draftAttachment.type == Attachment.TYPE_SOUND) {
+                        String extension = Utils.getFileExtension(draftAttachment.filename)
+
+                        File staged = attachmentService.getDraftSoundReplacement(
+                            profile.opus.uuid,
+                            profile.uuid,
+                            draftAttachment.uuid,
+                            extension
+                        )
+
+                        if (staged) {
+                            Attachment publishedAttachment = profile.attachments?.find {
+                                it.uuid == draftAttachment.uuid
+                            }
+
+                            String publishedExtension = publishedAttachment ?
+                                Utils.getFileExtension(publishedAttachment.filename) : null
+
+                            File destination = new File(
+                                attachmentService.getPath(
+                                    profile.opus.uuid,
+                                    profile.uuid,
+                                    draftAttachment.uuid,
+                                    extension
+                                )
+                            )
+
+                            File backup = destination.exists() ?
+                                attachmentService.backupPublishedSound(
+                                    profile.opus.uuid,
+                                    profile.uuid,
+                                    draftAttachment.uuid,
+                                    extension
+                                ) : null
+
+                            soundReplacements << [
+                                attachmentId: draftAttachment.uuid,
+                                extension: extension,
+                                publishedExtension: publishedExtension,
+                                destination: destination,
+                                backup: backup
+                            ]
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                soundReplacements.each { replacement ->
+                    replacement.backup?.delete()
+                }
+                throw e
             }
 
-            CloneAndDraftUtil.updateProfileFromDraft(profile)
+            try {
+                if (!TransactionSynchronizationManager.isSynchronizationActive() ||
+                    !TransactionSynchronizationManager.isActualTransactionActive()) {
+                    soundReplacements.each { replacement ->
+                        (replacement.backup as File)?.delete()
+                    }
+                    throw new IllegalStateException(
+                        "An active transaction is required to publish profile ${profile.uuid}"
+                    )
+                }
 
-            Set<Attribute> attributesToDelete = profile.attributes.findAll {
-                String uuid = it.uuid
-                profile.draft.attributes.find { it.uuid == uuid } == null
+                TransactionSynchronizationManager.registerSynchronization(
+                    new TransactionSynchronization() {
+
+                        @Override
+                        void afterCompletion(int status) {
+                            if (status == TransactionSynchronization.STATUS_COMMITTED) {
+                                try {
+                                    cleanupPublishedAttachments(
+                                        profile,
+                                        soundReplacements,
+                                        removedPublishedAttachments
+                                    )
+                                } catch (Exception e) {
+                                    log.error(
+                                        "Failed to clean up attachments for profile ${profile.uuid}",
+                                        e
+                                    )
+                                }
+
+                            } else if (status == TransactionSynchronization.STATUS_ROLLED_BACK) {
+                                restorePublishedSounds(soundReplacements, null)
+
+                                soundReplacements.each { replacement ->
+                                    File backup = replacement.backup as File
+
+                                    // Keep backups if restoration was unsuccessful.
+                                    if (backup && (!replacement.promotionStarted || replacement.restored)) {
+                                        if (backup.exists() && !backup.delete()) {
+                                            log.warn(
+                                                "Failed to delete recovered sound backup ${replacement.attachmentId}"
+                                            )
+                                        }
+                                    }
+                                }
+
+                            } else {
+                                log.error(
+                                    "Unknown publication transaction outcome for profile ${profile.uuid}; retaining sound backups for recovery"
+                                )
+                            }
+                        }
+                    }
+                )
+
+                // Promote staged recordings before publishing their metadata.
+                soundReplacements.each { replacement ->
+                    replacement.promotionStarted = true
+
+                    attachmentService.publishDraftSoundReplacement(
+                        profile.opus.uuid,
+                        profile.uuid,
+                        replacement.attachmentId as String,
+                        replacement.extension as String
+                    )
+                }
+
+                CloneAndDraftUtil.updateProfileFromDraft(profile)
+
+                Set<Attribute> attributesToDelete = profile.attributes.findAll {
+                    String uuid = it.uuid
+                    profile.draft.attributes.find { it.uuid == uuid } == null
+                }
+
+                profile.draft = null
+
+                attributesToDelete.each {
+                    profile.attributes.remove(it)
+                    delete it
+                }
+
+                if (!save(profile)) {
+                    throw new IllegalStateException(
+                        "Failed to publish profile ${profile.uuid}"
+                    )
+                }
+
+            } catch (Exception publicationError) {
+                restorePublishedSounds(soundReplacements, publicationError)
+                throw publicationError
             }
 
-            profile.draft = null
-
-            attributesToDelete.each {
-                profile.attributes.remove(it)
-                delete it
-            }
-
-
-            save profile
+            return true
         } else {
             profile.draft = profile.draft ?: CloneAndDraftUtil.createDraft(profile)
 
@@ -618,6 +807,105 @@ class ProfileService extends BaseDataAccessService {
             }
 
             save profile
+        }
+    }
+
+    private void restorePublishedSounds(
+        List<Map> soundReplacements,
+        Exception publicationError
+    ) {
+        soundReplacements.reverseEach { replacement ->
+            if (replacement.promotionStarted && !replacement.restored) {
+                try {
+                    File destination = replacement.destination as File
+                    File backup = replacement.backup as File
+
+                    if (backup) {
+                        java.nio.file.Files.copy(
+                            backup.toPath(),
+                            destination.toPath(),
+                            java.nio.file.StandardCopyOption.REPLACE_EXISTING
+                        )
+                    } else {
+                        java.nio.file.Files.deleteIfExists(
+                            destination.toPath()
+                        )
+                    }
+
+                    replacement.restored = true
+
+                } catch (Exception restoreError) {
+                    log.error(
+                        "Failed to restore sound ${replacement.attachmentId}",
+                        restoreError
+                    )
+
+                    if (publicationError) {
+                        publicationError.addSuppressed(restoreError)
+                    }
+                }
+            }
+        }
+    }
+
+    private void cleanupPublishedAttachments(Profile profile, List<Map> soundReplacements, List<Attachment> removedPublishedAttachments) {
+        // Clean up sound replacements after successful publication.
+        soundReplacements.each { replacement ->
+            String attachmentId = replacement.attachmentId as String
+            String newExtension = replacement.extension as String
+            String oldExtension = replacement.publishedExtension as String
+
+            // Remove the original file if its extension changed.
+            if (oldExtension && oldExtension != newExtension) {
+                try {
+                    File oldFile = attachmentService.getAttachment(
+                        profile.opus.uuid,
+                        profile.uuid,
+                        attachmentId,
+                        oldExtension
+                    )
+
+                    if (oldFile && !oldFile.delete()) {
+                        log.warn("Failed to delete obsolete sound file ${attachmentId}.${oldExtension}")
+                    }
+                } catch (Exception e) {
+                    log.warn("Failed to clean up obsolete sound ${attachmentId}", e)
+                }
+            }
+
+            // Remove the staged replacement.
+            try {
+                attachmentService.deleteDraftSoundReplacements(
+                    profile.opus.uuid,
+                    profile.uuid,
+                    attachmentId
+                )
+            } catch (Exception e) {
+                log.warn("Failed to clean up staged sound ${attachmentId}", e)
+            }
+
+            // Remove the temporary backup.
+            File backup = replacement.backup as File
+
+            if (backup?.exists() && !backup.delete()) {
+                log.warn("Failed to delete sound backup for ${attachmentId}")
+            }
+        }
+
+        // Remove files belonging to attachments deleted from the published profile.
+        removedPublishedAttachments.each { Attachment attachment ->
+            if (attachment.filename) {
+                boolean deleted = attachmentService.deleteAttachment(
+                    profile.opus.uuid,
+                    profile.uuid,
+                    attachment.uuid,
+                    Utils.getFileExtension(attachment.filename)
+                )
+
+                if (!deleted) {
+                    log.warn("Failed to delete removed attachment file ${attachment.uuid}")
+                }
+            }
         }
     }
 
@@ -1326,17 +1614,64 @@ class ProfileService extends BaseDataAccessService {
         Date createdDate = metadata.createdDate ? new SimpleDateFormat("yyyy-MM-dd").parse(metadata.createdDate) : null
         String attachmentType = metadata.type?.toString()?.toLowerCase()
         Map soundValidation = null
-        if (!metadata.uuid && attachmentType == Attachment.TYPE_SOUND) {
+        boolean hasReplacementFile = file != null && !file.empty
+
+        if (attachmentType == Attachment.TYPE_SOUND &&
+            (!metadata.uuid || hasReplacementFile)) {
+
             soundValidation = attachmentService.validateSound(file)
+
             if (!soundValidation.valid) {
                 throw new IllegalArgumentException(soundValidation.error as String)
             }
-            metadata.filename = file.originalFilename
+
+            if (!metadata.uuid) {
+                metadata.filename = file.originalFilename
+            }
         }
 
         if (metadata.uuid) {
             Attachment existing = profileOrDraft(profile).attachments.find { it.uuid == metadata.uuid }
             if (existing) {
+                if (hasReplacementFile) {
+                    if (existing.type != Attachment.TYPE_SOUND) {
+                        throw new IllegalArgumentException("File replacement is only supported for sound attachments")
+                    }
+
+                    if (!soundValidation?.valid) {
+                        throw new IllegalArgumentException("Invalid replacement sound file")
+                    }
+
+                    boolean isPublishedSound = profile.attachments?.any {
+                        it.uuid == existing.uuid
+                    }
+
+                    if (!profile.draft || !isPublishedSound) {
+                        throw new IllegalArgumentException(
+                            "Sound replacement is currently supported only for published sounds being edited in draft mode"
+                        )
+                    }
+
+                    String extension = soundValidation.extension as String
+
+                    attachmentService.saveDraftSoundReplacement(
+                        profile.opus.uuid,
+                        profile.uuid,
+                        existing.uuid,
+                        file,
+                        extension
+                    )
+
+                    attachmentService.deleteDraftSoundReplacements(
+                        profile.opus.uuid,
+                        profile.uuid,
+                        existing.uuid,
+                        extension
+                    )
+
+                    existing.filename = file.originalFilename
+                    existing.contentType = soundValidation.contentType
+                }
                 existing.url = metadata.url
                 existing.title = metadata.title
                 existing.description = metadata.description
@@ -1369,21 +1704,63 @@ class ProfileService extends BaseDataAccessService {
         Profile profile = Profile.findByUuid(profileId)
         checkState profile
 
-        Attachment attachment = profileOrDraft(profile).attachments?.find { it.uuid == attachmentId }
+        boolean inDraftMode = profile.draft != null
+
+        boolean isDraftOnlyAttachment = inDraftMode &&
+            !profile.attachments?.any { it.uuid == attachmentId }
+
+        Attachment attachment = profileOrDraft(profile).attachments?.find {
+            it.uuid == attachmentId
+        }
+
         if (attachment) {
             profileOrDraft(profile).attachments.remove(attachment)
+
             if (profileOrDraft(profile).primaryAudio == attachmentId) {
                 profileOrDraft(profile).primaryAudio = null
             }
 
-            // Only delete the file if we are not in draft mode.
-            // If we are in draft mode, then the file will be deleted when the draft is published.
-            if (!profile.draft && attachment.filename) {
-                attachmentService.deleteAttachment(profile.opus.uuid, profile.uuid, attachment.uuid, Utils.getFileExtension(attachment.filename))
+            // Preserve the existing non-draft deletion behaviour.
+            if (!inDraftMode && attachment.filename) {
+                attachmentService.deleteAttachment(
+                    profile.opus.uuid,
+                    profile.uuid,
+                    attachment.uuid,
+                    Utils.getFileExtension(attachment.filename)
+                )
             }
         }
 
-        save profile
+        if (!save(profile)) {
+            throw new IllegalStateException(
+                "Failed to delete attachment ${attachmentId} from profile ${profileId}"
+            )
+        }
+
+        if (attachment && inDraftMode) {
+            // A replacement is no longer needed once its draft attachment is deleted.
+            if (attachment.type == Attachment.TYPE_SOUND) {
+                try {
+                    attachmentService.deleteDraftSoundReplacements(
+                        profile.opus.uuid,
+                        profile.uuid,
+                        attachment.uuid
+                    )
+                } catch (IOException e) {
+                    log.warn("Failed to clean up staged sound replacement ${attachment.uuid}", e)
+                }
+            }
+
+            // New draft-only attachments have no published version to preserve.
+            if (isDraftOnlyAttachment && attachment.filename) {
+                attachmentService.deleteAttachment(
+                    profile.opus.uuid,
+                    profile.uuid,
+                    attachment.uuid,
+                    Utils.getFileExtension(attachment.filename)
+                )
+            }
+        }
 
         profileOrDraft(profile).attachments
     }

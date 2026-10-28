@@ -196,6 +196,52 @@ class ProfileControllerSpec extends BaseIntegrationSpec {
         soundFile?.delete()
     }
 
+
+    def "streamSound should accept the opus shortName"() {
+        given:
+        Opus opus = save new Opus(
+            uuid: "opusId",
+            shortName: "opusid",
+            title: "opusName",
+            glossary: new Glossary(),
+            dataResourceUid: "dr1"
+        )
+
+        Profile profile = save new Profile(
+            scientificName: "sciName",
+            opus: opus,
+            attachments: [
+                new Attachment(
+                    uuid: "sound1",
+                    filename: "call.mp3",
+                    contentType: "audio/mpeg",
+                    type: Attachment.TYPE_SOUND
+                )
+            ]
+        )
+
+        File soundFile = File.createTempFile("profile-sound-", ".mp3")
+        soundFile.bytes = [1, 2, 3] as byte[]
+
+        when:
+        controller.params.profileId = profile.uuid
+        controller.params.opusId = "opusid"  // Short name, not UUID
+        controller.params.attachmentId = "sound1"
+        controller.streamSound()
+
+        then:
+        1 * controller.attachmentService.getAttachment(
+            "opusId", profile.uuid, "sound1", "mp3"
+        ) >> soundFile
+
+        controller.response.status == 200
+        controller.response.contentType == "audio/mpeg"
+        controller.response.contentAsByteArray == ([1, 2, 3] as byte[])
+
+        cleanup:
+        soundFile?.delete()
+    }
+
     def "streamSound should not serve a non-sound attachment"() {
         given:
         Opus opus = save new Opus(uuid: "opusId", shortName: "opusid", title: "opusName", glossary: new Glossary(), dataResourceUid: "dr1")
@@ -206,6 +252,40 @@ class ProfileControllerSpec extends BaseIntegrationSpec {
         controller.params.profileId = profile.uuid
         controller.params.opusId = "opusId"
         controller.params.attachmentId = "document1"
+        controller.streamSound()
+
+        then:
+        controller.response.status == 404
+        0 * controller.attachmentService.getAttachment(_, _, _, _)
+    }
+
+    def "streamSound should reject a profile belonging to another opus"() {
+        given:
+        Opus opus = save new Opus(
+            uuid: "opusId",
+            shortName: "opusid",
+            title: "opusName",
+            glossary: new Glossary(),
+            dataResourceUid: "dr1"
+        )
+
+        Profile profile = save new Profile(
+            scientificName: "sciName",
+            opus: opus,
+            attachments: [
+                new Attachment(
+                    uuid: "sound1",
+                    filename: "call.mp3",
+                    contentType: "audio/mpeg",
+                    type: Attachment.TYPE_SOUND
+                )
+            ]
+        )
+
+        when:
+        controller.params.profileId = profile.uuid
+        controller.params.opusId = "differentOpusId"
+        controller.params.attachmentId = "sound1"
         controller.streamSound()
 
         then:

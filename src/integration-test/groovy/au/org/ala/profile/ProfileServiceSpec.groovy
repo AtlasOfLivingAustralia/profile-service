@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 import spock.lang.Unroll
-
+import grails.core.DefaultGrailsApplication
+import org.springframework.mock.web.MockMultipartFile
+import java.nio.file.Files
 import static au.org.ala.profile.util.ImageOption.EXCLUDE
 import static au.org.ala.profile.util.ImageOption.INCLUDE
 
@@ -1558,7 +1560,8 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
     def "toggleDraftMode should remove the files for any attachment deleted during draft mode"() {
         given:
         Opus opus = save new Opus(glossary: new Glossary(), dataResourceUid: "dr1234", title: "title")
-        Profile profile = save new Profile(uuid: "uuid1", opus: opus, scientificName: "sciName", attachments: [new Attachment(uuid: "1234", title: "title")])
+        Profile profile = save new Profile(uuid: "uuid1", opus: opus, scientificName: "sciName", attachments:
+            [new Attachment(uuid: "1234", title: "title", filename: "recording.mp3", type: Attachment.TYPE_SOUND)])
         profile.draft = new DraftProfile(uuid: "uuid1", scientificName: "sciName", attachments: [])
         save profile
 
@@ -1569,11 +1572,486 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
         1 * service.attachmentService.deleteAttachment(opus.uuid, profile.uuid, "1234", _)
     }
 
+    def "toggleDraftMode should publish a WAV replacement while preserving the sound UUID"() {
+        given:
+        File attachmentsDirectory = Files.createTempDirectory("profile-sound-integration-").toFile()
+
+        def application = new DefaultGrailsApplication()
+        application.config.attachments.directory = attachmentsDirectory.absolutePath
+
+        // Override the default mock with a real AttachmentService for this test.
+        service.attachmentService = new AttachmentService(
+            grailsApplication: application
+        )
+
+        Opus opus = save new Opus(
+            glossary: new Glossary(),
+            dataResourceUid: "dr1234",
+            title: "title"
+        )
+
+        String soundId = "sound-1234"
+
+        Attachment originalAttachment = new Attachment(
+            uuid: soundId,
+            title: "Original recording",
+            filename: "original.mp3",
+            contentType: "audio/mpeg",
+            type: Attachment.TYPE_SOUND
+        )
+
+        Profile profile = save new Profile(
+            uuid: "uuid1",
+            opus: opus,
+            scientificName: "sciName",
+            attachments: [originalAttachment]
+        )
+
+        File originalFile = new File(
+            service.attachmentService.getPath(
+                opus.uuid, profile.uuid, soundId, "mp3"
+            )
+        )
+
+        originalFile.parentFile.mkdirs()
+        originalFile.text = "original MP3 recording"
+
+        profile.draft = new DraftProfile(
+            uuid: profile.uuid,
+            scientificName: "sciName",
+            attachments: [
+                new Attachment(
+                    uuid: soundId,
+                    title: "Updated recording",
+                    filename: "replacement.wav",
+                    contentType: "audio/wav",
+                    type: Attachment.TYPE_SOUND
+                )
+            ]
+        )
+
+        save profile
+
+        MockMultipartFile replacement = new MockMultipartFile(
+            "file",
+            "replacement.wav",
+            "audio/wav",
+            "replacement WAV recording".bytes
+        )
+
+        service.attachmentService.saveDraftSoundReplacement(
+            opus.uuid,
+            profile.uuid,
+            soundId,
+            replacement,
+            "wav"
+        )
+
+        when:
+        boolean published = service.toggleDraftMode(profile.uuid, true)
+
+        then:
+        published
+
+        and:
+        Profile updatedProfile = Profile.findByUuid(profile.uuid)
+        updatedProfile.draft == null
+        updatedProfile.attachments.size() == 1
+
+        Attachment publishedAttachment = updatedProfile.attachments[0]
+
+        publishedAttachment.uuid == soundId
+        publishedAttachment.filename == "replacement.wav"
+        publishedAttachment.contentType == "audio/wav"
+        publishedAttachment.title == "Updated recording"
+
+        and:
+        File publishedFile = service.attachmentService.getAttachment(
+            opus.uuid, profile.uuid, soundId, "wav"
+        )
+
+        publishedFile != null
+        publishedFile.text == "replacement WAV recording"
+
+        and:
+        !originalFile.exists()
+
+        and:
+        service.attachmentService.getDraftSoundReplacement(
+            opus.uuid, profile.uuid, soundId, "wav"
+        ) == null
+
+        cleanup:
+        attachmentsDirectory?.deleteDir()
+    }
+
+    def "toggleDraftMode should publish an MP3 replacement and clean up its backup"() {
+        given:
+        File attachmentsDirectory = Files.createTempDirectory("profile-sound-integration-").toFile()
+
+        def application = new DefaultGrailsApplication()
+        application.config.attachments.directory = attachmentsDirectory.absolutePath
+
+        service.attachmentService = new AttachmentService(
+            grailsApplication: application
+        )
+
+        Opus opus = save new Opus(
+            glossary: new Glossary(),
+            dataResourceUid: "dr1234",
+            title: "title"
+        )
+
+        String soundId = "sound-1234"
+
+        Profile profile = save new Profile(
+            uuid: "uuid1",
+            opus: opus,
+            scientificName: "sciName",
+            attachments: [
+                new Attachment(
+                    uuid: soundId,
+                    title: "Original recording",
+                    filename: "original.mp3",
+                    contentType: "audio/mpeg",
+                    type: Attachment.TYPE_SOUND
+                )
+            ]
+        )
+
+        File publishedFile = new File(
+            service.attachmentService.getPath(
+                opus.uuid, profile.uuid, soundId, "mp3"
+            )
+        )
+
+        publishedFile.parentFile.mkdirs()
+        publishedFile.text = "original MP3 recording"
+
+        profile.draft = new DraftProfile(
+            uuid: profile.uuid,
+            scientificName: "sciName",
+            attachments: [
+                new Attachment(
+                    uuid: soundId,
+                    title: "Updated recording",
+                    filename: "replacement.mp3",
+                    contentType: "audio/mpeg",
+                    type: Attachment.TYPE_SOUND
+                )
+            ]
+        )
+
+        save profile
+
+        MockMultipartFile replacement = new MockMultipartFile(
+            "file",
+            "replacement.mp3",
+            "audio/mpeg",
+            "replacement MP3 recording".bytes
+        )
+
+        service.attachmentService.saveDraftSoundReplacement(
+            opus.uuid,
+            profile.uuid,
+            soundId,
+            replacement,
+            "mp3"
+        )
+
+        expect:
+        publishedFile.text == "original MP3 recording"
+
+        when:
+        boolean published = service.toggleDraftMode(profile.uuid, true)
+
+        then:
+        published
+
+        and:
+        Profile updatedProfile = Profile.findByUuid(profile.uuid)
+        updatedProfile.draft == null
+        updatedProfile.attachments.size() == 1
+
+        Attachment attachment = updatedProfile.attachments[0]
+
+        attachment.uuid == soundId
+        attachment.filename == "replacement.mp3"
+        attachment.contentType == "audio/mpeg"
+        attachment.title == "Updated recording"
+
+        and:
+        publishedFile.exists()
+        publishedFile.text == "replacement MP3 recording"
+
+        and:
+        service.attachmentService.getDraftSoundReplacement(
+            opus.uuid, profile.uuid, soundId, "mp3"
+        ) == null
+
+        and:
+        !publishedFile.parentFile.listFiles().any {
+            it.name.startsWith("sound-backup-")
+        }
+
+        cleanup:
+        attachmentsDirectory?.deleteDir()
+    }
+
+    def "toggleDraftMode should restore the original MP3 when sound promotion fails"() {
+        given:
+        File attachmentsDirectory = Files.createTempDirectory(
+            "profile-sound-rollback-"
+        ).toFile()
+
+        def application = new DefaultGrailsApplication()
+        application.config.attachments.directory =
+            attachmentsDirectory.absolutePath
+
+        // Simulate a failure after the replacement has been promoted.
+        AttachmentService failingAttachmentService = new AttachmentService() {
+            @Override
+            void publishDraftSoundReplacement(
+                String opusId,
+                String profileId,
+                String attachmentId,
+                String extension
+            ) {
+                super.publishDraftSoundReplacement(
+                    opusId, profileId, attachmentId, extension
+                )
+
+                throw new IOException("Simulated sound publication failure")
+            }
+        }
+
+        failingAttachmentService.grailsApplication = application
+        service.attachmentService = failingAttachmentService
+
+        Opus opus = save new Opus(
+            glossary: new Glossary(),
+            dataResourceUid: "dr1234",
+            title: "title"
+        )
+
+        String soundId = "sound-1234"
+
+        Profile profile = save new Profile(
+            uuid: "uuid1",
+            opus: opus,
+            scientificName: "sciName",
+            attachments: [
+                new Attachment(
+                    uuid: soundId,
+                    title: "Original recording",
+                    filename: "original.mp3",
+                    contentType: "audio/mpeg",
+                    type: Attachment.TYPE_SOUND
+                )
+            ]
+        )
+
+        File publishedFile = new File(
+            failingAttachmentService.getPath(
+                opus.uuid, profile.uuid, soundId, "mp3"
+            )
+        )
+
+        publishedFile.parentFile.mkdirs()
+        publishedFile.text = "original MP3 recording"
+
+        profile.draft = new DraftProfile(
+            uuid: profile.uuid,
+            scientificName: "sciName",
+            attachments: [
+                new Attachment(
+                    uuid: soundId,
+                    title: "Replacement recording",
+                    filename: "replacement.mp3",
+                    contentType: "audio/mpeg",
+                    type: Attachment.TYPE_SOUND
+                )
+            ]
+        )
+
+        save profile
+
+        MockMultipartFile replacement = new MockMultipartFile(
+            "file",
+            "replacement.mp3",
+            "audio/mpeg",
+            "replacement MP3 recording".bytes
+        )
+
+        failingAttachmentService.saveDraftSoundReplacement(
+            opus.uuid, profile.uuid, soundId, replacement, "mp3"
+        )
+
+        when:
+        service.toggleDraftMode(profile.uuid, true)
+
+        then:
+        thrown(IOException)
+
+        and:
+        publishedFile.exists()
+        publishedFile.text == "original MP3 recording"
+
+        and:
+        Profile updatedProfile = Profile.findByUuid(profile.uuid)
+        updatedProfile.draft != null
+        updatedProfile.attachments[0].uuid == soundId
+        updatedProfile.attachments[0].filename == "original.mp3"
+
+        and:
+        File staged = failingAttachmentService.getDraftSoundReplacement(
+            opus.uuid, profile.uuid, soundId, "mp3"
+        )
+        staged != null
+        staged.text == "replacement MP3 recording"
+
+        cleanup:
+        attachmentsDirectory?.deleteDir()
+    }
+
+    def "toggleDraftMode restores all sounds when the second promotion fails"() {
+        given:
+        File attachmentsDirectory =
+            Files.createTempDirectory("profile-multi-sound-").toFile()
+
+        def application = new DefaultGrailsApplication()
+        application.config.attachments.directory =
+            attachmentsDirectory.absolutePath
+
+        AttachmentService failingService = new AttachmentService() {
+            int promotionCount = 0
+
+            @Override
+            void publishDraftSoundReplacement(
+                String opusId,
+                String profileId,
+                String attachmentId,
+                String extension
+            ) {
+                super.publishDraftSoundReplacement(
+                    opusId, profileId, attachmentId, extension
+                )
+
+                promotionCount++
+
+                if (promotionCount == 2) {
+                    throw new IOException("Simulated second promotion failure")
+                }
+            }
+        }
+
+        failingService.grailsApplication = application
+        service.attachmentService = failingService
+
+        Opus opus = save new Opus(
+            glossary: new Glossary(),
+            dataResourceUid: "dr1234",
+            title: "title"
+        )
+
+        List<String> soundIds = ["sound-1", "sound-2"]
+
+        Profile profile = save new Profile(
+            uuid: "uuid1",
+            opus: opus,
+            scientificName: "sciName",
+            attachments: soundIds.collect { id ->
+                new Attachment(
+                    uuid: id,
+                    filename: "${id}.mp3",
+                    contentType: "audio/mpeg",
+                    type: Attachment.TYPE_SOUND
+                )
+            }
+        )
+
+        profile.draft = new DraftProfile(
+            uuid: profile.uuid,
+            scientificName: "sciName",
+            attachments: soundIds.collect { id ->
+                new Attachment(
+                    uuid: id,
+                    filename: "replacement-${id}.mp3",
+                    contentType: "audio/mpeg",
+                    type: Attachment.TYPE_SOUND
+                )
+            }
+        )
+
+        save profile
+
+        soundIds.each { id ->
+            File original = new File(
+                failingService.getPath(opus.uuid, profile.uuid, id, "mp3")
+            )
+
+            original.parentFile.mkdirs()
+            original.text = "original ${id}"
+
+            failingService.saveDraftSoundReplacement(
+                opus.uuid,
+                profile.uuid,
+                id,
+                new MockMultipartFile(
+                    "file",
+                    "replacement-${id}.mp3",
+                    "audio/mpeg",
+                    "replacement ${id}".bytes
+                ),
+                "mp3"
+            )
+        }
+
+        when:
+        service.toggleDraftMode(profile.uuid, true)
+
+        then:
+        thrown(IOException)
+
+        and:
+        failingService.promotionCount == 2
+
+        and:
+        soundIds.every { id ->
+            File published = failingService.getAttachment(
+                opus.uuid, profile.uuid, id, "mp3"
+            )
+
+            published != null && published.text == "original ${id}"
+        }
+
+        and:
+        Profile updatedProfile = Profile.findByUuid(profile.uuid)
+        updatedProfile.draft != null
+        updatedProfile.attachments*.uuid.containsAll(soundIds)
+        updatedProfile.attachments.every {
+            it.filename == "${it.uuid}.mp3"
+        }
+
+        and:
+        soundIds.every { id ->
+            File staged = failingService.getDraftSoundReplacement(
+                opus.uuid, profile.uuid, id, "mp3"
+            )
+
+            staged != null && staged.text == "replacement ${id}"
+        }
+
+        cleanup:
+        attachmentsDirectory?.deleteDir()
+    }
+
     def "discardDraftChanges should delete the file for any attachment uploaded during draft mode"() {
         given:
         Opus opus = save new Opus(glossary: new Glossary(), dataResourceUid: "dr1234", title: "title")
         Profile profile = save new Profile(uuid: "uuid1", opus: opus, scientificName: "sciName", attachments: [])
-        profile.draft = new DraftProfile(uuid: "uuid1", scientificName: "sciName", attachments: [new Attachment(uuid: "1234", title: "title")])
+        profile.draft = new DraftProfile(uuid: "uuid1", scientificName: "sciName", attachments:
+            [new Attachment(uuid: "1234", title: "title", filename: "recording.mp3", type: Attachment.TYPE_SOUND)])
         save profile
 
         when:
