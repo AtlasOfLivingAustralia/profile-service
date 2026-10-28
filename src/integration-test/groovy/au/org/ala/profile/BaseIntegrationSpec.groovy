@@ -15,8 +15,27 @@ class BaseIntegrationSpec extends Specification {
      * Therefore, before each test, loop through all domain classes and drop the mongo collection.
      */
     def setup() {
-        grailsApplication.domainClasses.each {
-            it.clazz.collection.remove([:])
+        // Resolve all collections and their actual MongoDB databases
+        // before deleting any documents.
+        def collections = grailsApplication.domainClasses.collect {
+            it.clazz.collection
+        }
+
+        def databaseNames = collections.collect {
+            it.getNamespace().getDatabaseName()
+        }.toSet()
+
+        // Never allow integration tests to clear the development database.
+        if (databaseNames != (['profiles-test'] as Set)) {
+            throw new IllegalStateException(
+                "Refusing to clear MongoDB collections in ${databaseNames}. " +
+                    "Integration tests must use profiles-test."
+            )
+        }
+
+        // Safe to clean up only after verifying the database.
+        collections.each {
+            it.remove([:])
         }
     }
 

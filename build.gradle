@@ -192,6 +192,12 @@ tasks.withType(Test) {
     }
 }
 
+tasks.named('integrationTest', Test) {
+    systemProperty 'grails.env', 'test'
+    systemProperty 'spring.profiles.active', 'test'
+    systemProperty 'grails.mongodb.databaseName', 'profiles-test'
+}
+
 
 assets {
     minifyJs = true

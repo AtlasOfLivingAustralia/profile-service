@@ -1,23 +1,27 @@
+import grails.util.Environment
 import java.text.SimpleDateFormat
 
 def appName = 'profile-service'
 def ENV_NAME = "${appName.toUpperCase()}_CONFIG"
 def default_config = "/data/${appName}/config/${appName}-config.properties"
 
-if(!grails.config.locations || !(grails.config.locations instanceof List)) {
-    grails.config.locations = []
-}
-if(System.getenv(ENV_NAME) && new File(System.getenv(ENV_NAME)).exists()) {
-    println "[${appName}] Including configuration file specified in environment: " + System.getenv(ENV_NAME);
-    grails.config.locations.add "file:" + System.getenv(ENV_NAME)
-} else if(System.getProperty(ENV_NAME) && new File(System.getProperty(ENV_NAME)).exists()) {
-    println "[${appName}] Including configuration file specified on command line: " + System.getProperty(ENV_NAME);
-    grails.config.locations.add "file:" + System.getProperty(ENV_NAME)
-} else if(new File(default_config).exists()) {
-    println "[${appName}] Including default configuration file: " + default_config;
-    grails.config.locations.add "file:" + default_config
-} else {
-    println "[${appName}] No external configuration file defined."
+if (Environment.current != Environment.TEST) {
+    if (!grails.config.locations || !(grails.config.locations instanceof List)) {
+        grails.config.locations = []
+    }
+
+    if (System.getenv(ENV_NAME) && new File(System.getenv(ENV_NAME)).exists()) {
+        println "[${appName}] Including configuration file specified in environment: " + System.getenv(ENV_NAME)
+        grails.config.locations.add "file:" + System.getenv(ENV_NAME)
+    } else if (System.getProperty(ENV_NAME) && new File(System.getProperty(ENV_NAME)).exists()) {
+        println "[${appName}] Including configuration file specified on command line: " + System.getProperty(ENV_NAME)
+        grails.config.locations.add "file:" + System.getProperty(ENV_NAME)
+    } else if (new File(default_config).exists()) {
+        println "[${appName}] Including default configuration file: " + default_config
+        grails.config.locations.add "file:" + default_config
+    } else {
+        println "[${appName}] No external configuration file defined."
+    }
 }
 
 // The ACCEPT header will not be used for content negotiation for user agents containing the following strings (defaults to the 4 major rendering engines)
