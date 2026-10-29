@@ -65,14 +65,20 @@ jobs:
 
       - name: Check MongoDB connectivity
         run: |
+          echo "MongoDB processes:"
+          ps aux | grep '[m]ongod' || true
+
+          echo "MongoDB listening ports:"
+          sudo ss -lntp | grep 27017 || true
+
+          echo "MongoDB service status:"
+          sudo systemctl status mongod --no-pager || true
+
+          echo "MongoDB recent logs:"
+          sudo journalctl -u mongod -n 40 --no-pager || true
+
           echo "Checking MongoDB port 27017..."
           timeout 5 bash -c 'echo > /dev/tcp/127.0.0.1/27017'
-          echo "MongoDB port is reachable"
-
-          if command -v mongosh >/dev/null 2>&1; then
-            mongosh --host 127.0.0.1 --port 27017 \
-              --quiet --eval 'db.adminCommand({ ping: 1 })'
-          fi
 
       - name: Run tests
         uses: gradle/gradle-build-action@v2.4.2
