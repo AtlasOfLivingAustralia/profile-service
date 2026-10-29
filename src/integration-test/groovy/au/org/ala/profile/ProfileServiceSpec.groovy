@@ -1685,6 +1685,119 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
         attachmentsDirectory?.deleteDir()
     }
 
+    def "toggleDraftMode should publish a replaced draft-only sound while preserving its UUID"() {
+        given:
+        File attachmentsDirectory = Files.createTempDirectory("profile-sound-integration-").toFile()
+
+        def application = new DefaultGrailsApplication()
+        application.config.attachments.directory = attachmentsDirectory.absolutePath
+        application.config.attachments.sound.maxFileSize = 5_000_000L
+
+        service.attachmentService = new AttachmentService(
+            grailsApplication: application
+        )
+
+        Opus opus = save new Opus(
+            glossary: new Glossary(),
+            dataResourceUid: "dr1234",
+            title: "title"
+        )
+
+        String soundId = "draft-sound-1234"
+
+        Profile profile = save new Profile(
+            uuid: "uuid1",
+            opus: opus,
+            scientificName: "sciName",
+            attachments: []
+        )
+
+        profile.draft = new DraftProfile(
+            uuid: profile.uuid,
+            scientificName: "sciName",
+            attachments: [
+                new Attachment(
+                    uuid: soundId,
+                    title: "Original recording",
+                    filename: "original.mp3",
+                    contentType: "audio/mpeg",
+                    type: Attachment.TYPE_SOUND
+                )
+            ]
+        )
+        save profile
+
+        File originalFile = new File(
+            service.attachmentService.getPath(
+                opus.uuid, profile.uuid, soundId, "mp3"
+            )
+        )
+        originalFile.parentFile.mkdirs()
+        originalFile.text = "original MP3 recording"
+
+        MockMultipartFile replacement = new MockMultipartFile(
+            "file",
+            "replacement.wav",
+            "audio/wav",
+            "replacement WAV recording".bytes
+        )
+
+        when:
+        service.saveAttachment(
+            profile.uuid,
+            [
+                uuid: soundId,
+                type: Attachment.TYPE_SOUND,
+                title: "Updated recording"
+            ],
+            replacement
+        )
+
+        Profile updatedDraft = Profile.findByUuid(profile.uuid)
+
+        // Capture draft state before publication.
+        int draftAttachmentCount = updatedDraft.draft.attachments.size()
+        String draftSoundId = updatedDraft.draft.attachments[0].uuid
+        String draftFilename = updatedDraft.draft.attachments[0].filename
+
+        boolean published = service.toggleDraftMode(profile.uuid, true)
+        Profile updatedProfile = Profile.findByUuid(profile.uuid)
+
+        then:
+        draftAttachmentCount == 1
+        draftSoundId == soundId
+        draftFilename == "replacement.wav"
+
+        and:
+        published
+        updatedProfile.draft == null
+        updatedProfile.attachments.size() == 1
+
+        Attachment publishedAttachment = updatedProfile.attachments[0]
+        publishedAttachment.uuid == soundId
+        publishedAttachment.filename == "replacement.wav"
+        publishedAttachment.contentType == "audio/wav"
+        publishedAttachment.title == "Updated recording"
+
+        and:
+        File publishedFile = service.attachmentService.getAttachment(
+            opus.uuid, profile.uuid, soundId, "wav"
+        )
+        publishedFile != null
+        publishedFile.text == "replacement WAV recording"
+
+        and:
+        !originalFile.exists()
+
+        and:
+        service.attachmentService.getDraftSoundReplacement(
+            opus.uuid, profile.uuid, soundId, "wav"
+        ) == null
+
+        cleanup:
+        attachmentsDirectory?.deleteDir()
+    }
+
     def "toggleDraftMode should publish an MP3 replacement and clean up its backup"() {
         given:
         File attachmentsDirectory = Files.createTempDirectory("profile-sound-integration-").toFile()
@@ -2240,6 +2353,87 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
         profile.draft.attachments[1].title == "newTitle"
         1 * service.attachmentService.saveAttachment(_, _, _, _, _)
         0 * service.attachmentService.deleteAttachment(_, _, _, _)
+    }
+
+    def "saveAttachment should replace a draft only sound while preserving its UUID"() {
+        given:
+        Opus opus = save new Opus(
+            title: "opus",
+            dataResourceUid: "123",
+            glossary: new Glossary()
+        )
+
+        String soundId = "draft-sound-1234"
+
+        Profile profile = save new Profile(
+            opus: opus,
+            scientificName: "profile",
+            attachments: []
+        )
+
+        profile.draft = new DraftProfile(
+            uuid: profile.uuid,
+            scientificName: "profile",
+            attachments: [
+                new Attachment(
+                    uuid: soundId,
+                    type: Attachment.TYPE_SOUND,
+                    title: "Original call",
+                    filename: "original.mp3",
+                    contentType: "audio/mpeg"
+                )
+            ]
+        )
+
+        save profile
+
+        CommonsMultipartFile replacement = Mock(CommonsMultipartFile) {
+            getOriginalFilename() >> "replacement.wav"
+            getContentType() >> "audio/wav"
+            isEmpty() >> false
+        }
+
+        service.attachmentService.validateSound(replacement) >> [
+            valid: true,
+            extension: "wav",
+            contentType: "audio/wav"
+        ]
+
+        when:
+        service.saveAttachment(
+            profile.uuid,
+            [
+                uuid: soundId,
+                type: Attachment.TYPE_SOUND,
+                title: "Updated call"
+            ],
+            replacement
+        )
+
+        profile = Profile.findByUuid(profile.uuid)
+
+        then:
+        profile.attachments.isEmpty()
+        profile.draft.attachments.size() == 1
+
+        with(profile.draft.attachments[0]) {
+            uuid == soundId
+            type == Attachment.TYPE_SOUND
+            title == "Updated call"
+            filename == "replacement.wav"
+            contentType == "audio/wav"
+        }
+
+        1 * service.attachmentService.replaceDraftOnlySound(
+            opus.uuid,
+            profile.uuid,
+            soundId,
+            replacement,
+            "mp3",
+            "wav"
+        )
+
+        0 * service.attachmentService.saveDraftSoundReplacement(_, _, _, _, _)
     }
 
     def "renameProfile should use the case of the matched scientific name if the supplied name doesn't have the same case"() {

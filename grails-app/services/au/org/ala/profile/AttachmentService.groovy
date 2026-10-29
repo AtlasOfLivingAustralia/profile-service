@@ -25,6 +25,36 @@ class AttachmentService {
         incomingFile.transferTo(file)
     }
 
+    void replaceDraftOnlySound(String opusId, String profileId, String attachmentId,
+                               MultipartFile incomingFile, String oldExtension,
+                               String newExtension) {
+        File destination = new File(getPath(opusId, profileId, attachmentId, newExtension))
+        destination.parentFile.mkdirs()
+
+        File temporary = File.createTempFile(
+            "draft-sound-replacement-", ".tmp", destination.parentFile
+        )
+
+        try {
+            incomingFile.transferTo(temporary)
+
+            java.nio.file.Files.move(
+                temporary.toPath(),
+                destination.toPath(),
+                java.nio.file.StandardCopyOption.REPLACE_EXISTING
+            )
+
+            if (oldExtension && oldExtension != newExtension) {
+                File oldFile = new File(getPath(opusId, profileId, attachmentId, oldExtension))
+                if (oldFile.exists() && !oldFile.delete()) {
+                    log.warn("Failed to remove obsolete draft sound ${attachmentId}.${oldExtension}")
+                }
+            }
+        } finally {
+            temporary.delete()
+        }
+    }
+
     File getAttachment(String opusId, String profileId, String attachmentId, String extension) {
         File file = new File(getPath(opusId, profileId, attachmentId, extension))
 
