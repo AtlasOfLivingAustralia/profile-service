@@ -1646,28 +1646,41 @@ class ProfileService extends BaseDataAccessService {
                         it.uuid == existing.uuid
                     }
 
-                    if (!profile.draft || !isPublishedSound) {
+                    if (!profile.draft) {
                         throw new IllegalArgumentException(
-                            "Sound replacement is currently supported only for published sounds being edited in draft mode"
+                            "Sound replacement requires the profile to be in draft mode"
                         )
                     }
 
                     String extension = soundValidation.extension as String
 
-                    attachmentService.saveDraftSoundReplacement(
-                        profile.opus.uuid,
-                        profile.uuid,
-                        existing.uuid,
-                        file,
-                        extension
-                    )
+                    if (isPublishedSound) {
+                        attachmentService.saveDraftSoundReplacement(
+                            profile.opus.uuid,
+                            profile.uuid,
+                            existing.uuid,
+                            file,
+                            extension
+                        )
 
-                    attachmentService.deleteDraftSoundReplacements(
-                        profile.opus.uuid,
-                        profile.uuid,
-                        existing.uuid,
-                        extension
-                    )
+                        attachmentService.deleteDraftSoundReplacements(
+                            profile.opus.uuid,
+                            profile.uuid,
+                            existing.uuid,
+                            extension
+                        )
+                    } else {
+                        String oldExtension = Utils.getFileExtension(existing.filename)
+
+                        attachmentService.replaceDraftOnlySound(
+                            profile.opus.uuid,
+                            profile.uuid,
+                            existing.uuid,
+                            file,
+                            oldExtension,
+                            extension
+                        )
+                    }
 
                     existing.filename = file.originalFilename
                     existing.contentType = soundValidation.contentType

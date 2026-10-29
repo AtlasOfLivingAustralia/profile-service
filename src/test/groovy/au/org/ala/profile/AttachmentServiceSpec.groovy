@@ -114,6 +114,140 @@ class AttachmentServiceSpec extends Specification implements ServiceUnitTest<Att
         attachmentsDirectory?.deleteDir()
     }
 
+    def "replaceDraftOnlySound replaces MP3 with WAV and removes the old file"() {
+        given:
+        File attachmentsDirectory = Files.createTempDirectory("profile-sound-test-").toFile()
+        service.grailsApplication.config.attachments.directory = attachmentsDirectory.absolutePath
+
+        String opusId = "opus-1"
+        String profileId = "profile-1"
+        String attachmentId = "draft-sound-1"
+
+        File original = new File(
+            service.getPath(opusId, profileId, attachmentId, "mp3")
+        )
+        original.parentFile.mkdirs()
+        original.text = "original MP3 recording"
+
+        MockMultipartFile replacement = new MockMultipartFile(
+            "file",
+            "replacement.wav",
+            "audio/wav",
+            "replacement WAV recording".bytes
+        )
+
+        when:
+        service.replaceDraftOnlySound(
+            opusId,
+            profileId,
+            attachmentId,
+            replacement,
+            "mp3",
+            "wav"
+        )
+
+        then:
+        File updated = service.getAttachment(
+            opusId, profileId, attachmentId, "wav"
+        )
+
+        updated != null
+        updated.text == "replacement WAV recording"
+
+        and:
+        !original.exists()
+
+        cleanup:
+        attachmentsDirectory?.deleteDir()
+    }
+
+    def "replaceDraftOnlySound replaces MP3 with MP3 using the same attachment ID"() {
+        given:
+        File attachmentsDirectory = Files.createTempDirectory("profile-sound-test-").toFile()
+        service.grailsApplication.config.attachments.directory = attachmentsDirectory.absolutePath
+
+        String opusId = "opus-1"
+        String profileId = "profile-1"
+        String attachmentId = "draft-sound-1"
+
+        File original = new File(
+            service.getPath(opusId, profileId, attachmentId, "mp3")
+        )
+        original.parentFile.mkdirs()
+        original.text = "original MP3 recording"
+
+        MockMultipartFile replacement = new MockMultipartFile(
+            "file",
+            "replacement.mp3",
+            "audio/mpeg",
+            "updated MP3 recording".bytes
+        )
+
+        when:
+        service.replaceDraftOnlySound(
+            opusId,
+            profileId,
+            attachmentId,
+            replacement,
+            "mp3",
+            "mp3"
+        )
+
+        then:
+        File updated = service.getAttachment(
+            opusId, profileId, attachmentId, "mp3"
+        )
+
+        updated != null
+        updated.text == "updated MP3 recording"
+        updated.absolutePath == original.absolutePath
+
+        cleanup:
+        attachmentsDirectory?.deleteDir()
+    }
+
+    def "replaceDraftOnlySound preserves original recording when upload fails"() {
+        given:
+        File attachmentsDirectory = Files.createTempDirectory("profile-sound-test-").toFile()
+        service.grailsApplication.config.attachments.directory = attachmentsDirectory.absolutePath
+
+        String opusId = "opus-1"
+        String profileId = "profile-1"
+        String attachmentId = "draft-sound-1"
+
+        File original = new File(
+            service.getPath(opusId, profileId, attachmentId, "mp3")
+        )
+        original.parentFile.mkdirs()
+        original.text = "original MP3 recording"
+
+        MultipartFile replacement = Stub(MultipartFile) {
+            transferTo(_ as File) >> { throw new IOException("Simulated upload failure") }
+        }
+
+        when:
+        service.replaceDraftOnlySound(
+            opusId,
+            profileId,
+            attachmentId,
+            replacement,
+            "mp3",
+            "wav"
+        )
+
+        then:
+        thrown(IOException)
+
+        original.exists()
+        original.text == "original MP3 recording"
+
+        and:
+        service.getAttachment(opusId, profileId, attachmentId, "wav") == null
+
+        cleanup:
+        attachmentsDirectory?.deleteDir()
+    }
+
     def "publishDraftSoundReplacement replaces the published file while preserving its backup"() {
         given:
         File attachmentsDirectory = Files.createTempDirectory("profile-sound-test-").toFile()
