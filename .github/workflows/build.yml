@@ -69,9 +69,10 @@ jobs:
           docker ps -a
 
           echo "MongoDB Docker container logs:"
-          docker ps -a --filter "ancestor=mongo" --format "{{.ID}}" | while read id; do
-            docker logs --tail 80 "$id"
-          done
+          docker logs --tail 100 mongodb 2>&1 || true
+
+          echo "MongoDB exit details:"
+          docker inspect mongodb --format 'ExitCode={{.State.ExitCode}} Error={{.State.Error}}' || true
 
           echo "MongoDB processes:"
           ps aux | grep '[m]ongod' || true
