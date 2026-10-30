@@ -65,6 +65,14 @@ jobs:
 
       - name: Check MongoDB connectivity
         run: |
+          echo "Docker containers:"
+          docker ps -a
+
+          echo "MongoDB Docker container logs:"
+          docker ps -a --filter "ancestor=mongo" --format "{{.ID}}" | while read id; do
+            docker logs --tail 80 "$id"
+          done
+
           echo "MongoDB processes:"
           ps aux | grep '[m]ongod' || true
 
