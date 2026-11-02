@@ -159,6 +159,7 @@ class ProfileControllerSpec extends BaseIntegrationSpec {
         controller.response.status == 200
         controller.response.json.uuid == profile.uuid
         controller.response.json.scientificName == "sciName"
+        controller.response.json.hasDraft == true
     }
 
     def "getByUuid should return the public profile if no draft exists, even if the 'latest' query param is 'true'"() {
@@ -173,10 +174,11 @@ class ProfileControllerSpec extends BaseIntegrationSpec {
         controller.params.latest = "true"
         controller.getByUuid()
 
-        then: "return the draft version"
+        then: "return the public version"
         controller.response.status == 200
         controller.response.json.uuid == profile.uuid
         controller.response.json.scientificName == "sciName"
+        controller.response.json.hasDraft == false
     }
 
     def "downloadAttachment should use the draft if there is one and latest = true"() {
