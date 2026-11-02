@@ -32,6 +32,47 @@ class ProfileControllerSpec extends BaseIntegrationSpec {
         controller.attachmentService = Mock(AttachmentService)
     }
 
+    def "saveAttachment should return a descriptive error when sound replacement requires a draft"() {
+        given:
+        Opus opus = save new Opus(
+            uuid: "opusId",
+            shortName: "opusid",
+            title: "opusName",
+            glossary: new Glossary(),
+            dataResourceUid: "dr1"
+        )
+
+        Profile profile = save new Profile(
+            scientificName: "sciName",
+            opus: opus
+        )
+
+        controller.params.opusId = opus.uuid
+        controller.params.profileId = profile.uuid
+
+        controller.request.addParameter("data", '''
+        {
+            "uuid": "existing-sound-uuid",
+            "type": "sound",
+            "filename": "original.mp3"
+        }
+        ''')
+
+        when:
+        controller.saveAttachment()
+
+        then:
+        1 * profileService.saveAttachment(profile.uuid, _, _) >> {
+            throw new IllegalArgumentException(
+                "Sound replacement requires the profile to be in draft mode"
+            )
+        }
+
+        controller.response.status == 400
+        controller.response.json.error ==
+            "Sound replacement requires the profile to be in draft mode"
+    }
+
     def "updateProfile should return the draft profile if it exists and the 'latest' query param is 'true'"() {
         given:
         Opus opus = save new Opus(uuid: "opusId", shortName: "opusid", title: "opusName", glossary: new Glossary(), dataResourceUid: "dr1")

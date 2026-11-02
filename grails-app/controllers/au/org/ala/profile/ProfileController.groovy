@@ -191,7 +191,8 @@ class ProfileController extends BaseController {
                     List<Attachment> attachments = profileService.saveAttachment(profile.uuid, metadata, file)
                     render (attachments as JSON)
                 } catch (IllegalArgumentException e) {
-                    badRequest e.message
+                    response.status = 400
+                    render([error: e.message] as JSON)
                 }
             }
         }
