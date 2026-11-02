@@ -23,6 +23,7 @@ class ProfileMarshaller {
                     opusName                 : profile.opus?.title,
                     opusShortName            : profile.opus?.shortName,
                     privateMode              : profile.privateMode,
+                    hasDraft                 : profile.draft != null,
                     rank                     : profile.rank,
                     scientificName           : profile.scientificName,
                     nameAuthor               : profile.nameAuthor,
