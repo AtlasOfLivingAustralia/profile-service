@@ -210,7 +210,12 @@ class OpusService extends BaseDataAccessService {
             if (!opus.profileLayoutConfig) {
                 opus.profileLayoutConfig = new ProfileLayoutConfig()
             }
+
             opus.profileLayoutConfig.layout = json.profileLayoutConfig.layout ? json.profileLayoutConfig.layout : null
+
+            if (json.profileLayoutConfig.containsKey('showQRCode')) {
+                opus.profileLayoutConfig.showQRCode = json.profileLayoutConfig.showQRCode == true
+            }
         }
 
         if (json.mapConfig) {
