@@ -5,9 +5,11 @@ package au.org.ala.profile
  */
 class ProfileLayoutConfig {
     String layout
+    Boolean showQRCode = false
 
     static constraints = {
         layout nullable: true
+        showQRCode nullable: true
     }
 
     static mapping = {
