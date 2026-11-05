@@ -3,14 +3,6 @@ grails:
     profile: web
     codegen:
         defaultPackage: au.org.ala.profile
-    gorm:
-        reactor:
-            # Whether to translate GORM events into Reactor events
-            # Disabled by default for performance reasons
-            events: false
-            default:
-                mapping:
-                    autowire: true
 
 info:
     app:
@@ -18,6 +10,8 @@ info:
         version: '@info.app.version@'
         grailsVersion: '@info.app.grailsVersion@'
 spring:
+    jmx:
+        unique-names: true
     main:
         banner-mode: "off"
     groovy:
@@ -29,11 +23,11 @@ spring:
                 - grails-app/views/**
                 - grails-app/i18n/**
                 - grails-app/conf/**
-# Spring Actuator Endpoints are Disabled by Default
-endpoints:
-    enabled: false
-    jmx:
-        enabled: true
+management:
+    endpoints:
+        # "none" keeps every actuator endpoint disabled unless one is granted access explicitly
+        access:
+            default: "none"
 
 ---
 grails:
@@ -87,7 +81,7 @@ grails:
             htmlcodec: xml
             codecs:
                 expression: html
-                scriptlets: html
+                scriptlet: html
                 taglib: none
                 staticparts: none
 
@@ -100,9 +94,9 @@ spring:
         unique-names: true
 management:
     endpoints:
-        enabled-by-default: false
+        access:
+            default: none
 
----
 environments:
     development:
         grails:
@@ -148,7 +142,11 @@ security:
 ---
 #reverse proxy support
 server:
+    forward-headers-strategy: native
     tomcat:
-        port-header: 'X-Forwarded-Port'
-        protocol-header: 'X-Forwarded-Proto'
-        remote-ip-header: 'X-Forwarded-For'
+        remoteip:
+            port-header: 'X-Forwarded-Port'
+            protocol-header: 'X-Forwarded-Proto'
+            remote-ip-header: 'X-Forwarded-For'
+        # Tomcat 10.1 defaults to 10 parts per multipart request which breaks large multipart forms
+        max-part-count: 100

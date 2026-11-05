@@ -94,12 +94,6 @@ grails.exceptionresolver.params.exclude = ['password']
 // configure passing read-only to OSIV session by default, requires "singleSession = false" OSIV mode
 //grails.hibernate.osiv.readonly = false
 
-grails.cache.config = {
-    provider {
-        name "ehcache-profile-service-"+(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()))
-    }
-}
-
 nsl.name.export.cacheTime = 86400 // seconds
 lists.items.cacheSpec = 'maximumSize=100,expireAfterWrite=1m'
 

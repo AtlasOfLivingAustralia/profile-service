@@ -3,7 +3,6 @@ package au.org.ala.profile
 import au.org.ala.ws.service.WebService
 import com.codahale.metrics.MetricRegistry
 import grails.testing.services.ServiceUnitTest
-import grails.core.DefaultGrailsApplication
 import spock.lang.Specification
 
 
@@ -14,9 +13,7 @@ class MasterListServiceSpec extends Specification implements ServiceUnitTest<Mas
     }}
 
     def setup() {
-        def ga = new DefaultGrailsApplication()
-        ga.config.lists.items.cacheSpec = 'maximumSize=0' // disable cache for tests
-        service.grailsApplication = ga
+        grailsApplication.config.lists.items.cacheSpec = 'maximumSize=0' // disable cache for tests
         service.init()
     }
 

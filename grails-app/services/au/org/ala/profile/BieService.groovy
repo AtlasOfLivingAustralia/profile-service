@@ -8,7 +8,7 @@ class BieService {
 
     List getClassification(String guid) {
         try {
-            String resp = new URL("${grailsApplication.config.bie.base.url}/ws/classification/${guid}").text
+            String resp = new URL("${grailsApplication.config.getProperty('bie.base.url')}/ws/classification/${guid}").text
             JsonSlurper jsonSlurper = new JsonSlurper()
             jsonSlurper.parseText(resp)
         } catch (Exception e) {
@@ -19,7 +19,7 @@ class BieService {
 
     Map getSpeciesProfile(String guid) {
         try {
-            String resp = new URL("${grailsApplication.config.bie.base.url}/ws/species/${guid}").text
+            String resp = new URL("${grailsApplication.config.getProperty('bie.base.url')}/ws/species/${guid}").text
             JsonSlurper jsonSlurper = new JsonSlurper()
             jsonSlurper.parseText(resp)
         } catch (Exception e) {
@@ -32,7 +32,7 @@ class BieService {
         Set potentialMatches = [] as HashSet
         long start = System.currentTimeMillis()
         try {
-            String url = "${grailsApplication.config.bie.base.url}/ws/search.json?q=${Utils.enc(name)}&q.op=AND"
+            String url = "${grailsApplication.config.getProperty('bie.base.url')}/ws/search.json?q=${Utils.enc(name)}&q.op=AND"
             log.debug("GET request to ${url}")
             String resp = new URL(url).text
 
@@ -59,7 +59,7 @@ class BieService {
         Set otherNames = [] as HashSet
 
         try {
-            String url = "${grailsApplication.config.bie.base.url}/ws/species/${Utils.enc(name)}"
+            String url = "${grailsApplication.config.getProperty('bie.base.url')}/ws/species/${Utils.enc(name)}"
             log.debug("GET request to ${url}")
             String resp = new URL(url).text
 

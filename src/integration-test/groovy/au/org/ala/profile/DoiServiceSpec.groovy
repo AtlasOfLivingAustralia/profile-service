@@ -4,11 +4,6 @@ import au.org.ala.profile.UserService
 import au.org.ala.web.UserDetails
 import au.org.ala.ws.service.WebService
 import grails.testing.mixin.integration.Integration
-import groovyx.net.http.HttpResponseDecorator
-import groovyx.net.http.RESTClient
-import org.apache.http.HttpVersion
-import org.apache.http.message.BasicHttpResponse
-import org.apache.http.message.BasicStatusLine
 
 @Integration
 class DoiServiceSpec extends BaseIntegrationSpec {
@@ -16,44 +11,10 @@ class DoiServiceSpec extends BaseIntegrationSpec {
     DoiService service = new DoiService()
 
     def setup() {
-        service.grailsApplication = [config:
-                                             [ doi : [
-                                                      service: [url: "http://ands.bla.bla/"],
-                                                      resolution: [
-                                                              url: [prefix: "http://blabla/publication/"]
-                                                      ]
-                                              ],
-                                               profile : [hub: [base: [url: "https://prod.blah"]]]
-                                             ]
-        ]
-    }
-
-    def mockServiceResponse(int statusResponseCode, Map statusJson, int mintResponseCode, Map mintJson) {
-        RESTClient.metaClass.get { Map<String, ?> args ->
-            BasicHttpResponse baseResponse
-            HttpResponseDecorator decorator = null
-            if (delegate.getUri().toString().endsWith("status.json")) {
-                baseResponse = new BasicHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, statusResponseCode, "bla"))
-                decorator = new HttpResponseDecorator(baseResponse, statusJson)
-            } else {
-                println "Unexpected service call"
-            }
-
-            decorator
-        }
-
-        RESTClient.metaClass.post { Map<String, ?> args ->
-            BasicHttpResponse baseResponse
-            HttpResponseDecorator decorator = null
-            if (delegate.getUri().toString().endsWith("mint.json/")) {
-                baseResponse = new BasicHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, mintResponseCode, "bla"))
-                decorator = new HttpResponseDecorator(baseResponse, mintJson)
-            } else {
-                println "Unexpected service call"
-            }
-
-            decorator
-        }
+        grailsApplication.config.doi.service.url = "http://ands.bla.bla/"
+        grailsApplication.config.doi.resolution.url.prefix = "http://blabla/publication/"
+        grailsApplication.config.profile.hub.base.url = "https://prod.blah"
+        service.grailsApplication = grailsApplication
     }
 
     def "mintDoi should return an error if the HTTP status of the DOI service status check is not 200"() {

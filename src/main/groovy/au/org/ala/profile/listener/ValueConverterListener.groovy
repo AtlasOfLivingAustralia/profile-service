@@ -5,7 +5,7 @@ import groovy.transform.TypeChecked
 import groovy.transform.stc.ClosureParams
 import groovy.transform.stc.FromString
 import groovy.transform.stc.ThirdParam
-import groovy.util.logging.Commons
+import groovy.util.logging.Slf4j
 import org.grails.datastore.mapping.core.Datastore
 import org.grails.datastore.mapping.engine.event.AbstractPersistenceEvent
 import org.grails.datastore.mapping.engine.event.AbstractPersistenceEventListener
@@ -28,7 +28,7 @@ import java.lang.reflect.Field
  */
 @CompileStatic
 @TypeChecked
-@Commons
+@Slf4j
 class ValueConverterListener<A extends Annotation, T> extends AbstractPersistenceEventListener {
 
     final Class<A> annotationType

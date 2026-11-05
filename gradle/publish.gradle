@@ -1,13 +1,10 @@
-// To use, add the following to build.gradle:
-// apply from: 'https://raw.githubusercontent.com/AtlasOfLivingAustralia/travis-build-configuration/master/travis_grails_publish.gradle'
-
-apply plugin:"maven-publish"
+apply plugin: "maven-publish"
 
 publishing {
     repositories {
         maven {
-            name 'GitHubPackages'
-            url uri("https://maven.pkg.github.com/atlasoflivingaustralia/profile-service")
+            name = 'GitHubPackages'
+            url = uri("https://maven.pkg.github.com/atlasoflivingaustralia/profile-service")
             credentials {
                 username = System.getenv('GITHUB_ACTOR')
                 password = System.getenv('GITHUB_TOKEN')
@@ -16,20 +13,16 @@ publishing {
     }
     publications {
         mavenJar(MavenPublication) {
-            pom.withXml {
-                def pomNode = asNode()
-                pomNode.dependencyManagement.replaceNode {}
-
-                // simply remove dependencies without a version
-                // version-less dependencies are handled with dependencyManagement
-                // see https://github.com/spring-gradle-plugins/dependency-management-plugin/issues/8 for more complete solutions
-                pomNode.dependencies.dependency.findAll {
-                    it.version.text().isEmpty()
-                }.each {
-                    it.replaceNode {}
-                }
+            artifact tasks.named('bootJar')
+            pom {
+                // Explicit jar packaging (Maven default); avoids a pom-only publication.
+                packaging = 'jar'
             }
-            artifact bootJar
         }
     }
+}
+
+// Module metadata describes component variants, not a fat executable. Disable it for this publication.
+tasks.withType(GenerateModuleMetadata).configureEach {
+    enabled = false
 }

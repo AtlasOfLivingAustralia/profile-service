@@ -14,14 +14,14 @@ class BootStrap {
     def userService
     def grailsApplication
     def sanitizerPolicy
+    def customObjectMarshallers
 
     def init = { servletContext ->
-
-        def ctx = servletContext.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE)
+        def ctx = servletContext?.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE) ?: grailsApplication.mainContext
         overrideClassMethod()
         initDatastores(ctx)
 
-        ctx?.getBean("customObjectMarshallers")?.register()
+        customObjectMarshallers?.register()
 
         createDefaultTags()
     }

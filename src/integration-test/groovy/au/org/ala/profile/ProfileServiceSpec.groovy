@@ -8,7 +8,6 @@ import grails.gorm.transactions.Rollback
 import grails.testing.mixin.integration.Integration
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.multipart.MultipartFile
-import org.springframework.web.multipart.commons.CommonsMultipartFile
 import spock.lang.Unroll
 import grails.core.DefaultGrailsApplication
 import org.springframework.mock.web.MockMultipartFile
@@ -36,7 +35,8 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
         service.bieService = bieService
         service.doiService = Mock(DoiService)
         service.doiService.mintDOI(_, _, _) >> [status: "success", doi: "1234"]
-        service.grailsApplication.config.snapshot.directory = "bla"
+        service.grailsApplication = grailsApplication
+        grailsApplication.config.snapshot.directory = "bla"
         service.vocabService = Mock(VocabService)
         service.vocabService.getOrCreateTerm(_, _) >> { name, id -> [name: name, vocabId: id] }
         service.attachmentService = Mock(AttachmentService)
@@ -2283,7 +2283,7 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
         save profile
 
         when:
-        service.saveAttachment(profile.uuid, [title: "newTitle"], Mock(CommonsMultipartFile))
+        service.saveAttachment(profile.uuid, [title: "newTitle"], Mock(MultipartFile))
         profile = Profile.findByUuid(profile.uuid)
 
         then:
@@ -2298,10 +2298,12 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
         given:
         Opus opus = save new Opus(title: "opus", dataResourceUid: "123", glossary: new Glossary())
         Profile profile = save new Profile(opus: opus, scientificName: "profile", attachments: [])
-        CommonsMultipartFile sound = Mock(CommonsMultipartFile) {
-            getOriginalFilename() >> "call.mp3"
-            getContentType() >> "audio/mpeg"
-        }
+        MockMultipartFile sound = new MockMultipartFile(
+            "file",
+            "call.mp3",
+            "audio/mpeg",
+            "test audio content".bytes
+        )
         service.attachmentService.validateSound(sound) >> [valid: true, extension: "mp3", contentType: "audio/mpeg"]
 
         when:
@@ -2320,7 +2322,12 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
         given:
         Opus opus = save new Opus(title: "opus", dataResourceUid: "123", glossary: new Glossary())
         Profile profile = save new Profile(opus: opus, scientificName: "profile", attachments: [])
-        CommonsMultipartFile sound = Mock(CommonsMultipartFile)
+        MockMultipartFile sound = new MockMultipartFile(
+            "file",
+            "invalid.txt",
+            "text/plain",
+            "invalid content".bytes
+        )
         service.attachmentService.validateSound(sound) >> [valid: false, error: "invalid sound"]
 
         when:
@@ -2342,7 +2349,7 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
         save profile
 
         when:
-        service.saveAttachment(profile.uuid, [title: "newTitle"], Mock(CommonsMultipartFile))
+        service.saveAttachment(profile.uuid, [title: "newTitle"], Mock(MultipartFile))
         profile = Profile.findByUuid(profile.uuid)
 
         then:
@@ -2387,11 +2394,12 @@ class ProfileServiceSpec extends BaseIntegrationSpec {
 
         save profile
 
-        CommonsMultipartFile replacement = Mock(CommonsMultipartFile) {
-            getOriginalFilename() >> "replacement.wav"
-            getContentType() >> "audio/wav"
-            isEmpty() >> false
-        }
+        MockMultipartFile replacement = new MockMultipartFile(
+            "file",
+            "replacement.wav",
+            "audio/wav",
+            "test replacement audio".bytes
+        )
 
         service.attachmentService.validateSound(replacement) >> [
             valid: true,
