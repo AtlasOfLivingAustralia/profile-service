@@ -62,17 +62,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
 
       - name: Clean to remove clover instrumentation
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v6
-
-      - name: Clean to remove clover instrumentation
         run: ./gradlew clean
-
-      - name: Publish the JAR to the repository
-        run: ./gradlew check publish
-        env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish the JAR to the repository
         run: ./gradlew check publish
