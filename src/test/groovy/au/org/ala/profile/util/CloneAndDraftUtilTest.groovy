@@ -46,6 +46,8 @@ class CloneAndDraftUtilTest extends Specification {
                 taxonomyTree: "taxonomyTree",
                 nslNameIdentifier: "nslId",
                 primaryImage: "primaryImage",
+                primaryVideo: "primaryVideo",
+                primaryAudio: "primaryAudio",
                 showLinkedOpusAttributes: true,
                 profileStatus: Profile.STATUS_PARTIAL,
                 imageSettings: [image1: new ImageSettings(imageDisplayOption: EXCLUDE), image2: new ImageSettings(imageDisplayOption: EXCLUDE)],
@@ -96,6 +98,8 @@ class CloneAndDraftUtilTest extends Specification {
                         taxonomyTree: "taxonomyTree2",
                         nslNameIdentifier: "nslId2",
                         primaryImage: "primaryImage2",
+                        primaryVideo: "primaryVideo2",
+                        primaryAudio: "primaryAudio2",
                         showLinkedOpusAttributes: false,
                         profileStatus: Profile.STATUS_LEGACY,
                         imageSettings: [image1: new ImageSettings(imageDisplayOption: INCLUDE), image2: new ImageSettings(imageDisplayOption: INCLUDE)],
@@ -126,6 +130,8 @@ class CloneAndDraftUtilTest extends Specification {
         draft.guid == original.guid
         draft.nslNameIdentifier == original.nslNameIdentifier
         draft.primaryImage == original.primaryImage
+        draft.primaryVideo == original.primaryVideo
+        draft.primaryAudio == original.primaryAudio
         draft.showLinkedOpusAttributes == original.showLinkedOpusAttributes
         draft.taxonomyTree == original.taxonomyTree
         draft.profileStatus == original.profileStatus
@@ -173,6 +179,8 @@ class CloneAndDraftUtilTest extends Specification {
         profileWithDraft.guid == profileWithDraft.draft.guid
         profileWithDraft.nslNameIdentifier == profileWithDraft.draft.nslNameIdentifier
         profileWithDraft.primaryImage == profileWithDraft.draft.primaryImage
+        profileWithDraft.primaryVideo == profileWithDraft.draft.primaryVideo
+        profileWithDraft.primaryAudio == profileWithDraft.draft.primaryAudio
         profileWithDraft.showLinkedOpusAttributes == profileWithDraft.draft.showLinkedOpusAttributes
         profileWithDraft.taxonomyTree == profileWithDraft.draft.taxonomyTree
         profileWithDraft.profileStatus == profileWithDraft.draft.profileStatus
